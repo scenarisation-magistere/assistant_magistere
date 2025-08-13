@@ -1,0 +1,8 @@
+# OpenAI API Configuration
+# Renommez ce fichier en .env et ajoutez votre clé API OpenAI
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional: Model configuration
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_MAX_TOKENS=1000
+OPENAI_TEMPERATURE=0.7 

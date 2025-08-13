@@ -1,0 +1,141 @@
+last_updated: '2025-08-13T18:55:06.945389'
+current_step: etape_4_competences
+etape_1_public_cible:
+  public_cible:
+    type: Enseignants 2d degré
+    profil: Groupe homogène (mêmes profils, mêmes besoins)
+    niveau_expertise: Intermédiaire
+    besoins_specifiques:
+    - Aucun besoin identifié
+    recommandations:
+    - À compléter ou à reformuler en fonction du profil et des besoins
+  contexte_formation:
+    titre: Test Formation IA
+    objectif_general: Test objectif général
+etape_2_contraintes:
+  contraintes_formation:
+    type_parcours: Création d'un nouvel espace
+    temps_total: Moins de 3h
+    autonomie: Autoformation (sans accompagnement)
+    animation: Formation animée par un seul intervenant
+    calendrier: Début d'année scolaire
+    horaires: Sur temps de travail
+    nombre_participants: Moins de 10 personnes
+    exigences_institutionnelles: Non
+    restrictions_techniques: Non
+    exemple_associe: 001C_Exemple_Contraintes_Formation.md
+etape_3_scenario:
+  scenario_cmo:
+    title: Scénario structuré recommandé – Communauté Magistère Occitanie (CMO)
+    description: Le scénario CMO propose une structuration claire et précise de la
+      formation
+    features:
+    - Prise en compte du public cible
+    - Prise en compte des contraintes
+    sections:
+    - number: 1
+      type: Accueil
+      content: Présentation générale
+      modality: Asynchrone
+    - number: 2
+      type: Section d'apprentissage 1
+      content: Compétence 1
+      modality: Asynchrone
+    constraints:
+    - Durée de 3h maximum
+    - Poids total de 512 Mo maximum
+    acknowledged: true
+    timestamp: '2025-08-13T18:55:06.945389'
+etape_4_competences:
+  formulations_competences:
+  - Être capable d'utiliser des outils d'intelligence artificielle pour créer des
+    contenus pédagogiques engageants.
+  - Être capable de personnaliser les parcours pédagogiques en fonction des données
+    recueillies sur les apprenants.
+  - Être capable d'innover dans la conception pédagogique en intégrant des solutions
+    d'intelligence artificielle.
+  competence_1:
+    titre: Utilisation des outils d'IA
+    idees_cles: IA, outils, contenus pédagogiques
+    niveau: Bas
+    verbes: utiliser, créer
+    formulation: Être capable d'utiliser des outils d'intelligence artificielle pour
+      créer des contenus pédagogiques engageants.
+  competence_2:
+    titre: Personnalisation des parcours
+    idees_cles: personnalisation, parcours, données
+    niveau: Moyen
+    verbes: personnaliser, adapter
+    formulation: Être capable de personnaliser les parcours pédagogiques en fonction
+      des données recueillies sur les apprenants.
+  competence_3:
+    titre: Innovation pédagogique
+    idees_cles: innovation, conception, solutions IA
+    niveau: Haut
+    verbes: innover, intégrer
+    formulation: Être capable d'innover dans la conception pédagogique en intégrant
+      des solutions d'intelligence artificielle.
+evaluation_competences:
+  ordre_competences:
+  - code: C1
+    formulation: Être capable d'utiliser des outils d'intelligence artificielle pour
+      créer des contenus pédagogiques engageants.
+    justification: C1 est la compétence de base
+    pertinence: élevée
+  - code: C2
+    formulation: Être capable de personnaliser les parcours pédagogiques en fonction
+      des données recueillies sur les apprenants.
+    justification: C2 construit sur C1
+    pertinence: élevée
+  - code: C3
+    formulation: Être capable d'innover dans la conception pédagogique en intégrant
+      des solutions d'intelligence artificielle.
+    justification: C3 représente le niveau le plus élevé
+    pertinence: élevée
+  avis_global: L'ordre des compétences respecte la logique de progression pédagogique.
+  points_amelioration:
+  - Clarifier les verbes d'action dans les formulations
+  - Ajouter des exemples concrets d'outils d'IA
+  competence_complementaire:
+    titre: Analyser les besoins des apprenants
+    niveau: Moyen
+    idees_cles: analyse, besoins, apprenants
+    verbes: analyser, évaluer, identifier
+    formulation: Être capable d'analyser les besoins des apprenants afin de mieux
+      personnaliser les parcours pédagogiques.
+    justification: Cette compétence est nécessaire pour combler le gap
+    position_suggeree: entre C1 et C2
+referentiels_par_section:
+- section: 1
+  competence: Être capable d'utiliser des outils d'intelligence artificielle pour
+    créer des contenus pédagogiques engageants.
+  niveaux:
+  - degre: 1
+    libelle: Je débute
+    observable_qualitatif: Je suis capable de reconnaître les concepts de base.
+    observable_quantitatif: Je peux citer 1 à 2 concepts sur 5.
+    badge: non
+  - degre: 2
+    libelle: Je progresse
+    observable_qualitatif: Je suis capable d'expliquer les concepts de base.
+    observable_quantitatif: Je peux expliquer 3 à 4 concepts sur 5 avec une précision
+      de 70%.
+    badge: non
+  - degre: 3
+    libelle: Je suis autonome
+    observable_qualitatif: Je suis capable d'appliquer les concepts de base dans des
+      situations variées.
+    observable_quantitatif: Je peux appliquer 5 concepts sur 5 dans des scénarios
+      pratiques avec une précision de 85%.
+    badge: oui
+  - degre: 4
+    libelle: Je maîtrise avec aisance
+    observable_qualitatif: Je suis capable de synthétiser et d'enseigner les concepts
+      à d'autres.
+    observable_quantitatif: Je peux enseigner 5 concepts sur 5 à des pairs avec une
+      évaluation positive de 90%.
+    badge: non
+  adaptations_cua:
+  - besoin: Difficultés d'apprentissage
+    adaptation: Mise à disposition de supports visuels et d'exemples concrets pour
+      faciliter la compréhension.
