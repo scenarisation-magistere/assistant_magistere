@@ -79,3 +79,5 @@ formulations_competences:
   - "[compétence 2 validée ou reformulée]"
   - "[compétence 3 validée ou reformulée]"
   - "[compétence 4 validée ou reformulée]"
+
+```

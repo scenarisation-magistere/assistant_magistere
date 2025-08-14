@@ -114,3 +114,5 @@ public_cible:
 contexte_formation:
   titre: "[titre_formation]"
   objectif_general: "[objectif_general]"
+  
+```

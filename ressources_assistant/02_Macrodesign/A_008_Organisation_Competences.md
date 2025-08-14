@@ -71,7 +71,7 @@ Formes acceptées (exemples) :
 ---
 
 ## 3) Ordre retenu (avec justification)
-~~~yaml
+```yaml
 ordre_retenu:
   - code: C1
     formulation: "[compétence 1]"
@@ -85,7 +85,7 @@ ordre_retenu:
   - code: C4
     formulation: "[compétence 4]"
     justification: "[justification]"
-~~~
+```
 
 **Confirmez-vous l’ordre retenu ? (Oui/Non)**  
 **Réponse : [à compléter]**
@@ -97,7 +97,7 @@ ordre_retenu:
 > Ligne 1 = Section 1, Ligne 2 = Section 2, etc.  
 > Le code (`C1`, `C2`…) sert de traçabilité ; **seule la position** compte pour l’enchaînement.
 
-~~~yaml
+```yaml
 ordre_competences:
   - code: C1
     formulation: "[compétence 1]"
@@ -111,7 +111,7 @@ ordre_competences:
   - code: C4
     formulation: "[compétence 4]"
     justification: "[...]"
-~~~
+```
 
 ---
 

@@ -1,21 +1,100 @@
-## 🎯 Objectif du prompt
+# Génération du récapitulatif de Macrodesign
 
-Ce prompt permet de **générer une fiche complète de macrodesign pédagogique**, en synthétisant automatiquement :
+[INSTRUCTION_ASSISTANT] :
+- But : Générer une fiche complète de macrodesign à partir :
+  - des données générales validées (prompts 001B → 001D),
+  - des compétences (001E) et de leur ordre (001F / A_008 → `ordre_competences`),
+  - des référentiels d’autoévaluation par section (001G),
+  - du YAML `contenus_sections` produit par A_010B.
+- Sorties attendues :
+  1) Bloc YAML `macrodesign_generalites`
+  2) Bloc YAML `contenus_par_section`
+  Les deux blocs doivent être autocohérents et exploitables pour l’export.
+- Règles :
+  - Ne pas modifier le contenu validé ; seulement assembler et normaliser.
+  - Si un champ manque : laisser des crochets `[ ]` (ne pas inventer).
+  - Respecter le scénario CMO (8 sections) et la nomenclature A_010B.
+- Vérifications :
+  - Concordance compétences ↔ sections S2–S5.
+  - Présence de l’intention “Acquisition” dans S2–S5.
+  - Présence du badge standard en S2–S5.
+- Variables internes : `yaml_generalites`, `yaml_contenus` (concaténation finale).
+- Affichage après validation :
+  - Afficher “📤 Consignes d’export — Deux formats au choix”.
+  - Formulation simple : le participant peut
+    1) garder un fichier **YAML** pour réutiliser plus tard ;
+    2) ouvrir deux fichiers **CSV** pour visualiser/éditer au tableur.
+  - Préciser : “Quand vous commencerez le microdesign, l’assistant vous proposera d’intégrer le fichier YAML si vous l’avez conservé.”
+- Question préalable (avant export) : poser la variable interne `lancer_tutorat_apres_export` avec choix [Oui / Non].
+- Après validation et export du macrodesign, poser la question au participant :  
+  “Souhaitez-vous enchaîner avec un module **optionnel** pour définir votre **plan d’accompagnement tutoral** selon la **méthode Jacques Rodet** ?”  
+  - **Oui** → l’assistant guidera immédiatement le participant pour définir son plan d’accompagnement tutoral et produira un export séparé (YAML et/ou CSV) dédié au tutorat.  
+  - **Non** → passer directement à la suite (microdesign).  
+- Enregistrer la réponse dans la variable interne `lancer_tutorat_apres_export`.  
+- Si `lancer_tutorat_apres_export = "Oui"` → enchaîner avec le prompt opératoire `A_012_Tutorat_Anticipation.md` en mode export séparé (pas de fusion YAML).  
+- Si `lancer_tutorat_apres_export = "Non"` → clore le macrodesign et proposer d’ouvrir le microdesign.  
+- Ne jamais afficher le nom du fichier interne au participant ; utiliser uniquement la formulation pédagogique ci-dessus.
+- Export (logique interne, affichage conditionnel) :
+  - Poser la question : “Quel format d’export souhaitez-vous ? — [Markdown / CSV]”.
+  - Si la réponse contient “markdown” (insensible casse/accents) :
+    - Afficher UNIQUEMENT l’export Markdown tableur strict (Feuille 1 + Feuille 2).
+    - Ne PAS afficher la version CSV.
+  - Si la réponse contient “csv” :
+    - Afficher UNIQUEMENT les deux blocs CSV (`generalites.csv` et `sections.csv`).
+    - Après l’export CSV, proposer le lien suivant :  
+      **“Pour un rendu formaté prêt à imprimer, vous pouvez télécharger notre modèle XLSX ici : [https://nuage02.apps.education.fr/index.php/s/wfDs68aYpokiKrP](https://nuage02.apps.education.fr/index.php/s/wfDs68aYpokiKrP) et y importer vos deux CSV.”**
+    - Ne PAS afficher la version Markdown.
+  - Sinon : redemander le choix avec l’indication “[exemples : Markdown / CSV]”.
+  - Rappel : quand le microdesign démarrera, proposer au participant d’intégrer le fichier YAML s’il l’a conservé.
+...
 
-- les données générales issues des prompts `001B` à `001D`,
-- les compétences visées (`001E`) et leur organisation (`001F`),
-- les référentiels d’autoévaluation par section (`001G`),
-- les contenus pédagogiques détaillés pour chaque section (`001H`).
+- TEMPLATES D’EXPORT (invisibles pour le participant — à utiliser selon le choix) :
 
-Il produit une fiche en **deux blocs YAML prêts à l’export**, selon le scénario hybride structuré de la **Communauté Magistère Occitanie (CMO)**.
+  [TEMPLATE_MARKDOWN_FEUILLE_1]
+  | titre_formation | public_type | public_profil | public_niveau | besoins_spec1 | besoins_spec2 | type_parcours | hybridation | temps_total | autonomie | animation | calendrier | horaires | nb_participants |
+  | [titre] | [public_type] | [public_profil] | [public_niveau] | [b1] | [b2] | [type_parcours] | asynchrone (majeure) + synchrone (mineure) | moins de 3h | formation tutorée | [animation] | [calendrier] | [horaires] | [nb] |
+
+  [TEMPLATE_MARKDOWN_FEUILLE_2]
+  | section | titre | competence | intentions | ressource | activite_1 | activite_2 | discussion | badge | modalite |
+  | 1 | Bienvenue dans la formation |  | Acquisition | Page d’accueil |  |  | Présentation du parcours, modalités, contacts |  | Asynchrone |
+  | 2 | [s2_titre] | [s2_comp] | Acquisition;[s2_int2] | [s2_ress] | [s2_act1] | [s2_act2] | [s2_disc] | Réussite si atteinte du degré 3 | Asynchrone |
+  | 3 | [s3_titre] | [s3_comp] | Acquisition;[s3_int2] | [s3_ress] | [s3_act1] | [s3_act2] | [s3_disc] | Réussite si atteinte du degré 3 | Asynchrone |
+  | 4 | [s4_titre] | [s4_comp] | Acquisition;[s4_int2] | [s4_ress] | [s4_act1] | [s4_act2] | [s4_disc] | Réussite si atteinte du degré 3 | Asynchrone |
+  | 5 | [s5_titre] | [s5_comp] | Acquisition;[s5_int2] | [s5_ress] | [s5_act1] | [s5_act2] | [s5_disc] | Réussite si atteinte du degré 3 | Asynchrone |
+  | 6 | Classe virtuelle – mise en pratique |  | Collaboration | Lien vers classe virtuelle (BBB) |  |  |  |  | Synchrone |
+  | 7 | Forum général – échanges libres |  | Discussion;Collaboration |  | Forum |  | Fils issus des discussions des sections S2 à S5 |  | Asynchrone |
+  | 8 | Évaluation finale et perspectives |  | Enquête | Sondage Magistère |  |  | Questionnaire de satisfaction à 3 temporalités |  | Asynchrone |
+
+  [TEMPLATE_CSV_GENERALITES]
+  titre_formation;public_type;public_profil;public_niveau;besoins_spec1;besoins_spec2;type_parcours;hybridation;temps_total;autonomie;animation;calendrier;horaires;nb_participants
+  [titre];[public_type];[public_profil];[public_niveau];[b1];[b2];[type_parcours];asynchrone (majeure) + synchrone (mineure);moins de 3h;formation tutorée;[animation];[calendrier];[horaires];[nb]
+
+[TEMPLATE_CSV_SECTIONS]
+section;titre;competence;intentions;ressource;activite_1;activite_2;discussion;badge;modalite
+1;Bienvenue dans la formation;;Acquisition;Page d’accueil;;;Présentation du parcours, modalités, contacts;;Asynchrone
+2;[s2_titre];[s2_comp];Acquisition;[s2_int2];[s2_ress];[s2_act1];[s2_act2];[s2_disc];Réussite si atteinte du degré 3;Asynchrone
+3;[s3_titre];[s3_comp];Acquisition;[s3_int2];[s3_ress];[s3_act1];[s3_act2];[s3_disc];Réussite si atteinte du degré 3;Asynchrone
+4;[s4_titre];[s4_comp];Acquisition;[s4_int2];[s4_ress];[s4_act1];[s4_act2];[s4_disc];Réussite si atteinte du degré 3;Asynchrone
+5;[s5_titre];[s5_comp];Acquisition;[s5_int2];[s5_ress];[s5_act1];[s5_act2];[s5_disc];Réussite si atteinte du degré 3;Asynchrone
+6;Classe virtuelle – mise en pratique;;Collaboration;Lien vers classe virtuelle (BBB);;;;;Synchrone
+7;Forum général – échanges libres;;Discussion;Collaboration;;Forum;;Fils issus des discussions des sections S2 à S5;;Asynchrone
+8;Évaluation finale et perspectives;;Enquête;Sondage Magistère;;;;Questionnaire de satisfaction à 3 temporalités;;Asynchrone
 
 ---
 
-## 🧾 Étapes du prompt
+## 🎯 Objectif du prompt (visible formateur)
 
-### 🔹 Étape 1 – Génération des deux blocs YAML
+Assembler automatiquement tout le macrodesign validé en **deux blocs YAML prêts à l’export** :
+- `macrodesign_generalites`
+- `contenus_par_section`
 
-#### 📦 Bloc 1 – Généralités
+Ces blocs serviront à produire un **tableur d’export** fidèle au scénario **CMO**.
+
+---
+
+## 🧾 Étape 1 — Génération des deux blocs YAML
+
+### 📦 Bloc 1 — Généralités
 
 ```yaml
 macrodesign_generalites:
@@ -65,7 +144,11 @@ macrodesign_generalites:
     - section: 5
       competence: "[...]"
       badge: "Réussite si atteinte du degré 3"
+~~~
 
+### 📦 Bloc 2 — Contenus par section
+
+```yaml
 contenus_par_section:
   - section: 1
     titre: "Bienvenue dans la formation"
@@ -146,75 +229,69 @@ contenus_par_section:
     discussion: "Questionnaire de satisfaction à 3 temporalités"
     badge: null
     modalite: "Asynchrone"
-    
 ```
 
-Souhaites-tu maintenant :
-1. Que je te renvoie **tout le bloc YAML proprement formé** (début + fin correcte),
-2. Que je te crée directement un fichier `.md` exportable ?
+---
 
-Dis-moi ce que tu préfères.
+## 📝 Étape 2 — Validation
 
-
-## 📝 Étape 3 – Validation du macrodesign
-
-> ⚠️ Une fois que vous avez validé ce récapitulatif, **aucune modification ne sera possible**.
-
-Merci de bien relire toutes les informations générées (bloc YAML ci-dessus) :  
-– données générales,  
-– compétences par section,  
-– intentions pédagogiques,  
-– ressources et activités.
-
-> Si vous constatez une erreur importante, il est nécessaire de **recommencer l’ensemble du parcours depuis le début** (en relançant le prompt de macrodesign).  
-> Il n’est **pas possible** de modifier ce bloc YAML partiellement ou de corriger une seule section.
-
-
-## 💾 Important – Continuité macrodesign → microdesign
-
-> 🧭 Le microdesign (construction détaillée des sections) s’appuiera **directement** sur ce fichier YAML.
-
-### ❗ Ce qu’il faut retenir :
-
-- **Une fois que vous avez commencé le macrodesign, vous devez aller jusqu’à cette validation complète.**
-- Vous ne pouvez interrompre le travail **qu’une fois le fichier final exporté**.
-- Ce fichier exporté sera **la seule base fiable** pour commencer ou reprendre le microdesign plus tard.
-
-> ⚠️ Toute interruption avant l’export entraîne une **perte totale des données**.
-
-## 📂 Reprendre plus tard : mode d’emploi
-
-Si vous souhaitez faire une pause après cette étape :
-
-1. **Exportez le fichier YAML** (voir ci-dessous).
-2. **Sauvegardez-le localement** sur votre ordinateur ou dans votre espace de travail (Nuage, clé USB…).
-3. Lors de la reprise, **copiez-collez ce fichier dans le prompt de microdesign (`002A_Presentation_Microdesign.md`)**.
-4. L’assistant pourra alors poursuivre le travail à partir de vos choix validés.
+Souhaitez-vous **valider** ce macrodesign (les deux blocs YAML ci-dessus) ?  
+**Réponse : [à compléter]**
 
 ---
 
-## 📤 Étape 4 – Export
+## 📤 Consignes d’export — Deux formats au choix
 
-Quel(s) format(s) souhaitez-vous générer ?
+Vous pouvez récupérer votre macrodesign sous deux formes. Choisissez ce qui vous convient (vous pouvez aussi garder les deux) :
 
-- [ ] Fichier Markdown `.md`  
-- [ ] Fichier CSV (tableur compatible Excel/LibreOffice)  
-- [ ] Les deux formats
+### A. Conserver un fichier YAML (pour réutiliser plus tard)
+- À quoi ça sert ?  
+  Pour reprendre votre travail plus tard, notamment lors du microdesign.
+- Comment faire ?  
+  1. Copiez les **deux blocs YAML** affichés ci-dessus (entre ```yaml et ```).  
+  2. Collez-les dans un fichier texte et enregistrez sous **`macrodesign.yml`**.  
+  3. Quand vous **commencerez le microdesign**, l’assistant vous **proposera d’intégrer ce fichier YAML** si vous l’avez conservé.
+
+### B. Voir/éditer au tableur (CSV)
+- À quoi ça sert ?  
+  Pour une vue “tableur” (Excel, LibreOffice Calc, Google Sheets) et de petites corrections.
+- Comment faire ?  
+  1. Récupérez les deux blocs CSV fournis par l’assistant (**`generalites.csv`** et **`sections.csv`**).  
+  2. Enregistrez-les tels quels, puis ouvrez-les dans votre tableur (séparateur **`;`**, encodage **UTF-8**).
+- À noter :  
+  Si vous modifiez le CSV et souhaitez ensuite reprendre avec le YAML, l’assistant pourra **reconvertir vos CSV en YAML**.
 
 ---
 
-## 🆘 Besoin d’aide ? Une question ?
+## Préférence — Préparer l’accompagnement tutoral après l’export ?
 
-👉 Vous pouvez contacter l’équipe de formateurs de la **Communauté Magistère Occitanie** :  
-🔗 [Consulter les contacts formateurs CMO (Nuage Éducation nationale)](https://nuage02.apps.education.fr/index.php/apps/files/files/171289979?dir=/Magist%C3%A8re/Ressources%20grain%20migration&openfile=true)
+Après l’export du macrodesign, souhaitez-vous enchaîner avec un module **optionnel** pour définir votre **plan d’accompagnement tutoral** selon la **méthode Jacques Rodet** ?  
+Ce module produira un **export séparé** (YAML et/ou CSV) dédié au tutorat, sans modifier votre macrodesign.
 
-**Principaux contacts** :  
-- **Laurent Castillo – DRANE Occitanie**  
-  📧 laurent.castillo@ac-toulouse.fr – ☎️ 05 36 25 72 82  
-- **Caroline Menanteau – DRANE Occitanie**  
-  📧 caroline.menanteau@ac-toulouse.fr – ☎️ 05 36 25 87 60  
-- **EAFC Toulouse – Ingénierie Magistère**  
-  📧 eafc-inge10@ac-toulouse.fr – ☎️ 05 36 25 70 24
+**Réponse : [à compléter]**  (Oui / Non)
 
+- **Oui** → l’assistant vous guidera immédiatement pour définir votre plan d’accompagnement tutoral (méthode Jacques Rodet) et produira un export dédié au tutorat.  
+- **Non** → vous passerez directement à la suite (microdesign) sans étape tutorat.
 
+> L’export du macrodesign se fait d’abord.  
+> Si vous répondez Oui, l’assistant lancera ensuite la phase tutorat.
 
+---
+
+[INSTRUCTION_ASSISTANT] :  
+- Après validation et export du macrodesign, **poser la question ci-dessus** et enregistrer la réponse dans la variable interne `lancer_tutorat_apres_export`.  
+- Si `lancer_tutorat_apres_export = "Oui"` → **enchaîner** avec le prompt opératoire `A_012_Tutorat_Anticipation.md` en **mode export séparé** (pas de fusion YAML).  
+- Si `lancer_tutorat_apres_export = "Non"` → **clore** le macrodesign et proposer d’ouvrir le microdesign.  
+- Ne jamais afficher le nom du fichier interne `A_012_Tutorat_Anticipation.md` au participant ; utiliser uniquement la formulation pédagogique indiquée ci-dessus.
+
+---
+
+## 📤 Étape 3 — Export (tableur)
+
+Quel format d’export souhaitez-vous ?
+- **Markdown (tableur “copier-coller”)**
+- **CSV (Excel / LibreOffice / Google Sheets)**
+
+**Réponse : [Markdown / CSV]**
+
+> Après votre réponse, l’assistant affichera directement l’export correspondant.
