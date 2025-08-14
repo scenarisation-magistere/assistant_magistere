@@ -28,6 +28,10 @@ RUN pip install --no-cache-dir --upgrade pip \
 # Copy application code
 COPY . .
 
+# Copy .env file if it exists (for local development)
+# For cloud deployment, environment variables should be set via platform
+COPY .env* ./
+
 # Create necessary directories
 RUN mkdir -p output \
     && mkdir -p logs

@@ -40,6 +40,11 @@ OPENAI_API_KEY=sk-your-openai-api-key-here
 OPENAI_MODEL=gpt-4o-mini
 OPENAI_MAX_TOKENS=1000
 OPENAI_TEMPERATURE=0.7
+
+# Docker Hub Configuration (pour le déploiement)
+DOCKER_HUB_USERNAME=your-docker-hub-username
+DOCKER_HUB_REPOSITORY=assistant-magistere
+DOCKER_HUB_TAG=latest
 ```
 
 ### 3. Rendre le script de déploiement exécutable
@@ -50,6 +55,8 @@ chmod +x deploy.sh
 ## Déploiement Rapide
 
 ### Option 1 : Script de déploiement (Recommandé)
+
+#### Linux/macOS
 ```bash
 # Construire et démarrer l'application
 ./deploy.sh build
@@ -60,6 +67,19 @@ chmod +x deploy.sh
 
 # Voir les logs
 ./deploy.sh logs
+```
+
+#### Windows PowerShell
+```powershell
+# Construire et démarrer l'application
+.\deploy.ps1 build
+.\deploy.ps1 start
+
+# Vérifier le statut
+.\deploy.ps1 status
+
+# Voir les logs
+.\deploy.ps1 logs
 ```
 
 ### Option 2 : Docker Compose manuel
@@ -77,6 +97,8 @@ docker-compose ps
 ## Commandes de Gestion
 
 ### Script de déploiement
+
+#### Linux/macOS (deploy.sh)
 ```bash
 ./deploy.sh build      # Construire l'image
 ./deploy.sh start      # Démarrer l'application
@@ -85,7 +107,25 @@ docker-compose ps
 ./deploy.sh logs       # Afficher les logs
 ./deploy.sh status     # Afficher le statut
 ./deploy.sh clean      # Nettoyer les conteneurs
+./deploy.sh tag        # Tagger l'image pour Docker Hub
+./deploy.sh push       # Pousser l'image vers Docker Hub
+./deploy.sh release    # Build + Tag + Push (release complète)
 ./deploy.sh help       # Afficher l'aide
+```
+
+#### Windows PowerShell (deploy.ps1)
+```powershell
+.\deploy.ps1 build      # Construire l'image
+.\deploy.ps1 start      # Démarrer l'application
+.\deploy.ps1 stop       # Arrêter l'application
+.\deploy.ps1 restart    # Redémarrer l'application
+.\deploy.ps1 logs       # Afficher les logs
+.\deploy.ps1 status     # Afficher le statut
+.\deploy.ps1 clean      # Nettoyer les conteneurs
+.\deploy.ps1 tag        # Tagger l'image pour Docker Hub
+.\deploy.ps1 push       # Pousser l'image vers Docker Hub
+.\deploy.ps1 release    # Build + Tag + Push (release complète)
+.\deploy.ps1 help       # Afficher l'aide
 ```
 
 ### Docker Compose
@@ -100,6 +140,124 @@ docker-compose logs -f         # Logs en temps réel
 docker-compose build --no-cache # Reconstruire l'image
 docker-compose pull            # Mettre à jour les images
 docker system prune            # Nettoyer Docker
+```
+
+## Déploiement Docker Hub
+
+### Configuration Docker Hub
+
+1. **Créer un compte Docker Hub** (si pas déjà fait)
+   - Allez sur [hub.docker.com](https://hub.docker.com)
+   - Créez un compte et notez votre nom d'utilisateur
+
+2. **Configurer les variables Docker Hub**
+   ```bash
+   # Éditer le fichier .env
+   nano .env
+   ```
+   
+   Ajoutez vos informations Docker Hub :
+   ```env
+   DOCKER_HUB_USERNAME=votre-username
+   DOCKER_HUB_REPOSITORY=assistant-magistere
+   DOCKER_HUB_TAG=latest
+   ```
+
+3. **Se connecter à Docker Hub**
+   ```bash
+   docker login
+   # Entrez votre nom d'utilisateur et mot de passe Docker Hub
+   ```
+
+### Commandes de déploiement Docker Hub
+
+#### Tagging d'images
+
+**Linux/macOS :**
+```bash
+# Tagger avec version auto-générée
+./deploy.sh tag
+
+# Tagger avec version spécifique
+./deploy.sh tag v1.0.0
+./deploy.sh tag v1.2.3-beta
+```
+
+**Windows PowerShell :**
+```powershell
+# Tagger avec version auto-générée
+.\deploy.ps1 tag
+
+# Tagger avec version spécifique
+.\deploy.ps1 tag v1.0.0
+.\deploy.ps1 tag v1.2.3-beta
+```
+
+#### Push vers Docker Hub
+
+**Linux/macOS :**
+```bash
+# Pousser la dernière version taggée
+./deploy.sh push
+
+# Pousser une version spécifique
+./deploy.sh push v1.0.0
+```
+
+**Windows PowerShell :**
+```powershell
+# Pousser la dernière version taggée
+.\deploy.ps1 push
+
+# Pousser une version spécifique
+.\deploy.ps1 push v1.0.0
+```
+
+#### Release complète (Build + Tag + Push)
+
+**Linux/macOS :**
+```bash
+# Release avec version auto-générée
+./deploy.sh release
+
+# Release avec version spécifique
+./deploy.sh release v1.0.0
+```
+
+**Windows PowerShell :**
+```powershell
+# Release avec version auto-générée
+.\deploy.ps1 release
+
+# Release avec version spécifique
+.\deploy.ps1 release v1.0.0
+```
+
+### Gestion des versions
+
+Le script génère automatiquement des tags de version basés sur :
+- **Timestamp** : Date et heure de build (YYYYMMDD_HHMMSS)
+- **Git commit** : Hash court du dernier commit (si disponible)
+
+Exemple de tags générés :
+- `v20241201_143022-a1b2c3d` (timestamp + commit)
+- `v20241201_143022-unknown` (si pas de git)
+
+### Utilisation des images Docker Hub
+
+Une fois poussées, les images peuvent être utilisées sur d'autres serveurs :
+
+```bash
+# Pull de l'image
+docker pull votre-username/assistant-magistere:latest
+docker pull votre-username/assistant-magistere:v1.0.0
+
+# Utilisation avec docker-compose
+# Modifier docker-compose.yml :
+services:
+  assistant-magistere:
+    image: votre-username/assistant-magistere:latest
+    # ... autres configurations
 ```
 
 ## Accès à l'Application
@@ -250,6 +408,27 @@ docker-compose logs assistant-magistere
 # Reconstruire l'image
 docker-compose build --no-cache
 docker-compose up -d
+```
+
+#### 5. Erreur Docker Hub
+```bash
+# Vérifier la connexion Docker Hub
+docker login
+
+# Vérifier la configuration
+cat .env | grep DOCKER_HUB
+
+# Tester le push manuel
+docker push votre-username/assistant-magistere:latest
+```
+
+#### 6. Erreur de permissions Docker Hub
+```bash
+# Vérifier les permissions du repository
+# Assurez-vous que le repository existe sur Docker Hub
+
+# Créer le repository si nécessaire
+# Via l'interface web Docker Hub ou API
 ```
 
 ### Commandes de diagnostic

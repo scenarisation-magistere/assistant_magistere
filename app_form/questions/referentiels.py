@@ -40,12 +40,6 @@ def referentiels_page():
     public_cible = yaml_data.get('etape_1_public_cible', {})
     besoins_specifiques = public_cible.get('public_cible', {}).get('besoins_specifiques', [])
     
-    # Debug: Print the data structure
-    print(f"Competences data: {competences_data}")
-    print(f"Formulations: {formulations}")
-    print(f"Formulations type: {type(formulations)}")
-    print(f"Formulations length: {len(formulations) if formulations else 0}")
-    
     # Prepare sections data (S2 to S5)
     sections = []
     

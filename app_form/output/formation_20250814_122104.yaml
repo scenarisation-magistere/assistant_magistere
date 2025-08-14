@@ -1,0 +1,197 @@
+etape_1_public_cible:
+  public_cible:
+    type: Enseignants 1er degré
+    profil: Groupe homogène (mêmes profils, mêmes besoins)
+    niveau_expertise: Débutant
+    besoins_specifiques: Aucun besoin identifié
+    recommandations:
+    - À compléter ou à reformuler en fonction du profil et des besoins
+  contexte_formation:
+    titre: Créer des formations innovantes grâce à l’Intelligence Artificielle
+    objectif_general: Apprenez à exploiter la puissance de l’IA pour concevoir, personnaliser
+      et automatiser vos parcours pédagogiques. Cette formation vous guidera pas à
+      pas dans l’utilisation d’outils et de méthodes d’IA afin de créer des contenus
+      engageants, adaptés aux besoins de vos apprenants, tout en gagnant en efficacité
+      et en créativité.
+last_updated: '2025-08-14T12:22:06.160685'
+current_step: etape_4_competences
+etape_2_contraintes:
+  contraintes_formation:
+    type_parcours: Création d'un nouvel espace
+    temps_total: Moins de 3h — Recommandé par la CMO
+    autonomie: Autoformation (sans accompagnement)
+    animation: Formation animée par un seul intervenant
+    calendrier: Début d'année scolaire
+    horaires: Sur temps de travail (journée / service)
+    nombre_participants: Moins de 10 personnes
+    exigences_institutionnelles: Non
+    restrictions_techniques: Non
+    exemple_associe: 001C_Exemple_Contraintes_Formation.md
+etape_3_scenario:
+  scenario_cmo:
+    title: Scénario structuré recommandé – Communauté Magistère Occitanie (CMO)
+    description: 'Le scénario CMO propose une structuration claire et précise de la
+      formation :'
+    features:
+    - 'Prise en compte du public cible : qualité, niveau, besoins particuliers'
+    - Prise en compte des contraintes de la formation
+    - 'Modalités : hybride asynchrone (majeure) et synchrone (mineur)'
+    - 3 à 4 compétences cibles écrites sous formes de verbes d'action dans les domaines
+      cognitif et affectif
+    - Au maximum 8 sections
+    sections:
+    - number: 1
+      type: Accueil
+      content: Présentation générale de la formation, objectifs, déroulé
+      modality: Asynchrone
+    - number: 2
+      type: Section d'apprentissage 1
+      content: Compétence 1 – Ressource, activité(s), référentiel, badge, discussion
+        associée
+      modality: Asynchrone
+    - number: 3
+      type: Section d'apprentissage 2
+      content: Compétence 2 – Idem
+      modality: Asynchrone
+    - number: 4
+      type: Section d'apprentissage 3
+      content: Compétence 3 – Idem
+      modality: Asynchrone
+    - number: 5
+      type: Section d'apprentissage 4
+      content: Idem (optionnelle)
+      modality: Asynchrone
+    - number: 6
+      type: Classe virtuelle (BBB)
+      content: Point intermédiaire, accompagnement à la demande, approfondissement
+      modality: Synchrone
+    - number: 7
+      type: Forum général
+      content: Discussions regroupées par compétence
+      modality: Asynchrone
+    - number: 8
+      type: Évaluation de satisfaction
+      content: Bilan à court, moyen et long terme
+      modality: Asynchrone
+    constraints:
+    - Durée de 3h maximum
+    - Poids total de 512 Mo maximum
+    acknowledged: true
+    timestamp: '2025-08-14T12:21:25.518057'
+etape_4_competences:
+  formulations_competences:
+  - Identifier les différents outils d'intelligence artificielle disponibles pour
+    la création de contenus pédagogiques.
+  - Décrire les principes fondamentaux de l'intelligence artificielle et leur application
+    dans le domaine éducatif.
+  - Utiliser des outils d'intelligence artificielle pour créer des ressources pédagogiques
+    adaptées aux besoins des apprenants.
+  - Créer des contenus pédagogiques engageants en intégrant des éléments d'intelligence
+    artificielle.
+  - Personnaliser les parcours pédagogiques en fonction des profils et des besoins
+    des apprenants grâce à des outils d'intelligence artificielle.
+  - Évaluer l'impact de l'intégration de l'intelligence artificielle dans les formations
+    sur l'engagement et l'apprentissage des élèves.
+  competence_1:
+    titre: ''
+    idees_cles: outils, IA, identification
+    niveau: Bas
+    verbes: identifier, reconnaître, nommer
+    formulation: Identifier les différents outils d'intelligence artificielle disponibles
+      pour la création de contenus pédagogiques.
+  competence_2:
+    titre: ''
+    idees_cles: principes, IA, description
+    niveau: Bas
+    verbes: décrire, expliquer, illustrer
+    formulation: Décrire les principes fondamentaux de l'intelligence artificielle
+      et leur application dans le domaine éducatif.
+  competence_3:
+    titre: ''
+    idees_cles: utilisation, outils, IA
+    niveau: Moyen
+    verbes: utiliser, appliquer, manipuler
+    formulation: Utiliser des outils d'intelligence artificielle pour créer des ressources
+      pédagogiques adaptées aux besoins des apprenants.
+  competence_4:
+    titre: ''
+    idees_cles: création, contenus, pédagogiques
+    niveau: Moyen
+    verbes: créer, développer, produire
+    formulation: Créer des contenus pédagogiques engageants en intégrant des éléments
+      d'intelligence artificielle.
+  competence_5:
+    titre: ''
+    idees_cles: personnalisation, parcours, pédagogiques
+    niveau: Haut
+    verbes: personnaliser, adapter, modifier
+    formulation: Personnaliser les parcours pédagogiques en fonction des profils et
+      des besoins des apprenants grâce à des outils d'intelligence artificielle.
+  competence_6:
+    titre: ''
+    idees_cles: évaluation, impact, IA
+    niveau: Haut
+    verbes: évaluer, analyser, mesurer
+    formulation: Évaluer l'impact de l'intégration de l'intelligence artificielle
+      dans les formations sur l'engagement et l'apprentissage des élèves.
+evaluation_competences:
+  ordre_competences:
+  - code: C1
+    formulation: Identifier les différents outils d'intelligence artificielle disponibles
+      pour la création de contenus pédagogiques.
+    justification: C1 est la compétence la plus simple, car elle implique uniquement
+      l'identification d'outils, ce qui est essentiel pour commencer à travailler
+      avec l'IA.
+    pertinence: élevée
+  - code: C2
+    formulation: Décrire les principes fondamentaux de l'intelligence artificielle
+      et leur application dans le domaine éducatif.
+    justification: C2 suit C1 car elle nécessite une compréhension des outils identifiés
+      et leur contexte, ce qui est une étape logique après l'identification.
+    pertinence: élevée
+  - code: C3
+    formulation: Utiliser des outils d'intelligence artificielle pour créer des ressources
+      pédagogiques adaptées aux besoins des apprenants.
+    justification: C3 est une compétence de niveau moyen qui s'appuie sur les connaissances
+      acquises dans C1 et C2, en passant à l'application pratique.
+    pertinence: élevée
+  - code: C4
+    formulation: Créer des contenus pédagogiques engageants en intégrant des éléments
+      d'intelligence artificielle.
+    justification: C4 suit C3 car elle demande non seulement l'utilisation d'outils,
+      mais aussi la création de contenus, ce qui est plus complexe.
+    pertinence: élevée
+  - code: C5
+    formulation: Personnaliser les parcours pédagogiques en fonction des profils et
+      des besoins des apprenants grâce à des outils d'intelligence artificielle.
+    justification: C5 est une compétence de haut niveau qui nécessite une compréhension
+      approfondie des outils et des contenus créés, ainsi qu'une capacité à adapter
+      ces contenus.
+    pertinence: élevée
+  - code: C6
+    formulation: Évaluer l'impact de l'intégration de l'intelligence artificielle
+      dans les formations sur l'engagement et l'apprentissage des élèves.
+    justification: C6 est la compétence la plus complexe, car elle implique une analyse
+      critique et une évaluation des effets de l'IA sur l'apprentissage, ce qui nécessite
+      une maîtrise des compétences précédentes.
+    pertinence: élevée
+  avis_global: 'L''ordre des compétences est cohérent avec les principes de l''alignement
+    pédagogique de Biggs et respecte la progression cognitive. Chaque compétence s''appuie
+    sur la précédente, permettant aux enseignants de développer progressivement leurs
+    compétences en IA dans un cadre pédagogique.
+
+    '
+  points_amelioration:
+  - Clarifier les formulations pour éviter toute ambiguïté, notamment dans C5 et C6.
+  - Ajouter des exemples concrets d'outils d'IA dans C1 pour enrichir l'apprentissage.
+  competence_complementaire:
+    titre: Explorer les fonctionnalités des outils d'IA
+    niveau: Bas
+    idees_cles: fonctionnalités, exploration, outils
+    verbes: explorer, naviguer, découvrir
+    formulation: Explorer les fonctionnalités des outils d'intelligence artificielle
+      pour mieux comprendre leur potentiel dans la création de contenus pédagogiques.
+    justification: Cette compétence complémentaire sert de point d'entrée pour aider
+      les enseignants à se familiariser avec les outils avant de les identifier et
+      de les utiliser.
+    position_suggeree: début

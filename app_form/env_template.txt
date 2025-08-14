@@ -5,4 +5,10 @@ OPENAI_API_KEY=your_openai_api_key_here
 # Optional: Model configuration
 OPENAI_MODEL=gpt-4o-mini
 OPENAI_MAX_TOKENS=1000
-OPENAI_TEMPERATURE=0.7 
+OPENAI_TEMPERATURE=0.7
+
+# Docker Hub Configuration (pour le déploiement)
+# Remplacez par votre nom d'utilisateur Docker Hub
+DOCKER_HUB_USERNAME=your_docker_hub_username
+DOCKER_HUB_REPOSITORY=assistant-magistere
+DOCKER_HUB_TAG=latest 
