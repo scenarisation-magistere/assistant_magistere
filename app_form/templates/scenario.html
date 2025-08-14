@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scénario CMO - Formation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .step-indicator {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .step-indicator .step {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .step-indicator .step.active {
+            background: white;
+            color: #20bf6b;
+        }
+
+        .step-indicator .step.inactive {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .content-container {
+            padding: 40px;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+            text-align: center;
+        }
+
+        .info-banner h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-banner p {
+            color: #424242;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .scenario-intro {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #20bf6b;
+        }
+
+        .scenario-intro h2 {
+            color: #20bf6b;
+            margin-bottom: 15px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #20bf6b;
+            font-weight: bold;
+        }
+
+        .sections-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .sections-table th {
+            background: #20bf6b;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .sections-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sections-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .modality-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .modality-async {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .modality-sync {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .constraints-section {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #f57c00;
+        }
+
+        .constraints-section h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+
+        .completion-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .completion-section h3 {
+            color: #20bf6b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .completion-section p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.4);
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.4);
+        }
+
+        .navigation-buttons {
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .download-btn, .restart-btn, .submit-btn, .nav-btn {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Scénario CMO</h1>
+            <p>Structure recommandée pour votre formation Magistère</p>
+            <div class="step-indicator">
+                <span class="step inactive">1. Public cible</span>
+                <span class="step inactive">2. Contraintes</span>
+                <span class="step active">3. Scénario</span>
+                <span class="step inactive">4. Compétences</span>
+                <span class="step inactive">5. Référentiels</span>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="info-banner">
+                <h2>📋 Page d'Information</h2>
+                <p>Cette page présente la structure du scénario CMO (Communauté Magistère Occitanie) qui servira de base pour la conception de votre parcours de formation. Toutes vos données ont été sauvegardées et sont prêtes pour la suite du processus.</p>
+            </div>
+
+            <div class="scenario-intro">
+                <h2>{{ scenario.title }}</h2>
+                <p>{{ scenario.description }}</p>
+                
+                <ul class="features-list">
+                    {% for feature in scenario.features %}
+                    <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <h3>Structure des 8 sections :</h3>
+            <table class="sections-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Type de section</th>
+                        <th>Contenu attendu</th>
+                        <th>Modalités</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for section in scenario.sections %}
+                    <tr>
+                        <td><strong>{{ section.number }}</strong></td>
+                        <td>{{ section.type }}</td>
+                        <td>{{ section.content }}</td>
+                        <td>
+                            <span class="modality-badge {% if section.modality == 'Asynchrone' %}modality-async{% else %}modality-sync{% endif %}">
+                                {{ section.modality }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="constraints-section">
+                <h3>⚠️ Contraintes importantes :</h3>
+                <ul class="features-list">
+                    {% for constraint in scenario.constraints %}
+                    <li>{{ constraint }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="completion-section">
+                <h3>✅ Étape 3 - Scénario CMO</h3>
+                <p>Vous avez consulté la structure du scénario CMO. Cliquez sur "Continuer" pour passer à l'étape suivante.</p>
+                
+                <button class="submit-btn" onclick="submitScenario()">
+                    🎯 Continuer vers les Compétences Visées
+                </button>
+                
+                <div class="navigation-buttons">
+                    <a href="/contraintes" class="nav-btn">
+                        ← Retour aux Contraintes
+                    </a>
+                    
+                    <a href="/download_yaml" class="download-btn" onclick="downloadYaml()">
+                        📥 Télécharger les Données YAML
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitScenario() {
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ Sauvegarde en cours...';
+            submitBtn.disabled = true;
+            
+            // Submit the scenario data
+            fetch('/submit_scenario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    acknowledged: true,
+                    timestamp: new Date().toISOString()
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    alert(data.message);
+                    // Redirect to competences page
+                    window.location.href = data.redirect;
+                } else {
+                    alert('Erreur lors de la sauvegarde : ' + data.error);
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erreur lors de la sauvegarde : ' + error.message);
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        function downloadYaml() {
+            // This would trigger a download of the YAML file
+            // For now, we'll show an alert
+            alert('Fonctionnalité de téléchargement à implémenter. Les données sont sauvegardées dans le dossier output/.');
+        }
+
+        function restartQuestionnaire() {
+            if (confirm('Êtes-vous sûr de vouloir recommencer le questionnaire ? Toutes les données actuelles seront perdues.')) {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html> 

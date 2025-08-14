@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Référentiels d'auto-évaluation - Formation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .step-indicator {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .step-indicator .step {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .step-indicator .step.active {
+            background: white;
+            color: #20bf6b;
+        }
+
+        .step-indicator .step.inactive {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .content-container {
+            padding: 40px;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+
+        .info-banner h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-banner p {
+            color: #424242;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .section-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            border-color: #20bf6b;
+            box-shadow: 0 10px 25px rgba(32, 191, 107, 0.2);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .section-header h3 {
+            color: #495057;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .competence-display {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #20bf6b;
+        }
+        
+        .competence-title {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #2c5530;
+            line-height: 1.4;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(32, 191, 107, 0.3);
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(32, 191, 107, 0.4);
+        }
+
+        .btn-generate:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #20bf6b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .referentiel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .referentiel-table th {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .referentiel-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .referentiel-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-oui {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-non {
+            background: #6c757d;
+            color: white;
+        }
+
+        .cua-adaptations {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .cua-adaptations h4 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .cua-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .modification-form {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #20bf6b;
+            box-shadow: 0 0 0 3px rgba(32, 191, 107, 0.1);
+        }
+
+        .final-validation {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 1px solid #c3e6cb;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .final-validation h3 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+
+        .final-validation p {
+            color: #155724;
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn-prev {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev:hover, .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧭 Référentiels d'auto-évaluation</h1>
+            <p>Générer des référentiels d'auto-évaluation clairs, progressifs et accessibles pour chaque section d'apprentissage</p>
+            
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <span class="step inactive">1. Public cible</span>
+                <span class="step inactive">2. Contraintes</span>
+                <span class="step inactive">3. Scénario</span>
+                <span class="step inactive">4. Compétences</span>
+                <span class="step active">5. Référentiels</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-container">
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <h2>📋 Instructions</h2>
+                <p>Pour chaque section d'apprentissage, l'IA va générer un référentiel d'auto-évaluation avec :</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>4 degrés de progression</strong> : Je débute, Je progresse, Je suis autonome, Je maîtrise avec aisance</li>
+                    <li><strong>Indicateurs qualitatifs et quantitatifs</strong> pour chaque degré</li>
+                    <li><strong>Adaptations CUA</strong> si des besoins spécifiques sont identifiés</li>
+                    <li><strong>Badge "oui"</strong> attribué au degré 3 (autonomie)</li>
+                </ul>
+            </div>
+
+
+
+            <!-- Sections -->
+            <div id="sections-container">
+                {% if sections %}
+                    {% for section in sections %}
+                    <div class="section-card" id="section-{{ section.numero }}">
+                    <div class="section-header">
+                        <h3>📚 Section {{ section.numero }} - {{ section.code }} : {{ section.title }}</h3>
+                        <div class="competence-display">
+                            <strong>Compétence visée :</strong><br>
+                            <span class="competence-title">{{ section.competence }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="section-content">
+                        <button class="btn-generate" onclick="generateReferentiel({{ section.numero }}, '{{ section.competence|replace("'", "\\'") }}')" id="btn-generate-{{ section.numero }}">
+                            ✨ Générer le référentiel
+                        </button>
+
+                        <!-- Loading -->
+                        <div class="loading" id="loading-{{ section.numero }}">
+                            <div class="spinner"></div>
+                            <p>Génération du référentiel en cours...</p>
+                        </div>
+
+                        <!-- Generated Referentiel -->
+                        <div id="referentiel-{{ section.numero }}" class="hidden">
+                            <h4 style="margin: 20px 0; color: #495057;">📊 Référentiel d'auto-évaluation</h4>
+                            
+                            <!-- Table -->
+                            <table class="referentiel-table">
+                                <thead>
+                                    <tr>
+                                        <th>Degré</th>
+                                        <th>Libellé</th>
+                                        <th>Indicateur qualitatif</th>
+                                        <th>Indicateur quantitatif</th>
+                                        <th>Badge</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-{{ section.numero }}">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+
+                            <!-- CUA Adaptations -->
+                            <div id="cua-{{ section.numero }}" class="cua-adaptations hidden">
+                                <h4>♿ Adaptations CUA</h4>
+                                <div id="cua-content-{{ section.numero }}">
+                                    <!-- Will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <button class="btn btn-success" onclick="validateReferentiel({{ section.numero }})">
+                                    ✅ Valider ce référentiel
+                                </button>
+                                <button class="btn btn-warning" onclick="modifyReferentiel({{ section.numero }})">
+                                    ✏️ Modifier
+                                </button>
+                            </div>
+
+                            <!-- Modification Form -->
+                            <div id="modification-form-{{ section.numero }}" class="modification-form">
+                                <h4>✏️ Modifications</h4>
+                                <div id="modification-fields-{{ section.numero }}">
+                                    <!-- Will be populated by JavaScript -->
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="btn btn-success" onclick="saveModifications({{ section.numero }})">
+                                        💾 Sauvegarder les modifications
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="cancelModifications({{ section.numero }})">
+                                        ❌ Annuler
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="info-banner">
+                    <h3>⚠️ Aucune section trouvée</h3>
+                    <p>Aucune compétence n'a été trouvée dans les données. Veuillez d'abord compléter l'étape des compétences.</p>
+                    <a href="/competences" class="btn-prev">
+                        ⬅️ Retour aux compétences
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Final Validation -->
+            <div id="final-validation" class="final-validation">
+                <h3>🎉 Validation finale</h3>
+                <p>Tous les référentiels ont été générés et validés. Vous pouvez maintenant passer à l'étape suivante.</p>
+                <button class="btn btn-success" onclick="proceedToNextStep()">
+                    ➡️ Passer à l'étape suivante
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navigation-buttons">
+                <button class="btn-prev" onclick="goToPreviousStep()">
+                    ⬅️ Retour aux compétences
+                </button>
+                <button class="btn-next" onclick="proceedToNextStep()" id="btn-next" style="display: none;">
+                    ➡️ Étape suivante
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let referentielsData = {};
+        let besoinsSpecifiques = {{ besoins_specifiques|tojson }};
+        let validatedSections = new Set();
+        let existingReferentiels = {{ existing_referentiels|tojson }};
+        
+        // Load existing referentiels on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            existingReferentiels.forEach(ref => {
+                const sectionNum = ref.section;
+                referentielsData[sectionNum] = ref;
+                displayReferentiel(sectionNum, ref);
+                
+                // Mark as validated if it exists
+                validatedSections.add(sectionNum);
+                const sectionCard = document.getElementById(`section-${sectionNum}`);
+                if (sectionCard) {
+                    sectionCard.style.borderColor = '#28a745';
+                    sectionCard.style.backgroundColor = '#f8fff9';
+                }
+            });
+            
+            // Check if all sections are validated
+            checkAllValidated();
+        });
+
+        function generateReferentiel(sectionNum, competence) {
+            // Show loading, hide button
+            document.getElementById(`loading-${sectionNum}`).style.display = 'block';
+            document.getElementById(`btn-generate-${sectionNum}`).disabled = true;
+            document.getElementById(`referentiel-${sectionNum}`).classList.add('hidden');
+
+            // Call API
+            fetch('/generate_referentiel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    section_num: sectionNum,
+                    competence: competence,
+                    besoins_specifiques: besoinsSpecifiques
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`loading-${sectionNum}`).style.display = 'none';
+                document.getElementById(`btn-generate-${sectionNum}`).disabled = false;
+                
+                if (data.success) {
+                    referentielsData[sectionNum] = data.referentiel;
+                    displayReferentiel(sectionNum, data.referentiel);
+                } else {
+                    alert('Erreur lors de la génération : ' + data.error);
+                }
+            })
+            .catch(error => {
+                document.getElementById(`loading-${sectionNum}`).style.display = 'none';
+                document.getElementById(`btn-generate-${sectionNum}`).disabled = false;
+                alert('Erreur : ' + error);
+            });
+        }
+
+        function displayReferentiel(sectionNum, referentiel) {
+            // Display table
+            const tbody = document.getElementById(`tbody-${sectionNum}`);
+            tbody.innerHTML = '';
+
+            referentiel.niveaux.forEach(niveau => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${niveau.degre}</strong></td>
+                    <td>${niveau.libelle}</td>
+                    <td>${niveau.observable_qualitatif}</td>
+                    <td>${niveau.observable_quantitatif}</td>
+                    <td><span class="badge ${niveau.badge === 'oui' ? 'badge-oui' : 'badge-non'}">${niveau.badge}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Display CUA adaptations if any
+            const cuaDiv = document.getElementById(`cua-${sectionNum}`);
+            const cuaContent = document.getElementById(`cua-content-${sectionNum}`);
+            
+            if (referentiel.adaptations_cua && referentiel.adaptations_cua.length > 0) {
+                cuaContent.innerHTML = '';
+                referentiel.adaptations_cua.forEach(adaptation => {
+                    cuaContent.innerHTML += `
+                        <div class="cua-item">
+                            <strong>${adaptation.besoin}</strong><br>
+                            ${adaptation.adaptation}
+                        </div>
+                    `;
+                });
+                cuaDiv.classList.remove('hidden');
+            } else {
+                cuaDiv.classList.add('hidden');
+            }
+
+            // Show referentiel
+            document.getElementById(`referentiel-${sectionNum}`).classList.remove('hidden');
+        }
+
+        function validateReferentiel(sectionNum) {
+            // Save to YAML
+            fetch('/save_referentiel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    referentiel: referentielsData[sectionNum]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mark as validated
+                    validatedSections.add(sectionNum);
+                    const sectionCard = document.getElementById(`section-${sectionNum}`);
+                    sectionCard.style.borderColor = '#28a745';
+                    sectionCard.style.backgroundColor = '#f8fff9';
+                    
+                    // Check if all sections are validated
+                    checkAllValidated();
+                } else {
+                    alert('Erreur lors de la sauvegarde : ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Erreur : ' + error);
+            });
+        }
+
+        function modifyReferentiel(sectionNum) {
+            const form = document.getElementById(`modification-form-${sectionNum}`);
+            const fields = document.getElementById(`modification-fields-${sectionNum}`);
+            
+            // Generate modification fields
+            fields.innerHTML = '';
+            referentielsData[sectionNum].niveaux.forEach(niveau => {
+                fields.innerHTML += `
+                    <div class="form-group">
+                        <h6>Degré ${niveau.degre} - ${niveau.libelle}</h6>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label>Indicateur qualitatif</label>
+                                <textarea id="qual-${sectionNum}-${niveau.degre}">${niveau.observable_qualitatif}</textarea>
+                            </div>
+                            <div>
+                                <label>Indicateur quantitatif</label>
+                                <textarea id="quant-${sectionNum}-${niveau.degre}">${niveau.observable_quantitatif}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            form.style.display = 'block';
+        }
+
+        function saveModifications(sectionNum) {
+            // Collect modifications
+            const modifications = [];
+            referentielsData[sectionNum].niveaux.forEach(niveau => {
+                const qualValue = document.getElementById(`qual-${sectionNum}-${niveau.degre}`).value;
+                const quantValue = document.getElementById(`quant-${sectionNum}-${niveau.degre}`).value;
+                
+                if (qualValue !== niveau.observable_qualitatif) {
+                    modifications.push({
+                        niveau: niveau.degre,
+                        field: 'observable_qualitatif',
+                        value: qualValue
+                    });
+                }
+                
+                if (quantValue !== niveau.observable_quantitatif) {
+                    modifications.push({
+                        niveau: niveau.degre,
+                        field: 'observable_quantitatif',
+                        value: quantValue
+                    });
+                }
+            });
+
+            // Save modifications
+            fetch('/update_referentiel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    section_num: sectionNum,
+                    modifications: modifications
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update local data and redisplay
+                    referentielsData[sectionNum] = data.referentiel;
+                    displayReferentiel(sectionNum, data.referentiel);
+                    document.getElementById(`modification-form-${sectionNum}`).style.display = 'none';
+                } else {
+                    alert('Erreur lors de la mise à jour : ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Erreur : ' + error);
+            });
+        }
+
+        function cancelModifications(sectionNum) {
+            document.getElementById(`modification-form-${sectionNum}`).style.display = 'none';
+        }
+
+        function checkAllValidated() {
+            const sections = {{ sections|tojson }};
+            let allValidated = true;
+            
+            sections.forEach(section => {
+                if (!validatedSections.has(section.numero)) {
+                    allValidated = false;
+                }
+            });
+            
+            if (allValidated) {
+                document.getElementById('final-validation').style.display = 'block';
+                document.getElementById('btn-next').style.display = 'inline-block';
+            }
+        }
+
+        function goToPreviousStep() {
+            window.location.href = '/competences';
+        }
+
+        function proceedToNextStep() {
+            // Redirect to next step (A_010_Contenus_Par_Section)
+            window.location.href = '/contenus';
+        }
+    </script>
+</body>
+</html> 

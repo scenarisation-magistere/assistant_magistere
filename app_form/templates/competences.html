@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compétences Visées - Formation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .step-indicator {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .step-indicator .step {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .step-indicator .step.active {
+            background: white;
+            color: #20bf6b;
+        }
+
+        .step-indicator .step.inactive {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .content-container {
+            padding: 40px;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+
+        .info-banner h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-banner p {
+            color: #424242;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .public-cible-recall {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #f57c00;
+        }
+
+        .public-cible-recall h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+
+        .public-cible-recall .data-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 5px;
+        }
+
+        .public-cible-recall .data-item strong {
+            color: #f57c00;
+        }
+
+        .competence-section {
+            margin: 40px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .competence-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .competence-header h3 {
+            color: #495057;
+            font-size: 1.3em;
+            margin-bottom: 0;
+        }
+
+        .remove-competence-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .remove-competence-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        .competence-content {
+            padding: 30px;
+        }
+
+        .step-group {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #20bf6b;
+        }
+
+        .step-group h4 {
+            color: #20bf6b;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .step-group p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #20bf6b;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            border-color: #20bf6b;
+            background: #f8f9fa;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            color: #20bf6b;
+            font-weight: 600;
+        }
+
+        .add-competence-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border: 2px dashed #20bf6b;
+        }
+
+        .add-competence-btn {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+        }
+
+        .add-competence-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.4);
+        }
+
+        .ai-suggestion-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .ai-suggestion-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .submit-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .evaluate-btn {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .evaluate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+        }
+
+        .evaluate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #20bf6b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .yaml-output {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .filename-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .filename-info strong {
+            color: #2e7d32;
+        }
+
+        .ai-suggestions-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .ai-suggestions-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .ai-suggestions-header h3 {
+            color: #6f42c1;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .ai-suggestions-header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .ai-generate-btn {
+            background: linear-gradient(135deg, #6f42c1 0%, #8e44ad 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
+        }
+
+        .ai-generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .ai-generate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .ai-loading {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .ai-loading p {
+            color: #666;
+            margin-top: 15px;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .suggestion-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-card:hover {
+            border-color: #6f42c1;
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.1);
+        }
+
+        .suggestion-card h4 {
+            color: #6f42c1;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .suggestion-field {
+            margin: 12px 0;
+        }
+
+        .suggestion-field label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .suggestion-field .field-value {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #6f42c1;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .suggestion-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .apply-suggestion-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-suggestion-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .ai-actions {
+            text-align: center;
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .apply-all-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .clear-suggestions-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-suggestions-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .ai-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .error-message {
+            color: #721c24;
+            font-weight: 600;
+        }
+
+        .fallback-notice {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f57c00;
+            color: #f57c00;
+            font-weight: 600;
+        }
+
+        .fallback-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fallback-banner span {
+            background: #f57c00;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .fallback-banner p {
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .active-competences-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .active-competences-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .active-competences-header h3 {
+            color: #20bf6b;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .active-competences-header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .active-competences-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .cancel-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+        }
+
+        .cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .add-empty-competence-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        .add-empty-competence-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .suggestions-pool-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .suggestions-pool-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .suggestions-pool-header h3 {
+            color: #6f42c1;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .suggestions-pool-header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pool-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .add-new-competence-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        .add-new-competence-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .delete-suggestion-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        .delete-suggestion-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+
+        .pool-actions-bottom {
+            text-align: center;
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .suggestions-pool-content {
+            display: block;
+        }
+
+        .selected-competences-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #20bf6b;
+        }
+
+        .selected-competences-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .selected-competences-header h3 {
+            color: #20bf6b;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .selected-competences-header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .selected-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .remove-all-btn {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+        }
+
+        .remove-all-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .radio-group {
+                gap: 5px;
+            }
+
+            .radio-option {
+                padding: 8px;
+            }
+        }
+
+        .evaluation-results-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #17a2b8;
+        }
+
+        .evaluation-results-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .evaluation-results-header h3 {
+            color: #17a2b8;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .evaluation-results-header p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .evaluation-results-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .competence-evaluation {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .competence-evaluation:hover {
+            border-color: #17a2b8;
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.1);
+        }
+
+        .competence-evaluation h4 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .competence-formulation {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 10px 0 15px 0;
+            font-style: italic;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .competence-evaluation p {
+            color: #666;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .competence-evaluation strong {
+            color: #333;
+        }
+
+        .avis-global {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .avis-global h3 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+        }
+
+        .points-amelioration {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .points-amelioration h3 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+        }
+
+        .points-amelioration ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .points-amelioration li {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            color: #666;
+        }
+
+        .evaluation-actions {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .evaluation-loading {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .evaluation-loading p {
+            color: #666;
+            margin-top: 15px;
+        }
+
+        .competences-manquantes {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .competences-manquantes h3 {
+            color: #ff6b35;
+            margin-bottom: 15px;
+        }
+
+        .competences-manquantes > p {
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .competence-suggestion {
+            background: #fff8f0;
+            border: 2px solid #ff6b35;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .competence-suggestion h4 {
+            color: #ff6b35;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .suggestion-details p {
+            color: #666;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .suggestion-details strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Compétences Visées</h1>
+            <p>Formulation des compétences visées pour le scénario CMO</p>
+            <div class="step-indicator">
+                <span class="step inactive">1. Public cible</span>
+                <span class="step inactive">2. Contraintes</span>
+                <span class="step inactive">3. Scénario</span>
+                <span class="step active">4. Compétences</span>
+                <span class="step inactive">5. Référentiels</span>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="info-banner">
+                <h2>📋 Formulation des Compétences</h2>
+                <p>Dans le scénario CMO, chaque section d'apprentissage repose sur une compétence visée claire et observable. Cette étape vous aide à formuler ces compétences à partir du domaine cognitif (taxonomie de Bloom révisée).</p>
+            </div>
+
+            <div class="public-cible-recall">
+                <h3>📌 Rappel du public cible</h3>
+                <div class="data-item">
+                    <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.contexte_formation.titre if public_cible_data else 'Non défini' }}</span>
+                </div>
+                <div class="data-item">
+                    <strong>Objectif général :</strong> <span id="objectif-general">{{ public_cible_data.contexte_formation.objectif_general if public_cible_data else 'Non défini' }}</span>
+                </div>
+                <div class="data-item">
+                    <strong>Type de public :</strong> <span id="type-public">{{ public_cible_data.public_cible.type if public_cible_data else 'Non défini' }}</span>
+                </div>
+                <div class="data-item">
+                    <strong>Niveau d'expertise :</strong> <span id="niveau-expertise">{{ public_cible_data.public_cible.niveau_expertise if public_cible_data else 'Non défini' }}</span>
+                </div>
+            </div>
+
+            <!-- Ideas Workshop Section (AI + Manual Drafts) -->
+            <div class="suggestions-pool-section">
+                <div class="suggestions-pool-header">
+                    <h3>🎨 Atelier d'Idées</h3>
+                    <p>Créez vos brouillons de compétences ou laissez l'IA vous inspirer</p>
+                    <div class="pool-actions">
+                        <button class="ai-generate-btn" onclick="generateAISuggestions()" id="aiGenerateBtn">
+                            ✨ Magie IA
+                        </button>
+                        <button class="add-new-competence-btn" onclick="addNewCompetence()">
+                            ✏️ Créer un Brouillon
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ai-loading" id="aiLoading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Génération des suggestions en cours...</p>
+                </div>
+                
+                <div class="suggestions-pool-content" id="suggestionsPoolContent">
+                    <div class="suggestions-grid" id="suggestionsGrid">
+                        <!-- AI suggestions and new competences will be inserted here -->
+                    </div>
+                    
+                    <div class="pool-actions-bottom" id="poolActionsBottom" style="display: none;">
+                        <button class="apply-all-btn" onclick="applyAllSuggestions()">
+                            ➕ Ajouter Tous les Brouillons
+                        </button>
+                        <button class="clear-suggestions-btn" onclick="clearSuggestions()">
+                            🗑️ Tout Supprimer
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ai-error" id="aiError" style="display: none;">
+                    <div class="error-message" id="aiErrorMessage"></div>
+                </div>
+            </div>
+
+            <!-- Selected Competences Pool Section -->
+            <div class="selected-competences-section" id="selectedCompetencesSection">
+                <div class="selected-competences-header">
+                    <h3>📋 Compétences Sélectionnées</h3>
+                    <p>Compétences choisies pour votre formation</p>
+                    <div class="selected-actions" id="selectedActions" style="display: none;">
+                        <button class="remove-all-btn" onclick="removeAllCompetences()">
+                            ➖ Retirer Toutes
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="selected-competences-content">
+                    <div class="suggestions-grid" id="selectedCompetencesGrid">
+                        <!-- Selected competences will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evaluation Results Section -->
+            <div class="evaluation-results-section" id="evaluationResultsSection">
+                <div class="evaluation-results-header">
+                    <h3>🔍 Résultats de l'Évaluation</h3>
+                    <p>Analyse et ordonnancement des compétences selon les critères pédagogiques</p>
+                </div>
+                
+                <div class="evaluation-actions">
+                    <button type="button" id="evaluateBtn" onclick="evaluateCompetences()" class="evaluate-btn" disabled>
+                        🔍 Évaluer et Ordonner
+                    </button>
+                    <div class="evaluation-loading" id="evaluateLoading" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Évaluation en cours...</p>
+                    </div>
+                </div>
+                
+                <div class="evaluation-results-content" id="evaluationResultsContent">
+                    <!-- Evaluation results will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Hidden form for submission -->
+            <form id="competencesForm" style="display: none;">
+                <div id="competencesContainer">
+                    <!-- Competences will be added here dynamically for form submission -->
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        ✅ Valider et Terminer
+                    </button>
+                    
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Sauvegarde en cours...</p>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Submit Section (visible) -->
+            <div class="submit-section" style="margin-top: 40px;">
+                <div class="submit-actions">
+                    <button type="button" class="submit-btn" id="visibleSubmitBtn" onclick="prepareAndSubmitForm()">
+                        ✅ Valider et Terminer
+                    </button>
+                </div>
+                
+                <div class="loading" id="visibleLoading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Sauvegarde en cours...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>✅ Compétences Visées Sauvegardées</h2>
+            <div class="filename-info">
+                <strong>📁 Fichier :</strong> <span id="filenameDisplay"></span>
+            </div>
+            <p id="successMessage"></p>
+            <h3>Données YAML Complètes :</h3>
+            <div class="yaml-output" id="yamlOutput"></div>
+            <div class="modal-actions">
+                <button class="submit-btn" onclick="window.location.href='/'">
+                    🏠 Retour à l'Accueil
+                </button>
+                <button class="submit-btn" onclick="window.location.href='/referentiels'" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);">
+                    🧭 Continuer vers les Référentiels
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Competence Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeEditModal()">&times;</span>
+            <h2>✏️ Modifier la Compétence</h2>
+            <div id="editModalContent">
+                <!-- Edit form will be inserted here -->
+            </div>
+            <div class="modal-actions">
+                <button class="save-btn" onclick="saveCompetenceEdit()">
+                    💾 Sauvegarder
+                </button>
+                <button class="cancel-btn" onclick="closeEditModal()">
+                    ❌ Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load previous data from YAML
+        let previousData = {% if public_cible_data %}{{ public_cible_data | tojson | safe }}{% else %}null{% endif %};
+        let aiSuggestions = []; // Store AI suggestions
+        let newCompetences = []; // Store new competences created manually
+        let selectedCompetences = []; // Store selected competences
+        let competenceCount = {{ competences | length }};
+        let competenceIds = new Set(); // Track existing competence IDs
+        let usedSuggestionIndices = new Set(); // Track which AI suggestions are used
+
+        // Initialize competence IDs tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track existing competence IDs
+            document.querySelectorAll('.competence-section').forEach(section => {
+                const competenceId = section.getAttribute('data-competence-id');
+                if (competenceId) {
+                    competenceIds.add(competenceId);
+                }
+            });
+            
+            // Add change event listeners to all niveau radio buttons
+            const niveauRadios = document.querySelectorAll('input[name^="niveau_"]');
+            niveauRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const competenceId = this.name.split('_')[1];
+                    const selectedNiveau = this.value;
+                });
+            });
+            
+            // Initialize displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+        });
+
+        function createCompetenceHTML(competence, competenceNumber) {
+            let stepsHtml = '';
+            
+            // Add title field at the beginning
+            stepsHtml += `
+                <div class="step-group">
+                    <h4>Titre de la compétence</h4>
+                    <p>Donnez un titre court et descriptif à cette compétence</p>
+                    <div class="form-group">
+                        <input type="text" name="titre_${competenceNumber}" placeholder="Ex: Utilisation des outils d'IA" value="${competence.titre || ''}">
+                    </div>
+                </div>
+            `;
+            
+            competence.steps.forEach((step, stepIndex) => {
+                let fieldHtml = '';
+                if (step.type === 'textarea') {
+                    fieldHtml = `<textarea name="${step.field_name}" placeholder="${step.placeholder}" ${step.step === 4 ? 'readonly' : ''}></textarea>`;
+                } else if (step.type === 'text') {
+                    fieldHtml = `<input type="text" name="${step.field_name}" placeholder="${step.placeholder}">`;
+                } else if (step.type === 'radio') {
+                    let optionsHtml = '';
+                    step.options.forEach((option, optionIndex) => {
+                        optionsHtml += `
+                            <div class="radio-option">
+                                <input type="radio" name="${step.field_name}" value="${option}" id="${step.field_name}_${optionIndex + 1}">
+                                <label for="${step.field_name}_${optionIndex + 1}">${option}</label>
+                            </div>
+                        `;
+                    });
+                    fieldHtml = `<div class="radio-group">${optionsHtml}</div>`;
+                }
+                
+                stepsHtml += `
+                    <div class="step-group">
+                        <h4>Étape ${step.step} – ${step.title}</h4>
+                        <p>${step.description}</p>
+                        <div class="form-group">
+                            ${fieldHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return `
+                <div class="competence-section" data-competence-id="${competence.id}">
+                    <div class="competence-header">
+                        <h3>${competence.title}</h3>
+                        <button type="button" class="remove-competence-btn" onclick="removeCompetence('${competence.id}')" title="Supprimer cette compétence">
+                            🗑️
+                        </button>
+                    </div>
+                    <div class="competence-content">
+                        ${stepsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+
+
+        function generateCompetenceFormulation(competenceId) {
+            // Extract number from competence ID if it's a full ID
+            const competenceNumber = competenceId.includes('_') ? competenceId.split('_')[1] : competenceId;
+            const ideesCles = document.querySelector(`textarea[name="idees_cles_${competenceNumber}"]`)?.value;
+            const niveau = document.querySelector(`input[name="niveau_${competenceNumber}"]:checked`)?.value;
+            const verbes = document.querySelector(`input[name="verbes_${competenceNumber}"]`)?.value;
+            
+            if (!ideesCles || !niveau || !verbes) {
+                return '';
+            }
+            
+            // Simple formulation generation
+            const niveauMap = {
+                'Haut : Créer / Évaluer / Analyser': 'créer',
+                'Moyen : Appliquer / Comprendre': 'appliquer',
+                'Bas : Se rappeler': 'identifier'
+            };
+            
+            const actionVerb = niveauMap[niveau] || verbes.split(',')[0].trim();
+            return `${actionVerb} ${ideesCles.toLowerCase()}`;
+        }
+
+        // Auto-generate formulations when all fields are filled
+        document.addEventListener('input', function(e) {
+            const fieldName = e.target.name;
+            if (fieldName.includes('verbes_')) {
+                const competenceId = fieldName.split('_')[1];
+                setTimeout(() => {
+                    const formulation = generateCompetenceFormulation(competenceId);
+                    if (formulation) {
+                        const formulationField = document.querySelector(`textarea[name="formulation_${competenceId}"]`);
+                        if (formulationField) {
+                            formulationField.value = formulation;
+                        }
+                    }
+                }, 500);
+            }
+        });
+
+        document.getElementById('competencesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Generate formulations for all competencies
+            const competenceSections = document.querySelectorAll('.competence-section');
+            competenceSections.forEach((section, index) => {
+                const competenceId = section.getAttribute('data-competence-id');
+                const competenceNumber = competenceId.split('_')[1];
+                const formulation = generateCompetenceFormulation(competenceNumber);
+                if (formulation) {
+                    data[`formulation_${competenceNumber}`] = formulation;
+                }
+            });
+            
+            fetch('/submit_competences', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    document.getElementById('successMessage').textContent = result.message;
+                    document.getElementById('filenameDisplay').textContent = result.filename;
+                    document.getElementById('yamlOutput').textContent = JSON.stringify(result.yaml_data, null, 2);
+                    document.getElementById('successModal').style.display = 'block';
+                } else {
+                    alert('Erreur lors de la sauvegarde : ' + result.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erreur lors de la sauvegarde');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            });
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('successModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function addNewCompetence() {
+            // Open modal directly for creating a new competence
+            const editModalContent = document.getElementById('editModalContent');
+            editModalContent.innerHTML = `
+                <div class="form-group">
+                    <label>Titre de la compétence :</label>
+                    <input type="text" id="editTitle" value="Nouvelle Compétence" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Idées clés :</label>
+                    <textarea id="editIdeesCles" class="form-control" placeholder="Entrez les idées clés..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Niveau :</label>
+                    <select id="editNiveau" class="form-control">
+                        <option value="Haut : Créer / Évaluer / Analyser">Haut : Créer / Évaluer / Analyser</option>
+                        <option value="Moyen : Appliquer / Comprendre" selected>Moyen : Appliquer / Comprendre</option>
+                        <option value="Bas : Se rappeler">Bas : Se rappeler</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Verbes :</label>
+                    <input type="text" id="editVerbes" value="" class="form-control" placeholder="Entrez les verbes...">
+                </div>
+                <div class="form-group">
+                    <label>Formulation :</label>
+                    <textarea id="editFormulation" class="form-control" placeholder="Entrez la formulation..."></textarea>
+                </div>
+                <input type="hidden" id="editCompetenceId" value="new">
+            `;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function generateAISuggestions() {
+            // Check if there are available suggestions (not used) or new competences in the workshop
+            const availableSuggestions = aiSuggestions.filter((_, index) => !usedSuggestionIndices.has(index));
+            const hasExistingContent = availableSuggestions.length > 0 || newCompetences.length > 0;
+            
+            if (hasExistingContent) {
+                const confirmed = confirm('Il y a déjà des compétences dans l\'atelier d\'idées. Voulez-vous les supprimer et générer de nouvelles suggestions IA ?');
+                if (!confirmed) {
+                    return;
+                }
+            }
+            
+            const generateBtn = document.getElementById('aiGenerateBtn');
+            const loading = document.getElementById('aiLoading');
+            const content = document.getElementById('suggestionsPoolContent');
+            const error = document.getElementById('aiError');
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            loading.style.display = 'block';
+            content.style.display = 'none';
+            error.style.display = 'none';
+            
+            // Clear existing suggestions and new competences
+            aiSuggestions = [];
+            newCompetences = [];
+            usedSuggestionIndices.clear();
+            
+            // Call the API
+            fetch('/generate_ai_suggestions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Set new suggestions (replace all)
+                    aiSuggestions = result.suggestions;
+                    displaySuggestionsPool();
+                    content.style.display = 'block';
+                } else {
+                    showAIError(result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAIError('Erreur lors de la génération des suggestions');
+            })
+            .finally(() => {
+                // Reset button state
+                generateBtn.disabled = false;
+                loading.style.display = 'none';
+            });
+        }
+
+        function displaySuggestionsPool() {
+            const grid = document.getElementById('suggestionsGrid');
+            const actionsBottom = document.getElementById('poolActionsBottom');
+            grid.innerHTML = '';
+            
+            let hasContent = false;
+            
+            // Display AI suggestions
+            if (aiSuggestions.length > 0) {
+                aiSuggestions.forEach((suggestion, index) => {
+                    // Skip if this suggestion is already used
+                    if (usedSuggestionIndices.has(index)) {
+                        return;
+                    }
+                    
+                    hasContent = true;
+                    const card = document.createElement('div');
+                    card.className = 'suggestion-card';
+                    
+                    const competenceTitle = suggestion.titre || `Compétence ${index + 1}`;
+                    
+                    card.innerHTML = `
+                        <h4>${competenceTitle}</h4>
+                        <div class="suggestion-field">
+                            <label>Idées clés :</label>
+                            <div class="field-value">${suggestion.idees_cles || 'Non spécifié'}</div>
+                        </div>
+                        <div class="suggestion-field">
+                            <label>Niveau :</label>
+                            <div class="field-value">${suggestion.niveau || 'Non spécifié'}</div>
+                        </div>
+                        <div class="suggestion-field">
+                            <label>Verbes suggérés :</label>
+                            <div class="field-value">${Array.isArray(suggestion.verbes_suggere) ? suggestion.verbes_suggere.join(', ') : suggestion.verbes_suggere || 'Non spécifié'}</div>
+                        </div>
+                        <div class="suggestion-field">
+                            <label>Formulation :</label>
+                            <div class="field-value">${suggestion.formulation || 'Non spécifié'}</div>
+                        </div>
+                                            <div class="suggestion-actions">
+                        <button class="apply-suggestion-btn" onclick="applySuggestion(${index})">
+                            ➕ Ajouter
+                        </button>
+                        <button class="delete-suggestion-btn" onclick="deleteSuggestion(${index})" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                            🗑️ Supprimer
+                        </button>
+                    </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+            
+            // Display new competences
+            newCompetences.forEach((competence, index) => {
+                hasContent = true;
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                
+                card.innerHTML = `
+                    <h4>${competence.titre}</h4>
+                    <div class="suggestion-field">
+                        <label>Idées clés :</label>
+                        <div class="field-value">${competence.idees_cles || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Niveau :</label>
+                        <div class="field-value">${competence.niveau || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Verbes :</label>
+                        <div class="field-value">${competence.verbes || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Formulation :</label>
+                        <div class="field-value">${competence.formulation || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-actions">
+                        <button class="apply-suggestion-btn" onclick="addNewCompetenceToSelected('${competence.id}')">
+                            ➕ Ajouter
+                        </button>
+                        <button class="delete-suggestion-btn" onclick="deleteNewCompetence('${competence.id}')" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                            🗑️ Supprimer
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            // Show/hide bottom actions
+            if (hasContent) {
+                actionsBottom.style.display = 'flex';
+            } else {
+                actionsBottom.style.display = 'none';
+            }
+        }
+
+        function updateActiveCompetencesDisplay() {
+            const activeSection = document.getElementById('activeCompetencesSection');
+            const activeGrid = document.getElementById('activeCompetencesGrid');
+            const competenceSections = document.querySelectorAll('.competence-section');
+            
+            if (competenceSections.length === 0) {
+                activeSection.style.display = 'none';
+                return;
+            }
+            
+            activeSection.style.display = 'block';
+            activeGrid.innerHTML = '';
+            
+            competenceSections.forEach((section, index) => {
+                const competenceId = section.getAttribute('data-competence-id');
+                const title = section.querySelector('h3').textContent;
+                
+                // Get competence data
+                const ideesCles = section.querySelector('textarea[name^="idees_cles_"]')?.value || '';
+                const niveau = section.querySelector('input[name^="niveau_"]:checked')?.value || '';
+                const verbes = section.querySelector('input[name^="verbes_"]')?.value || '';
+                const formulation = section.querySelector('textarea[name^="formulation_"]')?.value || '';
+                
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                card.innerHTML = `
+                    <h4>${title}</h4>
+                    <div class="suggestion-field">
+                        <label>Idées clés :</label>
+                        <div class="field-value">${ideesCles || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Niveau :</label>
+                        <div class="field-value">${niveau || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Verbes :</label>
+                        <div class="field-value">${verbes || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Formulation :</label>
+                        <div class="field-value">${formulation || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-actions">
+                        <button class="apply-suggestion-btn" onclick="editCompetence('${competenceId}')" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                            ✏️ Modifier
+                        </button>
+                        <button class="apply-suggestion-btn" onclick="removeCompetence('${competenceId}')" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                            🗑️ Supprimer
+                        </button>
+                    </div>
+                `;
+                activeGrid.appendChild(card);
+            });
+        }
+
+        function addCompetence() {
+            return fetch('/add_competence', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    competenceCount = result.competence_count;
+                    const competence = result.competence;
+                    
+                    // Check if competence ID already exists
+                    if (competenceIds.has(competence.id)) {
+                        // Reorder competences to fix numbering
+                        return reorderCompetences();
+                    }
+                    
+                    // Add to tracking set
+                    competenceIds.add(competence.id);
+                    
+                    // Create new competence HTML
+                    const competenceHtml = createCompetenceHTML(competence, competenceCount);
+                    
+                    // Insert before the add competence section
+                    const addSection = document.querySelector('.add-competence-section');
+                    addSection.insertAdjacentHTML('beforebegin', competenceHtml);
+                    
+                    // Update active competences display
+                    updateActiveCompetencesDisplay();
+                    
+                    showSuccessMessage('Nouvelle compétence ajoutée !');
+                    return result;
+                } else {
+                    alert('Erreur lors de l\'ajout de la compétence : ' + result.error);
+                    throw new Error(result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erreur lors de l\'ajout de la compétence');
+                throw error;
+            });
+        }
+
+        function removeCompetence(competenceId) {
+            // Find the competence in selected competences
+            const competenceIndex = selectedCompetences.findIndex(c => c.id === competenceId);
+            if (competenceIndex === -1) return;
+            
+            const competence = selectedCompetences[competenceIndex];
+            
+            // Return competence to suggestions pool
+            if (competence.type === 'ai') {
+                // Return AI suggestion to pool
+                usedSuggestionIndices.delete(competence.suggestionIndex);
+                showSuccessMessage('Compétence retirée et retournée à l\'atelier d\'idées !');
+            } else {
+                // Add new competence to suggestions pool
+                newCompetences.push(competence);
+                showSuccessMessage('Compétence retirée et retournée à l\'atelier d\'idées !');
+            }
+            
+            // Remove from selected competences
+            selectedCompetences.splice(competenceIndex, 1);
+            
+            // Update displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+        }
+
+        function reorderCompetences() {
+            // Get current competences from DOM
+            const competenceSections = document.querySelectorAll('.competence-section');
+            const currentCompetences = [];
+            
+            competenceSections.forEach(section => {
+                const competenceId = section.getAttribute('data-competence-id');
+                const title = section.querySelector('h3').textContent;
+                currentCompetences.push({
+                    id: competenceId,
+                    title: title
+                });
+            });
+            
+            // Call backend to reorder
+            return fetch('/reorder_competences', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    competences: currentCompetences
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Update the DOM with reordered competences
+                    updateCompetencesDisplay(result.competences);
+                    competenceCount = result.competence_count;
+                    return result;
+                } else {
+                    console.error('Error reordering competences:', result.error);
+                    return result;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                return { success: false, error: error.message };
+            });
+        }
+
+        function updateCompetencesDisplay(reorderedCompetences) {
+            const container = document.getElementById('competencesContainer');
+            const addSection = document.querySelector('.add-competence-section');
+            
+            // Clear existing competences
+            container.innerHTML = '';
+            
+            // Add reordered competences
+            reorderedCompetences.forEach(competence => {
+                const competenceHtml = createCompetenceHTML(competence, competence.competence_number);
+                container.insertAdjacentHTML('beforeend', competenceHtml);
+            });
+            
+            // Update tracking set
+            competenceIds.clear();
+            reorderedCompetences.forEach(competence => {
+                competenceIds.add(competence.id);
+            });
+            
+            // Update active competences display
+            updateActiveCompetencesDisplay();
+        }
+
+        function applySuggestion(index) {
+            if (!aiSuggestions[index] || usedSuggestionIndices.has(index)) return;
+            
+            const suggestion = aiSuggestions[index];
+            
+            // Mark this suggestion as used
+            usedSuggestionIndices.add(index);
+            
+            // Create new competence with the AI suggestion data
+            const newCompetenceId = `competence_${competenceCount + 1}`;
+            const newCompetence = {
+                id: newCompetenceId,
+                titre: suggestion.titre || `Compétence ${competenceCount + 1}`,
+                idees_cles: suggestion.idees_cles || '',
+                niveau: suggestion.niveau || '',
+                verbes: Array.isArray(suggestion.verbes_suggere) ? suggestion.verbes_suggere.join(', ') : suggestion.verbes_suggere || '',
+                formulation: suggestion.formulation || '',
+                type: 'ai',
+                suggestionIndex: index
+            };
+            
+            // Add to selected competences
+            selectedCompetences.push(newCompetence);
+            competenceCount++;
+            competenceIds.add(newCompetenceId);
+            
+            // Update displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Compétence ajoutée à votre formation !');
+        }
+
+        function applyAllSuggestions() {
+            // Apply all available suggestions
+            aiSuggestions.forEach((suggestion, index) => {
+                if (!usedSuggestionIndices.has(index)) {
+                    applySuggestion(index);
+                }
+            });
+            showSuccessMessage('Tous les brouillons disponibles ont été ajoutés à votre formation !');
+        }
+
+        function clearSuggestions() {
+            const confirmed = confirm('Êtes-vous sûr de vouloir supprimer toutes les compétences (atelier d\'idées ET formation) ? Cette action est irréversible.');
+            if (!confirmed) {
+                return;
+            }
+            
+            // Clear everything
+            aiSuggestions = [];
+            newCompetences = [];
+            selectedCompetences = [];
+            usedSuggestionIndices.clear();
+            
+            // Update displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Toutes les compétences ont été supprimées !');
+        }
+
+        function showAIError(message) {
+            const error = document.getElementById('aiError');
+            const errorMessage = document.getElementById('aiErrorMessage');
+            errorMessage.textContent = message;
+            error.style.display = 'block';
+        }
+
+        function showSuccessMessage(message) {
+            // Create a temporary success message
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(successDiv);
+            }, 3000);
+        }
+
+        function applySuggestionToCompetence(competenceId, suggestion) {
+            // Extract number from competence ID
+            const competenceNumber = competenceId.split('_')[1];
+            
+            // Apply to form fields
+            const ideesClesField = document.querySelector(`textarea[name="idees_cles_${competenceNumber}"]`);
+            const verbesField = document.querySelector(`input[name="verbes_${competenceNumber}"]`);
+            const formulationField = document.querySelector(`textarea[name="formulation_${competenceNumber}"]`);
+            
+            if (ideesClesField && suggestion.idees_cles) {
+                ideesClesField.value = suggestion.idees_cles;
+            }
+            
+            if (verbesField && suggestion.verbes_suggere) {
+                const verbes = Array.isArray(suggestion.verbes_suggere) ? suggestion.verbes_suggere.join(', ') : suggestion.verbes_suggere;
+                verbesField.value = verbes;
+            }
+            
+            if (formulationField && suggestion.formulation) {
+                formulationField.value = suggestion.formulation;
+            }
+            
+            // Set radio button for niveau
+            if (suggestion.niveau) {
+                const niveauOptions = document.querySelectorAll(`input[name="niveau_${competenceNumber}"]`);
+                niveauOptions.forEach(option => {
+                    if (option.value.includes(suggestion.niveau)) {
+                        option.checked = true;
+                    }
+                });
+            }
+            
+            // Update the competence title with the short title
+            const titleElement = document.querySelector(`[data-competence-id="${competenceId}"] h3`);
+            if (titleElement && suggestion.titre) {
+                titleElement.textContent = suggestion.titre;
+            }
+            
+            // Show success message
+            showSuccessMessage(`Suggestion appliquée à ${competenceId} !`);
+        }
+
+        function editCompetence(competenceId) {
+            // Find the competence in selected competences
+            const competence = selectedCompetences.find(c => c.id === competenceId);
+            if (!competence) return;
+            
+            const editModalContent = document.getElementById('editModalContent');
+            editModalContent.innerHTML = `
+                <div class="form-group">
+                    <label>Titre de la compétence :</label>
+                    <input type="text" id="editTitle" value="${competence.titre}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Idées clés :</label>
+                    <textarea id="editIdeesCles" class="form-control">${competence.idees_cles}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Niveau :</label>
+                    <select id="editNiveau" class="form-control">
+                        <option value="Haut : Créer / Évaluer / Analyser" ${competence.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
+                        <option value="Moyen : Appliquer / Comprendre" ${competence.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
+                        <option value="Bas : Se rappeler" ${competence.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Verbes :</label>
+                    <input type="text" id="editVerbes" value="${competence.verbes}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Formulation :</label>
+                    <textarea id="editFormulation" class="form-control">${competence.formulation}</textarea>
+                </div>
+                <input type="hidden" id="editCompetenceId" value="${competenceId}">
+            `;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function addStepToCompetence(competenceId) {
+            const editModalContent = document.getElementById('editModalContent');
+            const stepCount = editModalContent.querySelectorAll('.step-group').length;
+            const newStepNumber = stepCount + 1;
+
+            editModalContent.innerHTML += `
+                <div class="step-group">
+                    <h4>Étape ${newStepNumber} – Nouveau Titre</h4>
+                    <input type="text" name="step_${stepCount}_title" placeholder="Titre de l'étape">
+                    <textarea name="step_${stepCount}_description" placeholder="Description de l'étape"></textarea>
+                    <div class="form-group">
+                        <label>Type d'étape :</label>
+                        <select name="step_${stepCount}_type">
+                            <option value="textarea">Texte</option>
+                            <option value="text">Texte simple</option>
+                            <option value="radio">Choix multiple</option>
+                        </select>
+                    </div>
+                    <button type="button" class="remove-step-btn" onclick="removeStepFromCompetence('${competenceId}', ${stepCount})">🗑️ Supprimer l'étape</button>
+                </div>
+            `;
+        }
+
+        function removeStepFromCompetence(competenceId, stepIndex) {
+            const editModalContent = document.getElementById('editModalContent');
+            const steps = editModalContent.querySelectorAll('.step-group');
+            if (steps.length > 1) {
+                steps[stepIndex].remove();
+                // Re-number steps after removal
+                editModalContent.querySelectorAll('.step-group').forEach((group, index) => {
+                    group.querySelector('h4').textContent = `Étape ${index + 1} – ${group.querySelector('h4').textContent.split(' – ')[1]}`;
+                });
+            }
+        }
+
+        function saveCompetenceEdit() {
+            const competenceId = document.getElementById('editCompetenceId').value;
+            
+            if (competenceId === 'new') {
+                // Creating a new competence
+                const newCompetenceId = `competence_${competenceCount + 1}`;
+                const newCompetence = {
+                    id: newCompetenceId,
+                    titre: document.getElementById('editTitle').value,
+                    idees_cles: document.getElementById('editIdeesCles').value,
+                    niveau: document.getElementById('editNiveau').value,
+                    verbes: document.getElementById('editVerbes').value,
+                    formulation: document.getElementById('editFormulation').value,
+                    type: 'new'
+                };
+                
+                // Add to new competences pool
+                newCompetences.push(newCompetence);
+                competenceCount++;
+                competenceIds.add(newCompetenceId);
+                
+                // Update display
+                displaySuggestionsPool();
+                
+                showSuccessMessage('Brouillon créé dans l\'atelier d\'idées !');
+            } else {
+                // Editing existing competence
+                const competence = selectedCompetences.find(c => c.id === competenceId);
+                if (!competence) return;
+                
+                // Update competence data
+                competence.titre = document.getElementById('editTitle').value;
+                competence.idees_cles = document.getElementById('editIdeesCles').value;
+                competence.niveau = document.getElementById('editNiveau').value;
+                competence.verbes = document.getElementById('editVerbes').value;
+                competence.formulation = document.getElementById('editFormulation').value;
+                
+                // Update display
+                displaySelectedCompetences();
+                
+                showSuccessMessage('Compétence modifiée avec succès !');
+            }
+            
+            closeEditModal();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // No initialization needed - all competences will have remove buttons
+
+        function displaySelectedCompetences() {
+            const selectedSection = document.getElementById('selectedCompetencesSection');
+            const selectedGrid = document.getElementById('selectedCompetencesGrid');
+            const selectedActions = document.getElementById('selectedActions');
+            const evaluateBtn = document.getElementById('evaluateBtn');
+            
+            // Always show the section
+            selectedSection.style.display = 'block';
+            selectedGrid.innerHTML = '';
+            
+            // Show/hide the remove all button
+            if (selectedCompetences.length > 0) {
+                selectedActions.style.display = 'flex';
+            } else {
+                selectedActions.style.display = 'none';
+            }
+            
+            // Enable/disable evaluate button based on competences count
+            if (selectedCompetences.length > 0) {
+                evaluateBtn.disabled = false;
+                evaluateBtn.title = 'Évaluer et ordonner les compétences sélectionnées';
+            } else {
+                evaluateBtn.disabled = true;
+                evaluateBtn.title = 'Ajoutez d\'abord des compétences pour pouvoir les évaluer';
+            }
+            
+            if (selectedCompetences.length === 0) {
+                // Show empty state
+                const emptyCard = document.createElement('div');
+                emptyCard.className = 'suggestion-card';
+                emptyCard.innerHTML = `
+                    <h4>Aucune compétence sélectionnée</h4>
+                    <p>Ajoutez des compétences depuis l'atelier d'idées pour commencer votre formation.</p>
+                `;
+                selectedGrid.appendChild(emptyCard);
+                return;
+            }
+            
+            selectedCompetences.forEach((competence, index) => {
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                const competenceNumber = index + 1;
+                const competenceCode = `C${competenceNumber}`;
+                
+                card.innerHTML = `
+                    <h4>${competenceCode} - ${competence.titre}</h4>
+                    <div class="suggestion-field">
+                        <label>Idées clés :</label>
+                        <div class="field-value">${competence.idees_cles || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Niveau :</label>
+                        <div class="field-value">${competence.niveau || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Verbes :</label>
+                        <div class="field-value">${competence.verbes || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-field">
+                        <label>Formulation :</label>
+                        <div class="field-value">${competence.formulation || 'Non spécifié'}</div>
+                    </div>
+                    <div class="suggestion-actions">
+                        <button class="apply-suggestion-btn" onclick="editCompetence('${competence.id}')" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                            ✏️ Modifier
+                        </button>
+                        <button class="apply-suggestion-btn" onclick="removeCompetence('${competence.id}')" style="background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);">
+                            ➖ Retirer
+                        </button>
+                    </div>
+                `;
+                selectedGrid.appendChild(card);
+            });
+        }
+
+        function prepareAndSubmitForm() {
+            const visibleSubmitBtn = document.getElementById('visibleSubmitBtn');
+            const visibleLoading = document.getElementById('visibleLoading');
+            
+            visibleSubmitBtn.disabled = true;
+            visibleLoading.style.display = 'block';
+            
+            // Prepare data from selected competences
+            const data = {};
+            selectedCompetences.forEach((competence, index) => {
+                const competenceNumber = index + 1;
+                data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
+                data[`niveau_${competenceNumber}`] = competence.niveau;
+                data[`verbes_${competenceNumber}`] = competence.verbes;
+                data[`formulation_${competenceNumber}`] = competence.formulation;
+            });
+            
+            return fetch('/submit_competences', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    document.getElementById('successMessage').textContent = result.message;
+                    document.getElementById('filenameDisplay').textContent = result.filename;
+                    document.getElementById('yamlOutput').textContent = JSON.stringify(result.yaml_data, null, 2);
+                    document.getElementById('successModal').style.display = 'block';
+                    return result;
+                } else {
+                    alert('Erreur lors de la sauvegarde : ' + result.message);
+                    throw new Error(result.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erreur lors de la sauvegarde');
+                throw error;
+            })
+            .finally(() => {
+                visibleSubmitBtn.disabled = false;
+                visibleLoading.style.display = 'none';
+            });
+        }
+
+        function saveCompetencesSilently() {
+            // Prepare data from selected competences
+            const data = {};
+            selectedCompetences.forEach((competence, index) => {
+                const competenceNumber = index + 1;
+                data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
+                data[`niveau_${competenceNumber}`] = competence.niveau;
+                data[`verbes_${competenceNumber}`] = competence.verbes;
+                data[`formulation_${competenceNumber}`] = competence.formulation;
+            });
+            
+            return fetch('/submit_competences', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    return result;
+                } else {
+                    throw new Error(result.message || 'Erreur lors de la sauvegarde');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                throw error;
+            });
+        }
+
+        function deleteSuggestion(index) {
+            // Remove the AI suggestion permanently
+            aiSuggestions.splice(index, 1);
+            
+            // Update displays
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Suggestion IA supprimée définitivement !');
+        }
+
+        function deleteNewCompetence(competenceId) {
+            // Find and remove the competence from new competences
+            const competenceIndex = newCompetences.findIndex(c => c.id === competenceId);
+            if (competenceIndex === -1) return;
+            
+            newCompetences.splice(competenceIndex, 1);
+            
+            // Update displays
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Brouillon supprimé définitivement !');
+        }
+
+        function removeAllCompetences() {
+            const confirmed = confirm('Êtes-vous sûr de vouloir retirer toutes les compétences de votre formation ? Elles retourneront à l\'atelier d\'idées.');
+            if (!confirmed) {
+                return;
+            }
+            
+            // Return all competences to the workshop
+            selectedCompetences.forEach(competence => {
+                if (competence.type === 'ai') {
+                    // Return AI suggestion to pool
+                    usedSuggestionIndices.delete(competence.suggestionIndex);
+                } else {
+                    // Add new competence to suggestions pool
+                    newCompetences.push(competence);
+                }
+            });
+            
+            // Clear selected competences
+            selectedCompetences = [];
+            
+            // Update displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Toutes les compétences ont été retirées et retournées à l\'atelier d\'idées !');
+        }
+
+        function addNewCompetenceToSelected(competenceId) {
+            // Find the competence in new competences
+            const competenceIndex = newCompetences.findIndex(c => c.id === competenceId);
+            if (competenceIndex === -1) return;
+            
+            const competence = newCompetences[competenceIndex];
+            
+            // Remove from new competences
+            newCompetences.splice(competenceIndex, 1);
+            
+            // Add to selected competences
+            selectedCompetences.push(competence);
+            
+            // Update displays
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+            
+            showSuccessMessage('Compétence ajoutée à votre formation !');
+        }
+
+
+        function evaluateCompetences() {
+            const evaluateBtn = document.getElementById('evaluateBtn');
+            const evaluateLoading = document.getElementById('evaluateLoading');
+            
+            // Show loading state
+            evaluateBtn.disabled = true;
+            evaluateLoading.style.display = 'block';
+            
+            // First save current competences silently, then evaluate them
+            saveCompetencesSilently()
+                .then(() => {
+                    // Then evaluate them
+                    return fetch('/evaluate_and_order_competences', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Display evaluation results in the new section
+                        displayEvaluationResults(result.evaluation);
+                        showSuccessMessage('Évaluation et ordonnancement terminés !');
+                    } else {
+                        alert('Erreur lors de l\'évaluation : ' + result.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Erreur lors de l\'évaluation');
+                })
+                .finally(() => {
+                    // Reset button state
+                    evaluateBtn.disabled = false;
+                    evaluateLoading.style.display = 'none';
+                });
+        }
+
+        function displayEvaluationResults(evaluation) {
+            const evaluationSection = document.getElementById('evaluationResultsSection');
+            const evaluationContent = document.getElementById('evaluationResultsContent');
+            
+            // Build the content
+            let content = '';
+            
+            // Compétences ordonnées
+            if (evaluation.ordre_competences && evaluation.ordre_competences.length > 0) {
+                content += '<h3>📋 Compétences Ordonnées</h3>';
+                content += '<div class="evaluation-results-content">';
+                
+                evaluation.ordre_competences.forEach(comp => {
+                    const pertinenceColor = comp.pertinence === 'élevée' ? '#28a745' : 
+                                           comp.pertinence === 'moyenne' ? '#ffc107' : '#dc3545';
+                    
+                    // Find the corresponding competence in selectedCompetences to get the title
+                    let competenceTitle = '';
+                    const competenceNumber = comp.code.replace('C', '');
+                    const selectedCompetence = selectedCompetences[parseInt(competenceNumber) - 1];
+                    if (selectedCompetence) {
+                        competenceTitle = selectedCompetence.titre;
+                    }
+                    
+                    content += `
+                        <div class="competence-evaluation">
+                            <h4>${comp.code} - ${competenceTitle}</h4>
+                            <p class="competence-formulation">${comp.formulation}</p>
+                            <p><strong>Justification :</strong> ${comp.justification}</p>
+                            <p><strong>Pertinence :</strong> <span style="color: ${pertinenceColor};">${comp.pertinence}</span></p>
+                        </div>
+                    `;
+                });
+                
+                content += '</div>';
+            }
+            
+            // Compétences manquantes suggérées
+            if (evaluation.competences_manquantes && evaluation.competences_manquantes.length > 0) {
+                content += '<div class="competences-manquantes">';
+                content += '<h3>🔧 Compétences Intermédiaires Suggérées</h3>';
+                content += '<p>Ces compétences sont suggérées pour assurer une progression graduelle de la difficulté :</p>';
+                
+                evaluation.competences_manquantes.forEach((comp, index) => {
+                    content += `
+                        <div class="competence-suggestion">
+                            <h4>${comp.titre}</h4>
+                            <div class="suggestion-details">
+                                <p><strong>Niveau :</strong> ${comp.niveau}</p>
+                                <p><strong>Idées clés :</strong> ${comp.idees_cles}</p>
+                                <p><strong>Verbes :</strong> ${comp.verbes}</p>
+                                <p class="competence-formulation">${comp.formulation}</p>
+                                <p><strong>Justification :</strong> ${comp.justification}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                content += '</div>';
+            }
+            
+            // Avis global
+            if (evaluation.avis_global) {
+                content += `
+                    <div class="avis-global">
+                        <h3>📊 Avis Global</h3>
+                        <p>${evaluation.avis_global}</p>
+                    </div>
+                `;
+            }
+            
+            // Points d'amélioration
+            if (evaluation.points_amelioration && evaluation.points_amelioration.length > 0) {
+                content += '<div class="points-amelioration">';
+                content += '<h3>💡 Points d\'Amélioration</h3>';
+                content += '<ul>';
+                
+                evaluation.points_amelioration.forEach(point => {
+                    content += `<li>${point}</li>`;
+                });
+                
+                content += '</ul>';
+                content += '</div>';
+            }
+            
+            // Update the content
+            evaluationContent.innerHTML = content;
+        }
+    </script>
+</body>
+</html> 
