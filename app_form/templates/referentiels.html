@@ -394,6 +394,7 @@
                 <span class="step inactive">3. Scénario</span>
                 <span class="step inactive">4. Compétences</span>
                 <span class="step active">5. Référentiels</span>
+                <span class="step inactive">6. Contenus</span>
             </div>
         </div>
 
@@ -508,9 +509,9 @@
             <!-- Final Validation -->
             <div id="final-validation" class="final-validation">
                 <h3>🎉 Validation finale</h3>
-                <p>Tous les référentiels ont été générés et validés. Vous pouvez maintenant passer à l'étape suivante.</p>
+                <p>Tous les référentiels ont été générés et validés. Vous pouvez maintenant procéder à l'étape des contenus pédagogiques.</p>
                 <button class="btn btn-success" onclick="proceedToNextStep()">
-                    ➡️ Passer à l'étape suivante
+                    📚 Aller aux contenus pédagogiques
                 </button>
             </div>
 
@@ -520,7 +521,7 @@
                     ⬅️ Retour aux compétences
                 </button>
                 <button class="btn-next" onclick="proceedToNextStep()" id="btn-next" style="display: none;">
-                    ➡️ Étape suivante
+                    📚 Aller aux contenus pédagogiques
                 </button>
             </div>
         </div>
@@ -763,7 +764,7 @@
         }
 
         function proceedToNextStep() {
-            // Redirect to next step (A_010_Contenus_Par_Section)
+            // Redirect to contenus step
             window.location.href = '/contenus';
         }
     </script>

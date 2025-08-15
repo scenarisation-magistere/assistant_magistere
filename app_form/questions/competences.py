@@ -175,6 +175,66 @@ COMPETENCES_QUESTIONS = {
         "haut": ["créer", "concevoir", "structurer", "synthétiser", "planifier", "juger", "justifier", "analyser", "comparer", "différencier"],
         "moyen": ["appliquer", "utiliser", "démontrer", "résoudre", "expliquer", "illustrer", "interpréter", "reformuler"],
         "bas": ["définir", "nommer", "décrire", "identifier", "rappeler", "lister", "reconnaître"]
+    },
+    "bloom_taxonomy": {
+        # DOMAINE COGNITIF - Taxonomie de Bloom révisée
+        "creer": {
+            "name": "Créer",
+            "description": "Produire du nouveau contenu ou des idées originales",
+            "verbs": ["créer", "concevoir", "composer", "construire", "développer", "élaborer", "formuler", "générer", "inventer", "planifier", "produire", "structurer", "synthétiser", "assembler", "organiser", "proposer", "imaginer"]
+        },
+        "evaluer": {
+            "name": "Évaluer",
+            "description": "Porter un jugement basé sur des critères et des standards",
+            "verbs": ["apprécier", "argumenter", "assurer", "attester", "choisir", "conclure", "critiquer", "défendre", "déterminer", "évaluer", "juger", "justifier", "mesurer", "préférer", "prioriser", "recommander", "sélectionner", "valider", "vérifier", "contrôler", "estimer"]
+        },
+        "analyser": {
+            "name": "Analyser",
+            "description": "Décomposer un concept en ses éléments constitutifs",
+            "verbs": ["analyser", "catégoriser", "classifier", "comparer", "contraster", "décomposer", "différencier", "discriminer", "distinguer", "examiner", "identifier", "inférer", "organiser", "relier", "structurer", "déduire", "déterminer", "examiner", "explorer", "investiguer"]
+        },
+        "appliquer": {
+            "name": "Appliquer",
+            "description": "Utiliser des informations dans des situations nouvelles",
+            "verbs": ["appliquer", "calculer", "démontrer", "employer", "exécuter", "illustrer", "implémenter", "manipuler", "modifier", "opérer", "pratiquer", "résoudre", "utiliser", "adapter", "expérimenter", "mettre_en_œuvre", "réaliser", "transférer"]
+        },
+        "comprendre": {
+            "name": "Comprendre",
+            "description": "Construire du sens à partir de différents types de messages",
+            "verbs": ["classifier", "décrire", "discuter", "expliquer", "exprimer", "identifier", "indiquer", "interpréter", "localiser", "paraphraser", "reconnaître", "reformuler", "reporter", "résumer", "traduire", "comprendre", "associer", "comparer", "convertir", "exemplifier", "extrapoler", "généraliser", "inférer", "prédire"]
+        },
+        "se_rappeler": {
+            "name": "Se rappeler",
+            "description": "Retrouver des informations pertinentes en mémoire",
+            "verbs": ["citer", "définir", "décrire", "énumérer", "identifier", "lister", "nommer", "rappeler", "reconnaître", "reproduire", "retrouver", "spécifier", "énoncer", "mémoriser", "réciter", "reproduire", "sélectionner", "énumérer", "étiqueter", "localiser", "reconnaître", "reproduire", "retrouver", "spécifier"]
+        },
+        
+        # DOMAINE AFFECTIF - Taxonomie de Krathwohl
+        "caracteriser": {
+            "name": "Caractériser",
+            "description": "Intégrer des valeurs dans un système cohérent",
+            "verbs": ["adopter", "agir", "caractériser", "défendre", "démontrer", "incarner", "intégrer", "modifier", "pratiquer", "préférer", "proposer", "questionner", "reviser", "servir", "soutenir", "valoriser", "vivre", "s'engager", "s'identifier", "se_consacrer"]
+        },
+        "organiser": {
+            "name": "Organiser",
+            "description": "Organiser des valeurs en un système cohérent",
+            "verbs": ["adapter", "ajuster", "arranger", "catégoriser", "classifier", "combiner", "comparer", "compléter", "défendre", "établir", "formuler", "généraliser", "identifier", "intégrer", "modifier", "ordonner", "organiser", "préparer", "relier", "systématiser", "synthetiser", "valoriser"]
+        },
+        "valoriser": {
+            "name": "Valoriser",
+            "description": "Attribuer une valeur à quelque chose",
+            "verbs": ["accepter", "adopter", "apprécier", "chercher", "choisir", "défendre", "désirer", "estimer", "favoriser", "préférer", "rechercher", "sélectionner", "valoriser", "vouloir", "s'engager", "s'intéresser", "s'impliquer", "s'investir", "s'enthousiasmer", "s'émerveiller"]
+        },
+        "repondre": {
+            "name": "Répondre",
+            "description": "Réagir activement à quelque chose",
+            "verbs": ["accepter", "acquiescer", "agir", "aider", "applaudir", "approuver", "discuter", "donner", "greeter", "pratiquer", "présenter", "lire", "rapporter", "select", "participer", "répondre", "satisfaire", "visiter", "volunteer", "s'impliquer", "s'engager", "s'intéresser", "s'enthousiasmer", "s'émerveiller"]
+        },
+        "recevoir": {
+            "name": "Recevoir",
+            "description": "Être conscient et prêt à recevoir",
+            "verbs": ["accepter", "acquiescer", "écouter", "attendre", "être_conscient", "être_ouvert", "être_prêt", "être_sensible", "être_attentif", "être_disponible", "être_réceptif", "être_curieux", "être_intéressé", "être_concerné", "être_impliqué", "être_engagé", "être_motivé", "être_enthousiaste", "être_émerveillé", "être_étonné"]
+        }
     }
 }
 
