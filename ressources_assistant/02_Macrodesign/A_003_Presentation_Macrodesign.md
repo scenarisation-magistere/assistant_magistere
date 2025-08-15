@@ -1,4 +1,4 @@
-<!-- A_003_Presentation_Macrodesign.md — Version courte pour restitution mot pour mot -->
+<!-- A_003_Presentation_Macrodesign.md -->
 
 [INSTRUCTION_ASSISTANT] :
 
@@ -48,3 +48,6 @@ Exporter et sauvegarder localement le fichier final dès sa génération.
 ---
 
 **Souhaitez-vous commencer la première étape : Public cible ?**
+
+
+
