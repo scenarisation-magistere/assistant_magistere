@@ -14,6 +14,7 @@
   Après la question finale, analyser uniquement la réponse du participant :  
   - Si elle contient “oui” (insensible à la casse et aux accents) → lancer immédiatement l’étape **Identification des compétences visées** (`A_007_Competences_Visees.md`).  
   - Sinon → afficher : "D’accord, nous pourrons reprendre plus tard."
+
 ---
 
 ## 🎯 Objectif
@@ -49,7 +50,8 @@ Le scénario CMO propose une structuration claire et précise de la formation :
 | 8  | **Évaluation de satisfaction**| Bilan à court, moyen et long terme                                               | Asynchrone          |
 
 - **Durée de 3h maximum**  
-- **Poids total de 512 Mo maximum**
+- **Poids total de 512 Mo maximum**  
+- **Système de priorité pédagogique** : selon le modèle pédagogique **ABC Learning Design** et le profil identifié pour le scénario CMO, la sélection des ressources et activités privilégie **Acquisition**, **Collaboration**, **Discussion** et **Pratique**. **Production** et **Enquête** restent présentes mais de façon secondaire.
 
 ---
 
@@ -62,12 +64,10 @@ Si le formateur **ne souhaite pas adopter** ce scénario, l’assistant ne pourr
  → Vous souhaitez identifier votre profil de formateur :
 
 - 🧪 [Test Carenn – Quel formateur êtes-vous ?](http://www.pedagosup.fr/carenn/#)  
- 
+
 ---
 
 ## 🔁 Étape suivante
 
-Souhaitez-vous passer à l’étape **Identification des compétences visées** ?
+Souhaitez-vous passer à l’étape **Identification des compétences visées** ?  
 **Réponse :** [à compléter]
-
-
