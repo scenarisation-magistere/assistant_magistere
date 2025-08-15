@@ -683,6 +683,96 @@
             z-index: 1000;
         }
 
+        .edit-modal .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Bloom Taxonomy Styles */
+        .bloom-verbs-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .bloom-verbs-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .bloom-level {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #20bf6b;
+        }
+
+        .bloom-level-title {
+            color: #20bf6b;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .bloom-level-description {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .bloom-verbs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .bloom-verb-btn {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .bloom-verb-btn:hover {
+            background: #1976d2;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+        }
+
+        .bloom-verb-btn:active {
+            transform: translateY(0);
+        }
+
+        .bloom-verb-btn.affective {
+            background: #fce4ec;
+            color: #c2185b;
+            border-color: #f8bbd9;
+        }
+
+        .bloom-verb-btn.affective:hover {
+            background: #c2185b;
+            color: white;
+            box-shadow: 0 2px 8px rgba(194, 24, 91, 0.3);
+        }
+
         .modal-actions {
             display: flex;
             justify-content: center;
@@ -1069,13 +1159,41 @@
                 <span class="step inactive">3. Scénario</span>
                 <span class="step active">4. Compétences</span>
                 <span class="step inactive">5. Référentiels</span>
+                <span class="step inactive">6. Contenus</span>
+                <span class="step inactive">7. Export</span>
             </div>
         </div>
 
         <div class="content-container">
             <div class="info-banner">
                 <h2>📋 Formulation des Compétences</h2>
-                <p>Dans le scénario CMO, chaque section d'apprentissage repose sur une compétence visée claire et observable. Cette étape vous aide à formuler ces compétences à partir du domaine cognitif (taxonomie de Bloom révisée).</p>
+                <p>Dans le scénario CMO, chaque section d'apprentissage repose sur une compétence visée claire et observable. Cette étape vous aide à formuler ces compétences à partir de la taxonomie de Bloom révisée (domaines cognitif et affectif).</p>
+                <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 8px;">
+                    <h4 style="color: #1976d2; margin-bottom: 10px;">📚 Taxonomie de Bloom révisée :</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h5 style="color: #1976d2;">🧠 Domaine Cognitif</h5>
+                            <ul style="margin-left: 20px; font-size: 0.9em;">
+                                <li><strong>Créer</strong> : Produire du nouveau contenu</li>
+                                <li><strong>Évaluer</strong> : Porter un jugement</li>
+                                <li><strong>Analyser</strong> : Décomposer en éléments</li>
+                                <li><strong>Appliquer</strong> : Utiliser en situation</li>
+                                <li><strong>Comprendre</strong> : Construire du sens</li>
+                                <li><strong>Se rappeler</strong> : Retrouver des informations</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: #e91e63;">💝 Domaine Affectif</h5>
+                            <ul style="margin-left: 20px; font-size: 0.9em;">
+                                <li><strong>Caractériser</strong> : Intégrer des valeurs</li>
+                                <li><strong>Organiser</strong> : Systématiser des valeurs</li>
+                                <li><strong>Valoriser</strong> : Attribuer une valeur</li>
+                                <li><strong>Répondre</strong> : Réagir activement</li>
+                                <li><strong>Recevoir</strong> : Être conscient et prêt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="public-cible-recall">
@@ -1465,7 +1583,7 @@
                 </div>
                 <div class="form-group">
                     <label>Niveau :</label>
-                    <select id="editNiveau" class="form-control">
+                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
                         <option value="Haut : Créer / Évaluer / Analyser">Haut : Créer / Évaluer / Analyser</option>
                         <option value="Moyen : Appliquer / Comprendre" selected>Moyen : Appliquer / Comprendre</option>
                         <option value="Bas : Se rappeler">Bas : Se rappeler</option>
@@ -1474,6 +1592,12 @@
                 <div class="form-group">
                     <label>Verbes :</label>
                     <input type="text" id="editVerbes" value="" class="form-control" placeholder="Entrez les verbes...">
+                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
+                        <p class="bloom-verbs-title">💡 Suggestions de verbes selon la taxonomie de Bloom révisée (cognitif + affectif) :</p>
+                        <div id="bloomVerbsList" class="bloom-verbs-list">
+                            <!-- Les verbes seront chargés ici -->
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Formulation :</label>
@@ -1483,6 +1607,9 @@
             `;
             
             document.getElementById('editModal').style.display = 'block';
+            
+            // Load Bloom verbs for the default niveau
+            loadBloomVerbs();
         }
 
         function generateAISuggestions() {
@@ -1982,7 +2109,7 @@
                 </div>
                 <div class="form-group">
                     <label>Niveau :</label>
-                    <select id="editNiveau" class="form-control">
+                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
                         <option value="Haut : Créer / Évaluer / Analyser" ${competence.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
                         <option value="Moyen : Appliquer / Comprendre" ${competence.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
                         <option value="Bas : Se rappeler" ${competence.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
@@ -1991,6 +2118,12 @@
                 <div class="form-group">
                     <label>Verbes :</label>
                     <input type="text" id="editVerbes" value="${competence.verbes}" class="form-control">
+                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
+                        <p class="bloom-verbs-title">💡 Suggestions de verbes selon la taxonomie de Bloom révisée (cognitif + affectif) :</p>
+                        <div id="bloomVerbsList" class="bloom-verbs-list">
+                            <!-- Les verbes seront chargés ici -->
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Formulation :</label>
@@ -2000,6 +2133,9 @@
             `;
             
             document.getElementById('editModal').style.display = 'block';
+            
+            // Load Bloom verbs for the current niveau
+            loadBloomVerbs();
         }
 
         function addStepToCompetence(competenceId) {
@@ -2085,6 +2221,126 @@
 
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
+        }
+
+        function loadBloomVerbs() {
+            const niveauSelect = document.getElementById('editNiveau');
+            const bloomVerbsList = document.getElementById('bloomVerbsList');
+            
+            if (!niveauSelect || !bloomVerbsList) return;
+            
+            const selectedNiveau = niveauSelect.value;
+            
+            // Show loading
+            bloomVerbsList.innerHTML = '<p>Chargement des verbes...</p>';
+            
+            fetch(`/get_bloom_verbs/${encodeURIComponent(selectedNiveau)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayBloomVerbs(data.bloom_verbs);
+                    } else {
+                        bloomVerbsList.innerHTML = '<p class="error">Erreur lors du chargement des verbes</p>';
+                    }
+                })
+                .catch(error => {
+                    bloomVerbsList.innerHTML = '<p class="error">Erreur de connexion</p>';
+                });
+        }
+
+        function displayBloomVerbs(bloomVerbs) {
+            const bloomVerbsList = document.getElementById('bloomVerbsList');
+            
+            if (!bloomVerbsList) return;
+            
+            let html = '';
+            
+            // Séparer les domaines cognitif et affectif
+            const cognitiveLevels = ['creer', 'evaluer', 'analyser', 'appliquer', 'comprendre', 'se_rappeler'];
+            const affectiveLevels = ['caracteriser', 'organiser', 'valoriser', 'repondre', 'recevoir'];
+            
+            // Domaine cognitif
+            const cognitiveVerbs = {};
+            const affectiveVerbs = {};
+            
+            Object.entries(bloomVerbs).forEach(([level, levelData]) => {
+                if (cognitiveLevels.includes(level)) {
+                    cognitiveVerbs[level] = levelData;
+                } else if (affectiveLevels.includes(level)) {
+                    affectiveVerbs[level] = levelData;
+                }
+            });
+            
+            // Afficher le domaine cognitif
+            if (Object.keys(cognitiveVerbs).length > 0) {
+                html += '<h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.2em;">🧠 Domaine Cognitif</h3>';
+                
+                Object.entries(cognitiveVerbs).forEach(([level, levelData]) => {
+                    html += `
+                        <div class="bloom-level">
+                            <h4 class="bloom-level-title">${levelData.name}</h4>
+                            <p class="bloom-level-description">${levelData.description}</p>
+                            <div class="bloom-verbs-grid">
+                    `;
+                    
+                    levelData.verbs.forEach(verb => {
+                        html += `
+                            <button type="button" class="bloom-verb-btn" onclick="addBloomVerb('${verb}')">
+                                ${verb}
+                            </button>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Afficher le domaine affectif
+            if (Object.keys(affectiveVerbs).length > 0) {
+                html += '<h3 style="color: #e91e63; margin: 20px 0 15px 0; font-size: 1.2em;">💝 Domaine Affectif</h3>';
+                
+                Object.entries(affectiveVerbs).forEach(([level, levelData]) => {
+                    html += `
+                        <div class="bloom-level">
+                            <h4 class="bloom-level-title" style="color: #e91e63;">${levelData.name}</h4>
+                            <p class="bloom-level-description">${levelData.description}</p>
+                            <div class="bloom-verbs-grid">
+                    `;
+                    
+                    levelData.verbs.forEach(verb => {
+                        html += `
+                            <button type="button" class="bloom-verb-btn affective" onclick="addBloomVerb('${verb}')">
+                                ${verb}
+                            </button>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            bloomVerbsList.innerHTML = html;
+        }
+
+        function addBloomVerb(verb) {
+            const verbesInput = document.getElementById('editVerbes');
+            const currentVerbes = verbesInput.value.trim();
+            
+            if (currentVerbes) {
+                // Add comma and space if there are already verbs
+                verbesInput.value = currentVerbes + ', ' + verb;
+            } else {
+                verbesInput.value = verb;
+            }
+            
+            // Focus back to the input
+            verbesInput.focus();
         }
 
         // No initialization needed - all competences will have remove buttons

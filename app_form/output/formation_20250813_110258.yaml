@@ -13,7 +13,7 @@ etape_1_public_cible:
       pas dans l’utilisation d’outils et de méthodes d’IA afin de créer des contenus
       engageants, adaptés aux besoins de vos apprenants, tout en gagnant en efficacité
       et en créativité.
-last_updated: '2025-08-13T18:58:18.964878'
+last_updated: '2025-08-14T19:26:32.864222'
 current_step: etape_4_competences
 etape_2_contraintes:
   contraintes_formation:
@@ -77,73 +77,155 @@ etape_3_scenario:
     - Durée de 3h maximum
     - Poids total de 512 Mo maximum
     acknowledged: true
-    timestamp: '2025-08-13T18:44:35.187570'
+    timestamp: '2025-08-14T19:22:27.251498'
 etape_4_competences:
-  formulations_competences:
-  - Être capable d'utiliser des outils d'intelligence artificielle pour concevoir
-    des parcours pédagogiques adaptés.
-  - Être capable d'évaluer l'efficacité des parcours pédagogiques automatisés et d'apporter
-    des améliorations basées sur les résultats obtenus.
-  - Être capable d'innover et de proposer des formations créatives et engageantes
-    en intégrant les technologies d'intelligence artificielle.
-  competence_1:
-    titre: ''
-    idees_cles: outils, design pédagogique, IA
-    niveau: Bas
-    verbes: utiliser, manipuler, naviguer
-    formulation: Être capable d'utiliser des outils d'intelligence artificielle pour
-      concevoir des parcours pédagogiques adaptés.
-  competence_2:
-    titre: ''
-    idees_cles: évaluation, efficacité, automatisation
-    niveau: Haut
-    verbes: évaluer, mesurer, comparer
-    formulation: Être capable d'évaluer l'efficacité des parcours pédagogiques automatisés
-      et d'apporter des améliorations basées sur les résultats obtenus.
-  competence_3:
-    titre: ''
-    idees_cles: innovation, création, IA
-    niveau: Haut
-    verbes: innover, proposer, imaginer
-    formulation: Être capable d'innover et de proposer des formations créatives et
-      engageantes en intégrant les technologies d'intelligence artificielle.
+  formulations_competences: []
 evaluation_competences:
   ordre_competences:
   - code: C1
-    formulation: Être capable d'utiliser des outils d'intelligence artificielle pour
-      concevoir des parcours pédagogiques adaptés.
-    justification: C1 est la compétence de base qui permet aux enseignants de se familiariser
-      avec les outils d'IA avant de passer à des tâches plus complexes.
+    formulation: Être capable d'identifier et de nommer différents outils d'intelligence
+      artificielle adaptés à la création de contenus pédagogiques.
+    justification: C1 est la compétence la plus simple, car elle se concentre sur
+      l'identification et la description, ce qui est essentiel pour établir une base
+      de connaissances sur les outils d'IA.
     pertinence: élevée
   - code: C2
-    formulation: Être capable d'évaluer l'efficacité des parcours pédagogiques automatisés
-      et d'apporter des améliorations basées sur les résultats obtenus.
-    justification: C2 nécessite une compréhension des outils (C1) et permet d'appliquer
-      une réflexion critique sur l'utilisation de l'IA dans l'évaluation.
+    formulation: Être capable d'innover dans la conception pédagogique en intégrant
+      des solutions d'intelligence artificielle pour améliorer l'engagement et l'apprentissage.
+    justification: C2 est une progression naturelle après C1, car elle demande d'appliquer
+      les connaissances acquises pour innover dans la conception pédagogique.
     pertinence: élevée
   - code: C3
-    formulation: Être capable d'innover et de proposer des formations créatives et
-      engageantes en intégrant les technologies d'intelligence artificielle.
-    justification: C3 est la compétence la plus avancée, nécessitant à la fois l'utilisation
-      des outils (C1) et l'évaluation de leur efficacité (C2) pour innover.
+    formulation: Être capable d'évaluer l'efficacité des contenus pédagogiques générés
+      par l'intelligence artificielle en mesurant leur impact sur l'apprentissage
+      des élèves.
+    justification: C3 est la compétence la plus complexe, car elle nécessite une analyse
+      critique et une évaluation des contenus, ce qui est une étape avancée dans le
+      processus d'apprentissage.
     pertinence: élevée
-  avis_global: 'L''alignement pédagogique est respecté, avec une progression logique
-    des compétences allant de l''utilisation des outils d''IA à l''évaluation de leur
-    efficacité, puis à l''innovation. Chaque compétence s''appuie sur la précédente,
-    assurant une montée en complexité cohérente.
+  avis_global: 'L''ordre des compétences est cohérent avec les principes de l''alignement
+    pédagogique de Biggs. La progression de C1 à C3 suit une logique de complexité
+    croissante, passant de l''identification à l''innovation, puis à l''évaluation.
+    Chaque compétence est pertinente pour le public cible et les objectifs de la formation.
 
     '
   points_amelioration:
-  - Ajouter une compétence intermédiaire qui aborde l'application des outils d'IA
-    dans des scénarios pédagogiques concrets.
+  - Ajouter une compétence de niveau bas pour faciliter l'accès aux concepts de base
+    de l'IA.
   competence_complementaire:
-    titre: Appliquer des outils d'intelligence artificielle dans des scénarios pédagogiques
-    niveau: Moyen
-    idees_cles: application, scénarios, outils IA
-    verbes: appliquer, adapter, contextualiser
-    formulation: Être capable d'appliquer des outils d'intelligence artificielle dans
-      des scénarios pédagogiques concrets pour améliorer l'engagement des apprenants.
-    justification: Cette compétence est nécessaire pour faire le lien entre l'utilisation
-      des outils (C1) et l'évaluation de leur efficacité (C2), en fournissant un contexte
-      pratique.
-    position_suggeree: entre C1 et C2
+    titre: Comprendre les concepts fondamentaux de l'intelligence artificielle
+    niveau: Bas
+    idees_cles: IA, concepts, fondamentaux, éducation
+    verbes: définir, expliquer, reconnaître
+    formulation: Être capable de définir et d'expliquer les concepts fondamentaux
+      de l'intelligence artificielle et leur pertinence dans le contexte éducatif.
+    justification: Cette compétence est nécessaire pour établir une base solide avant
+      d'aborder les outils et les applications de l'IA dans l'éducation.
+    position_suggeree: début
+referentiels_par_section:
+- adaptations_cua:
+  - adaptation: Proposer des études de cas plus complexes pour analyser les impacts
+      des formations.
+    besoin: Différenciation pour les apprenants avancés
+  competence: Être capable d'évaluer l'impact des formations créées avec l'IA et d'analyser
+    les retours d'expérience pour des améliorations futures.
+  niveaux:
+  - badge: non
+    degre: 1
+    libelle: Je débute
+    observable_qualitatif: Je suis capable de décrire les objectifs des formations
+      créées avec l'IA.
+    observable_quantitatif: Je peux identifier au moins 1 objectif de formation.
+  - badge: non
+    degre: 2
+    libelle: Je progresse
+    observable_qualitatif: Je suis capable d'analyser les retours d'expérience des
+      participants.
+    observable_quantitatif: Je peux recueillir et analyser les retours d'au moins
+      3 participants.
+  - badge: oui
+    degre: 3
+    libelle: Je suis autonome
+    observable_qualitatif: Je suis capable de proposer des améliorations basées sur
+      l'analyse des retours d'expérience.
+    observable_quantitatif: Je peux formuler au moins 2 suggestions d'amélioration
+      après chaque formation.
+  - badge: non
+    degre: 4
+    libelle: Je maîtrise avec aisance
+    observable_qualitatif: Je suis capable de concevoir des formations en intégrant
+      des évaluations d'impact dès le départ.
+    observable_quantitatif: Je peux démontrer l'impact de mes formations sur au moins
+      5 indicateurs clés.
+  section: 3
+- adaptations_cua:
+  - adaptation: Création de modules de formation adaptés, incluant des ressources
+      variées et des évaluations formatives.
+    besoin: Apprenants avec des besoins spécifiques d'apprentissage
+  competence: Être capable d'analyser les besoins des apprenants afin de personnaliser
+    les parcours pédagogiques.
+  niveaux:
+  - badge: non
+    degre: 1
+    libelle: Je débute
+    observable_qualitatif: Je suis capable de reconnaître que chaque apprenant a des
+      besoins différents.
+    observable_quantitatif: Je peux identifier 1 à 2 besoins par session d'apprentissage.
+  - badge: non
+    degre: 2
+    libelle: Je progresse
+    observable_qualitatif: Je suis capable de recueillir des informations sur les
+      besoins des apprenants.
+    observable_quantitatif: Je réalise 3 à 5 entretiens ou questionnaires par mois.
+  - badge: oui
+    degre: 3
+    libelle: Je suis autonome
+    observable_qualitatif: Je suis capable d'analyser et de synthétiser les besoins
+      des apprenants pour adapter les parcours.
+    observable_quantitatif: J'élabore des parcours personnalisés pour au moins 75%
+      de mes apprenants.
+  - badge: non
+    degre: 4
+    libelle: Je maîtrise avec aisance
+    observable_qualitatif: Je suis capable d'innover dans l'analyse des besoins et
+      de partager mes pratiques.
+    observable_quantitatif: Je participe à 2 à 3 projets collaboratifs par an sur
+      l'analyse des besoins.
+  section: 2
+- adaptations_cua:
+  - adaptation: Utiliser des infographies et des vidéos explicatives pour mieux comprendre
+      les concepts.
+    besoin: Apprentissage visuel
+  - adaptation: Proposer des podcasts ou des discussions en groupe sur les concepts
+      d'intelligence artificielle.
+    besoin: Apprentissage auditif
+  competence: Être capable de définir et d'expliquer les concepts fondamentaux de
+    l'intelligence artificielle appliqués à l'éducation.
+  niveaux:
+  - badge: non
+    degre: 1
+    libelle: Je débute
+    observable_qualitatif: Je suis capable de définir quelques concepts de base de
+      l'intelligence artificielle.
+    observable_quantitatif: Je peux énumérer au moins 2 concepts fondamentaux.
+  - badge: non
+    degre: 2
+    libelle: Je progresse
+    observable_qualitatif: Je suis capable d'expliquer ces concepts de manière simple.
+    observable_quantitatif: Je peux expliquer au moins 3 concepts fondamentaux avec
+      des exemples.
+  - badge: oui
+    degre: 3
+    libelle: Je suis autonome
+    observable_qualitatif: Je suis capable d'appliquer ces concepts dans des situations
+      éducatives concrètes.
+    observable_quantitatif: Je peux animer une discussion ou un atelier sur l'intelligence
+      artificielle avec au moins 5 participants.
+  - badge: non
+    degre: 4
+    libelle: Je maîtrise avec aisance
+    observable_qualitatif: Je suis capable de critiquer et d'évaluer l'impact de l'intelligence
+      artificielle dans l'éducation.
+    observable_quantitatif: Je peux rédiger un article ou une présentation d'au moins
+      1500 mots sur le sujet, intégrant des recherches récentes.
+  section: 1

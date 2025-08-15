@@ -241,6 +241,38 @@ def get_verb_suggestions(niveau):
             'error': str(e)
         })
 
+@app.route('/get_bloom_verbs/<niveau>')
+def get_bloom_verbs(niveau):
+    """Get Bloom taxonomy verbs for a specific level"""
+    try:
+        from questions.competences import COMPETENCES_QUESTIONS
+        
+        # Map niveau to bloom taxonomy keys
+        niveau_mapping = {
+            'Haut : Créer / Évaluer / Analyser': ['creer', 'evaluer', 'analyser', 'caracteriser', 'organiser'],
+            'Moyen : Appliquer / Comprendre': ['appliquer', 'comprendre', 'valoriser', 'repondre'],
+            'Bas : Se rappeler': ['se_rappeler', 'recevoir']
+        }
+        
+        bloom_taxonomy = COMPETENCES_QUESTIONS.get('bloom_taxonomy', {})
+        selected_levels = niveau_mapping.get(niveau, [])
+        
+        result = {}
+        for level in selected_levels:
+            if level in bloom_taxonomy:
+                result[level] = bloom_taxonomy[level]
+        
+        return jsonify({
+            'success': True,
+            'bloom_verbs': result,
+            'niveau': niveau
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        })
+
 @app.route('/generate_ai_suggestions', methods=['POST'])
 def generate_ai_suggestions():
     """Generate AI suggestions for competencies based on formation data"""
@@ -574,8 +606,566 @@ def update_referentiel_route():
 
 @app.route('/contenus')
 def contenus():
-    """Placeholder for the next step - Contenus par section"""
-    return render_template('contenus.html', step=5, total_steps=5)
+    """Contenus pédagogiques page - selection of intentions, resources and activities"""
+    # Get sections from session data
+    sections = []
+    if 'session_id' in session:
+        filename = get_session_filename()
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    yaml_data = yaml.safe_load(f) or {}
+                
+                if 'ordre_competences' in yaml_data:
+                    sections = yaml_data['ordre_competences'].get('sections', [])
+            except Exception as e:
+                print(f"Erreur lors du chargement des sections: {str(e)}")
+    
+    # Get existing contenus
+    existing_contenus = []
+    if 'session_id' in session:
+        filename = get_session_filename()
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    yaml_data = yaml.safe_load(f) or {}
+                
+                if 'contenus_sections' in yaml_data:
+                    existing_contenus = yaml_data['contenus_sections']
+            except Exception as e:
+                print(f"Erreur lors du chargement des contenus existants: {str(e)}")
+    
+    return render_template('contenus.html', 
+                         step=6, 
+                         total_steps=7, 
+                         sections=sections,
+                         existing_contenus=existing_contenus)
+
+@app.route('/export')
+def export():
+    """Final export page - allows selection of any YAML file for export"""
+    return render_template('export.html', step=7, total_steps=7)
+
+@app.route('/get_available_files')
+def get_available_files():
+    """Get list of available YAML files in the output directory"""
+    try:
+        files = []
+        if os.path.exists(OUTPUT_DIR):
+            for filename in os.listdir(OUTPUT_DIR):
+                if filename.endswith('.yaml') or filename.endswith('.yml'):
+                    filepath = os.path.join(OUTPUT_DIR, filename)
+                    # Get file modification time
+                    mtime = os.path.getmtime(filepath)
+                    date_str = datetime.fromtimestamp(mtime).strftime('%d/%m/%Y %H:%M')
+                    files.append({
+                        'filename': filename,
+                        'date': date_str
+                    })
+        
+        # Sort files by modification time (newest first)
+        files.sort(key=lambda x: x['date'], reverse=True)
+        
+        return jsonify({
+            'success': True,
+            'files': files
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': f'Erreur lors du chargement de la liste: {str(e)}'})
+
+@app.route('/get_file_data', methods=['POST'])
+def get_file_data():
+    """Get data from a specific YAML file"""
+    try:
+        data = request.get_json()
+        filename = data.get('filename')
+        
+        if not filename:
+            return jsonify({'success': False, 'error': 'Nom de fichier manquant'})
+        
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        
+        if not os.path.exists(filepath):
+            return jsonify({'success': False, 'error': 'Fichier non trouvé'})
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
+            yaml_data = yaml.safe_load(f) or {}
+        
+        return jsonify({
+            'success': True,
+            'data': yaml_data
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': f'Erreur lors du chargement: {str(e)}'})
+
+@app.route('/get_session_data')
+def get_session_data():
+    """Get all session data for the export page"""
+    if 'session_id' not in session:
+        return jsonify({'success': False, 'error': 'Aucune session active'})
+    
+    filename = get_session_filename()
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    
+    if not os.path.exists(filepath):
+        return jsonify({'success': False, 'error': 'Fichier non trouvé'})
+    
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            yaml_data = yaml.safe_load(f) or {}
+        
+        return jsonify({
+            'success': True,
+            'data': yaml_data
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': f'Erreur lors du chargement: {str(e)}'})
+
+
+
+@app.route('/export_data', methods=['POST'])
+def export_data():
+    """Export data in the requested format"""
+    try:
+        data = request.get_json()
+        format_type = data.get('format', 'markdown')
+        generation_type = data.get('generation', 'gpt4')
+        yaml_data = data.get('data', {})
+        
+        if format_type == 'markdown':
+            if generation_type == 'gpt4':
+                content = generate_markdown_export(yaml_data)
+            else:
+                content = generate_markdown_fallback(yaml_data)
+            filename = f"macrodesign_formation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+            mimetype = 'text/markdown'
+        elif format_type == 'yaml':
+            content = yaml.dump(yaml_data, default_flow_style=False, allow_unicode=True, sort_keys=False)
+            filename = f"macrodesign_formation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.yaml"
+            mimetype = 'application/x-yaml'
+        else:
+            return jsonify({'success': False, 'error': 'Format non supporté'}), 400
+        
+        from flask import send_file
+        from io import BytesIO
+        
+        # Create file-like object
+        file_obj = BytesIO(content.encode('utf-8'))
+        file_obj.seek(0)
+        
+        return send_file(
+            file_obj,
+            mimetype=mimetype,
+            as_attachment=True,
+            download_name=filename
+        )
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/generate_contenus', methods=['POST'])
+def generate_contenus():
+    """Generate contenus for a section based on competence"""
+    try:
+        data = request.get_json()
+        section_num = data.get('section_num')
+        competence = data.get('competence')
+        
+        if not section_num or not competence:
+            return jsonify({'success': False, 'error': 'Données manquantes'})
+        
+        # Import OpenAI client
+        from openai import OpenAI
+        import os
+        
+        # Initialize OpenAI client
+        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        
+        # Create prompt for contenus generation
+        prompt = f"""
+Tu es un expert en pédagogie et en conception de formation. Tu dois sélectionner automatiquement les contenus pédagogiques pour une section d'apprentissage basée sur la compétence suivante.
+
+Compétence de la section {section_num} : {competence}
+
+Selon les règles ABC Learning Design et les prompts A_010a et A_010b, tu dois sélectionner :
+
+1. **Intention secondaire ABC** selon le type de compétence :
+   - Mémorisation/compréhension → Acquisition (déjà incluse)
+   - Application/entraînement → Entraînement
+   - Restitution/réalisation → Production
+   - Réflexion/posture → Discussion
+   - Coopération/co-construction → Collaboration
+   - Exploration/investigation → Enquête
+
+2. **Ressource principale** (1 seule, type "Ressource" ou "Ressource H5P", priorité recommandation=3)
+
+3. **Activité principale** (obligatoire, type "Activité" ou "Activité H5P", priorité recommandation=3)
+
+4. **Activité secondaire** (optionnelle si utile, même critères)
+
+5. **Discussion contextualisée** pour le forum
+
+6. **Badge** avec formulation fixe : "Réussite si atteinte du degré 3 (autoévaluation)"
+
+Pour chaque sélection, fournis une justification pédagogique.
+
+Retourne un objet JSON avec cette structure :
+{{
+    "section": {section_num},
+    "intention_secondaire": "Nom de l'intention",
+    "ressource_principale": {{
+        "id": "ID de la ressource",
+        "type": "Type de ressource",
+        "nom": "Nom de la ressource"
+    }},
+    "activite_principale": {{
+        "id": "ID de l'activité",
+        "type": "Type d'activité",
+        "nom": "Nom de l'activité"
+    }},
+    "activite_secondaire": {{
+        "id": "ID de l'activité",
+        "type": "Type d'activité",
+        "nom": "Nom de l'activité"
+    }},
+    "discussion": "Description de la discussion contextualisée",
+    "justification_intention": "Justification de l'intention choisie",
+    "justification_ressource": "Justification de la ressource choisie",
+    "justification_activite1": "Justification de l'activité principale",
+    "justification_activite2": "Justification de l'activité secondaire"
+}}
+
+Note : Pour les ressources et activités, utilise des exemples réalistes basés sur des outils pédagogiques courants (Moodle, H5P, etc.).
+"""
+        
+        # Call GPT-4
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Tu es un expert en pédagogie qui sélectionne des contenus pédagogiques selon les règles ABC Learning Design."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.7,
+            max_tokens=2000
+        )
+        
+        # Extract the generated contenus
+        contenus_content = response.choices[0].message.content.strip()
+        
+        # Parse JSON response
+        import json
+        try:
+            contenus_data = json.loads(contenus_content)
+            return jsonify({
+                'success': True,
+                'contenus': contenus_data
+            })
+        except json.JSONDecodeError:
+            # Fallback to manual generation
+            return jsonify({
+                'success': True,
+                'contenus': generate_contenus_fallback(section_num, competence)
+            })
+        
+    except Exception as e:
+        print(f"Erreur lors de la génération des contenus: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+def generate_contenus_fallback(section_num, competence):
+    """Fallback manual contenus generation"""
+    return {
+        "section": section_num,
+        "intention_secondaire": "Entraînement",
+        "ressource_principale": {
+            "id": "RES001",
+            "type": "Ressource H5P",
+            "nom": "Vidéo interactive avec quiz"
+        },
+        "activite_principale": {
+            "id": "ACT001",
+            "type": "Activité H5P",
+            "nom": "Exercice d'application"
+        },
+        "activite_secondaire": {
+            "id": "ACT002",
+            "type": "Activité",
+            "nom": "Devoir à rendre"
+        },
+        "discussion": f"Partagez vos expériences et difficultés rencontrées dans l'acquisition de la compétence : {competence}",
+        "justification_intention": "Intention Entraînement pour permettre l'application pratique",
+        "justification_ressource": "Ressource interactive adaptée à l'apprentissage",
+        "justification_activite1": "Activité principale pour valider la compétence",
+        "justification_activite2": "Activité complémentaire pour approfondir"
+    }
+
+@app.route('/save_contenus', methods=['POST'])
+def save_contenus():
+    """Save contenus to YAML file"""
+    try:
+        data = request.get_json()
+        contenus = data.get('contenus')
+        
+        if not contenus:
+            return jsonify({'success': False, 'error': 'Données manquantes'})
+        
+        if 'session_id' not in session:
+            return jsonify({'success': False, 'error': 'Aucune session active'})
+        
+        filename = get_session_filename()
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        
+        # Load existing data
+        yaml_data = {}
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                yaml_data = yaml.safe_load(f) or {}
+        
+        # Initialize contenus_sections if not exists
+        if 'contenus_sections' not in yaml_data:
+            yaml_data['contenus_sections'] = []
+        
+        # Add or update contenus
+        section_num = contenus.get('section')
+        existing_index = None
+        
+        for i, existing in enumerate(yaml_data['contenus_sections']):
+            if existing.get('section') == section_num:
+                existing_index = i
+                break
+        
+        if existing_index is not None:
+            yaml_data['contenus_sections'][existing_index] = contenus
+        else:
+            yaml_data['contenus_sections'].append(contenus)
+        
+        # Save to file
+        with open(filepath, 'w', encoding='utf-8') as f:
+            yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+        
+        return jsonify({'success': True})
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+def generate_markdown_export(yaml_data):
+    """Generate complete markdown export using GPT-4"""
+    try:
+        # Import OpenAI client
+        from openai import OpenAI
+        import os
+        
+        # Initialize OpenAI client
+        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        
+        # Create a comprehensive prompt for GPT-4
+        prompt = f"""
+Tu es un expert en pédagogie et en conception de formation. Tu dois créer un document Markdown professionnel et complet pour un macrodesign pédagogique basé sur les données suivantes.
+
+Voici les données du macrodesign au format YAML :
+
+```yaml
+{yaml.dump(yaml_data, default_flow_style=False, allow_unicode=True, sort_keys=False)}
+```
+
+Crée un document Markdown complet et professionnel qui :
+
+1. **Structure claire** : Utilise une hiérarchie de titres appropriée (# pour le titre principal, ## pour les sections principales, ### pour les sous-sections)
+2. **Formatage riche** : Utilise les emojis appropriés, le gras, l'italique, les listes à puces et numérotées
+3. **Contenu complet** : Inclus toutes les informations importantes des données YAML
+4. **Style professionnel** : Rédige un document qui pourrait être utilisé dans un contexte professionnel de formation
+5. **Organisation logique** : Structure le document de manière logique et pédagogique
+
+Le document doit inclure :
+- Un titre principal attractif
+- Une section d'informations générales avec public cible, contraintes, et contexte
+- Une section détaillée sur les compétences visées
+- Une section complète sur les référentiels d'autoévaluation avec tous les niveaux
+- Un pied de page professionnel
+
+Utilise des emojis appropriés pour rendre le document visuellement attractif.
+Assure-toi que le document soit bien structuré et facile à lire.
+
+Retourne uniquement le contenu Markdown, sans commentaires supplémentaires.
+"""
+        
+        # Call GPT-4
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Tu es un expert en pédagogie et en rédaction de documents de formation. Tu crées des documents Markdown professionnels et bien structurés."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.7,
+            max_tokens=4000
+        )
+        
+        # Extract the generated markdown
+        markdown_content = response.choices[0].message.content.strip()
+        
+        # Add timestamp at the beginning
+        timestamp = f"*Généré le {datetime.now().strftime('%d/%m/%Y à %H:%M')}*"
+        if markdown_content.startswith("#"):
+            # Insert timestamp after the first line
+            lines = markdown_content.split('\n', 1)
+            markdown_content = f"{lines[0]}\n{timestamp}\n{lines[1] if len(lines) > 1 else ''}"
+        
+        return markdown_content
+        
+    except Exception as e:
+        # Fallback to manual generation if GPT-4 fails
+        print(f"Erreur lors de la génération avec GPT-4: {str(e)}")
+        return generate_markdown_fallback(yaml_data)
+
+def generate_markdown_fallback(yaml_data):
+    """Fallback manual markdown generation if GPT-4 fails"""
+    lines = []
+    
+    # Header
+    lines.append("# Macrodesign Pédagogique")
+    lines.append(f"*Généré le {datetime.now().strftime('%d/%m/%Y à %H:%M')}*")
+    lines.append("")
+    
+    # General information
+    lines.append("## 📋 Informations Générales")
+    lines.append("")
+    
+    if 'etape_1_public_cible' in yaml_data:
+        pc = yaml_data['etape_1_public_cible']
+        if 'public_cible' in pc:
+            pc_data = pc['public_cible']
+            lines.append("### Public Cible")
+            lines.append(f"- **Type:** {pc_data.get('type', 'Non défini')}")
+            lines.append(f"- **Profil:** {pc_data.get('profil', 'Non défini')}")
+            lines.append(f"- **Niveau d'expertise:** {pc_data.get('niveau_expertise', 'Non défini')}")
+            if pc_data.get('besoins_specifiques'):
+                lines.append(f"- **Besoins spécifiques:** {pc_data['besoins_specifiques']}")
+            lines.append("")
+        
+        if 'contexte_formation' in pc:
+            ctx = pc['contexte_formation']
+            lines.append("### Contexte de Formation")
+            lines.append(f"- **Titre:** {ctx.get('titre', 'Non défini')}")
+            lines.append(f"- **Objectif général:** {ctx.get('objectif_general', 'Non défini')}")
+            lines.append("")
+    
+    if 'etape_2_contraintes' in yaml_data:
+        cont = yaml_data['etape_2_contraintes']
+        if 'contraintes_formation' in cont:
+            cf = cont['contraintes_formation']
+            lines.append("### Contraintes de Formation")
+            lines.append(f"- **Type de parcours:** {cf.get('type_parcours', 'Non défini')}")
+            lines.append(f"- **Temps total:** {cf.get('temps_total', 'Non défini')}")
+            lines.append(f"- **Autonomie:** {cf.get('autonomie', 'Non défini')}")
+            lines.append(f"- **Animation:** {cf.get('animation', 'Non défini')}")
+            lines.append(f"- **Calendrier:** {cf.get('calendrier', 'Non défini')}")
+            lines.append(f"- **Horaires:** {cf.get('horaires', 'Non défini')}")
+            lines.append(f"- **Nombre de participants:** {cf.get('nombre_participants', 'Non défini')}")
+            lines.append("")
+    
+    if 'etape_3_scenario' in yaml_data:
+        scen = yaml_data['etape_3_scenario']
+        if 'scenario_cmo' in scen:
+            sc = scen['scenario_cmo']
+            lines.append("### Scénario Pédagogique")
+            lines.append(f"- **Titre:** {sc.get('title', 'Non défini')}")
+            lines.append(f"- **Description:** {sc.get('description', 'Non défini')}")
+            
+            if sc.get('sections'):
+                lines.append("- **Structure:**")
+                for section in sc['sections']:
+                    lines.append(f"  - **Section {section.get('number', '?')}:** {section.get('type', 'Non défini')} - {section.get('content', 'Non défini')} ({section.get('modality', 'Non défini')})")
+            lines.append("")
+    
+    # Competences
+    if 'etape_4_competences' in yaml_data:
+        comp = yaml_data['etape_4_competences']
+        lines.append("## 🎯 Compétences Visées")
+        lines.append("")
+        
+        if 'formulations_competences' in comp:
+            competences = comp['formulations_competences']
+            for i, competence in enumerate(competences, 1):
+                lines.append(f"### Compétence {i}")
+                lines.append(f"**Formulation:** {competence}")
+                lines.append("")
+        
+        # Add detailed competence information if available
+        for i in range(1, 4):  # Check for competence_1, competence_2, competence_3
+            comp_key = f'competence_{i}'
+            if comp_key in comp:
+                comp_data = comp[comp_key]
+                lines.append(f"#### Détails Compétence {i}")
+                if comp_data.get('titre'):
+                    lines.append(f"**Titre:** {comp_data['titre']}")
+                if comp_data.get('idees_cles'):
+                    lines.append(f"**Idées clés:** {comp_data['idees_cles']}")
+                if comp_data.get('niveau'):
+                    lines.append(f"**Niveau:** {comp_data['niveau']}")
+                if comp_data.get('verbes'):
+                    lines.append(f"**Verbes d'action:** {comp_data['verbes']}")
+                lines.append("")
+    
+    # Referentiels
+    if 'referentiels_par_section' in yaml_data:
+        refs = yaml_data['referentiels_par_section']
+        lines.append("## 📊 Référentiels d'Autoévaluation")
+        lines.append("")
+        
+        for referentiel in refs:
+            section_num = referentiel.get('section', 'Non défini')
+            lines.append(f"### Section {section_num}")
+            lines.append(f"**Compétence évaluée:** {referentiel.get('competence', 'Non défini')}")
+            lines.append("")
+            lines.append("**Degrés de maîtrise:**")
+            
+            niveaux = referentiel.get('niveaux', [])
+            for niveau in niveaux:
+                degre = niveau.get('degre', '')
+                libelle = niveau.get('libelle', '')
+                badge = niveau.get('badge', 'non')
+                badge_text = " (Badge)" if badge == 'oui' else ""
+                lines.append(f"{degre}. {libelle}{badge_text}")
+                
+                # Add observables if available
+                if niveau.get('observable_qualitatif'):
+                    lines.append(f"   - *Qualitatif:* {niveau['observable_qualitatif']}")
+                if niveau.get('observable_quantitatif'):
+                    lines.append(f"   - *Quantitatif:* {niveau['observable_quantitatif']}")
+                lines.append("")
+            
+            # Add CUA adaptations if available
+            if referentiel.get('adaptations_cua'):
+                lines.append("**Adaptations CUA:**")
+                for adaptation in referentiel['adaptations_cua']:
+                    if isinstance(adaptation, dict):
+                        lines.append(f"- **Besoin:** {adaptation.get('besoin', 'Non défini')}")
+                        lines.append(f"  **Adaptation:** {adaptation.get('adaptation', 'Non défini')}")
+                    else:
+                        lines.append(f"- {adaptation}")
+                lines.append("")
+    
+    # Footer
+    lines.append("---")
+    lines.append("*Document généré automatiquement par l'Assistant IA Magistère*")
+    lines.append("*Communauté Magistère Occitanie (CMO)*")
+    
+    return "\n".join(lines)
 
 @app.route('/download_yaml')
 def download_yaml():
