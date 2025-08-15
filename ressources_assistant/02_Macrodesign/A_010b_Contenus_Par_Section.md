@@ -1,7 +1,7 @@
 [INSTRUCTION_ASSISTANT] :
 - **But** : Générer automatiquement, pour les sections S2 à S5, un tableau complet des contenus pédagogiques à partir :
   - du bloc `ordre_competences` validé (A_008_Organisation_Competences.md),
-  - du fichier Markdown `R_03_001_Tableau_Activites_Ressources.md` (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),
+  - du fichier Markdown `R_03_Tableau_Activites_Ressources.md` (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),
   - des règles ABC Learning Design (A_010a_Consignes_Choix_Intentions_Ressources_Activites.md).
 
 - **Règles de sélection** :

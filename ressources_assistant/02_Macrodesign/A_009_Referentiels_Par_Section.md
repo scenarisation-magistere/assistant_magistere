@@ -1,110 +1,160 @@
 [INSTRUCTION_ASSISTANT] :
+> **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
+> **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N’EST AUTORISÉE.**
+
 - Ne jamais afficher ce bloc au formateur. **Markdown uniquement**.
 - Importer automatiquement :
-  - `ordre_competences` validé dans **A_008_Organisation_Competences.md** (ordre des sections d’apprentissage S2→S5).
+  - `ordre_competences` validé dans **A_008_Organisation_Competences.md**.
   - `formulations_competences` validées dans **A_007_Competences_Visees.md**.
-  - `public_cible.besoins_specifiques` validés dans **A_004_Public_Cible.md**.
-- Pour chaque section d’apprentissage :
-  1) Annoncer la section et rappeler la compétence associée.
-  2) Générer une première version du référentiel avec :
-     - 4 degrés de progression (`Je débute`, `Je progresse`, `Je suis autonome`, `Je maîtrise avec aisance`).
-     - Pour chaque degré : un **indicateur qualitatif** (type “Je suis capable de…”) et un **indicateur quantitatif** (score, fréquence, action réalisée).
-     - Une **adaptation CUA optionnelle** :
-       - Si `public_cible.besoins_specifiques` est vide → ne rien afficher.
-       - Si au moins un besoin est présent → suggérer **une adaptation par besoin**, en lien avec la compétence visée.  
-         *Exemples :*
-           - Fatigabilité importante → prévoir des pauses et fractionner la tâche.
-           - Troubles des fonctions exécutives → fournir un guide pas-à-pas visuel.
-           - Trouble de la vision → proposer un support accessible (police agrandie, contraste renforcé).
-     - Un badge **"oui"** si degré 3 atteint.
-  3) Demander au formateur s’il valide ou souhaite modifier (Oui/Non).
-  4) Si Non : recueillir les modifications, mettre à jour et reproposer.
-  5) Une fois validé, enregistrer dans `referentiels_par_section`.
-- Après la dernière section :
-  - Générer le bloc YAML `referentiels_par_section` dans l’ordre S2→S5.
-  - Afficher **Synthèse** + **bloc YAML** + consigne **Valider / Corriger**.
-  - Si **Corriger**, ne redemander que les champs visés, mettre à jour YAML et réafficher.
-- Passer automatiquement à **A_010_Contenus_Par_Section.md** à validation.
+- Présenter les compétences **séparément** (Compétence 1 à Compétence 4) dans l’ordre de `ordre_competences`.
+- Pour chaque compétence :
+  - Créer 4 degrés : `Je débute`, `Je progresse`, `Je suis autonome`, `Je maîtrise avec aisance`.
+  - Indicateur **qualitatif** : texte lié directement à la compétence (proposé par l’assistant).
+  - Indicateur **quantitatif** (fixe) :
+    - Je débute → **25 %** de réussite dans l’activité proposée.
+    - Je progresse → **50 %** de réussite dans l’activité proposée.
+    - Je suis autonome → **75 %** de réussite dans l’activité proposée.
+    - Je maîtrise avec aisance → **> 75 %** de réussite dans l’activité proposée.
+  - **Badge** = "oui" si **degré 3** atteint ; sinon "non".
+- Ne pas inclure d’adaptations CUA par défaut (les ajouter uniquement si le formateur les demande explicitement).
+- Afficher **tous les tableaux** (2 à 4 compétences), puis demander une **validation globale** unique.
+- Si **Non** : demander uniquement les **modifications ciblées**, mettre à jour et **réafficher** tous les tableaux.
+- Si **Oui** : générer le **bloc YAML final complet** `referentiels_par_section` (sections 2 → 5), puis afficher **Synthèse + YAML + consigne Valider/Corriger**.
+- Si **Corriger** : ne redemander que les champs visés, mettre à jour le YAML et **réafficher**.
+- Si **Valider** : **enregistrer** et **passer automatiquement** au prompt suivant : **A_010_Contenus_Par_Section.md**.
 
 ---
 
-# 🧭 A_009 — Référentiels d’auto-évaluation par section
+# 🧭 A_009 — Référentiels d’auto-évaluation (validation globale)
 
 ## 🎯 Objectif
-Générer un **référentiel d’auto-évaluation clair, progressif et accessible** pour chaque section d’apprentissage, à partir des compétences définies dans **A_008_Organisation_Competences.md**.
-
-Ce prompt s’inscrit dans une double logique pédagogique :  
-- **Alignement pédagogique** (*Biggs*) : cohérence entre objectifs, activités et évaluation.  
-- **Backward Design** (*Wiggins & McTighe*) : partir des résultats attendus (évaluation) pour concevoir la formation.  
-
-👉 Synthèse modèles pédagogiques : [R_02_001_RC_Modeles_Pedagogiques_Inspirants.md](R_02_001_RC_Modeles_Pedagogiques_Inspirants.md)  
-
-> 📌 Chaque compétence est liée à une ressource et à une activité. Le référentiel vient compléter cet alignement.
+Produire des référentiels clairs, séparés par compétence, avec indicateurs qualitatifs liés à la compétence et indicateurs quantitatifs fixes, puis valider l’ensemble en une seule fois.
 
 ---
 
-## 1️⃣ Création interactive du référentiel
+## 📋 Tableaux par compétence
 
-Pour la section **[numéro]** – compétence : **[formulation compétence]**  
-Voici une première proposition :
+### Compétence 1 — [Formulation compétence 1]
+| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
+|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
+| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
+| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
+| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
+| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
 
-| Degré | Libellé                        | Indicateur qualitatif                  | Indicateur quantitatif          | Adaptation CUA (si besoin)              | Badge |
-|-------|---------------------------------|------------------------------------------|----------------------------------|------------------------------------------|-------|
-| 1     | Je débute                       | …                                        | …                                | … *(si applicable)*                      | non   |
-| 2     | Je progresse                    | …                                        | …                                | … *(si applicable)*                      | non   |
-| 3     | Je suis autonome                | …                                        | …                                | … *(si applicable)*                      | oui   |
-| 4     | Je maîtrise avec aisance        | …                                        | …                                | … *(si applicable)*                      | non   |
+---
 
-Souhaitez-vous conserver cette version ? (Oui/Non)  
+### Compétence 2 — [Formulation compétence 2]
+| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
+|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
+| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
+| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
+| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
+| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+
+---
+
+### Compétence 3 — [Formulation compétence 3]
+| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
+|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
+| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
+| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
+| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
+| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+
+---
+
+### Compétence 4 — [Formulation compétence 4]
+| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
+|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
+| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
+| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
+| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
+| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+
+*(Si seulement 2 ou 3 compétences : n’afficher que les tableaux correspondants, dans l’ordre de `ordre_competences`.)*
+
+---
+
+## 🔍 Validation globale
+Souhaitez-vous conserver l’ensemble de ces propositions ? (**Oui/Non**)  
 **Réponse : [à compléter]**
 
 ---
 
-## 2️⃣ Modifications (si besoin)
-Si **Non**, indiquez vos modifications pour chaque degré et/ou adaptation CUA.  
+## ✏️ Modifications globales (si besoin)
+Si **Non**, indiquez uniquement les compétences et degrés à modifier.  
 **Réponse : [à compléter]**
 
 ---
 
-## 3️⃣ Validation
-Confirmez-vous ce référentiel pour la section **[numéro]** ? (Oui/Non)  
-**Réponse : [à compléter]**
-
----
-
-## 📦 Bloc YAML final
+## 📦 Bloc YAML final (complet — 4 compétences)
+> **Inclure uniquement les compétences réellement présentes (2 à 4).**  
+> **Respecter l’ordre de `ordre_competences` (sections S2 → S5).**
 
 ```yaml
 referentiels_par_section:
   - section: 2
-    competence: "[formulation compétence 1]"
-    adaptation_CUA:
-      - besoin: "Fatigabilité importante"
-        adaptation: "Prévoir des pauses et fractionner la tâche"
-      - besoin: "Troubles des fonctions exécutives"
-        adaptation: "Fournir un guide pas-à-pas visuel"
+    competence: "[Compétence 1]"
     badge: "oui (si degré 3 atteint)"
     niveaux:
       - degre: 1
-        observable_qualitatif: "[...]"
-        observable_quantitatif: "[...]"
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
       - degre: 2
-        observable_qualitatif: "[...]"
-        observable_quantitatif: "[...]"
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
       - degre: 3
-        observable_qualitatif: "[...]"
-        observable_quantitatif: "[...]"
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
       - degre: 4
-        observable_qualitatif: "[...]"
-        observable_quantitatif: "[...]"
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
   - section: 3
-    competence: "[formulation compétence 2]"
-    adaptation_CUA: []
+    competence: "[Compétence 2]"
     badge: "oui (si degré 3 atteint)"
     niveaux:
       - degre: 1
-        observable_qualitatif: "[...]"
-        observable_quantitatif: "[...]"
-      ...
-      
-```
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+      - degre: 2
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+      - degre: 3
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+      - degre: 4
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
+  - section: 4
+    competence: "[Compétence 3]"
+    badge: "oui (si degré 3 atteint)"
+    niveaux:
+      - degre: 1
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+      - degre: 2
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+      - degre: 3
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+      - degre: 4
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
+  - section: 5
+    competence: "[Compétence 4]"
+    badge: "oui (si degré 3 atteint)"
+    niveaux:
+      - degre: 1
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+      - degre: 2
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+      - degre: 3
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+      - degre: 4
+        indicateur_qualitatif: "[à valider]"
+        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"

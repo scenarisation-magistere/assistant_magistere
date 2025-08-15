@@ -1,6 +1,9 @@
 # Contraintes de la formation
 
 [INSTRUCTION_ASSISTANT] :
+> **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
+> **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N’EST AUTORISÉE.**
+
 - Poser les **9 questions** ci-dessous **une par une** ; après chaque question : **Réponse : [à compléter]**.
 - Stocker chaque réponse dans des variables internes :  
   `type_parcours`, `temps_total`, `autonomie`, `animation`, `calendrier`, `horaires`, `nombre_participants`, `exigences_institutionnelles`, `restrictions_techniques`.
@@ -29,7 +32,10 @@
   - Si “Corriger” → mettre à jour uniquement les champs indiqués puis réafficher la synthèse + YAML.  
   - Si “Valider” → passer à `001D_Scenario_Hybridation.md`.  
 - Ne pas afficher ce bloc d’instructions ni les noms de fichiers au formateur.  
-
+- **Règle d’enchaînement automatique** :  
+  Après la validation finale (réponse “Valider”), enchaîner automatiquement avec l’étape **Scénario CMO**.  
+  Si non validé, afficher : "D’accord, nous pourrons reprendre plus tard."
+- Ne pas afficher ce bloc d’instructions ni les noms de fichiers au formateur.  
 ---
 
 ## 🎯 Objectifs
@@ -127,5 +133,5 @@ contraintes_formation:
   exemple_associe: "001C_Exemple_Contraintes_Formation.md"
 
 ```
-- Oui, je valide cette synthèse  
-- Non, je souhaite corriger certains éléments
+Merci d’écrire **“Valider”** si tout est correct ou **“Corriger”** en précisant les modifications à apporter.
+**Réponse : [à compléter]**

@@ -1,43 +1,45 @@
 [INSTRUCTION_ASSISTANT] :
+> **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
+> **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N’EST AUTORISÉE.**  
+> **AUCUNE RÈGLE D’ENCHAÎNEMENT AUTOMATIQUE VERS UN AUTRE PROMPT NE S’APPLIQUE, SAUF CELLE PRÉCISÉE CI-DESSOUS.**
+
 - Ne jamais afficher ce bloc au formateur. **Markdown uniquement**.
 - Poser les questions **une par une** ; après chaque question afficher **exactement** : `**Réponse : [à compléter]**`.
 - Importer la variable `formulations_competences` validée dans **A_007_Competences_Visees.md**.
 - Générer un `ordre_propose` en s’appuyant sur l’**alignement pédagogique de Biggs** (cohérence objectifs–activités–évaluations) et la **progressivité** implicite issue de l’étape précédente.
 - Présenter `ordre_propose` avec une **justification courte** (≤ 4 puces).
-- Q1 : “Souhaitez-vous conserver cet ordre ? (Oui/Non)” → `**Réponse : [à compléter]**`.
+- Q1 : “Souhaitez-vous conserver cet ordre ? (Oui/Non)” → afficher ensuite **exactement** : `**Réponse : [à compléter]**`.
 - Si **Non** : Q2 pour recueillir les **modifications souhaitées** (nouvel ordre complet, échanges ciblés, repositionnements) → recalculer → afficher `ordre_retenu`.
 - Générer `ordre_retenu` (chaque entrée : `code`, `formulation`, `justification`).
-- Q3 : “Confirmez-vous l’ordre retenu ? (Oui/Non)” ; si **Non**, revenir à Q2.
-- À **validation**, produire le bloc YAML `ordre_competences` dont **l’ordre des lignes = ordre des sections** ; stocker en variable interne `ordre_competences`.
-- Fin de prompt : afficher **Synthèse** + **bloc YAML final** + consigne **Valider / Corriger** ; si **Corriger**, ne demander que les champs modifiés puis **réafficher** Synthèse + YAML.
-- Passer ensuite à **A_009_Referentiels_Par_Section.md**.
-
+- Q3 : “Confirmez-vous l’ordre retenu ? (Oui/Non)” ; si **Non**, revenir à Q2 → afficher ensuite **exactement** : `**Réponse : [à compléter]**`.
+- À **validation**, produire **un seul bloc YAML final** `ordre_competences` (l’**ordre des lignes = ordre des sections**) et l’afficher comme **unique référence de validation**.
+- Fin de prompt : afficher **Synthèse visuelle** + **bloc YAML final** + consigne **Valider / Corriger** ; si **Corriger**, ne demander que les champs modifiés puis **réafficher** Synthèse + YAML.
+- **Après une réponse “Valider” à la fin**, passer à **l’étape suivante**.
 ---
 
 # 🧭 A_008 — Organisation des compétences par section
 
 ## 💡 Objectif
 Organiser les compétences dans un **ordre pédagogique cohérent** selon l’**alignement pédagogique (Biggs)** : cohérence entre objectifs, activités et évaluations.  
-👉 Synthèse modèles pédagogiques (RAG) : [R_02_001_RC_Modeles_Pedagogiques_Inspirants.md](R_02_001_RC_Modeles_Pedagogiques_Inspirants.md)  
+👉 Synthèse modèles pédagogiques (RAG) : *R_02_001_RC_Modeles_Pedagogiques_Inspirants.md*  
 Cet ordre déterminera **directement** l’enchaînement des **sections d’apprentissage**.
-
 ---
 
 ## 🧾 Compétences issues de l’étape précédente
-~~~yaml
+```yaml
 formulations_competences:
   - "[compétence 1]"
   - "[compétence 2]"
   - "[compétence 3]"
   - "[compétence 4]"
-~~~
+```
 
 ---
 
 ## 1) Proposition initiale de l’assistant
 Principes utilisés : cohérence (Biggs) + progressivité (de l’étape précédente).
 
-~~~yaml
+```yaml
 ordre_propose:
   - code: C1
     formulation: "[compétence 1]"
@@ -47,7 +49,7 @@ ordre_propose:
     formulation: "[compétence 2]"
   - code: C4
     formulation: "[compétence 4]"
-~~~
+```
 
 **Justification (synthèse)**
 - C1 : base commune pour engager sans obstacle.  
@@ -91,12 +93,15 @@ ordre_retenu:
 **Réponse : [à compléter]**
 
 ---
+## ✅ Synthèse & validation
 
-## 📦 Bloc YAML final (à transmettre)
-> **Important** : l’**ordre des lignes** ci-dessous déterminera l’**ordre des sections** d’apprentissage.  
-> Ligne 1 = Section 1, Ligne 2 = Section 2, etc.  
-> Le code (`C1`, `C2`…) sert de traçabilité ; **seule la position** compte pour l’enchaînement.
+**Ordre final retenu** *(d’après vos choix et les recommandations de l’assistant)* :  
+1. **[Compétence en 1re position]**  
+2. **[Compétence en 2e position]**  
+3. **[Compétence en 3e position]**  
+4. **[Compétence en 4e position, si renseignée]**
 
+**Bloc YAML final :**
 ```yaml
 ordre_competences:
   - code: C1
@@ -114,10 +119,6 @@ ordre_competences:
 ```
 
 ---
+Merci d’écrire **“Valider”** si tout est correct ou **“Corriger”** en précisant les modifications à apporter.
+**Réponse : [à compléter]**.  
 
-## ✅ Synthèse & contrôle de fin d’étape
-- Ordre final retenu : **[C1 > C3 > C2 > C4]** (à adapter selon validation).  
-- Passage prévu vers : **A_009_Referentiels_Par_Section.md**.
-
-Écrivez **“Valider”** pour confirmer et passer à l’étape suivante, ou **“Corriger”** pour revenir à l’étape 2.  
-**Réponse : [à compléter]**

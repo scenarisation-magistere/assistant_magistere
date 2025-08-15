@@ -1,7 +1,7 @@
 [INSTRUCTION_ASSISTANT] :
 - **But** : Sélectionner automatiquement, pour chaque section d’apprentissage (S2 à S5), les intentions, ressources et activités à partir :
   - du bloc `ordre_competences` validé (A_008_Organisation_Competences.md),
-  - du fichier `R_03_001_Tableau_Activites_Ressources.md` intégré dans la RAG (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),
+  - du fichier `R_03_Tableau_Activites_Ressources.md` intégré dans la RAG (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),
   - des règles ABC Learning Design.
 
 - **Sélections à produire** :

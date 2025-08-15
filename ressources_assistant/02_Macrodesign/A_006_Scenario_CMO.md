@@ -1,12 +1,19 @@
 <!-- Instructions pour l'assistant -->
 
 [INSTRUCTION_ASSISTANT] :
+
+> **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
+> **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N’EST AUTORISÉE.**
+
 - Ce fichier présente le **scénario CMO** (Communauté Magistère Occitanie), qui servira de base pour la construction du macrodesign.
 - L'assistant doit **afficher l'intégralité du scénario** tel qu'il est décrit ci-dessous.
 - **Ne pas poser de question de validation ou de choix** : Le scénario CMO est celui qui sera utilisé pour la conception du parcours. Si le formateur ne souhaite pas l’adopter, il sera informé que l’accompagnement n’est pas possible pour l’instant.
 - Fournir le lien vers le **test Carenn** pour aider le formateur à identifier son profil.
 - L’assistant doit **mettre à jour les informations** de manière claire, sans inclure de cases à cocher ou de demande de validation.
-
+- **Règle d’enchaînement automatique** :  
+  Après la question finale, analyser uniquement la réponse du participant :  
+  - Si elle contient “oui” (insensible à la casse et aux accents) → lancer immédiatement l’étape **Identification des compétences visées** (`A_007_Competences_Visees.md`).  
+  - Sinon → afficher : "D’accord, nous pourrons reprendre plus tard."
 ---
 
 ## 🎯 Objectif
@@ -36,7 +43,7 @@ Le scénario CMO propose une structuration claire et précise de la formation :
 | 2  | **Section d’apprentissage 1** | Compétence 1 – Ressource, activité(s), référentiel, badge, discussion associée   | Asynchrone          |
 | 3  | **Section d’apprentissage 2** | Compétence 2 – Idem                                                              | Asynchrone          |
 | 4  | **Section d’apprentissage 3** | Compétence 3 – Idem                                                              | Asynchrone          |
-| 5  | **Section d’apprentissage 4** *(si 4e compétence)* | Idem (optionnelle)                                     | Asynchrone          |
+| 5  | **Section d’apprentissage 4** (optionnelle)  | Compétence 4 – Idem                                               | Asynchrone          |
 | 6  | **Classe virtuelle (BBB)**    | Point intermédiaire, accompagnement à la demande, approfondissement              | Synchrone           |
 | 7  | **Forum général**             | Discussions regroupées par compétence                                            | Asynchrone          |
 | 8  | **Évaluation de satisfaction**| Bilan à court, moyen et long terme                                               | Asynchrone          |
@@ -52,16 +59,15 @@ L’assistant **n’est pas encore capable de proposer d’autres scénarios** p
 
 Si le formateur **ne souhaite pas adopter** ce scénario, l’assistant ne pourra **pas l’accompagner** dans la création d’un scénario alternatif. 
 
-Pour mieux comprendre ses propres préférences pédagogiques, le formateur peut consulter le test Carenn pour identifier son profil de formateur.
+ → Vous souhaitez identifier votre profil de formateur :
 
 - 🧪 [Test Carenn – Quel formateur êtes-vous ?](http://www.pedagosup.fr/carenn/#)  
-  → Pour identifier votre profil de formateur
-
+ 
 ---
 
-## 🔁 Conclusion
+## 🔁 Étape suivante
 
-Une fois ce scénario validé, il servira de base à la construction du macrodesign.  
-L’assistant mettra en place les étapes suivantes de manière automatique.
+Souhaitez-vous passer à l’étape **Identification des compétences visées** ?
+**Réponse :** [à compléter]
 
 
