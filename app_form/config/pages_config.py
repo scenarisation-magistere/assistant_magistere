@@ -12,7 +12,7 @@ HEADER_COLORS = {
 }
 
 # Common configuration
-TOTAL_STEPS = 5
+TOTAL_STEPS = 6
 
 def apply_header_color(page_config, color_key):
     """Apply header color gradient to page config"""
@@ -58,9 +58,17 @@ BASE_PAGES_CONFIG = {
         'name': 'Contenus par Section',
         'step': 5,
         'previous': 'referentiels',
-        'next': None,
+        'next': 'recap',
         'route': '/contenu',
         'template': 'contenu.html'
+    },
+    'recap': {
+        'name': 'Récapitulatif Macrodesign',
+        'step': 6,
+        'previous': 'contenu',
+        'next': None,
+        'route': '/recap',
+        'template': 'recap.html'
     }
 }
 
@@ -70,7 +78,8 @@ PAGES_CONFIG = {
     'contraintes': apply_header_color(BASE_PAGES_CONFIG['contraintes'].copy(), 'danger'),
     'competences': apply_header_color(BASE_PAGES_CONFIG['competences'].copy(), 'secondary'),
     'referentiels': apply_header_color(BASE_PAGES_CONFIG['referentiels'].copy(), 'success'),
-    'contenu': apply_header_color(BASE_PAGES_CONFIG['contenu'].copy(), 'info')
+    'contenu': apply_header_color(BASE_PAGES_CONFIG['contenu'].copy(), 'info'),
+    'recap': apply_header_color(BASE_PAGES_CONFIG['recap'].copy(), 'gray')
 }
 
 def get_page_config(page_name):

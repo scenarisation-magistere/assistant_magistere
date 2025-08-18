@@ -33,6 +33,7 @@ function goToPreviousStep() {
 }
 
 function goToNextStep() {
+    console.log('goToNextStep called, next_route:', '{{ nav_info.next_route if nav_info else "None" }}');
     {% if nav_info.next_route %}
         window.location.href = '{{ nav_info.next_route }}';
     {% endif %}

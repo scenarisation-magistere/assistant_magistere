@@ -12,65 +12,35 @@
 
     ## COMPÉTENCES À TRAITER
     - code: C1
-  formulation: Être capable d'identifier et de décrire les concepts clés liés au domaine
-    de formation.
-  idees_cles: concepts, terminologie, compréhension
-  justification: C1 est la compétence la plus basique, permettant d'établir une compréhension
-    fondamentale des concepts clés.
+  formulation: À l'issue de la formation, les participants seront capables d'identifier
+    et de nommer les ingrédients nécessaires à la préparation des crêpes et des galettes.
+  idees_cles: ingrédients, crêpes, préparation
+  justification: C1 est la compétence la plus simple, car elle se concentre sur l'identification
+    des ingrédients, ce qui est fondamental avant de passer à des techniques de cuisson.
   niveau: Bas
   pertinence: élevée
-  titre: Identifier les concepts clés
-  verbes: identifier, décrire, nommer
-- code: C2
-  formulation: Savoir appliquer les techniques de base dans des situations pratiques
-    pertinentes.
-  idees_cles: techniques, méthodes, application
-  justification: C2 construit sur C1 en demandant l'application des concepts, ce qui
-    est une progression logique.
-  niveau: Bas
-  pertinence: élevée
-  titre: Appliquer les techniques de base
-  verbes: appliquer, exécuter, démontrer
+  titre: Identifier les ingrédients nécessaires pour faire des crêpes
+  verbes: identifier, nommer, énumérer
 - code: C3
-  formulation: Être capable d'analyser des cas pratiques et d'évaluer les différentes
-    solutions possibles.
-  idees_cles: analyse, cas, résolution de problèmes
-  justification: C3 nécessite une compréhension plus approfondie et l'application
-    des compétences précédentes pour l'analyse.
+  formulation: À l'issue de la formation, les participants seront capables d'utiliser
+    les techniques de cuisson adaptées pour réaliser des crêpes et des galettes.
+  idees_cles: techniques, cuisson, crêpes
+  justification: C3 est de niveau moyen et suit logiquement C1, car une fois les ingrédients
+    identifiés, les participants doivent apprendre à les cuisiner.
   niveau: Moyen
   pertinence: élevée
-  titre: Analyser des cas pratiques
-  verbes: analyser, évaluer, interpréter
-- code: C4
-  formulation: Savoir élaborer des stratégies adaptées aux besoins spécifiques identifiés
-    dans le contexte de formation.
-  idees_cles: stratégies, planification, adaptation
-  justification: C4 continue la progression en demandant la conception de stratégies,
-    ce qui est plus complexe que l'analyse.
-  niveau: Moyen
-  pertinence: élevée
-  titre: Élaborer des stratégies adaptées
-  verbes: élaborer, concevoir, planifier
-- code: C5
-  formulation: Être capable d'évaluer l'impact des interventions sur les résultats
-    attendus et de proposer des améliorations.
-  idees_cles: évaluation, impact, résultats
-  justification: C5 représente une compétence de haut niveau, nécessitant une évaluation
-    critique des résultats.
+  titre: Utiliser les techniques de cuisson adaptées pour les crêpes
+  verbes: utiliser, appliquer, manipuler
+- code: C2
+  formulation: À l'issue de la formation, les participants seront capables de créer
+    des recettes variées de crêpes et de galettes en intégrant différentes garnitures.
+  idees_cles: création, recettes, variété
+  justification: C2 est la compétence la plus complexe, car elle implique la création
+    et l'innovation, nécessitant une maîtrise des compétences précédentes.
   niveau: Haut
   pertinence: élevée
-  titre: Évaluer l'impact des interventions
-  verbes: évaluer, mesurer, analyser
-- code: C6
-  formulation: Savoir créer des solutions innovantes face à des problématiques complexes
-    en intégrant les concepts et techniques apprises.
-  idees_cles: innovation, créativité, résolution de problèmes
-  justification: C6 est la compétence la plus avancée, impliquant la créativité et
-    l'innovation dans des situations complexes.
-  niveau: Haut
-  pertinence: élevée
-  titre: Créer des solutions innovantes
-  verbes: créer, imaginer, synthétiser
+  titre: Créer des recettes variées de crêpes et galettes
+  verbes: créer, innover, composer
 
 
     ## RESSOURCES RAG DISPONIBLES

@@ -6,8 +6,8 @@ etape_1_public_cible:
   niveau_expertise: Débutant
   profil_groupe: Groupe homogène (mêmes profils, mêmes besoins)
   besoins_specifiques: Aucun besoin identifié
-last_updated: '2025-08-18T20:56:46.169119'
-current_step: etape_4_competences
+last_updated: '2025-08-18T21:32:42.154639'
+current_step: etape_5_contenu
 etape_2_contraintes:
   type_parcours: Création d'un nouvel espace
   temps_total: Moins de 3h — Recommandé par la CMO
@@ -101,7 +101,10 @@ etape_4_competences:
       position_suggeree: entre C1 et C3
 etape_5_referentiels:
   section_1:
-    adaptations_cua: []
+    adaptations_cua:
+    - adaptation: Utiliser des supports visuels tels que des images ou des vidéos
+        des ingrédients pendant la formation.
+      besoin: Apprentissage visuel
     competence: À l'issue de la formation, les participants seront capables d'identifier
       et de nommer les ingrédients nécessaires à la préparation des crêpes et des
       galettes.
@@ -109,213 +112,201 @@ etape_5_referentiels:
     - badge: non
       degre: 1
       libelle: Je débute
-      observable_qualitatif: Je suis capable de nommer au moins 2 ingrédients pour
-        la préparation des crêpes.
-      observable_quantitatif: Je peux citer 2 ingrédients sur 10.
+      observable_qualitatif: Je suis capable de nommer au moins 2 ingrédients de base
+        pour les crêpes et les galettes.
+      observable_quantitatif: Nommer 2 ingrédients lors d'un exercice pratique.
     - badge: non
       degre: 2
       libelle: Je progresse
-      observable_qualitatif: Je suis capable de nommer au moins 5 ingrédients pour
+      observable_qualitatif: Je suis capable de lister 5 ingrédients nécessaires à
         la préparation des crêpes et des galettes.
-      observable_quantitatif: Je peux citer 5 ingrédients sur 10 avec une précision
-        de 70%.
+      observable_quantitatif: Lister 5 ingrédients lors d'un quiz écrit.
     - badge: oui
       degre: 3
       libelle: Je suis autonome
-      observable_qualitatif: Je suis capable de nommer tous les ingrédients utilisés
-        pour la préparation des crêpes et des galettes.
-      observable_quantitatif: Je peux citer 10 ingrédients sur 10 avec une précision
-        de 90% ou plus.
+      observable_qualitatif: Je suis capable d'identifier et de nommer tous les ingrédients
+        nécessaires à la préparation des crêpes et des galettes.
+      observable_quantitatif: Identifier tous les ingrédients dans un exercice pratique
+        sans aide.
     - badge: non
       degre: 4
       libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable de décrire l'usage de chaque ingrédient
+      observable_qualitatif: Je suis capable d'expliquer le rôle de chaque ingrédient
         dans la préparation des crêpes et des galettes.
-      observable_quantitatif: Je peux citer et expliquer l'usage de 10 ingrédients
-        sur 10 avec une précision de 100%.
+      observable_quantitatif: Expliquer le rôle de chaque ingrédient lors d'une présentation
+        orale.
     section: 1
   section_2:
     adaptations_cua:
-    - adaptation: Proposer des ressources visuelles et des démonstrations pratiques.
-      besoin: Difficultés d'apprentissage
-    competence: Savoir appliquer les techniques de base dans des situations pratiques
-      pertinentes.
+    - adaptation: Proposer des recettes simplifiées et un accompagnement individuel.
+      besoin: Apprentissage lent
+    - adaptation: Fournir des ustensiles adaptés et un soutien lors de la manipulation
+        des ingrédients.
+      besoin: Difficultés motrices
+    competence: À l'issue de la formation, les participants seront capables de créer
+      des recettes variées de crêpes et de galettes en intégrant différentes garnitures.
     niveaux:
     - badge: non
       degre: 1
       libelle: Je débute
-      observable_qualitatif: Je suis capable de reconnaître les techniques de base.
-      observable_quantitatif: Je peux identifier au moins 2 techniques sur 5.
+      observable_qualitatif: Je suis capable de suivre une recette simple de crêpes.
+      observable_quantitatif: Je peux réaliser 1 recette de crêpes sans erreur.
     - badge: non
       degre: 2
       libelle: Je progresse
-      observable_qualitatif: Je suis capable d'appliquer une technique de base sous
-        supervision.
-      observable_quantitatif: Je réussis à appliquer la technique dans 3 situations
-        sur 5.
+      observable_qualitatif: Je suis capable de modifier une recette de crêpes en
+        ajoutant une garniture.
+      observable_quantitatif: Je peux réaliser 3 recettes de crêpes avec différentes
+        garnitures.
     - badge: oui
       degre: 3
       libelle: Je suis autonome
-      observable_qualitatif: Je suis capable d'appliquer plusieurs techniques de base
-        de manière autonome.
-      observable_quantitatif: Je réussis à appliquer au moins 3 techniques dans 5
-        situations différentes.
+      observable_qualitatif: Je suis capable de créer ma propre recette de crêpes
+        avec plusieurs garnitures.
+      observable_quantitatif: Je peux réaliser 5 recettes originales de crêpes en
+        2 heures.
     - badge: non
       degre: 4
       libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable d'adapter et d'enseigner les techniques
-        de base à d'autres.
-      observable_quantitatif: Je peux démontrer et expliquer les techniques dans 5
-        situations variées.
+      observable_qualitatif: Je suis capable de créer des recettes innovantes de crêpes
+        et de former d'autres personnes.
+      observable_quantitatif: Je peux réaliser 10 recettes variées en 3 heures et
+        animer un atelier.
     section: 2
   section_3:
     adaptations_cua:
-    - adaptation: Proposer des fiches d'aide à l'analyse pour structurer la pensée.
-      besoin: Difficultés d'analyse
-    - adaptation: Offrir des sessions de feedback en groupe pour renforcer la confiance
-        dans les compétences d'évaluation.
-      besoin: Manque de confiance
-    competence: Être capable d'analyser des cas pratiques et d'évaluer les différentes
-      solutions possibles.
+    - adaptation: Utilisation d'ustensiles adaptés facilitant la préhension et le
+        contrôle des mouvements.
+      besoin: Apprenant avec des difficultés motrices
+    - adaptation: Mise à disposition de supports visuels et de fiches recettes simplifiées.
+      besoin: Apprenant ayant des difficultés d'apprentissage
+    competence: À l'issue de la formation, les participants seront capables d'utiliser
+      les techniques de cuisson adaptées pour réaliser des crêpes et des galettes.
     niveaux:
     - badge: non
       degre: 1
       libelle: Je débute
-      observable_qualitatif: Je suis capable de décrire un cas pratique de manière
-        basique.
-      observable_quantitatif: Je peux identifier au moins 1 solution possible sur
-        5 cas pratiques analysés.
+      observable_qualitatif: Je suis capable de reconnaître les ingrédients nécessaires
+        pour faire des crêpes et des galettes.
+      observable_quantitatif: Je peux identifier 3 ingrédients sur 5 requis pour la
+        préparation.
     - badge: non
       degre: 2
       libelle: Je progresse
-      observable_qualitatif: Je suis capable d'analyser un cas pratique et d'identifier
-        plusieurs solutions.
-      observable_quantitatif: Je peux proposer au moins 2 solutions sur 5 cas pratiques
-        analysés.
+      observable_qualitatif: Je suis capable de préparer la pâte pour les crêpes et
+        les galettes.
+      observable_quantitatif: Je peux préparer la pâte correctement dans 3 sur 5 essais.
     - badge: oui
       degre: 3
       libelle: Je suis autonome
-      observable_qualitatif: Je suis capable d'évaluer et de justifier les solutions
-        proposées pour un cas pratique.
-      observable_quantitatif: Je peux évaluer au moins 3 solutions sur 5 cas pratiques
-        analysés avec des justifications claires.
+      observable_qualitatif: Je suis capable de cuire des crêpes et des galettes de
+        manière autonome et sans assistance.
+      observable_quantitatif: Je réussis à cuire des crêpes et des galettes avec un
+        taux de réussite de 4 sur 5 essais.
     - badge: non
       degre: 4
       libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable de comparer et de synthétiser les solutions
-        de manière critique.
-      observable_quantitatif: Je peux réaliser une analyse comparative de 4 solutions
-        sur 5 cas pratiques analysés, en présentant des conclusions détaillées.
+      observable_qualitatif: Je suis capable de cuire des crêpes et des galettes de
+        manière créative, en variant les recettes et les techniques.
+      observable_quantitatif: Je peux réaliser 2 recettes différentes de crêpes et
+        galettes avec succès dans 5 essais.
     section: 3
-  section_4:
-    adaptations_cua:
-    - adaptation: Mise en place de supports visuels et auditifs pour faciliter la
-        compréhension.
-      besoin: Difficultés d'apprentissage
-    - adaptation: Création d'activités ludiques et interactives pour susciter l'engagement.
-      besoin: Manque de motivation
-    - adaptation: Proposition de parcours individualisés avec des temps de travail
-        modulables.
-      besoin: Rythmes d'apprentissage variés
-    competence: Savoir élaborer des stratégies adaptées aux besoins spécifiques identifiés
-      dans le contexte de formation.
-    niveaux:
-    - badge: non
-      degre: 1
-      libelle: Je débute
-      observable_qualitatif: Je suis capable de reconnaître les besoins spécifiques
-        en formation.
-      observable_quantitatif: J'identifie 1 à 2 besoins dans un contexte de formation
-        donné.
-    - badge: non
-      degre: 2
-      libelle: Je progresse
-      observable_qualitatif: Je suis capable de proposer des stratégies simples pour
-        répondre aux besoins identifiés.
-      observable_quantitatif: Je propose 2 à 3 stratégies adaptées pour au moins 2
-        besoins spécifiques.
-    - badge: oui
-      degre: 3
-      libelle: Je suis autonome
-      observable_qualitatif: Je suis capable d'élaborer des stratégies variées et
-        adaptées aux besoins spécifiques identifiés.
-      observable_quantitatif: J'élabore au moins 4 stratégies adaptées pour 3 à 4
-        besoins spécifiques dans un contexte de formation.
-    - badge: non
-      degre: 4
-      libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable d'évaluer et d'ajuster mes stratégies
-        en fonction des résultats obtenus.
-      observable_quantitatif: J'évalue et ajuste mes stratégies après mise en œuvre
-        pour 4 à 5 besoins spécifiques, avec un retour positif de 80% des apprenants.
-    section: 4
-  section_5:
-    adaptations_cua:
-    - adaptation: Proposer des modules de formation supplémentaires sur les méthodes
-        d'évaluation.
-      besoin: Accompagnement pour l'évaluation des interventions
-    competence: Être capable d'évaluer l'impact des interventions sur les résultats
-      attendus et de proposer des améliorations.
-    niveaux:
-    - badge: non
-      degre: 1
-      libelle: Je débute
-      observable_qualitatif: Je suis capable de décrire les objectifs d'une intervention.
-      observable_quantitatif: Je peux identifier 1 à 2 résultats d'une intervention.
-    - badge: non
-      degre: 2
-      libelle: Je progresse
-      observable_qualitatif: Je suis capable de comparer les résultats d'une intervention
-        avec les objectifs fixés.
-      observable_quantitatif: Je peux évaluer 3 à 4 interventions et en faire un bilan.
-    - badge: oui
-      degre: 3
-      libelle: Je suis autonome
-      observable_qualitatif: Je suis capable de proposer des améliorations basées
-        sur l'évaluation des résultats.
-      observable_quantitatif: Je peux évaluer 5 interventions et suggérer au moins
-        2 améliorations pour chacune.
-    - badge: non
-      degre: 4
-      libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable de concevoir des interventions en tenant
-        compte des évaluations précédentes.
-      observable_quantitatif: Je peux évaluer plus de 5 interventions et proposer
-        des améliorations innovantes et pertinentes.
-    section: 5
-  section_6:
-    adaptations_cua:
-    - adaptation: Proposer des ateliers de groupe pour aider à identifier et analyser
-        des problématiques complexes.
-      besoin: Accompagnement pour les débutants
-    competence: Savoir créer des solutions innovantes face à des problématiques complexes
-      en intégrant les concepts et techniques apprises.
-    niveaux:
-    - badge: non
-      degre: 1
-      libelle: Je débute
-      observable_qualitatif: Je suis capable de reconnaître des problématiques complexes
-        et d'énoncer des solutions possibles.
-      observable_quantitatif: Je peux identifier au moins 2 problématiques et 1 solution
-        par mois.
-    - badge: non
-      degre: 2
-      libelle: Je progresse
-      observable_qualitatif: Je suis capable de proposer des solutions innovantes
-        en utilisant certaines techniques apprises.
-      observable_quantitatif: Je génère au moins 3 solutions innovantes par trimestre.
-    - badge: oui
-      degre: 3
-      libelle: Je suis autonome
-      observable_qualitatif: Je suis capable de créer des solutions innovantes de
-        manière autonome en intégrant différents concepts et techniques.
-      observable_quantitatif: Je développe et présente au moins 1 projet de solution
-        innovante par mois.
-    - badge: non
-      degre: 4
-      libelle: Je maîtrise avec aisance
-      observable_qualitatif: Je suis capable de guider d'autres personnes dans la
-        création de solutions innovantes face à des problématiques complexes.
-      observable_quantitatif: Je supervise et évalue au moins 2 projets d'autres personnes
-        par trimestre.
-    section: 6
+etape_5_contenu:
+  contenus_par_section:
+  - activite_1: ''
+    activite_2: ''
+    competences_visees: ''
+    intention_activite_1: ''
+    intention_activite_2: ''
+    intention_ressource: ''
+    justification_activite_s: ''
+    ressource: ''
+    section: S1
+    type_de_section: Accueil
+  - activite_1: Image Pairing
+    activite_2: Flashcards
+    competences_visees: C1
+    intention_activite_1: Acquisition/Entraînement
+    intention_activite_2: Acquisition/Entraînement
+    intention_ressource: Acquisition
+    justification_activite_s: Pour C1 (identifier et nommer les ingrédients), la ressource
+      Course Presentation permet de présenter visuellement et textuellement les éléments.
+      L'activité Image Pairing est idéale pour un entraînement visuel à l'identification
+      des ingrédients et de leurs noms. Les Flashcards viennent compléter cet entraînement
+      en permettant une mémorisation active et une vérification de la capacité à nommer
+      les ingrédients par la saisie.
+    ressource: Course Presentation
+    section: S2
+    type_de_section: Apprentissage
+  - activite_1: Interactive Video
+    activite_2: Branching Scenario
+    competences_visees: C3
+    intention_activite_1: Acquisition/Entraînement
+    intention_activite_2: Enquête/Entraînement
+    intention_ressource: Acquisition/Entraînement
+    justification_activite_s: Pour C3 (utiliser les techniques de cuisson), l'Interactive
+      Book structure les techniques de cuisson en un module complet. L'Interactive
+      Video permet de s'entraîner à identifier et comprendre les techniques en situation
+      réelle (vidéo de démonstration avec questions intégrées). Le Branching Scenario
+      offre une simulation de prise de décision, permettant d'appliquer les techniques
+      apprises face à des situations variées et d'en observer les conséquences, renforçant
+      ainsi l'entraînement.
+    ressource: Interactive Book
+    section: S3
+    type_de_section: Apprentissage
+  - activite_1: Devoir
+    activite_2: Forum
+    competences_visees: C2
+    intention_activite_1: Production/Collaboration
+    intention_activite_2: Discussion/Collaboration
+    intention_ressource: Acquisition/Enquête/Production
+    justification_activite_s: Pour C2 (créer des recettes variées), le Dossier fournit
+      des exemples et des inspirations. L'activité Devoir est essentielle pour que
+      les participants soumettent leur propre création de recette, permettant une
+      évaluation formelle. Le Forum complète cette phase en offrant un espace de discussion
+      et de collaboration où les participants peuvent partager leurs recettes, recevoir
+      des retours de leurs pairs et s'inspirer mutuellement, stimulant l'innovation
+      et l'amélioration.
+    ressource: Dossier
+    section: S4
+    type_de_section: Apprentissage
+  - activite_1: ''
+    activite_2: ''
+    competences_visees: ''
+    intention_activite_1: ''
+    intention_activite_2: ''
+    intention_ressource: ''
+    justification_activite_s: ''
+    ressource: ''
+    section: S5
+    type_de_section: Récapitulatif
+  - activite_1: BigBlueButtonBN
+    activite_2: ''
+    competences_visees: ''
+    intention_activite_1: Discussion
+    intention_activite_2: ''
+    intention_ressource: ''
+    justification_activite_s: ''
+    ressource: ''
+    section: S6
+    type_de_section: Classe virtuelle (BBB)
+  - activite_1: Forum
+    activite_2: ''
+    competences_visees: ''
+    intention_activite_1: Discussion/Collaboration
+    intention_activite_2: ''
+    intention_ressource: ''
+    justification_activite_s: ''
+    ressource: ''
+    section: S7
+    type_de_section: Forum général
+  - activite_1: Sondage
+    activite_2: ''
+    competences_visees: ''
+    intention_activite_1: Enquête
+    intention_activite_2: ''
+    intention_ressource: ''
+    justification_activite_s: ''
+    ressource: ''
+    section: S8
+    type_de_section: Évaluation

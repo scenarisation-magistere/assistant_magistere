@@ -502,36 +502,7 @@
             }
         }
 
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin: var(--spacing-xl) 0;
-            padding: var(--spacing-lg) 0;
-        }
 
-        .nav-btn {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1em;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
 
         .submit-section {
             text-align: center;
@@ -623,10 +594,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
+
         }
     </style>
 </head>
@@ -727,7 +695,8 @@
                         </div>
                         
                         <div style="text-align: center; margin: 10px 0; font-size: 0.9em; color: var(--text-medium);">
-                            💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer
+                            💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer<br>
+                            📋 Vue détaillée : Seules les sections avec des compétences sont affichées
                         </div>
                         
                         <div id="detailedContent">
@@ -736,9 +705,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Navigation Buttons -->
-            {% include 'includes/navigation_buttons.html' %}
 
             <!-- Submit Section -->
             <div class="submit-section" id="submitSection" style="display: none;">
@@ -896,7 +862,7 @@
         function generateSimplifiedTable(contenusData) {
             const simplifiedTableContent = document.getElementById('simplifiedTableContent');
             
-            // Generate simplified table HTML
+            // Generate simplified table HTML - show ALL sections
             let tableHTML = `
                 <table class="simplified-table">
                     <thead>
@@ -912,7 +878,7 @@
                     <tbody>
             `;
             
-            // Add each section to the simplified table
+            // Add each section to the simplified table (no filtering)
             contenusData.forEach(section => {
                 tableHTML += `
                     <tr>
@@ -937,16 +903,25 @@
         function generateDetailedView(contenusData) {
             const detailedContent = document.getElementById('detailedContent');
             
-            // Generate detailed view HTML for all sections
+            // Filter sections to only show those with competences
+            const sectionsWithCompetences = contenusData.filter(section => 
+                section.competences_visees && 
+                section.competences_visees.trim() !== '' && 
+                section.competences_visees !== '-'
+            );
+            
+            // Generate detailed view HTML for filtered sections only
             let detailedHTML = '';
             
-            contenusData.forEach((section, index) => {
+            sectionsWithCompetences.forEach((section, index) => {
                 detailedHTML += generateSectionCard(section, index);
             });
             
             detailedContent.innerHTML = detailedHTML;
             
-            // Update navigation
+            // Update navigation with filtered count
+            totalSections = sectionsWithCompetences.length;
+            currentSectionIndex = 0;
             updateDetailedNavigation();
         }
 

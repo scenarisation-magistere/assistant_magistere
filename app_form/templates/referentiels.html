@@ -61,31 +61,6 @@
             padding: var(--spacing-xl);
         }
 
-        .btn-generate {
-            background: var(--gradient-success);
-            color: var(--white);
-            border: none;
-            padding: 12px 25px;
-            border-radius: var(--radius-large);
-            font-size: var(--font-size-normal);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-success);
-        }
-
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(32, 191, 107, 0.4);
-        }
-
-        .btn-generate:disabled {
-            background: var(--secondary-gray);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
         .loading {
             text-align: center;
             padding: var(--spacing-lg);
@@ -580,6 +555,11 @@
                                 ✅ Valider et terminer
                             </button>
                             {% endif %}
+                            
+                            <!-- Complete All button that appears when all sections are validated -->
+                            <button type="button" class="btn-complete-all-global" onclick="completeAllReferentiels()" style="display: none; margin-left: auto;">
+                                🎯 Terminer toutes les compétences
+                            </button>
                         </div>
                     </div>
                     {% endfor %}
@@ -609,6 +589,13 @@
         
         // Load existing referentiels on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Debug navigation info
+            console.log('Navigation info:', {
+                next_route: '{{ nav_info.next_route if nav_info else "None" }}',
+                next_page: '{{ nav_info.next_page if nav_info else "None" }}',
+                current_page: '{{ nav_info.current_page if nav_info else "None" }}'
+            });
+            
             existingReferentiels.forEach(ref => {
                 const sectionNum = ref.section;
                 referentielsData[sectionNum] = ref;
@@ -625,6 +612,20 @@
             
             // Check if all sections are validated
             checkAllValidated();
+            
+            // Function to check if all sections are validated and show/hide complete all button
+            function checkAllValidated() {
+                const sections = {{ sections|tojson }};
+                const allValidated = sections.every(section => validatedSections.has(section.numero));
+                
+                // Show/hide complete all button
+                const completeAllButtons = document.querySelectorAll('.btn-complete-all-global');
+                completeAllButtons.forEach(button => {
+                    button.style.display = allValidated ? 'block' : 'none';
+                });
+                
+                console.log('All sections validated:', allValidated);
+            }
             
             // Auto-generate referentiel for first section if not exists
             const firstSection = {{ sections|tojson }}[0];
@@ -779,11 +780,11 @@
                     displayReferentiel(sectionNum, data.referentiel);
                     document.getElementById(`modification-form-${sectionNum}`).style.display = 'none';
                 } else {
-                    alert('Erreur lors de la mise à jour : ' + data.error);
+                    console.error('Erreur lors de la mise à jour : ' + data.error);
                 }
             })
             .catch(error => {
-                alert('Erreur : ' + error);
+                console.error('Erreur : ' + error);
             });
         }
 
@@ -804,17 +805,7 @@
             // All sections are validated - no special action needed
         }
 
-        function goToPreviousStep() {
-            {% if nav_info and nav_info.previous_route %}
-                window.location.href = '{{ nav_info.previous_route }}';
-            {% endif %}
-        }
 
-        function goToNextStep() {
-            {% if nav_info and nav_info.next_route %}
-                window.location.href = '{{ nav_info.next_route }}';
-            {% endif %}
-        }
 
 
 
@@ -877,6 +868,9 @@
                     dot.classList.remove('completed');
                 }
             });
+            
+            // Check if all sections are validated and show/hide complete all button
+            checkAllValidated();
         }
 
         // Update section counter
@@ -898,17 +892,20 @@
         }
 
         function validateAndCompleteAll(sectionNum) {
+            console.log('validateAndCompleteAll called for section:', sectionNum);
             // First validate the current section
             validateReferentiel(sectionNum, () => {
+                console.log('validateReferentiel callback executed, calling completeAllReferentiels');
                 // After validation, complete all
                 completeAllReferentiels();
             });
         }
 
         function validateReferentiel(sectionNum, callback = null) {
+            console.log('validateReferentiel called for section:', sectionNum, 'callback:', callback);
             // Check if referentiel exists
             if (!referentielsData[sectionNum]) {
-                alert('Veuillez d\'abord générer le référentiel pour cette compétence.');
+                console.error('Veuillez d\'abord générer le référentiel pour cette compétence.');
                 return;
             }
 
@@ -924,6 +921,7 @@
             })
             .then(response => response.json())
             .then(data => {
+                console.log('Save referentiel response:', data);
                 if (data.success) {
                     // Mark as validated
                     validatedSections.add(sectionNum);
@@ -931,23 +929,22 @@
                     // Update progress dots
                     updateProgressDots();
                     
-                    // Show success message
-                    alert('Référentiel validé avec succès !');
-                    
                     // Execute callback if provided
                     if (callback) {
+                        console.log('Executing callback for section:', sectionNum);
                         callback();
                     }
                 } else {
-                    alert('Erreur lors de la sauvegarde : ' + data.error);
+                    console.error('Erreur lors de la sauvegarde : ' + data.error);
                 }
             })
             .catch(error => {
-                alert('Erreur : ' + error);
+                console.error('Erreur : ' + error);
             });
         }
 
         function completeAllReferentiels() {
+            console.log('completeAllReferentiels function called');
             const sections = {{ sections|tojson }};
             let allCompleted = true;
             let incompleteSections = [];
@@ -960,13 +957,13 @@
             });
 
             if (!allCompleted) {
-                alert(`Veuillez générer et valider tous les référentiels avant de terminer.\nSections manquantes : ${incompleteSections.join(', ')}`);
+                console.error(`Veuillez générer et valider tous les référentiels avant de terminer.\nSections manquantes : ${incompleteSections.join(', ')}`);
                 return;
             }
 
-            if (confirm('Tous les référentiels sont validés ! Voulez-vous retourner à l\'accueil ?')) {
-                window.location.href = '/';
-            }
+            console.log('All referentiels completed, redirecting to /contenu...');
+            // Redirect to next page (contenu)
+            window.location.href = '/contenu';
         }
     </script>
 </body>
