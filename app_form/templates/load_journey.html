@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charger un parcours - Assistant Créa Magistère</title>
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333333;
+            padding: 20px;
+        }
+
+        /* Container principal */
+        .main-container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Icône d'information */
+        .info-icon {
+            font-size: 4rem;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+
+        /* Titre */
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        /* Description */
+        .description {
+            font-size: 1.1rem;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Bouton de retour */
+        .back-button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: #34495e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 30px 20px;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="info-icon">📁</div>
+        
+        <h1 class="title">Charger un parcours</h1>
+        
+        <p class="description">
+            Cette fonctionnalité est actuellement en développement.<br>
+            Vous pourrez bientôt charger et reprendre des parcours de formation existants.
+        </p>
+        
+        <a href="/" class="back-button">← Retour à l'accueil</a>
+    </div>
+</body>
+</html>

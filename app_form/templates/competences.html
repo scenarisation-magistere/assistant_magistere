@@ -4,149 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compétences Visées - Formation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
+        /* Page-specific styles for competences.html */
         .header {
-            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .step-indicator {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
-
-        .step-indicator .step {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 0 5px;
-            border-radius: 20px;
-            font-weight: bold;
+            background: var(--gradient-success);
         }
 
         .step-indicator .step.active {
-            background: white;
-            color: #20bf6b;
-        }
-
-        .step-indicator .step.inactive {
-            background: rgba(255,255,255,0.3);
-            color: white;
-        }
-
-        .content-container {
-            padding: 40px;
-        }
-
-        .info-banner {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #2196f3;
-        }
-
-        .info-banner h2 {
-            color: #1976d2;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .info-banner p {
-            color: #424242;
-            font-size: 1.1em;
-            line-height: 1.6;
+            color: var(--primary-green);
         }
 
         .public-cible-recall {
-            background: #fff3e0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 4px solid #f57c00;
+            background: var(--bg-warning-light);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-small);
+            margin-bottom: var(--spacing-xl);
+            border-left: 4px solid var(--secondary-orange);
         }
 
         .public-cible-recall h3 {
-            color: #f57c00;
-            margin-bottom: 15px;
+            color: var(--secondary-orange);
+            margin-bottom: var(--spacing-md);
         }
 
         .public-cible-recall .data-item {
-            margin: 10px 0;
-            padding: 10px;
+            margin: var(--spacing-sm) 0;
+            padding: var(--spacing-sm);
             background: rgba(255,255,255,0.5);
             border-radius: 5px;
         }
 
         .public-cible-recall .data-item strong {
-            color: #f57c00;
+            color: var(--secondary-orange);
         }
 
         .competence-section {
-            margin: 40px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
+            margin: var(--spacing-xxl) 0;
+            border: 2px solid var(--border-gray);
+            border-radius: var(--radius-medium);
             overflow: hidden;
             position: relative;
         }
 
         .competence-header {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-bottom: 2px solid #e0e0e0;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            padding: var(--spacing-lg);
+            border-bottom: 2px solid var(--border-gray);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .competence-header h3 {
-            color: #495057;
-            font-size: 1.3em;
+            color: var(--secondary-gray-dark);
+            font-size: var(--font-size-xl);
             margin-bottom: 0;
         }
 
         .remove-competence-btn {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
+            background: var(--gradient-danger);
+            color: var(--white);
             border: none;
             padding: 8px 12px;
-            border-radius: 50%;
+            border-radius: var(--radius-circle);
             cursor: pointer;
             font-size: 1.2em;
             width: 35px;
@@ -163,38 +85,38 @@
         }
 
         .competence-content {
-            padding: 30px;
+            padding: var(--spacing-xl);
         }
 
         .step-group {
-            margin: 25px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #20bf6b;
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-lg);
+            background: var(--light-gray);
+            border-radius: var(--radius-small);
+            border-left: 4px solid var(--primary-green);
         }
 
         .step-group h4 {
-            color: #20bf6b;
-            margin-bottom: 15px;
-            font-size: 1.1em;
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-large);
         }
 
         .step-group p {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 0.95em;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-small);
         }
 
         .form-group {
-            margin: 15px 0;
+            margin: var(--spacing-md) 0;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: var(--text-dark);
         }
 
         .form-group input[type="text"],
@@ -296,7 +218,6 @@
             text-align: center;
             margin: 40px 0;
             padding: 30px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: 15px;
         }
 
@@ -934,6 +855,39 @@
             margin-top: 15px;
         }
 
+        .evaluation-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .evaluate-btn {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
+            font-weight: 600;
+        }
+
+        .evaluate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+        }
+
+        .evaluate-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .remove-all-btn {
             background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
             color: white;
@@ -1045,7 +999,72 @@
             color: #333;
         }
 
+        .competences-manquantes {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .competences-manquantes h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .competence-suggestion {
+            background: white;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .competence-suggestion h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-details p {
+            margin: 8px 0;
+            color: #666;
+        }
+
         .avis-global {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .avis-global h3 {
+            color: #0c5460;
+            margin-bottom: 15px;
+        }
+
+        .points-amelioration {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .points-amelioration h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .points-amelioration ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+                .points-amelioration li {
+            margin: 8px 0;
+            color: #721c24;
+        }
             background: white;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
@@ -1146,69 +1165,57 @@
         .suggestion-details strong {
             color: #333;
         }
+
+        .evaluation-status-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .evaluation-status-notice .notice-content p {
+            color: #856404;
+            margin: 0;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🎯 Compétences Visées</h1>
-            <p>Formulation des compétences visées pour le scénario CMO</p>
-            <div class="step-indicator">
-                <span class="step inactive">1. Public cible</span>
-                <span class="step inactive">2. Contraintes</span>
-                <span class="step inactive">3. Scénario</span>
-                <span class="step active">4. Compétences</span>
-                <span class="step inactive">5. Référentiels</span>
-                <span class="step inactive">6. Contenus</span>
-                <span class="step inactive">7. Export</span>
-            </div>
-        </div>
+        {% include 'includes/header.html' %}
 
         <div class="content-container">
-            <div class="info-banner">
-                <h2>📋 Formulation des Compétences</h2>
-                <p>Dans le scénario CMO, chaque section d'apprentissage repose sur une compétence visée claire et observable. Cette étape vous aide à formuler ces compétences à partir de la taxonomie de Bloom révisée (domaines cognitif et affectif).</p>
-                <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 8px;">
-                    <h4 style="color: #1976d2; margin-bottom: 10px;">📚 Taxonomie de Bloom révisée :</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div>
-                            <h5 style="color: #1976d2;">🧠 Domaine Cognitif</h5>
-                            <ul style="margin-left: 20px; font-size: 0.9em;">
-                                <li><strong>Créer</strong> : Produire du nouveau contenu</li>
-                                <li><strong>Évaluer</strong> : Porter un jugement</li>
-                                <li><strong>Analyser</strong> : Décomposer en éléments</li>
-                                <li><strong>Appliquer</strong> : Utiliser en situation</li>
-                                <li><strong>Comprendre</strong> : Construire du sens</li>
-                                <li><strong>Se rappeler</strong> : Retrouver des informations</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h5 style="color: #e91e63;">💝 Domaine Affectif</h5>
-                            <ul style="margin-left: 20px; font-size: 0.9em;">
-                                <li><strong>Caractériser</strong> : Intégrer des valeurs</li>
-                                <li><strong>Organiser</strong> : Systématiser des valeurs</li>
-                                <li><strong>Valoriser</strong> : Attribuer une valeur</li>
-                                <li><strong>Répondre</strong> : Réagir activement</li>
-                                <li><strong>Recevoir</strong> : Être conscient et prêt</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="public-cible-recall">
                 <h3>📌 Rappel du public cible</h3>
                 <div class="data-item">
-                    <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.contexte_formation.titre if public_cible_data else 'Non défini' }}</span>
+                    <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.titre_formation if public_cible_data and public_cible_data.titre_formation else 'Non défini' }}</span>
                 </div>
                 <div class="data-item">
-                    <strong>Objectif général :</strong> <span id="objectif-general">{{ public_cible_data.contexte_formation.objectif_general if public_cible_data else 'Non défini' }}</span>
+                    <strong>Objectif général :</strong> <span id="objectif-general">{{ public_cible_data.objectif_general if public_cible_data and public_cible_data.objectif_general else 'Non défini' }}</span>
                 </div>
                 <div class="data-item">
-                    <strong>Type de public :</strong> <span id="type-public">{{ public_cible_data.public_cible.type if public_cible_data else 'Non défini' }}</span>
+                    <strong>Type de public :</strong> <span id="type-public">
+                        {% if public_cible_data and public_cible_data.type_de_public %}
+                            {% if public_cible_data.type_de_public is string %}
+                                {{ public_cible_data.type_de_public }}
+                            {% else %}
+                                {{ public_cible_data.type_de_public|join(', ') }}
+                            {% endif %}
+                        {% else %}
+                            Non défini
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="data-item">
-                    <strong>Niveau d'expertise :</strong> <span id="niveau-expertise">{{ public_cible_data.public_cible.niveau_expertise if public_cible_data else 'Non défini' }}</span>
+                    <strong>Niveau d'expertise :</strong> <span id="niveau-expertise">
+                        {% if public_cible_data and public_cible_data.niveau_expertise %}
+                            {{ public_cible_data.niveau_expertise }}
+                        {% else %}
+                            Non défini
+                        {% endif %}
+                    </span>
                 </div>
             </div>
 
@@ -1269,17 +1276,10 @@
                         <!-- Selected competences will be inserted here -->
                     </div>
                 </div>
-            </div>
-
-            <!-- Evaluation Results Section -->
-            <div class="evaluation-results-section" id="evaluationResultsSection">
-                <div class="evaluation-results-header">
-                    <h3>🔍 Résultats de l'Évaluation</h3>
-                    <p>Analyse et ordonnancement des compétences selon les critères pédagogiques</p>
-                </div>
                 
-                <div class="evaluation-actions">
-                    <button type="button" id="evaluateBtn" onclick="evaluateCompetences()" class="evaluate-btn" disabled>
+                <!-- Evaluation Button - Only shown when competences are present -->
+                <div class="evaluation-actions" id="evaluationActions" style="display: none;">
+                    <button type="button" id="evaluateBtn" onclick="evaluateCompetences()" class="evaluate-btn">
                         🔍 Évaluer et Ordonner
                     </button>
                     <div class="evaluation-loading" id="evaluateLoading" style="display: none;">
@@ -1287,9 +1287,24 @@
                         <p>Évaluation en cours...</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Evaluation Results Section -->
+            <div class="evaluation-results-section" id="evaluationResultsSection" style="display: none;">
+                <div class="evaluation-results-header">
+                    <h3>🔍 Résultats de l'Évaluation</h3>
+                    <p>Analyse et ordonnancement des compétences selon les critères pédagogiques</p>
+                </div>
                 
                 <div class="evaluation-results-content" id="evaluationResultsContent">
                     <!-- Evaluation results will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Evaluation Status Notice -->
+            <div class="evaluation-status-notice" id="evaluationStatusNotice" style="display: none;">
+                <div class="notice-content">
+                    <p>⚠️ <strong>Évaluation requise :</strong> Vous devez évaluer vos compétences avant de pouvoir continuer.</p>
                 </div>
             </div>
 
@@ -1301,7 +1316,7 @@
 
                 <div class="submit-section">
                     <button type="submit" class="submit-btn" id="submitBtn">
-                        ✅ Valider et Terminer
+                        ✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}
                     </button>
                     
                     <div class="loading" id="loading">
@@ -1311,11 +1326,11 @@
                 </div>
             </form>
 
-            <!-- Submit Section (visible) -->
-            <div class="submit-section" style="margin-top: 40px;">
+            <!-- Submit Section (visible) - Only shown when competences are selected and evaluated -->
+            <div class="submit-section" id="submitSection" style="margin-top: 40px; display: none;">
                 <div class="submit-actions">
                     <button type="button" class="submit-btn" id="visibleSubmitBtn" onclick="prepareAndSubmitForm()">
-                        ✅ Valider et Terminer
+                        ✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}
                     </button>
                 </div>
                 
@@ -1324,30 +1339,13 @@
                     <p>Sauvegarde en cours...</p>
                 </div>
             </div>
+
+            
         </div>
+    </div>
     </div>
 
-    <!-- Success Modal -->
-    <div class="success-modal" id="successModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>✅ Compétences Visées Sauvegardées</h2>
-            <div class="filename-info">
-                <strong>📁 Fichier :</strong> <span id="filenameDisplay"></span>
-            </div>
-            <p id="successMessage"></p>
-            <h3>Données YAML Complètes :</h3>
-            <div class="yaml-output" id="yamlOutput"></div>
-            <div class="modal-actions">
-                <button class="submit-btn" onclick="window.location.href='/'">
-                    🏠 Retour à l'Accueil
-                </button>
-                <button class="submit-btn" onclick="window.location.href='/referentiels'" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);">
-                    🧭 Continuer vers les Référentiels
-                </button>
-            </div>
-        </div>
-    </div>
+    {% include 'includes/success_modal.html' %}
 
     <!-- Edit Competence Modal -->
     <div class="edit-modal" id="editModal">
@@ -1368,6 +1366,7 @@
         </div>
     </div>
 
+    <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
         // Load previous data from YAML
         let previousData = {% if public_cible_data %}{{ public_cible_data | tojson | safe }}{% else %}null{% endif %};
@@ -1377,6 +1376,22 @@
         let competenceCount = {{ competences | length }};
         let competenceIds = new Set(); // Track existing competence IDs
         let usedSuggestionIndices = new Set(); // Track which AI suggestions are used
+        let evaluationCompleted = false; // Track if evaluation has been completed
+
+        // Override navigation functions for this template
+        function getNextRouteFromNavInfo() {
+            {% if nav_info and nav_info.next_route %}
+                return '{{ nav_info.next_route }}';
+            {% endif %}
+            return null;
+        }
+
+        function getPreviousRouteFromNavInfo() {
+            {% if nav_info and nav_info.previous_route %}
+                return '{{ nav_info.previous_route }}';
+            {% endif %}
+            return null;
+        }
 
         // Initialize competence IDs tracking
         document.addEventListener('DOMContentLoaded', function() {
@@ -1400,7 +1415,32 @@
             // Initialize displays
             displaySelectedCompetences();
             displaySuggestionsPool();
+            updateSubmitButtonVisibility();
         });
+
+        function updateSubmitButtonVisibility() {
+            const submitSection = document.getElementById('submitSection');
+            const evaluationStatusNotice = document.getElementById('evaluationStatusNotice');
+            const evaluationResultsSection = document.getElementById('evaluationResultsSection');
+            const hasCompetences = selectedCompetences.length > 0;
+            
+            // Show submit button only if competences are selected AND evaluation is completed
+            if (hasCompetences && evaluationCompleted) {
+                submitSection.style.display = 'block';
+                evaluationStatusNotice.style.display = 'none';
+                evaluationResultsSection.style.display = 'block';
+            } else if (hasCompetences && !evaluationCompleted) {
+                // Show evaluation notice when competences are selected but not evaluated
+                submitSection.style.display = 'none';
+                evaluationStatusNotice.style.display = 'block';
+                evaluationResultsSection.style.display = 'none';
+            } else {
+                // Hide both when no competences are selected
+                submitSection.style.display = 'none';
+                evaluationStatusNotice.style.display = 'none';
+                evaluationResultsSection.style.display = 'none';
+            }
+        }
 
         function createCompetenceHTML(competence, competenceNumber) {
             let stepsHtml = '';
@@ -2013,6 +2053,9 @@
             selectedCompetences = [];
             usedSuggestionIndices.clear();
             
+            // Reset evaluation status
+            evaluationCompleted = false;
+            
             // Update displays
             displaySelectedCompetences();
             displaySuggestionsPool();
@@ -2210,10 +2253,13 @@
                 competence.verbes = document.getElementById('editVerbes').value;
                 competence.formulation = document.getElementById('editFormulation').value;
                 
+                // Reset evaluation status since competence was modified
+                evaluationCompleted = false;
+                
                 // Update display
                 displaySelectedCompetences();
                 
-                showSuccessMessage('Compétence modifiée avec succès !');
+                showSuccessMessage('Compétence modifiée avec succès ! L\'évaluation doit être relancée.');
             }
             
             closeEditModal();
@@ -2349,26 +2395,19 @@
             const selectedSection = document.getElementById('selectedCompetencesSection');
             const selectedGrid = document.getElementById('selectedCompetencesGrid');
             const selectedActions = document.getElementById('selectedActions');
-            const evaluateBtn = document.getElementById('evaluateBtn');
+            const evaluationActions = document.getElementById('evaluationActions');
             
             // Always show the section
             selectedSection.style.display = 'block';
             selectedGrid.innerHTML = '';
             
-            // Show/hide the remove all button
+            // Show/hide the remove all button and evaluation button based on competences count
             if (selectedCompetences.length > 0) {
                 selectedActions.style.display = 'flex';
+                evaluationActions.style.display = 'block';
             } else {
                 selectedActions.style.display = 'none';
-            }
-            
-            // Enable/disable evaluate button based on competences count
-            if (selectedCompetences.length > 0) {
-                evaluateBtn.disabled = false;
-                evaluateBtn.title = 'Évaluer et ordonner les compétences sélectionnées';
-            } else {
-                evaluateBtn.disabled = true;
-                evaluateBtn.title = 'Ajoutez d\'abord des compétences pour pouvoir les évaluer';
+                evaluationActions.style.display = 'none';
             }
             
             if (selectedCompetences.length === 0) {
@@ -2380,6 +2419,9 @@
                     <p>Ajoutez des compétences depuis l'atelier d'idées pour commencer votre formation.</p>
                 `;
                 selectedGrid.appendChild(emptyCard);
+                // Reset evaluation status when no competences are selected
+                evaluationCompleted = false;
+                updateSubmitButtonVisibility();
                 return;
             }
             
@@ -2418,54 +2460,34 @@
                 `;
                 selectedGrid.appendChild(card);
             });
+            
+            // Update submit button visibility
+            updateSubmitButtonVisibility();
         }
 
         function prepareAndSubmitForm() {
-            const visibleSubmitBtn = document.getElementById('visibleSubmitBtn');
-            const visibleLoading = document.getElementById('visibleLoading');
-            
-            visibleSubmitBtn.disabled = true;
-            visibleLoading.style.display = 'block';
-            
-            // Prepare data from selected competences
-            const data = {};
-            selectedCompetences.forEach((competence, index) => {
-                const competenceNumber = index + 1;
-                data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
-                data[`niveau_${competenceNumber}`] = competence.niveau;
-                data[`verbes_${competenceNumber}`] = competence.verbes;
-                data[`formulation_${competenceNumber}`] = competence.formulation;
-            });
-            
-            return fetch('/submit_competences', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            // Use harmonized submit button approach
+            const submitHandler = createHarmonizedSubmitButton({
+                buttonId: 'visibleSubmitBtn',
+                buttonText: '✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}',
+                endpoint: '/submit_competences',
+                dataProcessor: () => {
+                    // Prepare data from selected competences
+                    const data = {};
+                    selectedCompetences.forEach((competence, index) => {
+                        const competenceNumber = index + 1;
+                        data[`titre_${competenceNumber}`] = competence.titre || `Compétence ${competenceNumber}`;
+                        data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
+                        data[`niveau_${competenceNumber}`] = competence.niveau;
+                        data[`verbes_${competenceNumber}`] = competence.verbes;
+                        data[`formulation_${competenceNumber}`] = competence.formulation;
+                    });
+                    return data;
                 },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    document.getElementById('successMessage').textContent = result.message;
-                    document.getElementById('filenameDisplay').textContent = result.filename;
-                    document.getElementById('yamlOutput').textContent = JSON.stringify(result.yaml_data, null, 2);
-                    document.getElementById('successModal').style.display = 'block';
-                    return result;
-                } else {
-                    alert('Erreur lors de la sauvegarde : ' + result.message);
-                    throw new Error(result.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erreur lors de la sauvegarde');
-                throw error;
-            })
-            .finally(() => {
-                visibleSubmitBtn.disabled = false;
-                visibleLoading.style.display = 'none';
+                loadingText: '⏳ Sauvegarde en cours...'
             });
+            
+            submitHandler();
         }
 
         function saveCompetencesSilently() {
@@ -2473,6 +2495,7 @@
             const data = {};
             selectedCompetences.forEach((competence, index) => {
                 const competenceNumber = index + 1;
+                data[`titre_${competenceNumber}`] = competence.titre || `Compétence ${competenceNumber}`;
                 data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
                 data[`niveau_${competenceNumber}`] = competence.niveau;
                 data[`verbes_${competenceNumber}`] = competence.verbes;
@@ -2542,6 +2565,9 @@
             
             // Clear selected competences
             selectedCompetences = [];
+            
+            // Reset evaluation status
+            evaluationCompleted = false;
             
             // Update displays
             displaySelectedCompetences();
@@ -2614,6 +2640,12 @@
         function displayEvaluationResults(evaluation) {
             const evaluationSection = document.getElementById('evaluationResultsSection');
             const evaluationContent = document.getElementById('evaluationResultsContent');
+            
+            // Show the evaluation results section
+            evaluationSection.style.display = 'block';
+            
+            // Mark evaluation as completed
+            evaluationCompleted = true;
             
             // Build the content
             let content = '';
@@ -2698,6 +2730,15 @@
             
             // Update the content
             evaluationContent.innerHTML = content;
+            
+            // Update submit button visibility
+            updateSubmitButtonVisibility();
+        }
+        
+        function goToNextStep() {
+            {% if nav_info and nav_info.next_route %}
+                window.location.href = '{{ nav_info.next_route }}';
+            {% endif %}
         }
     </script>
 </body>

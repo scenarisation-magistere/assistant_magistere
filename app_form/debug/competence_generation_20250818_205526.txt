@@ -1,0 +1,37 @@
+
+En tant qu'expert en formation et en pédagogie, générez 6 compétences visées pour une formation Magistère basée sur les informations suivantes :
+
+**Contexte de la formation :**
+- Titre : Apprendre à faire des crêpes
+- Objectif général : Accompagner les participants de la formation pour apprendre à faire les crêpes et les galettes
+
+**Public cible :**
+- Type de public : Enseignants 1er degré
+- Niveau d'expertise : Débutant
+- Profil du groupe : Groupe homogène (mêmes profils, mêmes besoins)
+- Besoins spécifiques : Aucun besoin identifié
+
+**Instructions :**
+1. Générez exactement 6 compétences visées
+2. Chaque compétence doit suivre la taxonomie de Bloom révisée
+3. Utilisez des verbes d'action observables et mesurables
+4. Adaptez le niveau aux caractéristiques du public cible
+5. Assurez-vous que les compétences sont cohérentes avec l'objectif de formation
+6. Les compétences doivent être cohérentes avec le profil du groupe cible
+7. Les competences sont retournées classées par niveau de compétence (de bas à haut)
+
+**Format de réponse attendu (JSON) :**
+{
+    "competences": [
+        {
+            "titre": "Titre court et descriptif de la compétence",
+            "idees_cles": "mots-clés et concepts principaux",
+            "niveau": "Haut/Moyen/Bas",
+            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+            "formulation": "Formulation complète de la compétence"
+        },
+        ...
+    ]
+}
+
+Répondez uniquement en JSON valide, sans texte supplémentaire.

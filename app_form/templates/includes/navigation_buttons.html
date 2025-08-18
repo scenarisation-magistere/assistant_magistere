@@ -1,0 +1,13 @@
+<!-- Navigation Buttons -->
+<div class="navigation-buttons" style="margin-top: 20px; display: flex; justify-content: {% if nav_info and nav_info.is_first %}flex-end{% else %}center{% endif %};">
+    {% if nav_info and not nav_info.is_first %}
+        <button class="btn-prev" onclick="goToPreviousStep()" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 0 10px;">
+            ← {{ get_page_name_by_step(nav_info.step - 1) }}
+        </button>
+    {% endif %}
+    {% if nav_info and not nav_info.is_last %}
+        <button class="btn-next" onclick="goToNextStep()" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin: {% if nav_info and nav_info.is_first %}0{% else %}0 10px{% endif %};">
+            {{ get_page_name_by_step(nav_info.step + 1) }} →
+        </button>
+    {% endif %}
+</div>

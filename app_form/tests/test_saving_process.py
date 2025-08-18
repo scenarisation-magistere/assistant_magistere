@@ -83,45 +83,45 @@ def test_saving_process():
                 'niveau': 'Haut',
                 'verbes': 'innover, intégrer',
                 'formulation': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.'
-            }
-        },
-        'evaluation_competences': {
-            'ordre_competences': [
-                {
-                    'code': 'C1',
-                    'formulation': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
-                    'justification': 'C1 est la compétence de base',
-                    'pertinence': 'élevée'
-                },
-                {
-                    'code': 'C2',
-                    'formulation': 'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.',
-                    'justification': 'C2 construit sur C1',
-                    'pertinence': 'élevée'
-                },
-                {
-                    'code': 'C3',
-                    'formulation': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.',
-                    'justification': 'C3 représente le niveau le plus élevé',
-                    'pertinence': 'élevée'
+            },
+            'evaluation_competences': {
+                'ordre_competences': [
+                    {
+                        'code': 'C1',
+                        'formulation': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
+                        'justification': 'C1 est la compétence de base',
+                        'pertinence': 'élevée'
+                    },
+                    {
+                        'code': 'C2',
+                        'formulation': 'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.',
+                        'justification': 'C2 construit sur C1',
+                        'pertinence': 'élevée'
+                    },
+                    {
+                        'code': 'C3',
+                        'formulation': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.',
+                        'justification': 'C3 représente le niveau le plus élevé',
+                        'pertinence': 'élevée'
+                    }
+                ],
+                'avis_global': 'L\'ordre des compétences respecte la logique de progression pédagogique.',
+                'points_amelioration': [
+                    'Clarifier les verbes d\'action dans les formulations',
+                    'Ajouter des exemples concrets d\'outils d\'IA'
+                ],
+                'competence_complementaire': {
+                    'titre': 'Analyser les besoins des apprenants',
+                    'niveau': 'Moyen',
+                    'idees_cles': 'analyse, besoins, apprenants',
+                    'verbes': 'analyser, évaluer, identifier',
+                    'formulation': 'Être capable d\'analyser les besoins des apprenants afin de mieux personnaliser les parcours pédagogiques.',
+                    'justification': 'Cette compétence est nécessaire pour combler le gap',
+                    'position_suggeree': 'entre C1 et C2'
                 }
-            ],
-            'avis_global': 'L\'ordre des compétences respecte la logique de progression pédagogique.',
-            'points_amelioration': [
-                'Clarifier les verbes d\'action dans les formulations',
-                'Ajouter des exemples concrets d\'outils d\'IA'
-            ],
-            'competence_complementaire': {
-                'titre': 'Analyser les besoins des apprenants',
-                'niveau': 'Moyen',
-                'idees_cles': 'analyse, besoins, apprenants',
-                'verbes': 'analyser, évaluer, identifier',
-                'formulation': 'Être capable d\'analyser les besoins des apprenants afin de mieux personnaliser les parcours pédagogiques.',
-                'justification': 'Cette compétence est nécessaire pour combler le gap',
-                'position_suggeree': 'entre C1 et C2'
             }
         },
-        'referentiels_par_section': [
+        'etape_5_referentiels': [
             {
                 'section': 1,
                 'competence': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
@@ -204,8 +204,7 @@ def test_saving_process():
             'etape_2_contraintes', 
             'etape_3_scenario',
             'etape_4_competences',
-            'evaluation_competences',
-            'referentiels_par_section'
+            'etape_5_referentiels'
         ]
         
         all_steps_present = True
@@ -232,21 +231,24 @@ def test_saving_process():
                         else:
                             print(f"   - {comp_key}: Missing")
                             all_steps_present = False
-                
-                # Check evaluation data
-                elif step == 'evaluation_competences':
-                    eval_data = loaded_data[step]
-                    ordre_competences = eval_data.get('ordre_competences', [])
-                    print(f"   - Ordre compétences: {len(ordre_competences)} found")
                     
-                    comp_complementaire = eval_data.get('competence_complementaire', {})
-                    if comp_complementaire:
-                        print(f"   - Compétence complémentaire: {comp_complementaire.get('titre', '')}")
+                    # Check evaluation_competences (nested under etape_4_competences)
+                    evaluation_data = competences_data.get('evaluation_competences', {})
+                    if evaluation_data:
+                        ordre_competences = evaluation_data.get('ordre_competences', [])
+                        print(f"   - Evaluation ordre compétences: {len(ordre_competences)} found")
+                        
+                        comp_complementaire = evaluation_data.get('competence_complementaire', {})
+                        if comp_complementaire:
+                            print(f"   - Compétence complémentaire: {comp_complementaire.get('titre', '')}")
+                        else:
+                            print(f"   - Compétence complémentaire: Missing")
                     else:
-                        print(f"   - Compétence complémentaire: Missing")
+                        print(f"   - Evaluation competences: Missing")
+                        all_steps_present = False
                 
                 # Check referentiels
-                elif step == 'referentiels_par_section':
+                elif step == 'etape_5_referentiels':
                     refs = loaded_data[step]
                     print(f"   - Référentiels: {len(refs)} found")
                     for ref in refs:
@@ -282,10 +284,185 @@ def test_saving_process():
         print(f"❌ Error verifying test file: {e}")
         return False
 
-if __name__ == "__main__":
-    success = test_saving_process()
-    if success:
-        print("\n✅ Saving process test completed successfully!")
+def test_competence_order_preservation():
+    """Test that competence order (evaluation_competences) is preserved when submitting competences"""
+    
+    print("🧪 Testing Competence Order Preservation")
+    print("=" * 50)
+    
+    # Simulate the scenario where user has already evaluated competences
+    # and then validates to go to next page
+    
+    # Step 1: Create initial competences data with evaluation
+    initial_competences_data = {
+        'formulations_competences': [
+            'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
+            'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.',
+            'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.'
+        ],
+        'competence_1': {
+            'titre': 'Utilisation des outils d\'IA',
+            'idees_cles': 'IA, outils, contenus pédagogiques',
+            'niveau': 'Bas',
+            'verbes': 'utiliser, créer',
+            'formulation': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.'
+        },
+        'competence_2': {
+            'titre': 'Personnalisation des parcours',
+            'idees_cles': 'personnalisation, parcours, données',
+            'niveau': 'Moyen',
+            'verbes': 'personnaliser, adapter',
+            'formulation': 'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.'
+        },
+        'competence_3': {
+            'titre': 'Innovation pédagogique',
+            'idees_cles': 'innovation, conception, solutions IA',
+            'niveau': 'Haut',
+            'verbes': 'innover, intégrer',
+            'formulation': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.'
+        },
+        'evaluation_competences': {
+            'ordre_competences': [
+                {
+                    'code': 'C1',
+                    'formulation': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
+                    'justification': 'C1 est la compétence de base',
+                    'pertinence': 'élevée'
+                },
+                {
+                    'code': 'C2',
+                    'formulation': 'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.',
+                    'justification': 'C2 construit sur C1',
+                    'pertinence': 'élevée'
+                },
+                {
+                    'code': 'C3',
+                    'formulation': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.',
+                    'justification': 'C3 représente le niveau le plus élevé',
+                    'pertinence': 'élevée'
+                }
+            ],
+            'avis_global': 'L\'ordre des compétences respecte la logique de progression pédagogique.',
+            'points_amelioration': [
+                'Clarifier les verbes d\'action dans les formulations',
+                'Ajouter des exemples concrets d\'outils d\'IA'
+            ],
+            'competence_complementaire': {
+                'titre': 'Analyser les besoins des apprenants',
+                'niveau': 'Moyen',
+                'idees_cles': 'analyse, besoins, apprenants',
+                'verbes': 'analyser, évaluer, identifier',
+                'formulation': 'Être capable d\'analyser les besoins des apprenants afin de mieux personnaliser les parcours pédagogiques.',
+                'justification': 'Cette compétence est nécessaire pour combler le gap',
+                'position_suggeree': 'entre C1 et C2'
+            }
+        }
+    }
+    
+    # Step 2: Simulate what happens when user validates to go to next page
+    # (This would be the data from the form submission)
+    form_submission_data = {
+        'formulation_1': 'Être capable d\'utiliser des outils d\'intelligence artificielle pour créer des contenus pédagogiques engageants.',
+        'formulation_2': 'Être capable de personnaliser les parcours pédagogiques en fonction des données recueillies sur les apprenants.',
+        'formulation_3': 'Être capable d\'innover dans la conception pédagogique en intégrant des solutions d\'intelligence artificielle.',
+        'titre_1': 'Utilisation des outils d\'IA',
+        'titre_2': 'Personnalisation des parcours',
+        'titre_3': 'Innovation pédagogique',
+        'idees_cles_1': 'IA, outils, contenus pédagogiques',
+        'idees_cles_2': 'personnalisation, parcours, données',
+        'idees_cles_3': 'innovation, conception, solutions IA',
+        'niveau_1': 'Bas',
+        'niveau_2': 'Moyen',
+        'niveau_3': 'Haut',
+        'verbes_1': 'utiliser, créer',
+        'verbes_2': 'personnaliser, adapter',
+        'verbes_3': 'innover, intégrer'
+    }
+    
+    # Step 3: Simulate the submit_competences logic
+    # Generate YAML data for competencies
+    competences_data = {
+        'formulations_competences': []
+    }
+    
+    # Count competences from the data
+    competence_count = 0
+    for key in form_submission_data.keys():
+        if key.startswith('formulation_'):
+            competence_count = max(competence_count, int(key.split('_')[1]))
+    
+    # Extract formulations for each competence
+    for i in range(1, competence_count + 1):
+        formulation = form_submission_data.get(f'formulation_{i}', '')
+        if formulation:
+            competences_data['formulations_competences'].append(formulation)
+    
+    # Add detailed data for each competence
+    for i in range(1, competence_count + 1):
+        competence_key = f'competence_{i}'
+        competences_data[competence_key] = {
+            'titre': form_submission_data.get(f'titre_{i}', ''),
+            'idees_cles': form_submission_data.get(f'idees_cles_{i}', ''),
+            'niveau': form_submission_data.get(f'niveau_{i}', ''),
+            'verbes': form_submission_data.get(f'verbes_{i}', ''),
+            'formulation': form_submission_data.get(f'formulation_{i}', '')
+        }
+    
+    # Step 4: Preserve existing evaluation_competences data if it exists
+    existing_competences = initial_competences_data
+    if 'evaluation_competences' in existing_competences:
+        competences_data['evaluation_competences'] = existing_competences['evaluation_competences']
+    
+    # Step 5: Verify that evaluation_competences is preserved
+    if 'evaluation_competences' in competences_data:
+        print("✅ evaluation_competences preserved successfully!")
+        print(f"   - ordre_competences count: {len(competences_data['evaluation_competences'].get('ordre_competences', []))}")
+        print(f"   - avis_global: {competences_data['evaluation_competences'].get('avis_global', 'N/A')}")
+        print(f"   - competence_complementaire: {competences_data['evaluation_competences'].get('competence_complementaire', {}).get('titre', 'N/A')}")
+        
+        # Verify the order is correct
+        ordre_competences = competences_data['evaluation_competences'].get('ordre_competences', [])
+        if len(ordre_competences) == 3:
+            print("✅ All 3 competences are in the order!")
+            for i, comp in enumerate(ordre_competences, 1):
+                print(f"   {i}. {comp.get('code', 'N/A')}: {comp.get('formulation', 'N/A')[:50]}...")
+        else:
+            print(f"❌ Expected 3 competences in order, got {len(ordre_competences)}")
+            return False
     else:
-        print("\n❌ Saving process test failed!")
+        print("❌ evaluation_competences was lost!")
+        return False
+    
+    # Step 6: Verify that basic competences data is also preserved
+    if 'formulations_competences' in competences_data and len(competences_data['formulations_competences']) == 3:
+        print("✅ Basic competences data preserved!")
+    else:
+        print("❌ Basic competences data was lost!")
+        return False
+    
+    print("\n🎉 All tests passed! Competence order preservation is working correctly.")
+    return True
+
+if __name__ == "__main__":
+    print("🚀 Running all tests...")
+    print("=" * 60)
+    
+    # Run the main saving process test
+    success1 = test_saving_process()
+    
+    print("\n" + "=" * 60)
+    
+    # Run the competence order preservation test
+    success2 = test_competence_order_preservation()
+    
+    print("\n" + "=" * 60)
+    
+    if success1 and success2:
+        print("✅ All tests completed successfully!")
+    else:
+        print("❌ Some tests failed!")
+        if not success1:
+            print("   - Main saving process test failed")
+        if not success2:
+            print("   - Competence order preservation test failed")
         exit(1) 

@@ -2,9 +2,9 @@ from flask import render_template, request, jsonify, session
 import yaml
 import os
 from datetime import datetime
-from ai_helpers import generate_referentiel_suggestions, save_referentiel_to_yaml, update_referentiel_with_feedback
+from routes.referentiels_ai import generate_referentiel_suggestions, save_referentiel_to_yaml, update_referentiel_with_feedback
 
-def referentiels_page():
+def referentiels_page(nav_info=None, header_gradient='var(--gradient-success)'):
     """
     Handle the referentiels (evaluation rubrics) page
     """
@@ -27,7 +27,7 @@ def referentiels_page():
     
     # Extract required data
     competences_data = yaml_data.get('etape_4_competences', {})
-    evaluation_data = yaml_data.get('evaluation_competences', {})
+    evaluation_data = competences_data.get('evaluation_competences', {})
     
     # Try to get formulations from different possible locations
     formulations = competences_data.get('formulations_competences', [])
@@ -150,14 +150,22 @@ def referentiels_page():
     print(f"Final sections: {sections}")
     
     # Check for existing referentiels
-    existing_referentiels = yaml_data.get('referentiels_par_section', [])
+    etape_5_referentiels = yaml_data.get('etape_5_referentiels', {})
+    existing_referentiels = []
+    for key, value in etape_5_referentiels.items():
+        if key.startswith('section_'):
+            existing_referentiels.append(value)
     print(f"Existing referentiels: {existing_referentiels}")
     
     return render_template('referentiels.html', 
                          sections=sections,
                          besoins_specifiques=besoins_specifiques,
                          yaml_data=yaml_data,
-                         existing_referentiels=existing_referentiels)
+                         existing_referentiels=existing_referentiels,
+                         nav_info=nav_info,
+                         header_gradient=header_gradient,
+                         header_title='🧭 Référentiels d\'auto-évaluation',
+                         header_description='Générer des référentiels d\'auto-évaluation clairs, progressifs et accessibles pour chaque section d\'apprentissage')
 
 def generate_referentiel():
     """

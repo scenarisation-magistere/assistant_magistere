@@ -4,557 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire - Contraintes Formation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
+        /* Page-specific styles for contraintes.html */
         .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .step-indicator {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
-
-        .step-indicator .step {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 0 5px;
-            border-radius: 20px;
-            font-weight: bold;
+            background: var(--gradient-danger);
         }
 
         .step-indicator .step.active {
-            background: white;
-            color: #ff6b6b;
-        }
-
-        .step-indicator .step.inactive {
-            background: rgba(255,255,255,0.3);
-            color: white;
-        }
-
-        .form-container {
-            padding: 40px;
-        }
-
-        .question {
-            margin-bottom: 40px;
-            padding: 25px;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            color: var(--primary-red);
         }
 
         .question:hover {
-            border-color: #ff6b6b;
+            border-color: var(--primary-red);
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
         }
 
         .question-number {
-            display: inline-block;
-            background: #ff6b6b;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            margin-right: 15px;
-        }
-
-        .question h3 {
-            display: inline-block;
-            font-size: 1.3em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .question-description {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-            margin-top: 10px;
+            background: var(--primary-red);
         }
 
         input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: #ff6b6b;
+            border-color: var(--primary-red);
             box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
 
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .radio-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
         .radio-item:hover {
-            border-color: #ff6b6b;
+            border-color: var(--primary-red);
             background: #fff5f5;
         }
 
-        .radio-item input {
-            margin-right: 12px;
-            transform: scale(1.2);
-        }
-
-        .radio-item label {
-            cursor: pointer;
-            flex: 1;
-            color: #333;
-        }
-
         .text-input-container {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #ff6b6b;
-        }
-
-        .text-input-container input {
-            margin-top: 0;
-        }
-
-        .submit-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f0f0;
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--light-gray);
+            border-radius: var(--radius-small);
+            border-left: 4px solid var(--primary-red);
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            background: var(--gradient-danger);
+            box-shadow: var(--shadow-danger);
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
         }
 
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #f0f0f0;
-            border-radius: 3px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
         .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .result-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .yaml-output {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            white-space: pre-wrap;
-            font-size: 0.9em;
-            border: 1px solid #e0e0e0;
-            margin-top: 20px;
+            background: var(--gradient-danger);
         }
 
         .migration-warning {
             background: linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-small);
+            margin: var(--spacing-lg) 0;
             border-left: 5px solid #e056fd;
         }
 
         .migration-warning h3 {
-            margin-bottom: 15px;
-            font-size: 1.2em;
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-xl);
         }
 
         .migration-warning a {
-            color: white;
+            color: var(--white);
             text-decoration: underline;
             font-weight: bold;
         }
 
         .migration-warning .important {
             background: rgba(255,255,255,0.2);
-            padding: 10px;
+            padding: var(--spacing-sm);
             border-radius: 5px;
-            margin: 10px 0;
+            margin: var(--spacing-sm) 0;
         }
 
-        .filename-info {
-            background: #e8f5e8;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border-left: 4px solid #28a745;
+        .yaml-output {
+            background: var(--light-gray);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-small);
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            font-size: var(--font-size-small);
+            border: 1px solid var(--border-gray);
+            margin-top: var(--spacing-lg);
         }
 
-        .filename-info strong {
-            color: #2e7d32;
-        }
-
-        .continue-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1em;
-            border-radius: 25px;
-            cursor: pointer;
+        /* Navigation buttons alignment for first page */
+        .navigation-buttons {
+            text-align: right !important;
             margin-top: 20px;
-            transition: all 0.3s ease;
         }
 
-        .continue-btn:hover {
+        .navigation-buttons .btn-next {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%) !important;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .navigation-buttons .btn-next:hover {
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>⚙️ Contraintes Formation</h1>
-            <p>Précisez les contraintes temporelles, organisationnelles et techniques</p>
-            <div class="step-indicator">
-                <span class="step inactive">1. Public cible</span>
-                <span class="step active">2. Contraintes</span>
-                <span class="step inactive">3. Scénario</span>
-                <span class="step inactive">4. Compétences</span>
-                <span class="step inactive">5. Référentiels</span>
-                <span class="step inactive">6. Contenus</span>
-                <span class="step inactive">7. Export</span>
-            </div>
-        </div>
+        {% include 'includes/header.html' %}
 
         <div class="form-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
 
-            <form id="questionnaireForm">
-                {% for question in questions %}
-                <div class="question" id="question-{{ question.id }}">
-                    <div class="question-header">
-                        <span class="question-number">{{ question.id }}</span>
-                        <h3>{{ question.question }}</h3>
-                    </div>
-
-                    {% if question.description %}
-                    <div class="question-description">{{ question.description }}</div>
-                    {% endif %}
-
-                    <div class="form-group">
-                        <div class="radio-group">
-                            {% for option in question.options %}
-                            <div class="radio-item">
-                                <input type="radio" name="{{ question.field_name }}" value="{{ option }}" id="{{ question.field_name }}_{{ loop.index }}" required>
-                                <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
-                            </div>
-                            {% endfor %}
-                        </div>
-
-                        {% if question.text_input_options %}
-                        <div class="text-input-container" id="text-input-{{ question.field_name }}" style="display: none;">
-                            <input type="text" name="{{ question.field_name }}_text" placeholder="{{ question.text_placeholder }}">
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-
-                <div class="submit-section">
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        ✅ Valider et Continuer vers le Scénario CMO
-                    </button>
-                </div>
+            <form id="questionnaireForm" method="POST">
+                {% include 'includes/question_slider.html' %}
             </form>
         </div>
     </div>
 
-    <!-- Result Modal -->
-    <div class="result-modal" id="resultModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>✅ Données Sauvegardées</h2>
-            <div class="filename-info">
-                <strong>📁 Fichier :</strong> <span id="filenameDisplay"></span>
-            </div>
-            <p id="resultMessage"></p>
-            
-            <div id="migrationWarning" class="migration-warning" style="display: none;">
-                <h3>⚠️ Ressource utile — Migration de parcours Magistère</h3>
-                <p><a href="https://toulouse.magistere.apps.education.fr/course/view.php?id=398" target="_blank">https://toulouse.magistere.apps.education.fr/course/view.php?id=398</a></p>
-                <div class="important">
-                    <strong>ℹ️ Important :</strong> L'équipe des formateurs de la Communauté Magistère Occitanie accompagne la migration <strong>jusqu'à la fin octobre 2025</strong>.
-                </div>
-                <div class="important">
-                    <strong>⚠️ Tous les parcours qui n'auront pas été migrés d'ici décembre 2025 ne pourront plus être récupérés.</strong>
-                </div>
-            </div>
+    {% include 'includes/success_modal.html' %}
 
-            <h3>Données YAML Complètes :</h3>
-            <div class="yaml-output" id="yamlOutput"></div>
-            <button class="continue-btn" onclick="continueToNextStep()">Continuer vers le Scénario CMO →</button>
-        </div>
-    </div>
-
+    <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
-        // Update progress bar
-        function updateProgress() {
-            const form = document.getElementById('questionnaireForm');
-            const inputs = form.querySelectorAll('input[type="radio"]');
-            const filledInputs = Array.from(inputs).filter(input => input.checked).length;
-            
-            const progress = (filledInputs / inputs.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
+        // Override navigation functions for this template
+        function getNextRouteFromNavInfo() {
+            {% if nav_info and nav_info.next_route %}
+                return '{{ nav_info.next_route }}';
+            {% endif %}
+            return null;
         }
 
-        // Handle text input visibility for radio buttons
-        function handleRadioChange() {
-            const radioButtons = document.querySelectorAll('input[type="radio"]');
+        function getPreviousRouteFromNavInfo() {
+            {% if nav_info and nav_info.previous_route %}
+                return '{{ nav_info.previous_route }}';
+            {% endif %}
+            return null;
+        }
+
+        // Override submitAllQuestions function to use harmonized submit for contraintes
+        const originalSubmitAllQuestions = window.submitAllQuestions;
+        window.submitAllQuestions = function() {
+            // Check if all questions are completed
+            const questionData = {{ questions|tojson }};
+            const incompleteQuestions = [];
             
-            radioButtons.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const fieldName = this.name;
-                    const textInputContainer = document.getElementById(`text-input-${fieldName}`);
-                    
-                    if (textInputContainer) {
-                        const selectedOption = this.value;
-                        
-                        // Check if the selected option requires text input
-                        const questionData = {{ questions|tojson }};
-                        const currentQuestion = questionData.find(q => q.field_name === fieldName);
-                        
-                        if (currentQuestion && currentQuestion.text_input_options) {
-                            const needsTextInput = currentQuestion.text_input_options.includes(selectedOption);
-                            textInputContainer.style.display = needsTextInput ? 'block' : 'none';
-                            
-                            if (!needsTextInput) {
-                                const textInput = textInputContainer.querySelector('input');
-                                if (textInput) textInput.value = '';
-                            }
+            questionData.forEach((question, index) => {
+                if (!isQuestionCompleted(question.field_name)) {
+                    incompleteQuestions.push(index + 1);
+                }
+            });
+            
+            if (incompleteQuestions.length > 0) {
+                alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
+                goToQuestion(incompleteQuestions[0]);
+                return;
+            }
+            
+            // Custom data processor for contraintes form
+            function processContraintesData() {
+                const form = document.getElementById('questionnaireForm');
+                if (!form) return {};
+                
+                const data = {};
+                
+                // Handle radio buttons
+                const radioButtons = form.querySelectorAll('input[type="radio"]:checked');
+                radioButtons.forEach(radio => {
+                    data[radio.name] = radio.value;
+                });
+                
+                // Handle text inputs for specific options
+                const textInputs = form.querySelectorAll('input[type="text"]');
+                textInputs.forEach(textInput => {
+                    if (textInput.value.trim() !== '') {
+                        const fieldName = textInput.name.replace('_text', '');
+                        // Combine the radio selection with the text input
+                        if (data[fieldName]) {
+                            data[fieldName] = data[fieldName] + ' : ' + textInput.value.trim();
                         }
                     }
                 });
-            });
-        }
-
-        // Add event listeners for progress tracking
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('questionnaireForm');
-            const inputs = form.querySelectorAll('input[type="radio"]');
-            
-            inputs.forEach(input => {
-                input.addEventListener('change', updateProgress);
-            });
-            
-            handleRadioChange();
-            updateProgress();
-        });
-
-        // Form submission
-        document.getElementById('questionnaireForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = {};
-            
-            // Handle radio buttons
-            const radioButtons = this.querySelectorAll('input[type="radio"]:checked');
-            radioButtons.forEach(radio => {
-                data[radio.name] = radio.value;
-            });
-            
-            // Handle text inputs for specific options
-            const textInputs = this.querySelectorAll('input[type="text"]');
-            textInputs.forEach(textInput => {
-                if (textInput.value.trim() !== '') {
-                    const fieldName = textInput.name.replace('_text', '');
-                    // Combine the radio selection with the text input
-                    if (data[fieldName]) {
-                        data[fieldName] = data[fieldName] + ' : ' + textInput.value.trim();
-                    }
-                }
-            });
-            
-            // Submit data
-            fetch('/submit_contraintes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    document.getElementById('filenameDisplay').textContent = result.filename;
-                    document.getElementById('resultMessage').textContent = result.message;
-                    document.getElementById('yamlOutput').textContent = JSON.stringify(result.yaml_data, null, 2);
-                    
-                    // Show migration warning if needed
-                    if (result.migration_warning) {
-                        document.getElementById('migrationWarning').style.display = 'block';
-                    }
-                    
-                    document.getElementById('resultModal').style.display = 'block';
-                } else {
-                    alert('Erreur lors de la soumission');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erreur lors de la soumission');
-            });
-        });
-
-        function closeModal() {
-            document.getElementById('resultModal').style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('resultModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+                
+                return data;
             }
-        }
-
-        function continueToNextStep() {
-            window.location.href = '/scenario';
-        }
+            
+            // Use harmonized submit
+            const submitHandler = createHarmonizedSubmitButton({
+                buttonId: 'submitBtn',
+                buttonText: '✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}',
+                endpoint: '/submit_contraintes',
+                dataProcessor: processContraintesData,
+                loadingText: '⏳ Sauvegarde en cours...'
+            });
+            
+            // Create a temporary form submission event
+            const event = new Event('submit', { bubbles: true, cancelable: true });
+            document.getElementById('questionnaireForm').dispatchEvent(event);
+        };
     </script>
 </body>
 </html> 

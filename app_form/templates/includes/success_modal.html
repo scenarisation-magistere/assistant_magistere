@@ -1,0 +1,23 @@
+<!-- Success Modal -->
+<div class="result-modal" id="successModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>✅ Données Sauvegardées</h2>
+        <div class="filename-info">
+            <strong>📁 Fichier :</strong> <span id="filenameDisplay"></span>
+        </div>
+        <p id="resultMessage"></p>
+        <h3>Données YAML :</h3>
+        <div class="yaml-output" id="yamlOutput"></div>
+        <div class="modal-actions">
+            <button class="submit-btn" onclick="window.location.href='/'">
+                🏠 Retour à l'Accueil
+            </button>
+            {% if nav_info and not nav_info.is_last %}
+                <button class="submit-btn" onclick="continueToNextStep()" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);">
+                    🧭 Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

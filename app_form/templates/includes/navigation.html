@@ -1,0 +1,41 @@
+<!-- Common Navigation Template -->
+{% if nav_info %}
+<div class="step-indicator">
+    {% for step_num in range(1, nav_info.total_steps + 1) %}
+        {% if step_num == nav_info.step %}
+            <span class="step active">{{ step_num }}. {{ nav_info.current_name }}</span>
+        {% else %}
+            <span class="step inactive">{{ step_num }}. {{ get_page_name_by_step(step_num) }}</span>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Navigation Buttons -->
+<div class="navigation-buttons">
+    {% if not nav_info.is_first %}
+        <button class="btn-prev" onclick="goToPreviousStep()">
+            ← {{ get_page_name_by_step(nav_info.step - 1) }}
+        </button>
+    {% endif %}
+    
+    {% if not nav_info.is_last %}
+        <button class="btn-next" onclick="goToNextStep()">
+            {{ get_page_name_by_step(nav_info.step + 1) }} →
+        </button>
+    {% endif %}
+</div>
+
+<script>
+function goToPreviousStep() {
+    {% if nav_info.previous_route %}
+        window.location.href = '{{ nav_info.previous_route }}';
+    {% endif %}
+}
+
+function goToNextStep() {
+    {% if nav_info.next_route %}
+        window.location.href = '{{ nav_info.next_route }}';
+    {% endif %}
+}
+</script>
+{% endif %}

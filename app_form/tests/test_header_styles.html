@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Header Styles</title>
+    <link rel="stylesheet" href="static/css/common.css">
+    <style>
+        /* Test page styles */
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-header {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test Header Gradient Styles</h1>
+        
+        <div class="test-header" style="background: var(--gradient-primary);">
+            <h2>Primary Gradient (Blue)</h2>
+            <p>This should show a blue gradient background</p>
+        </div>
+        
+        <div class="test-header" style="background: var(--gradient-success);">
+            <h2>Success Gradient (Green)</h2>
+            <p>This should show a green gradient background</p>
+        </div>
+        
+        <div class="test-header" style="background: var(--gradient-danger);">
+            <h2>Danger Gradient (Red)</h2>
+            <p>This should show a red gradient background</p>
+        </div>
+        
+        <div class="test-header" style="background: var(--gradient-secondary);">
+            <h2>Secondary Gradient (Purple)</h2>
+            <p>This should show a purple gradient background</p>
+        </div>
+        
+        <div class="test-header" style="background: var(--gradient-gray);">
+            <h2>Gray Gradient</h2>
+            <p>This should show a gray gradient background</p>
+        </div>
+    </div>
+</body>
+</html>

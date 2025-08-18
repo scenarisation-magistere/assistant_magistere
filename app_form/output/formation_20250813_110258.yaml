@@ -1,231 +1,321 @@
 etape_1_public_cible:
-  public_cible:
-    type: Enseignants 2d degré
-    profil: Groupe homogène (mêmes profils, mêmes besoins)
-    niveau_expertise: Débutant
-    besoins_specifiques: Aucun besoin identifié
-    recommandations:
-    - À compléter ou à reformuler en fonction du profil et des besoins
-  contexte_formation:
-    titre: Créer des formations innovantes grâce à l’Intelligence Artificielle
-    objectif_general: Apprenez à exploiter la puissance de l’IA pour concevoir, personnaliser
-      et automatiser vos parcours pédagogiques. Cette formation vous guidera pas à
-      pas dans l’utilisation d’outils et de méthodes d’IA afin de créer des contenus
-      engageants, adaptés aux besoins de vos apprenants, tout en gagnant en efficacité
-      et en créativité.
-last_updated: '2025-08-14T19:26:32.864222'
+  titre_formation: Apprendre à faire des crêpes
+  objectif_general: Accompagner les participants de la formation pour apprendre à
+    faire les crêpes et les galettes
+  type_de_public: Enseignants 1er degré
+  niveau_expertise: Débutant
+  profil_groupe: Groupe homogène (mêmes profils, mêmes besoins)
+  besoins_specifiques: Aucun besoin identifié
+last_updated: '2025-08-18T20:56:46.169119'
 current_step: etape_4_competences
 etape_2_contraintes:
-  contraintes_formation:
-    type_parcours: Création d'un nouvel espace
-    temps_total: Moins de 3h — Recommandé par la CMO
-    autonomie: Autoformation (sans accompagnement)
-    animation: Formation animée par un seul intervenant
-    calendrier: Début d'année scolaire
-    horaires: Sur temps de travail (journée / service)
-    nombre_participants: Moins de 10 personnes
-    exigences_institutionnelles: Non
-    restrictions_techniques: Non
-    exemple_associe: 001C_Exemple_Contraintes_Formation.md
-etape_3_scenario:
-  scenario_cmo:
-    title: Scénario structuré recommandé – Communauté Magistère Occitanie (CMO)
-    description: 'Le scénario CMO propose une structuration claire et précise de la
-      formation :'
-    features:
-    - 'Prise en compte du public cible : qualité, niveau, besoins particuliers'
-    - Prise en compte des contraintes de la formation
-    - 'Modalités : hybride asynchrone (majeure) et synchrone (mineur)'
-    - 3 à 4 compétences cibles écrites sous formes de verbes d'action dans les domaines
-      cognitif et affectif
-    - Au maximum 8 sections
-    sections:
-    - number: 1
-      type: Accueil
-      content: Présentation générale de la formation, objectifs, déroulé
-      modality: Asynchrone
-    - number: 2
-      type: Section d'apprentissage 1
-      content: Compétence 1 – Ressource, activité(s), référentiel, badge, discussion
-        associée
-      modality: Asynchrone
-    - number: 3
-      type: Section d'apprentissage 2
-      content: Compétence 2 – Idem
-      modality: Asynchrone
-    - number: 4
-      type: Section d'apprentissage 3
-      content: Compétence 3 – Idem
-      modality: Asynchrone
-    - number: 5
-      type: Section d'apprentissage 4
-      content: Idem (optionnelle)
-      modality: Asynchrone
-    - number: 6
-      type: Classe virtuelle (BBB)
-      content: Point intermédiaire, accompagnement à la demande, approfondissement
-      modality: Synchrone
-    - number: 7
-      type: Forum général
-      content: Discussions regroupées par compétence
-      modality: Asynchrone
-    - number: 8
-      type: Évaluation de satisfaction
-      content: Bilan à court, moyen et long terme
-      modality: Asynchrone
-    constraints:
-    - Durée de 3h maximum
-    - Poids total de 512 Mo maximum
-    acknowledged: true
-    timestamp: '2025-08-14T19:22:27.251498'
+  type_parcours: Création d'un nouvel espace
+  temps_total: Moins de 3h — Recommandé par la CMO
+  autonomie: Formation tutorée (accompagnement ponctuel) — Recommandé par la CMO
+  animation: Formation animée par un seul intervenant
+  calendrier: Début d'année scolaire
+  calendrier_text: ''
+  horaires: Hors temps de travail (soir, à partir de 17h00)
+  horaires_text: ''
+  nombre_participants: Moins de 10 personnes
+  exigences_institutionnelles: Non
+  exigences_institutionnelles_text: ''
+  restrictions_techniques: Non
+  restrictions_techniques_text: ''
 etape_4_competences:
-  formulations_competences: []
-evaluation_competences:
-  ordre_competences:
-  - code: C1
-    formulation: Être capable d'identifier et de nommer différents outils d'intelligence
-      artificielle adaptés à la création de contenus pédagogiques.
-    justification: C1 est la compétence la plus simple, car elle se concentre sur
-      l'identification et la description, ce qui est essentiel pour établir une base
-      de connaissances sur les outils d'IA.
-    pertinence: élevée
-  - code: C2
-    formulation: Être capable d'innover dans la conception pédagogique en intégrant
-      des solutions d'intelligence artificielle pour améliorer l'engagement et l'apprentissage.
-    justification: C2 est une progression naturelle après C1, car elle demande d'appliquer
-      les connaissances acquises pour innover dans la conception pédagogique.
-    pertinence: élevée
-  - code: C3
-    formulation: Être capable d'évaluer l'efficacité des contenus pédagogiques générés
-      par l'intelligence artificielle en mesurant leur impact sur l'apprentissage
-      des élèves.
-    justification: C3 est la compétence la plus complexe, car elle nécessite une analyse
-      critique et une évaluation des contenus, ce qui est une étape avancée dans le
-      processus d'apprentissage.
-    pertinence: élevée
-  avis_global: 'L''ordre des compétences est cohérent avec les principes de l''alignement
-    pédagogique de Biggs. La progression de C1 à C3 suit une logique de complexité
-    croissante, passant de l''identification à l''innovation, puis à l''évaluation.
-    Chaque compétence est pertinente pour le public cible et les objectifs de la formation.
-
-    '
-  points_amelioration:
-  - Ajouter une compétence de niveau bas pour faciliter l'accès aux concepts de base
-    de l'IA.
-  competence_complementaire:
-    titre: Comprendre les concepts fondamentaux de l'intelligence artificielle
+  formulations_competences:
+  - À l'issue de la formation, les participants seront capables d'identifier et de
+    nommer les ingrédients nécessaires à la préparation des crêpes et des galettes.
+  - À l'issue de la formation, les participants seront capables de créer des recettes
+    variées de crêpes et de galettes en intégrant différentes garnitures.
+  - À l'issue de la formation, les participants seront capables d'utiliser les techniques
+    de cuisson adaptées pour réaliser des crêpes et des galettes.
+  competence_1:
+    titre: Identifier les ingrédients nécessaires pour faire des crêpes
+    idees_cles: ingrédients, crêpes, préparation
     niveau: Bas
-    idees_cles: IA, concepts, fondamentaux, éducation
-    verbes: définir, expliquer, reconnaître
-    formulation: Être capable de définir et d'expliquer les concepts fondamentaux
-      de l'intelligence artificielle et leur pertinence dans le contexte éducatif.
-    justification: Cette compétence est nécessaire pour établir une base solide avant
-      d'aborder les outils et les applications de l'IA dans l'éducation.
-    position_suggeree: début
-referentiels_par_section:
-- adaptations_cua:
-  - adaptation: Proposer des études de cas plus complexes pour analyser les impacts
-      des formations.
-    besoin: Différenciation pour les apprenants avancés
-  competence: Être capable d'évaluer l'impact des formations créées avec l'IA et d'analyser
-    les retours d'expérience pour des améliorations futures.
-  niveaux:
-  - badge: non
-    degre: 1
-    libelle: Je débute
-    observable_qualitatif: Je suis capable de décrire les objectifs des formations
-      créées avec l'IA.
-    observable_quantitatif: Je peux identifier au moins 1 objectif de formation.
-  - badge: non
-    degre: 2
-    libelle: Je progresse
-    observable_qualitatif: Je suis capable d'analyser les retours d'expérience des
-      participants.
-    observable_quantitatif: Je peux recueillir et analyser les retours d'au moins
-      3 participants.
-  - badge: oui
-    degre: 3
-    libelle: Je suis autonome
-    observable_qualitatif: Je suis capable de proposer des améliorations basées sur
-      l'analyse des retours d'expérience.
-    observable_quantitatif: Je peux formuler au moins 2 suggestions d'amélioration
-      après chaque formation.
-  - badge: non
-    degre: 4
-    libelle: Je maîtrise avec aisance
-    observable_qualitatif: Je suis capable de concevoir des formations en intégrant
-      des évaluations d'impact dès le départ.
-    observable_quantitatif: Je peux démontrer l'impact de mes formations sur au moins
-      5 indicateurs clés.
-  section: 3
-- adaptations_cua:
-  - adaptation: Création de modules de formation adaptés, incluant des ressources
-      variées et des évaluations formatives.
-    besoin: Apprenants avec des besoins spécifiques d'apprentissage
-  competence: Être capable d'analyser les besoins des apprenants afin de personnaliser
-    les parcours pédagogiques.
-  niveaux:
-  - badge: non
-    degre: 1
-    libelle: Je débute
-    observable_qualitatif: Je suis capable de reconnaître que chaque apprenant a des
-      besoins différents.
-    observable_quantitatif: Je peux identifier 1 à 2 besoins par session d'apprentissage.
-  - badge: non
-    degre: 2
-    libelle: Je progresse
-    observable_qualitatif: Je suis capable de recueillir des informations sur les
-      besoins des apprenants.
-    observable_quantitatif: Je réalise 3 à 5 entretiens ou questionnaires par mois.
-  - badge: oui
-    degre: 3
-    libelle: Je suis autonome
-    observable_qualitatif: Je suis capable d'analyser et de synthétiser les besoins
-      des apprenants pour adapter les parcours.
-    observable_quantitatif: J'élabore des parcours personnalisés pour au moins 75%
-      de mes apprenants.
-  - badge: non
-    degre: 4
-    libelle: Je maîtrise avec aisance
-    observable_qualitatif: Je suis capable d'innover dans l'analyse des besoins et
-      de partager mes pratiques.
-    observable_quantitatif: Je participe à 2 à 3 projets collaboratifs par an sur
-      l'analyse des besoins.
-  section: 2
-- adaptations_cua:
-  - adaptation: Utiliser des infographies et des vidéos explicatives pour mieux comprendre
-      les concepts.
-    besoin: Apprentissage visuel
-  - adaptation: Proposer des podcasts ou des discussions en groupe sur les concepts
-      d'intelligence artificielle.
-    besoin: Apprentissage auditif
-  competence: Être capable de définir et d'expliquer les concepts fondamentaux de
-    l'intelligence artificielle appliqués à l'éducation.
-  niveaux:
-  - badge: non
-    degre: 1
-    libelle: Je débute
-    observable_qualitatif: Je suis capable de définir quelques concepts de base de
-      l'intelligence artificielle.
-    observable_quantitatif: Je peux énumérer au moins 2 concepts fondamentaux.
-  - badge: non
-    degre: 2
-    libelle: Je progresse
-    observable_qualitatif: Je suis capable d'expliquer ces concepts de manière simple.
-    observable_quantitatif: Je peux expliquer au moins 3 concepts fondamentaux avec
-      des exemples.
-  - badge: oui
-    degre: 3
-    libelle: Je suis autonome
-    observable_qualitatif: Je suis capable d'appliquer ces concepts dans des situations
-      éducatives concrètes.
-    observable_quantitatif: Je peux animer une discussion ou un atelier sur l'intelligence
-      artificielle avec au moins 5 participants.
-  - badge: non
-    degre: 4
-    libelle: Je maîtrise avec aisance
-    observable_qualitatif: Je suis capable de critiquer et d'évaluer l'impact de l'intelligence
-      artificielle dans l'éducation.
-    observable_quantitatif: Je peux rédiger un article ou une présentation d'au moins
-      1500 mots sur le sujet, intégrant des recherches récentes.
-  section: 1
+    verbes: identifier, nommer, énumérer
+    formulation: À l'issue de la formation, les participants seront capables d'identifier
+      et de nommer les ingrédients nécessaires à la préparation des crêpes et des
+      galettes.
+  competence_2:
+    titre: Créer des recettes variées de crêpes et galettes
+    idees_cles: création, recettes, variété
+    niveau: Haut
+    verbes: créer, innover, composer
+    formulation: À l'issue de la formation, les participants seront capables de créer
+      des recettes variées de crêpes et de galettes en intégrant différentes garnitures.
+  competence_3:
+    titre: Utiliser les techniques de cuisson adaptées pour les crêpes
+    idees_cles: techniques, cuisson, crêpes
+    niveau: Moyen
+    verbes: utiliser, appliquer, manipuler
+    formulation: À l'issue de la formation, les participants seront capables d'utiliser
+      les techniques de cuisson adaptées pour réaliser des crêpes et des galettes.
+  evaluation_competences:
+    ordre_competences:
+    - code: C1
+      formulation: À l'issue de la formation, les participants seront capables d'identifier
+        et de nommer les ingrédients nécessaires à la préparation des crêpes et des
+        galettes.
+      justification: C1 est la compétence la plus simple, car elle se concentre sur
+        l'identification des ingrédients, ce qui est fondamental avant de passer à
+        des techniques de cuisson.
+      pertinence: élevée
+    - code: C3
+      formulation: À l'issue de la formation, les participants seront capables d'utiliser
+        les techniques de cuisson adaptées pour réaliser des crêpes et des galettes.
+      justification: C3 est de niveau moyen et suit logiquement C1, car une fois les
+        ingrédients identifiés, les participants doivent apprendre à les cuisiner.
+      pertinence: élevée
+    - code: C2
+      formulation: À l'issue de la formation, les participants seront capables de
+        créer des recettes variées de crêpes et de galettes en intégrant différentes
+        garnitures.
+      justification: C2 est la compétence la plus complexe, car elle implique la création
+        et l'innovation, nécessitant une maîtrise des compétences précédentes.
+      pertinence: élevée
+    avis_global: 'L''ordre des compétences est cohérent avec la progression pédagogique,
+      allant de l''identification des ingrédients à l''application des techniques
+      de cuisson, puis à la création de recettes. Cela respecte l''alignement pédagogique
+      de Biggs.
+
+      '
+    points_amelioration:
+    - Clarifier les verbes d'action dans les compétences pour éviter toute ambiguïté.
+    - Ajouter des exemples concrets d'ingrédients et de techniques pour enrichir la
+      formation.
+    - Suggestion d'ajouter une compétence pour combler un gap entre l'identification
+      des ingrédients et l'utilisation des techniques de cuisson.
+    competence_complementaire:
+      titre: Appliquer les techniques de préparation des ingrédients
+      niveau: Moyen
+      idees_cles: préparation, découpe, mélange
+      verbes: préparer, mélanger, découper
+      formulation: À l'issue de la formation, les participants seront capables de
+        préparer les ingrédients nécessaires pour la réalisation des crêpes et des
+        galettes.
+      justification: Cette compétence est nécessaire pour faire le lien entre l'identification
+        des ingrédients et leur utilisation en cuisine, facilitant ainsi la progression
+        vers C3.
+      position_suggeree: entre C1 et C3
+etape_5_referentiels:
+  section_1:
+    adaptations_cua: []
+    competence: À l'issue de la formation, les participants seront capables d'identifier
+      et de nommer les ingrédients nécessaires à la préparation des crêpes et des
+      galettes.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de nommer au moins 2 ingrédients pour
+        la préparation des crêpes.
+      observable_quantitatif: Je peux citer 2 ingrédients sur 10.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de nommer au moins 5 ingrédients pour
+        la préparation des crêpes et des galettes.
+      observable_quantitatif: Je peux citer 5 ingrédients sur 10 avec une précision
+        de 70%.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de nommer tous les ingrédients utilisés
+        pour la préparation des crêpes et des galettes.
+      observable_quantitatif: Je peux citer 10 ingrédients sur 10 avec une précision
+        de 90% ou plus.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de décrire l'usage de chaque ingrédient
+        dans la préparation des crêpes et des galettes.
+      observable_quantitatif: Je peux citer et expliquer l'usage de 10 ingrédients
+        sur 10 avec une précision de 100%.
+    section: 1
+  section_2:
+    adaptations_cua:
+    - adaptation: Proposer des ressources visuelles et des démonstrations pratiques.
+      besoin: Difficultés d'apprentissage
+    competence: Savoir appliquer les techniques de base dans des situations pratiques
+      pertinentes.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître les techniques de base.
+      observable_quantitatif: Je peux identifier au moins 2 techniques sur 5.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable d'appliquer une technique de base sous
+        supervision.
+      observable_quantitatif: Je réussis à appliquer la technique dans 3 situations
+        sur 5.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable d'appliquer plusieurs techniques de base
+        de manière autonome.
+      observable_quantitatif: Je réussis à appliquer au moins 3 techniques dans 5
+        situations différentes.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable d'adapter et d'enseigner les techniques
+        de base à d'autres.
+      observable_quantitatif: Je peux démontrer et expliquer les techniques dans 5
+        situations variées.
+    section: 2
+  section_3:
+    adaptations_cua:
+    - adaptation: Proposer des fiches d'aide à l'analyse pour structurer la pensée.
+      besoin: Difficultés d'analyse
+    - adaptation: Offrir des sessions de feedback en groupe pour renforcer la confiance
+        dans les compétences d'évaluation.
+      besoin: Manque de confiance
+    competence: Être capable d'analyser des cas pratiques et d'évaluer les différentes
+      solutions possibles.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de décrire un cas pratique de manière
+        basique.
+      observable_quantitatif: Je peux identifier au moins 1 solution possible sur
+        5 cas pratiques analysés.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable d'analyser un cas pratique et d'identifier
+        plusieurs solutions.
+      observable_quantitatif: Je peux proposer au moins 2 solutions sur 5 cas pratiques
+        analysés.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable d'évaluer et de justifier les solutions
+        proposées pour un cas pratique.
+      observable_quantitatif: Je peux évaluer au moins 3 solutions sur 5 cas pratiques
+        analysés avec des justifications claires.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de comparer et de synthétiser les solutions
+        de manière critique.
+      observable_quantitatif: Je peux réaliser une analyse comparative de 4 solutions
+        sur 5 cas pratiques analysés, en présentant des conclusions détaillées.
+    section: 3
+  section_4:
+    adaptations_cua:
+    - adaptation: Mise en place de supports visuels et auditifs pour faciliter la
+        compréhension.
+      besoin: Difficultés d'apprentissage
+    - adaptation: Création d'activités ludiques et interactives pour susciter l'engagement.
+      besoin: Manque de motivation
+    - adaptation: Proposition de parcours individualisés avec des temps de travail
+        modulables.
+      besoin: Rythmes d'apprentissage variés
+    competence: Savoir élaborer des stratégies adaptées aux besoins spécifiques identifiés
+      dans le contexte de formation.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître les besoins spécifiques
+        en formation.
+      observable_quantitatif: J'identifie 1 à 2 besoins dans un contexte de formation
+        donné.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de proposer des stratégies simples pour
+        répondre aux besoins identifiés.
+      observable_quantitatif: Je propose 2 à 3 stratégies adaptées pour au moins 2
+        besoins spécifiques.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable d'élaborer des stratégies variées et
+        adaptées aux besoins spécifiques identifiés.
+      observable_quantitatif: J'élabore au moins 4 stratégies adaptées pour 3 à 4
+        besoins spécifiques dans un contexte de formation.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable d'évaluer et d'ajuster mes stratégies
+        en fonction des résultats obtenus.
+      observable_quantitatif: J'évalue et ajuste mes stratégies après mise en œuvre
+        pour 4 à 5 besoins spécifiques, avec un retour positif de 80% des apprenants.
+    section: 4
+  section_5:
+    adaptations_cua:
+    - adaptation: Proposer des modules de formation supplémentaires sur les méthodes
+        d'évaluation.
+      besoin: Accompagnement pour l'évaluation des interventions
+    competence: Être capable d'évaluer l'impact des interventions sur les résultats
+      attendus et de proposer des améliorations.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de décrire les objectifs d'une intervention.
+      observable_quantitatif: Je peux identifier 1 à 2 résultats d'une intervention.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de comparer les résultats d'une intervention
+        avec les objectifs fixés.
+      observable_quantitatif: Je peux évaluer 3 à 4 interventions et en faire un bilan.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de proposer des améliorations basées
+        sur l'évaluation des résultats.
+      observable_quantitatif: Je peux évaluer 5 interventions et suggérer au moins
+        2 améliorations pour chacune.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de concevoir des interventions en tenant
+        compte des évaluations précédentes.
+      observable_quantitatif: Je peux évaluer plus de 5 interventions et proposer
+        des améliorations innovantes et pertinentes.
+    section: 5
+  section_6:
+    adaptations_cua:
+    - adaptation: Proposer des ateliers de groupe pour aider à identifier et analyser
+        des problématiques complexes.
+      besoin: Accompagnement pour les débutants
+    competence: Savoir créer des solutions innovantes face à des problématiques complexes
+      en intégrant les concepts et techniques apprises.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître des problématiques complexes
+        et d'énoncer des solutions possibles.
+      observable_quantitatif: Je peux identifier au moins 2 problématiques et 1 solution
+        par mois.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de proposer des solutions innovantes
+        en utilisant certaines techniques apprises.
+      observable_quantitatif: Je génère au moins 3 solutions innovantes par trimestre.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de créer des solutions innovantes de
+        manière autonome en intégrant différents concepts et techniques.
+      observable_quantitatif: Je développe et présente au moins 1 projet de solution
+        innovante par mois.
+    - badge: non
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de guider d'autres personnes dans la
+        création de solutions innovantes face à des problématiques complexes.
+      observable_quantitatif: Je supervise et évalue au moins 2 projets d'autres personnes
+        par trimestre.
+    section: 6

@@ -1,0 +1,153 @@
+from flask import render_template, session, redirect, url_for, request, jsonify
+import yaml
+import os
+from datetime import datetime
+
+# Import questions from separate files
+from questions.public_cible import QUESTIONS_PUBLIC_CIBLE
+from questions.contraintes import QUESTIONS_CONTRAINTES
+
+# Import navigation config
+from config.pages_config import get_navigation_info, get_page_by_step, PAGES_CONFIG, get_page_config
+
+# Create output directory if it doesn't exist
+OUTPUT_DIR = 'output'
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
+
+# Generate a unique session ID for this run
+def get_session_filename():
+    """Generate a unique filename for this session"""
+    if 'session_id' not in session:
+        session['session_id'] = datetime.now().strftime("%Y%m%d_%H%M%S")
+    return f"formation_{session['session_id']}.yaml"
+
+def save_yaml_data(data, step_name):
+    """Save data to YAML file, updating existing file if it exists"""
+    filename = get_session_filename()
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    
+    # Load existing data if file exists
+    existing_data = {}
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                existing_data = yaml.safe_load(f) or {}
+        except:
+            existing_data = {}
+    
+    # Update with new data
+    existing_data[step_name] = data
+    existing_data['last_updated'] = datetime.now().isoformat()
+    existing_data['current_step'] = step_name
+    
+    # Save updated data
+    with open(filepath, 'w', encoding='utf-8') as f:
+        yaml.dump(existing_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+    
+    return filename
+
+def check_migration_warning(type_parcours):
+    """Check if migration warning should be displayed"""
+    if not type_parcours:
+        return False
+    
+    migration_keywords = ['migration', 'migrer', 'migrer un parcours', 'migration parcours']
+    type_parcours_lower = type_parcours.lower()
+    
+    for keyword in migration_keywords:
+        if keyword in type_parcours_lower:
+            return True
+    return False
+
+def check_previous_steps_completed(required_steps):
+    """Check if all required previous steps are completed"""
+    if 'session_id' not in session:
+        return False, "Aucune session active"
+    
+    filename = get_session_filename()
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    
+    if not os.path.exists(filepath):
+        return False, "Aucun fichier de données trouvé"
+    
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            yaml_data = yaml.safe_load(f) or {}
+    except:
+        return False, "Erreur lors du chargement des données"
+    
+    for step in required_steps:
+        if step not in yaml_data:
+            return False, f"Étape {step} non complétée"
+    
+    return True, "OK"
+
+def register_main_routes(app):
+    """Register main routes with the Flask app"""
+    
+    # Add context processor for navigation helpers
+    @app.context_processor
+    def inject_navigation_helpers():
+        def get_page_name_by_step(step):
+            page_name = get_page_by_step(step)
+            if page_name:
+                return PAGES_CONFIG[page_name]['name']
+            return f'Étape {step}'
+        
+        return dict(get_page_name_by_step=get_page_name_by_step)
+    
+    @app.route('/')
+    def index():
+        return render_template('home.html')
+
+    @app.route('/start-journey')
+    def start_journey():
+        return redirect('/public-cible')
+
+    @app.route('/public-cible', methods=['GET', 'POST'])
+    def public_cible():
+        if request.method == 'POST':
+            # Handle form submission
+            data = request.form.to_dict()
+            filename = save_yaml_data(data, 'etape_1_public_cible')
+            return redirect('/contraintes')
+        
+        nav_info = get_navigation_info('public_cible')
+        page_config = get_page_config('public_cible')
+        return render_template('public_cible.html', 
+                             questions=QUESTIONS_PUBLIC_CIBLE, 
+                             nav_info=nav_info,
+                             header_gradient=page_config.get('header_gradient', 'var(--gradient-primary)'),
+                             header_title='🧭 Questionnaire Public Cible',
+                             header_description='Déterminez les caractéristiques du public cible de votre formation')
+
+    @app.route('/load-journey')
+    def load_journey():
+        return render_template('load_journey.html')
+
+    @app.route('/contraintes', methods=['GET', 'POST'])
+    def contraintes():
+        if request.method == 'POST':
+            # Handle form submission
+            data = request.form.to_dict()
+            filename = save_yaml_data(data, 'etape_2_contraintes')
+            return redirect('/competences')
+        
+        # Check if public_cible step is completed
+        completed, message = check_previous_steps_completed(['etape_1_public_cible'])
+        if not completed:
+            return render_template('error.html', message=f"Veuillez d'abord compléter l'étape Public Cible. {message}")
+        
+        nav_info = get_navigation_info('contraintes')
+        page_config = get_page_config('contraintes')
+        return render_template('contraintes.html', 
+                             questions=QUESTIONS_CONTRAINTES, 
+                             nav_info=nav_info,
+                             header_gradient=page_config.get('header_gradient', 'var(--gradient-danger)'),
+                             header_title='⚙️ Contraintes Formation',
+                             header_description='Précisez les contraintes temporelles, organisationnelles et techniques')
+
+
+
+

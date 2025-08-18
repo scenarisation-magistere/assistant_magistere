@@ -1,0 +1,8 @@
+<!-- Reusable Header Component -->
+<div class="header" {% if header_gradient %}style="background: {{ header_gradient }};"{% endif %}>
+    <h1>{{ header_title | default('Titre de la page') }}</h1>
+    <p>{{ header_description | default('Description de la page') }}</p>
+    {% if nav_info %}
+        {% include 'includes/navigation.html' %}
+    {% endif %}
+</div>

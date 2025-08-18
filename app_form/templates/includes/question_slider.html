@@ -1,0 +1,768 @@
+<!-- Question Slider Template -->
+<div class="question-slider-container">
+    <!-- Progress Bar with Dots -->
+    <div class="progress-dots">
+        {% for question in questions %}
+        <div class="progress-dot {% if loop.index == 1 %}active{% endif %}" 
+             data-question="{{ loop.index }}" 
+             onclick="goToQuestion({{ loop.index }})">
+            <span class="dot-number">{{ loop.index }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+        {% for question in questions %}
+        <div class="question-slide {% if loop.index == 1 %}active{% endif %}" id="question-slide-{{ loop.index }}">
+            <!-- Question Header -->
+            <div class="question-header">
+                <h3 class="question-title">{{ question.question }}</h3>
+                <div class="question-counter">Question {{ loop.index }} sur {{ questions|length }}</div>
+            </div>
+
+            <!-- Question Content -->
+            <div class="question-content">
+                {% if question.examples %}
+                <div class="suggestions-section">
+                    <h4>💡 Suggestions de réponses :</h4>
+                    <div class="suggestions-list">
+                        {% for example in question.examples %}
+                        <div class="suggestion-item" onclick="fillSuggestion('{{ question.field_name }}', '{{ example|replace("'", "\\'") }}')">
+                            {{ example }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Form Field -->
+                <div class="form-field-section">
+                    {% if question.type == 'text' %}
+                        <input type="text" 
+                               name="{{ question.field_name }}" 
+                               id="{{ question.field_name }}"
+                               placeholder="Votre réponse..." 
+                               required>
+                    
+                    {% elif question.type == 'textarea' %}
+                        <textarea name="{{ question.field_name }}" 
+                                  id="{{ question.field_name }}"
+                                  placeholder="Décrivez l'objectif général de votre formation..." 
+                                  required></textarea>
+                    
+                                         {% elif question.type == 'radio' %}
+                         <div class="radio-group">
+                             {% for option in question.options %}
+                             <div class="radio-item">
+                                 <input type="radio" 
+                                        name="{{ question.field_name }}" 
+                                        value="{{ option }}" 
+                                        id="{{ question.field_name }}_{{ loop.index }}" 
+                                        required>
+                                 <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
+                             </div>
+                             {% endfor %}
+                         </div>
+                         
+                         {% if question.text_input_options %}
+                         <div class="text-input-container" id="text-input-{{ question.field_name }}" style="display: none;">
+                             <input type="text" name="{{ question.field_name }}_text" placeholder="{{ question.text_placeholder }}">
+                         </div>
+                         {% endif %}
+                    
+                    {% elif question.type == 'checkbox' %}
+                        <div class="checkbox-group">
+                            {% for option in question.options %}
+                            <div class="checkbox-item">
+                                <input type="checkbox" 
+                                       name="{{ question.field_name }}" 
+                                       value="{{ option }}" 
+                                       id="{{ question.field_name }}_{{ loop.index }}">
+                                <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+                         <!-- Navigation Buttons -->
+             <div class="question-navigation" style="justify-content: {% if loop.first %}flex-end{% else %}space-between{% endif %};">
+                 {% if not loop.first %}
+                 <button type="button" class="btn-prev-question" onclick="previousQuestion()">
+                     ← Question précédente
+                 </button>
+                 {% endif %}
+                 
+                 {% if not loop.last %}
+                 <button type="button" class="btn-next-question" onclick="nextQuestion()">
+                     Question suivante →
+                 </button>
+                 {% else %}
+                 <button type="button" class="btn-submit-all" onclick="validateAndShowYAML()">
+                     ✅ Valider et Voir le YAML
+                 </button>
+                 {% endif %}
+             </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* Question Slider Styles */
+.question-slider-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Progress Dots */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.progress-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: 2px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.progress-dot:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+.progress-dot.active {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white;
+}
+
+.progress-dot.completed {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: white;
+}
+
+.dot-number {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Question Container */
+.question-container {
+    position: relative;
+    min-height: 400px;
+}
+
+.question-slide {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.question-slide.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Question Header */
+.question-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.question-title {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.question-counter {
+    color: var(--text-medium);
+    font-size: 0.9rem;
+}
+
+/* Question Content */
+.question-content {
+    margin-bottom: 40px;
+}
+
+/* Suggestions Section */
+.suggestions-section {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.suggestions-section h4 {
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.suggestion-item {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.suggestion-item:hover {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+/* Form Field Section */
+.form-field-section {
+    margin-top: 20px;
+}
+
+.form-field-section input[type="text"],
+.form-field-section textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-field-section input[type="text"]:focus,
+.form-field-section textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.form-field-section textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Radio and Checkbox Groups */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-item,
+.checkbox-item {
+    background: white;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.radio-item:hover,
+.checkbox-item:hover {
+    border-color: var(--primary-blue);
+    background: #f8f9fa;
+}
+
+.radio-item input[type="radio"],
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-blue);
+}
+
+.radio-item label,
+ .checkbox-item label {
+     flex: 1;
+     cursor: pointer;
+     font-size: 1rem;
+     line-height: 1.4;
+ }
+
+ /* Text Input Container for conditional fields */
+ .text-input-container {
+     margin-top: var(--spacing-md);
+     padding: var(--spacing-md);
+     background: var(--light-gray);
+     border-radius: var(--radius-small);
+     border-left: 4px solid var(--primary-blue);
+     animation: slideDown 0.3s ease-out;
+ }
+
+ @keyframes slideDown {
+     from { opacity: 0; transform: translateY(-10px); }
+     to { opacity: 1; transform: translateY(0); }
+ }
+
+ .text-input-container input[type="text"] {
+     width: 100%;
+     padding: 12px;
+     border: 2px solid #e9ecef;
+     border-radius: 8px;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+ }
+
+ .text-input-container input[type="text"]:focus {
+     outline: none;
+     border-color: var(--primary-blue);
+     box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+ }
+
+/* Question Navigation */
+.question-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-prev-question,
+.btn-next-question,
+.btn-submit-all {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-prev-question {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-prev-question:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-next-question {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-next-question:hover {
+    background: var(--primary-blue-dark);
+    transform: translateY(-2px);
+}
+
+.btn-submit-all {
+    background: var(--primary-green);
+    color: white;
+    font-weight: bold;
+}
+
+.btn-submit-all:hover {
+    background: var(--primary-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .question-slider-container {
+        padding: 15px;
+    }
+    
+    .progress-dots {
+        gap: 8px;
+    }
+    
+    .progress-dot {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .question-title {
+        font-size: 1.3rem;
+    }
+    
+    .suggestions-section {
+        padding: 15px;
+    }
+    
+    .question-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-prev-question,
+    .btn-next-question,
+    .btn-submit-all {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+let currentQuestion = 1;
+const totalQuestions = {{ questions|length }};
+
+// Initialize the slider
+document.addEventListener('DOMContentLoaded', function() {
+    updateProgressDots();
+    updateQuestionCounter();
+});
+
+// Navigation functions
+function goToQuestion(questionNumber) {
+    if (questionNumber < 1 || questionNumber > totalQuestions) return;
+    
+    // Hide current question
+    document.querySelector('.question-slide.active').classList.remove('active');
+    document.querySelector('.progress-dot.active').classList.remove('active');
+    
+    // Show new question
+    document.getElementById(`question-slide-${questionNumber}`).classList.add('active');
+    document.querySelector(`[data-question="${questionNumber}"]`).classList.add('active');
+    
+    currentQuestion = questionNumber;
+    updateProgressDots();
+    updateQuestionCounter();
+}
+
+function nextQuestion() {
+    if (currentQuestion < totalQuestions) {
+        goToQuestion(currentQuestion + 1);
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 1) {
+        goToQuestion(currentQuestion - 1);
+    }
+}
+
+// Update progress dots based on completion
+function updateProgressDots() {
+    const dots = document.querySelectorAll('.progress-dot');
+    dots.forEach((dot, index) => {
+        const questionNumber = index + 1;
+        const fieldName = getFieldNameForQuestion(questionNumber);
+        
+        if (isQuestionCompleted(fieldName)) {
+            dot.classList.add('completed');
+        } else {
+            dot.classList.remove('completed');
+        }
+    });
+}
+
+ // Check if a question is completed
+ function isQuestionCompleted(fieldName) {
+     // Check for radio buttons
+     const radioButtons = document.querySelectorAll(`input[name="${fieldName}"][type="radio"]`);
+     if (radioButtons.length > 0) {
+         const checkedRadio = document.querySelector(`input[name="${fieldName}"][type="radio"]:checked`);
+         if (checkedRadio) {
+             // If there's a text input option and it's selected, check if text is filled
+             const textInputContainer = document.getElementById(`text-input-${fieldName}`);
+             if (textInputContainer && textInputContainer.style.display !== 'none') {
+                 const textInput = textInputContainer.querySelector('input[type="text"]');
+                 return textInput && textInput.value.trim() !== '';
+             }
+             return true;
+         }
+         return false;
+     }
+     
+     // Check for checkbox
+     const checkboxes = document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]`);
+     if (checkboxes.length > 0) {
+         return document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]:checked`).length > 0;
+     }
+     
+     // Check for text/textarea
+     const field = document.getElementById(fieldName);
+     if (field) {
+         return field.value.trim() !== '';
+     }
+     
+     return false;
+ }
+
+// Get field name for a question number
+function getFieldNameForQuestion(questionNumber) {
+    const questionData = {{ questions|tojson }};
+    return questionData[questionNumber - 1].field_name;
+}
+
+// Update question counter
+function updateQuestionCounter() {
+    const counter = document.querySelector('.question-counter');
+    if (counter) {
+        counter.textContent = `Question ${currentQuestion} sur ${totalQuestions}`;
+    }
+}
+
+// Fill suggestion
+function fillSuggestion(fieldName, suggestion) {
+    const field = document.getElementById(fieldName);
+    if (field) {
+        if (field.type === 'textarea') {
+            field.value = suggestion;
+        } else {
+            field.value = suggestion;
+        }
+        field.focus();
+        updateProgressDots();
+    }
+}
+
+ // Submit all questions
+ function submitAllQuestions() {
+     // Check if all questions are completed
+     const questionData = {{ questions|tojson }};
+     const incompleteQuestions = [];
+     
+     questionData.forEach((question, index) => {
+         if (!isQuestionCompleted(question.field_name)) {
+             incompleteQuestions.push(index + 1);
+         }
+     });
+     
+     if (incompleteQuestions.length > 0) {
+         alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
+         goToQuestion(incompleteQuestions[0]);
+         return;
+     }
+     
+     // Submit the form
+     document.getElementById('questionnaireForm').submit();
+ }
+
+ // Validate and show YAML
+ function validateAndShowYAML() {
+     // Check if all questions are completed
+     const questionData = {{ questions|tojson }};
+     const incompleteQuestions = [];
+     
+     questionData.forEach((question, index) => {
+         if (!isQuestionCompleted(question.field_name)) {
+             incompleteQuestions.push(index + 1);
+         }
+     });
+     
+     if (incompleteQuestions.length > 0) {
+         alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
+         goToQuestion(incompleteQuestions[0]);
+         return;
+     }
+     
+     // Collect form data
+     const form = document.getElementById('questionnaireForm');
+     const formData = new FormData(form);
+     const data = {};
+     
+     for (let [key, value] of formData.entries()) {
+         data[key] = value;
+     }
+     
+     // Show YAML in a modal
+     showYAMLModal(data);
+ }
+ 
+ // Show YAML modal
+ function showYAMLModal(data) {
+     // Create modal HTML
+     const modalHTML = `
+         <div id="yamlModal" style="
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: rgba(0,0,0,0.8);
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             z-index: 1000;
+         ">
+             <div style="
+                 background: white;
+                 padding: 30px;
+                 border-radius: 15px;
+                 max-width: 80%;
+                 max-height: 80%;
+                 overflow-y: auto;
+                 position: relative;
+             ">
+                 <h2 style="margin-bottom: 20px; color: #333;">📄 YAML Généré</h2>
+                 <pre style="
+                     background: #f8f9fa;
+                     padding: 20px;
+                     border-radius: 8px;
+                     font-family: 'Courier New', monospace;
+                     font-size: 14px;
+                     line-height: 1.4;
+                     overflow-x: auto;
+                     white-space: pre-wrap;
+                     border: 1px solid #dee2e6;
+                 ">${JSON.stringify(data, null, 2)}</pre>
+                 <div style="
+                     display: flex;
+                     justify-content: space-between;
+                     margin-top: 20px;
+                     gap: 15px;
+                 ">
+                     <button onclick="closeYAMLModal()" style="
+                         padding: 12px 24px;
+                         background: #6c757d;
+                         color: white;
+                         border: none;
+                         border-radius: 8px;
+                         cursor: pointer;
+                         font-size: 16px;
+                     ">Fermer</button>
+                     <button onclick="submitAndContinue()" style="
+                         padding: 12px 24px;
+                         background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+                         color: white;
+                         border: none;
+                         border-radius: 8px;
+                         cursor: pointer;
+                         font-size: 16px;
+                         font-weight: bold;
+                     ">Continuer vers la page suivante</button>
+                 </div>
+             </div>
+         </div>
+     `;
+     
+     // Add modal to page
+     document.body.insertAdjacentHTML('beforeend', modalHTML);
+ }
+ 
+ // Close YAML modal
+ function closeYAMLModal() {
+     const modal = document.getElementById('yamlModal');
+     if (modal) {
+         modal.remove();
+     }
+ }
+ 
+ // Submit and continue to next page
+ function submitAndContinue() {
+     // Close modal first
+     closeYAMLModal();
+     
+     // Submit the form - the server will handle the redirect
+     document.getElementById('questionnaireForm').submit();
+ }
+
+                 // Handle text input visibility for radio buttons
+         function handleRadioChange() {
+             const radioButtons = document.querySelectorAll('input[type="radio"]');
+             
+             radioButtons.forEach(radio => {
+                 radio.addEventListener('change', function() {
+                     const fieldName = this.name;
+                     const textInputContainer = document.getElementById(`text-input-${fieldName}`);
+                     
+                     if (textInputContainer) {
+                         const selectedOption = this.value;
+                         
+                         // Check if the selected option requires text input
+                         const questionData = {{ questions|tojson }};
+                         const currentQuestion = questionData.find(q => q.field_name === fieldName);
+                         
+                         if (currentQuestion && currentQuestion.text_input_options) {
+                             const needsTextInput = currentQuestion.text_input_options.includes(selectedOption);
+                             textInputContainer.style.display = needsTextInput ? 'block' : 'none';
+                             
+                             if (!needsTextInput) {
+                                 const textInput = textInputContainer.querySelector('input');
+                                 if (textInput) textInput.value = '';
+                             }
+                         }
+                     }
+                     
+                     // Update progress immediately when radio button changes
+                     setTimeout(updateProgressDots, 100);
+                 });
+             });
+         }
+
+                 // Add event listeners for real-time progress updates
+         document.addEventListener('input', function(e) {
+             if (e.target.name) {
+                 setTimeout(updateProgressDots, 100);
+             }
+         });
+
+         document.addEventListener('change', function(e) {
+             if (e.target.name) {
+                 setTimeout(updateProgressDots, 100);
+             }
+         });
+
+         // Add specific event listeners for radio and checkbox buttons
+         document.addEventListener('click', function(e) {
+             if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+                 setTimeout(updateProgressDots, 100);
+             }
+         });
+
+         // Initialize radio change handlers
+         document.addEventListener('DOMContentLoaded', function() {
+             handleRadioChange();
+             
+             // Add event listeners to all radio and checkbox inputs
+             const radioInputs = document.querySelectorAll('input[type="radio"]');
+             const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
+             
+             radioInputs.forEach(input => {
+                 input.addEventListener('change', function() {
+                     setTimeout(updateProgressDots, 100);
+                 });
+             });
+             
+             checkboxInputs.forEach(input => {
+                 input.addEventListener('change', function() {
+                     setTimeout(updateProgressDots, 100);
+                 });
+             });
+         });
+</script>

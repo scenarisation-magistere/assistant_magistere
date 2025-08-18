@@ -177,7 +177,6 @@ COMPETENCES_QUESTIONS = {
         "bas": ["définir", "nommer", "décrire", "identifier", "rappeler", "lister", "reconnaître"]
     },
     "bloom_taxonomy": {
-        # DOMAINE COGNITIF - Taxonomie de Bloom révisée
         "creer": {
             "name": "Créer",
             "description": "Produire du nouveau contenu ou des idées originales",
@@ -208,8 +207,6 @@ COMPETENCES_QUESTIONS = {
             "description": "Retrouver des informations pertinentes en mémoire",
             "verbs": ["citer", "définir", "décrire", "énumérer", "identifier", "lister", "nommer", "rappeler", "reconnaître", "reproduire", "retrouver", "spécifier", "énoncer", "mémoriser", "réciter", "reproduire", "sélectionner", "énumérer", "étiqueter", "localiser", "reconnaître", "reproduire", "retrouver", "spécifier"]
         },
-        
-        # DOMAINE AFFECTIF - Taxonomie de Krathwohl
         "caracteriser": {
             "name": "Caractériser",
             "description": "Intégrer des valeurs dans un système cohérent",

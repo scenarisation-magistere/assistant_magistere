@@ -175,7 +175,8 @@ def test_ai_function_integration():
     
     # Import the AI functions
     try:
-        from ai_helpers import generate_competency_suggestions, evaluate_and_order_competences, generate_referentiel_suggestions
+        from routes.competences_ai import generate_competency_suggestions, evaluate_and_order_competences
+        from routes.referentiels_ai import generate_referentiel_suggestions
         print("✅ AI functions imported successfully")
     except ImportError as e:
         print(f"❌ Error importing AI functions: {e}")

@@ -54,7 +54,7 @@ def test_ai_helpers():
     print("\n🔍 Test du module ai_helpers...")
     
     try:
-        from ai_helpers import generate_competency_suggestions
+        from routes.competences_ai import generate_competency_suggestions
         
         # Test avec des données fictives
         test_data = {

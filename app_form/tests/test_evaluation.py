@@ -4,7 +4,7 @@ Test simple pour vérifier que la fonction d'évaluation fonctionne
 """
 
 import yaml
-from ai_helpers import evaluate_and_order_competences
+from routes.competences_ai import evaluate_and_order_competences
 
 # Données de test plus réalistes
 test_yaml_data = {

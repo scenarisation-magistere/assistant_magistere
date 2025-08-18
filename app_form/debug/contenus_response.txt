@@ -1,0 +1,94 @@
+```
+| Section | Type de section | Compétences visées | Ressource | Intention ressource | Activité 1 | Intention activité 1 | Activité 2 | Intention activité 2 | Justification activité(s) |
+| :------ | :-------------- | :----------------- | :-------- | :------------------ | :--------- | :------------------- | :--------- | :------------------- | :-------------------------- |
+| S1 | Accueil | "" | "" | "" | "" | "" | "" | "" | "" |
+| S2 | Apprentissage | C1 - Identifier les concepts clés | Interactive Book | Acquisition | Dialog Cards | Acquisition | Multiple Choice | Acquisition/Entraînement | L'Interactive Book permet une acquisition structurée des concepts. Les Dialog Cards et le Multiple Choice facilitent la mémorisation et la vérification rapide des connaissances fondamentales, alignées sur l'intention d'Acquisition et d'Entraînement. |
+| S3 | Apprentissage | C2 - Appliquer les techniques de base | Course Presentation | Acquisition/Entraînement | Branching Scenario | Entraînement | Drag and Drop | Acquisition/Entraînement | La Course Presentation introduit les techniques. Le Branching Scenario offre une application pratique des techniques dans des situations simulées (Entraînement), et Drag and Drop renforce les associations visuelles (Entraînement). |
+| S4 | Apprentissage | C3 - Analyser des cas pratiques | Fichier | Acquisition/Enquête/Production | Essay | Entraînement/Production | Forum | Discussion/Collaboration | Le Fichier fournit les cas pratiques. L'Essay permet une analyse individuelle et la proposition de solutions (Production). Le Forum facilite la discussion collective et l'évaluation des différentes approches (Discussion/Collaboration). |
+| S5 | Apprentissage | C4 - Élaborer des stratégies adaptées | Fichier | Acquisition/Enquête/Production | Devoir | Collaboration/Production | Documentation Tool | Entraînement/Production | Le Fichier offre les guides pour la conception. Le Devoir permet l'élaboration et la soumission de stratégies personnalisées (Production). Le Documentation Tool guide l'apprenant dans la structuration de sa réflexion pour l'élaboration (Entraînement/Production). |
+| S6 | Classe virtuelle | "" | "" | "" | BigBlueButtonBN | Discussion | "" | "" | "" |
+| S7 | Forum général | "" | "" | "" | Forum | Discussion/Collaboration | "" | "" | "" |
+| S8 | Évaluation | "" | "" | "" | Sondage | Enquête | "" | "" | "" |
+```
+```yaml
+- section: S1
+  type_de_section: Accueil
+  competences_visees: ""
+  ressource: ""
+  intention_ressource: ""
+  activite_1: ""
+  intention_activite_1: ""
+  activite_2: ""
+  intention_activite_2: ""
+  justification_activite_s: ""
+- section: S2
+  type_de_section: Apprentissage
+  competences_visees: C1 - Identifier les concepts clés
+  ressource: Interactive Book
+  intention_ressource: Acquisition
+  activite_1: Dialog Cards
+  intention_activite_1: Acquisition
+  activite_2: Multiple Choice
+  intention_activite_2: Acquisition/Entraînement
+  justification_activite_s: L'Interactive Book permet une acquisition structurée des concepts. Les Dialog Cards et le Multiple Choice facilitent la mémorisation et la vérification rapide des connaissances fondamentales, alignées sur l'intention d'Acquisition et d'Entraînement.
+- section: S3
+  type_de_section: Apprentissage
+  competences_visees: C2 - Appliquer les techniques de base
+  ressource: Course Presentation
+  intention_ressource: Acquisition/Entraînement
+  activite_1: Branching Scenario
+  intention_activite_1: Entraînement
+  activite_2: Drag and Drop
+  intention_activite_2: Acquisition/Entraînement
+  justification_activite_s: La Course Presentation introduit les techniques. Le Branching Scenario offre une application pratique des techniques dans des situations simulées (Entraînement), et Drag and Drop renforce les associations visuelles (Entraînement).
+- section: S4
+  type_de_section: Apprentissage
+  competences_visees: C3 - Analyser des cas pratiques
+  ressource: Fichier
+  intention_ressource: Acquisition/Enquête/Production
+  activite_1: Essay
+  intention_activite_1: Entraînement/Production
+  activite_2: Forum
+  intention_activite_2: Discussion/Collaboration
+  justification_activite_s: Le Fichier fournit les cas pratiques. L'Essay permet une analyse individuelle et la proposition de solutions (Production). Le Forum facilite la discussion collective et l'évaluation des différentes approches (Discussion/Collaboration).
+- section: S5
+  type_de_section: Apprentissage
+  competences_visees: C4 - Élaborer des stratégies adaptées
+  ressource: Fichier
+  intention_ressource: Acquisition/Enquête/Production
+  activite_1: Devoir
+  intention_activite_1: Collaboration/Production
+  activite_2: Documentation Tool
+  intention_activite_2: Entraînement/Production
+  justification_activite_s: Le Fichier offre les guides pour la conception. Le Devoir permet l'élaboration et la soumission de stratégies personnalisées (Production). Le Documentation Tool guide l'apprenant dans la structuration de sa réflexion pour l'élaboration (Entraînement/Production).
+- section: S6
+  type_de_section: Classe virtuelle
+  competences_visees: ""
+  ressource: ""
+  intention_ressource: ""
+  activite_1: BigBlueButtonBN
+  intention_activite_1: Discussion
+  activite_2: ""
+  intention_activite_2: ""
+  justification_activite_s: ""
+- section: S7
+  type_de_section: Forum général
+  competences_visees: ""
+  ressource: ""
+  intention_ressource: ""
+  activite_1: Forum
+  intention_activite_1: Discussion/Collaboration
+  activite_2: ""
+  intention_activite_2: ""
+  justification_activite_s: ""
+- section: S8
+  type_de_section: Évaluation
+  competences_visees: ""
+  ressource: ""
+  intention_ressource: ""
+  activite_1: Sondage
+  intention_activite_1: Enquête
+  activite_2: ""
+  intention_activite_2: ""
+  justification_activite_s: ""
+```

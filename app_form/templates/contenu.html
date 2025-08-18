@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenus par Section - Formation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
+    <style>
+        /* Page-specific styles for contenu.html */
+        .header {
+            /* Header background will be set via inline style */
+        }
+
+        .step-indicator .step.active {
+            color: var(--primary-blue);
+        }
+
+        .competences-recall {
+            background: var(--bg-info-light);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-small);
+            margin-bottom: var(--spacing-xl);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .competences-recall h3 {
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .competences-recall .data-item {
+            margin: var(--spacing-sm) 0;
+            padding: var(--spacing-sm);
+            background: rgba(255,255,255,0.5);
+            border-radius: 5px;
+        }
+
+        .competences-recall .data-item strong {
+            color: var(--primary-blue);
+        }
+
+        .competences-recall .competence-item {
+            margin: var(--spacing-sm) 0;
+            padding: var(--spacing-sm);
+            background: rgba(255,255,255,0.7);
+            border-radius: var(--radius-small);
+            border-left: 3px solid var(--primary-blue);
+            font-size: var(--font-size-small);
+            line-height: 1.4;
+        }
+
+        .competences-recall .competence-item strong {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .ai-generate-section {
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-xl);
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            border-radius: var(--radius-medium);
+            border: 2px dashed var(--primary-blue);
+        }
+
+        .ai-generate-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .ai-generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+        }
+
+        .ai-generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-loading {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .ai-loading p {
+            color: var(--text-medium);
+            margin-top: 15px;
+        }
+
+        .section-results {
+            background: white;
+            border: 2px solid var(--border-gray);
+            border-radius: var(--radius-medium);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .section-results h4 {
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+        }
+
+        .section-table th,
+        .section-table td {
+            border: 1px solid var(--border-gray);
+            padding: var(--spacing-sm);
+            text-align: left;
+        }
+
+        .section-table th {
+            background: var(--light-gray);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .section-table td {
+            background: white;
+            color: var(--text-medium);
+        }
+
+        .section-table .section-number {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .section-table .section-type {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .section-table .competence-visee {
+            font-style: italic;
+            color: var(--text-medium);
+        }
+
+        .section-table .ressource {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .section-table .activite {
+            color: var(--secondary-orange);
+            font-weight: 600;
+        }
+
+        .section-table .intention {
+            color: var(--primary-blue);
+            font-size: var(--font-size-small);
+        }
+
+        .section-table .justification {
+            font-size: var(--font-size-small);
+            color: var(--text-medium);
+            font-style: italic;
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+
+        /* AI Results specific styles */
+        #aiResultsSection {
+            margin: var(--spacing-xl) 0;
+        }
+
+        #aiResultsSection .section-results {
+            background: var(--bg-info-light);
+            border: 2px solid var(--border-info);
+        }
+
+        #aiResultsSection .section-results h4 {
+            color: var(--text-info);
+            font-size: var(--font-size-xl);
+        }
+
+        #aiResultsSection .section-results p {
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* View options styles */
+        .view-options {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            justify-content: center;
+        }
+
+        .view-option-btn {
+            background: var(--light-gray);
+            border: 2px solid var(--border-gray);
+            color: var(--text-medium);
+            padding: 10px 20px;
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-option-btn.active {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+        }
+
+        .view-option-btn:hover {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+        }
+
+        /* Simplified table styles */
+        .simplified-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+        }
+
+        .simplified-table th,
+        .simplified-table td {
+            border: 1px solid var(--border-gray);
+            padding: var(--spacing-sm);
+            text-align: left;
+        }
+
+        .simplified-table th {
+            background: var(--light-gray);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .simplified-table td {
+            background: white;
+            color: var(--text-medium);
+        }
+
+        .simplified-table .section-number {
+            font-weight: 600;
+            color: var(--primary-blue);
+            width: 80px;
+        }
+
+        .simplified-table .section-type {
+            font-weight: 600;
+            color: var(--text-dark);
+            width: 150px;
+        }
+
+        .simplified-table .competence-visee {
+            font-style: italic;
+            color: var(--text-medium);
+            max-width: 300px;
+        }
+
+        .simplified-table .ressource {
+            color: var(--primary-green);
+            font-weight: 600;
+            max-width: 200px;
+        }
+
+        .simplified-table .activite {
+            color: var(--secondary-orange);
+            font-weight: 600;
+            max-width: 200px;
+        }
+
+        /* Detailed view styles */
+        .detailed-view {
+            display: none;
+        }
+
+        .section-card {
+            background: white;
+            border: 2px solid var(--border-gray);
+            border-radius: var(--radius-medium);
+            margin: var(--spacing-lg) 0;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-card-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-card-header h5 {
+            margin: 0;
+            font-size: var(--font-size-lg);
+        }
+
+        .section-card-header .section-number {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .section-card-content {
+            padding: var(--spacing-lg);
+        }
+
+        .section-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-info-item {
+            background: var(--bg-info-light);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-small);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .section-info-item h6 {
+            color: var(--primary-blue);
+            margin: 0 0 var(--spacing-sm) 0;
+            font-size: var(--font-size-md);
+        }
+
+        .section-info-item p {
+            margin: 0;
+            color: var(--text-medium);
+            line-height: 1.5;
+        }
+
+        .section-info-item .competence-highlight {
+            background: var(--primary-blue);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-actions {
+            background: var(--light-gray);
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .section-actions h6 {
+            color: var(--text-dark);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            margin: var(--spacing-sm) 0;
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: var(--radius-small);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .action-item .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .action-item .action-content {
+            flex: 1;
+        }
+
+        .action-item .action-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .action-item .action-intention {
+            font-size: var(--font-size-small);
+            color: var(--text-medium);
+            font-style: italic;
+        }
+
+        .justification-box {
+            background: var(--bg-success-light);
+            border: 1px solid var(--border-success);
+            border-radius: var(--radius-small);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .justification-box h6 {
+            color: var(--text-success);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .justification-box p {
+            margin: 0;
+            color: var(--text-medium);
+            line-height: 1.5;
+        }
+
+        /* Navigation between detailed views */
+        .detailed-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: var(--spacing-lg) 0;
+            padding: var(--spacing-md);
+            background: var(--light-gray);
+            border-radius: var(--radius-small);
+        }
+
+        .nav-detail-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: var(--font-size-small);
+        }
+
+        .nav-detail-btn:hover {
+            background: var(--secondary-blue);
+        }
+
+        .nav-detail-btn:disabled {
+            background: var(--border-gray);
+            cursor: not-allowed;
+        }
+
+        .section-counter {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Responsive design for new components */
+        @media (max-width: 768px) {
+            .view-options {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .section-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-card-header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                text-align: center;
+            }
+
+            .detailed-navigation {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+        }
+
+        /* Table responsive design */
+        @media (max-width: 1200px) {
+            .section-table {
+                font-size: var(--font-size-small);
+            }
+            
+            .section-table th,
+            .section-table td {
+                padding: var(--spacing-xs);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-lg) 0;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            border-radius: 15px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: var(--bg-danger-light);
+            border: 1px solid var(--border-danger);
+            border-radius: var(--radius-small);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            color: var(--text-danger);
+            text-align: center;
+        }
+
+        .success-message {
+            background: var(--bg-success-light);
+            border: 1px solid var(--border-success);
+            border-radius: var(--radius-small);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            color: var(--text-success);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .contenus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">     
+        {% include 'includes/header.html' %}   
+        <div class="content-container">
+            
+
+            <!-- Compétences Recall Section -->
+            <div class="competences-recall">
+                <h3>📋 Compétences Sélectionnées</h3>
+                <div class="data-item">
+                    <strong>Nombre de compétences :</strong> 
+                    <span id="competences-count">
+                        {% if competences_for_display %}
+                            {{ competences_for_display | length }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="data-item">
+                    <strong>Compétences :</strong>
+                    <div id="competences-list">
+                        {% if competences_for_display %}
+                            {% for comp in competences_for_display %}
+                                <div class="competence-item">
+                                    <strong>{{ comp.code }}</strong> - {{ comp.formulation }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="competence-item" style="color: #666; font-style: italic;">
+                                Aucune compétence définie
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Generation Section -->
+            <div class="ai-generate-section">
+                <h3>🤖 Génération IA des Contenus</h3>
+                <p>L'IA va analyser vos compétences et générer automatiquement les contenus pédagogiques pour chaque section selon les règles ABC Learning Design.</p>
+                
+                <button class="ai-generate-btn" id="generateContenusBtn" onclick="generateContenus()">
+                    ✨ Générer les Contenus
+                </button>
+                
+                <div class="ai-loading" id="aiLoading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Génération des contenus en cours...</p>
+                </div>
+            </div>
+
+            <!-- Error/Success Messages -->
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+
+            <!-- AI Generated Results Section -->
+            <div id="aiResultsSection" style="display: none;">
+                <div class="section-results">
+                    <h4>📋 Contenus Générés par l'IA</h4>
+                    <p>Voici les contenus générés automatiquement par l'IA. Choisissez votre mode d'affichage :</p>
+                    
+                    <!-- View Options -->
+                    <div class="view-options">
+                        <button class="view-option-btn active" onclick="switchView('simplified')">
+                            📊 Tableau Simplifié
+                        </button>
+                        <button class="view-option-btn" onclick="switchView('detailed')">
+                            🔍 Vue Détaillée
+                        </button>
+                    </div>
+                    
+                    <!-- Simplified Table View -->
+                    <div id="simplifiedView" class="simplified-view">
+                        <div id="simplifiedTableContent">
+                            <!-- Simplified table will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed View -->
+                    <div id="detailedView" class="detailed-view">
+                        <!-- Navigation between sections -->
+                        <div class="detailed-navigation">
+                            <button class="nav-detail-btn" id="prevSectionBtn" onclick="showPreviousSection()">
+                                ← Précédent
+                            </button>
+                            <div class="section-counter">
+                                Section <span id="currentSectionNumber">1</span> sur <span id="totalSections">0</span>
+                            </div>
+                            <button class="nav-detail-btn" id="nextSectionBtn" onclick="showNextSection()">
+                                Suivant →
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 10px 0; font-size: 0.9em; color: var(--text-medium);">
+                            💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer
+                        </div>
+                        
+                        <div id="detailedContent">
+                            <!-- Detailed section cards will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            {% include 'includes/navigation_buttons.html' %}
+
+            <!-- Submit Section -->
+            <div class="submit-section" id="submitSection" style="display: none;">
+                <button class="submit-btn" id="submitBtn" onclick="saveContenus()">
+                    ✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}
+                </button>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Sauvegarde en cours...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'includes/success_modal.html' %}
+
+    <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
+    <script>
+        // Global variables
+        let competences = [];
+        let contenusData = {};
+
+        // Load competences data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load competences from the backend
+            loadCompetencesData();
+            
+            // Add keyboard shortcuts for detailed view navigation
+            document.addEventListener('keydown', function(e) {
+                const detailedView = document.getElementById('detailedView');
+                if (detailedView.style.display !== 'none') {
+                    if (e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        showNextSection();
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        showPreviousSection();
+                    }
+                }
+            });
+        });
+
+        function loadCompetencesData() {
+            fetch('/get_competences_data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.competences && data.competences.ordre_competences) {
+                        competences = data.competences.ordre_competences;
+                        updateCompetencesDisplay();
+                    } else if (data.success && data.etape3_data && data.etape3_data.evaluation_competences && data.etape3_data.evaluation_competences.ordre_competences) {
+                        // Fallback to direct access if the nested structure is available
+                        competences = data.etape3_data.evaluation_competences.ordre_competences;
+                        updateCompetencesDisplay();
+                    } else {
+                        // Don't show error if competences are already displayed by template
+                        const existingCompetences = document.querySelectorAll('#competences-list .competence-item');
+                        if (existingCompetences.length === 0) {
+                            showError('Aucune compétence trouvée. Veuillez d\'abord définir vos compétences.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading competences:', error);
+                    // Don't show error if competences are already displayed by template
+                    const existingCompetences = document.querySelectorAll('#competences-list .competence-item');
+                    if (existingCompetences.length === 0) {
+                        showError('Erreur lors du chargement des compétences.');
+                    }
+                });
+        }
+
+        function updateCompetencesDisplay() {
+            const countElement = document.getElementById('competences-count');
+            const listElement = document.getElementById('competences-list');
+            
+            // Only update if we have competences data
+            if (competences && competences.length > 0) {
+                countElement.textContent = competences.length;
+                
+                let listHTML = '';
+                competences.forEach(comp => {
+                    listHTML += `<div class="competence-item"><strong>${comp.code}</strong> - ${comp.formulation}</div>`;
+                });
+                
+                listElement.innerHTML = listHTML;
+            }
+        }
+
+        function generateContenus() {
+            const generateBtn = document.getElementById('generateContenusBtn');
+            const aiLoading = document.getElementById('aiLoading');
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            aiLoading.style.display = 'block';
+            hideMessages();
+            
+            // Call the AI generation endpoint
+            fetch('/generate_contenus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    contenusData = result.contenus;
+                    showAIResults(result.contenus);
+                    showSuccess('Contenus générés avec succès !');
+                } else {
+                    showError('Erreur lors de la génération : ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Erreur lors de la génération des contenus.');
+            })
+            .finally(() => {
+                // Reset button state
+                generateBtn.disabled = false;
+                aiLoading.style.display = 'none';
+            });
+        }
+
+        // Global variables for detailed view
+        let currentSectionIndex = 0;
+        let totalSections = 0;
+
+        function showAIResults(contenusData) {
+            const aiResultsSection = document.getElementById('aiResultsSection');
+            
+            // Hide the AI generation section
+            document.querySelector('.ai-generate-section').style.display = 'none';
+            
+            // Show the results section
+            aiResultsSection.style.display = 'block';
+            
+            // Initialize global variables
+            totalSections = contenusData.length;
+            currentSectionIndex = 0;
+            
+            // Generate both views
+            generateSimplifiedTable(contenusData);
+            generateDetailedView(contenusData);
+            
+            // Show simplified view by default
+            switchView('simplified');
+            
+            // Show submit section
+            document.getElementById('submitSection').style.display = 'block';
+        }
+
+        function generateSimplifiedTable(contenusData) {
+            const simplifiedTableContent = document.getElementById('simplifiedTableContent');
+            
+            // Generate simplified table HTML
+            let tableHTML = `
+                <table class="simplified-table">
+                    <thead>
+                        <tr>
+                            <th>Section</th>
+                            <th>Type</th>
+                            <th>Compétences visées</th>
+                            <th>Ressource</th>
+                            <th>Activité 1</th>
+                            <th>Activité 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            // Add each section to the simplified table
+            contenusData.forEach(section => {
+                tableHTML += `
+                    <tr>
+                        <td class="section-number">${section.section}</td>
+                        <td class="section-type">${section.type_de_section || '-'}</td>
+                        <td class="competence-visee">${section.competences_visees || '-'}</td>
+                        <td class="ressource">${section.ressource || '-'}</td>
+                        <td class="activite">${section.activite_1 || '-'}</td>
+                        <td class="activite">${section.activite_2 || '-'}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            simplifiedTableContent.innerHTML = tableHTML;
+        }
+
+        function generateDetailedView(contenusData) {
+            const detailedContent = document.getElementById('detailedContent');
+            
+            // Generate detailed view HTML for all sections
+            let detailedHTML = '';
+            
+            contenusData.forEach((section, index) => {
+                detailedHTML += generateSectionCard(section, index);
+            });
+            
+            detailedContent.innerHTML = detailedHTML;
+            
+            // Update navigation
+            updateDetailedNavigation();
+        }
+
+        function generateSectionCard(section, index) {
+            const competenceCode = extractCompetenceCode(section.competences_visees);
+            const competenceDetails = getCompetenceDetails(competenceCode);
+            
+            return `
+                <div class="section-card" id="section-${index}" style="display: ${index === 0 ? 'block' : 'none'};">
+                    <div class="section-card-header">
+                        <h5>${section.type_de_section || 'Section'}</h5>
+                        <div class="section-number">${section.section}</div>
+                    </div>
+                    
+                    <div class="section-card-content">
+                        <div class="section-info-grid">
+                            ${section.competences_visees ? `
+                                <div class="section-info-item">
+                                    <div class="competence-highlight">${competenceCode || 'Compétence'}</div>
+                                    <h6>Compétences visées</h6>
+                                    <p>${section.competences_visees}</p>
+                                    ${competenceDetails ? `
+                                        <div style="margin-top: 10px; padding: 8px; background: rgba(23, 162, 184, 0.1); border-radius: 5px; font-size: 0.9em;">
+                                            <strong>Niveau :</strong> ${competenceDetails.niveau || 'Non défini'}<br>
+                                            <strong>Idées clés :</strong> ${competenceDetails.idees_cles || 'Non définies'}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
+                            
+                            ${section.ressource ? `
+                                <div class="section-info-item">
+                                    <h6>📚 Ressource</h6>
+                                    <p><strong>${section.ressource}</strong></p>
+                                    ${section.intention_ressource ? `<p><em>Intention : ${section.intention_ressource}</em></p>` : ''}
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        ${(section.activite_1 || section.activite_2) ? `
+                            <div class="section-actions">
+                                <h6>🎯 Activités pédagogiques</h6>
+                                ${section.activite_1 ? `
+                                    <div class="action-item">
+                                        <div class="action-icon">1</div>
+                                        <div class="action-content">
+                                            <div class="action-title">${section.activite_1}</div>
+                                            ${section.intention_activite_1 ? `<div class="action-intention">Intention : ${section.intention_activite_1}</div>` : ''}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                
+                                ${section.activite_2 ? `
+                                    <div class="action-item">
+                                        <div class="action-icon">2</div>
+                                        <div class="action-content">
+                                            <div class="action-title">${section.activite_2}</div>
+                                            ${section.intention_activite_2 ? `<div class="action-intention">Intention : ${section.intention_activite_2}</div>` : ''}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                        
+                        ${section.justification_activite_s ? `
+                            <div class="justification-box">
+                                <h6>💡 Justification pédagogique</h6>
+                                <p>${section.justification_activite_s}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCompetenceDetails(competenceCode) {
+            if (!competenceCode || !competences) return null;
+            
+            return competences.find(comp => comp.code === competenceCode) || null;
+        }
+
+        function extractCompetenceCode(competenceText) {
+            if (!competenceText) return null;
+            const match = competenceText.match(/^([A-Z]\d+)/);
+            return match ? match[1] : null;
+        }
+
+        function switchView(viewType) {
+            const simplifiedView = document.getElementById('simplifiedView');
+            const detailedView = document.getElementById('detailedView');
+            const simplifiedBtn = document.querySelector('.view-option-btn[onclick*="simplified"]');
+            const detailedBtn = document.querySelector('.view-option-btn[onclick*="detailed"]');
+            
+            if (viewType === 'simplified') {
+                simplifiedView.style.display = 'block';
+                detailedView.style.display = 'none';
+                simplifiedBtn.classList.add('active');
+                detailedBtn.classList.remove('active');
+            } else {
+                simplifiedView.style.display = 'none';
+                detailedView.style.display = 'block';
+                simplifiedBtn.classList.remove('active');
+                detailedBtn.classList.add('active');
+                updateDetailedNavigation();
+            }
+        }
+
+        function showNextSection() {
+            if (currentSectionIndex < totalSections - 1) {
+                document.getElementById(`section-${currentSectionIndex}`).style.display = 'none';
+                currentSectionIndex++;
+                document.getElementById(`section-${currentSectionIndex}`).style.display = 'block';
+                updateDetailedNavigation();
+            }
+        }
+
+        function showPreviousSection() {
+            if (currentSectionIndex > 0) {
+                document.getElementById(`section-${currentSectionIndex}`).style.display = 'none';
+                currentSectionIndex--;
+                document.getElementById(`section-${currentSectionIndex}`).style.display = 'block';
+                updateDetailedNavigation();
+            }
+        }
+
+        function updateDetailedNavigation() {
+            const currentSectionNumber = document.getElementById('currentSectionNumber');
+            const totalSectionsSpan = document.getElementById('totalSections');
+            const prevBtn = document.getElementById('prevSectionBtn');
+            const nextBtn = document.getElementById('nextSectionBtn');
+            
+            currentSectionNumber.textContent = currentSectionIndex + 1;
+            totalSectionsSpan.textContent = totalSections;
+            
+            prevBtn.disabled = currentSectionIndex === 0;
+            nextBtn.disabled = currentSectionIndex === totalSections - 1;
+        }
+
+
+
+        function saveContenus() {
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            // Use the AI generated data directly
+            const dataToSave = {
+                contenus_par_section: contenusData
+            };
+            
+            // Save to backend
+            fetch('/save_contenus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSave)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    showSuccess('Contenus sauvegardés avec succès !');
+                    // Navigate to next step
+                    setTimeout(() => {
+                        const nextRoute = '{{ nav_info.next_route if nav_info and nav_info.next_route else "" }}';
+                        if (nextRoute) {
+                            window.location.href = nextRoute;
+                        }
+                    }, 1500);
+                } else {
+                    showError('Erreur lors de la sauvegarde : ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Erreur lors de la sauvegarde.');
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            });
+        }
+
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Navigation functions for the navigation buttons
+        function getPreviousRouteFromNavInfo() {
+            return '{{ nav_info.previous_route if nav_info and nav_info.previous_route else "" }}';
+        }
+
+        function getNextRouteFromNavInfo() {
+            return '{{ nav_info.next_route if nav_info and nav_info.next_route else "" }}';
+        }
+    </script>
+</body>
+</html>
