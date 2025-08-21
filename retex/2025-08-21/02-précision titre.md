@@ -1,4 +1,4 @@
-### ℹ️ Pour mieux comprendre
+### ℹ️ Repère pratique
 
 - **Le titre** : court, percutant, facile à lire dans un catalogue.  
 - **L’objectif général** : décrit l’intention globale de la formation, l’impact attendu sur les enseignants et/ou leurs élèves.  
