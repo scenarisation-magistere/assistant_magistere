@@ -1,14 +1,26 @@
-### ℹ️ Repère pratique
+### 📌 Repère pratique
 
 - **Le titre** : court, percutant, facile à lire dans un catalogue.  
-- **L’objectif général** : décrit l’intention globale de la formation, l’impact attendu sur les enseignants et/ou leurs élèves.  
-- **Les compétences** : elles seront travaillées à l’étape suivante. Elles combinent généralement des **savoirs**, des **savoir-faire** et des **savoir-être**.  
+- **L’objectif général** : intention globale de la formation, impact attendu sur les participants.  
+- **Les compétences** : elles seront travaillées à l’étape suivante (ensemble de savoirs, savoir-faire et savoir-être).  
 
 ---
 
-### 📌 Exemple
+### 💡 Exemple
+
 - **Titre** : “Intégrer le numérique pour dynamiser sa classe”  
-- **Objectif général** : “Accompagner les enseignants dans l’utilisation d’outils numériques afin d’améliorer l’engagement et la collaboration des élèves.”  
+- **Objectif général** : “Accompagner les enseignants à utiliser des outils numériques pour enrichir leurs pratiques et favoriser la collaboration entre pairs.”  
+
+---
+
+### ❓ Questions
+
+1. **Quel est le titre envisagé de votre formation ?**  
+👉 Votre réponse :  
+
+
+2. **Quel est l’objectif général envisagé ?**  
+👉 Votre réponse :  
 
 
 
