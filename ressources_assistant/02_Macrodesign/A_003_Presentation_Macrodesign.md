@@ -20,11 +20,11 @@ Il structure la formation en **sections** alignées sur des **compétences clair
 ---
 
 ## 🧩 Scénario CMO (structure type)
-- 1 section d’accueil  
-- 3 à 4 sections d’apprentissage (1 compétence chacune)  
-- 1 classe virtuelle  
-- 1 forum général  
-- 1 évaluation
+- 1 section "accueil"  
+- 3 à 4 sections "apprentissage" (1 compétence visée par sections)  
+- 1 section "classe virtuelle"  
+- 1 section "forum général"  
+- 1 section "évaluation de la formation"
 
 ---
 
