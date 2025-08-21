@@ -49,9 +49,12 @@ Le scénario CMO propose une structuration claire et précise de la formation :
 | 7  | **Forum général**             | Discussions regroupées par compétence                                            | Asynchrone          |
 | 8  | **Évaluation de satisfaction**| Bilan à court, moyen et long terme                                               | Asynchrone          |
 
-- **Durée de 3h maximum**  
+ **Durée de 3h maximum**  
 - **Poids total de 512 Mo maximum**  
-- **Système de priorité pédagogique** : selon le modèle pédagogique **ABC Learning Design** et le profil identifié pour le scénario CMO, la sélection des ressources et activités privilégie **Acquisition**, **Collaboration**, **Discussion** et **Pratique**. **Production** et **Enquête** restent présentes mais de façon secondaire.
+- **Nombre recommandé de participants** : **10 à 20** pour garantir une dynamique de groupe vivante et un suivi de qualité.  
+  - Jusqu’à **30 participants** possible avec animation renforcée.  
+  - Au-delà de 30, la classe virtuelle perd son interactivité et n’est pas recommandée dans le scénario CMO.  
+- **Système de priorité pédagogique** : selon le modèle pédagogique **ABC Learning Design** et le profil identifié pour le scénario CMO, la sélection des ressources et activités privilégie **Acquisition**, **Collaboration**, **Discussion** et **Pratique**. **Production** et **Enquête** restent présentes mais de façon secondaire.  
 
 ---
 

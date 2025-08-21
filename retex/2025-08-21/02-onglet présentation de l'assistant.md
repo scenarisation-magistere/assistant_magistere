@@ -19,7 +19,7 @@ Le **scénario de la Communauté Magistère Occitanie (CMO)** est un modèle **h
 
 👉 [🔗 Voir le scénario en image](https://nuage02.apps.education.fr/index.php/s/Fi6QNtrL6F8KDHj)
 
-⏱️ Durée max : **3h** — 💾 Poids max : **512 Mo**
+⏱️ Durée max : **3h** — 💾 Poids max : **512 Mo** — 👥 Nombre recommandé : **10 à 20 participants (maximum 30)** 
 
 ---
 
