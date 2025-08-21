@@ -37,7 +37,8 @@ Le **scénario de la Communauté Magistère Occitanie (CMO)** est un modèle **h
 ## ⚠️ Informations importantes
 
 - L’assistant ne propose que le **scénario CMO**.  
-- Il **ne gère pas la migration** de parcours existants.  
+- Il **ne gère pas la migration** de parcours existants.
+- Il est conseillé d’utiliser l’assistant **en une seule fois**, sans laisser trop d’intervalle entre les questions, afin de limiter les risques de bug technique ou de retour intempestif à l’accueil.    
 
 👉 S’il s’agit d’une **migration**, veuillez utiliser l’[espace dédié](https://toulouse.magistere.apps.education.fr/course/view.php?id=398).  
 👉 Pour toute autre question, ou pour partager le **tableur exporté du macrodesign**, vous pouvez contacter vos formateurs :  
