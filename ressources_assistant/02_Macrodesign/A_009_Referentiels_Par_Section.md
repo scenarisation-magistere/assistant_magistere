@@ -1,4 +1,4 @@
-<!-- A_009_Referentiel_Par_Sections.md -->
+<!-- A_009_Referentiels_Par_Section.md (version mise à jour v2) -->
 
 [INSTRUCTION_ASSISTANT] :
 > **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
@@ -10,15 +10,14 @@
   - `formulations_competences` validées dans **A_007_Competences_Visees.md**.
 - Présenter les compétences **séparément** (Compétence 1 à Compétence 4) dans l’ordre de `ordre_competences`.
 - Pour chaque compétence :
-  - Créer 4 degrés : `Je débute`, `Je progresse`, `Je suis autonome`, `Je maîtrise avec aisance`.
+  - Créer 4 degrés : `Je débute`, `Je progresse`, `Je suis autonome`, `Je maîtrise`.
   - Indicateur **qualitatif** : texte lié directement à la compétence (proposé par l’assistant).
   - Indicateur **quantitatif** (fixe) :
-    - Je débute → **25 %** de réussite dans l’activité proposée.
-    - Je progresse → **50 %** de réussite dans l’activité proposée.
-    - Je suis autonome → **75 %** de réussite dans l’activité proposée.
-    - Je maîtrise avec aisance → **> 75 %** de réussite dans l’activité proposée.
-  - **Badge** = "oui" si **degré 3** ou **degré 4** atteint ; sinon "non".
-- Ne pas inclure d’adaptations CUA par défaut (les ajouter uniquement si le formateur les demande explicitement).
+    - Je débute → **Au moins 25 %** de réussite
+    - Je progresse → **Au moins 50 %** de réussite
+    - Je suis autonome → **Au moins 75 %** de réussite
+    - Je maîtrise → **100 %** de réussite
+- Badge : supprimé (non présent dans le gabarit final).
 - Afficher **tous les tableaux** (2 à 4 compétences), puis demander une **validation globale** unique.
 - Si **Non** : demander uniquement les **modifications ciblées**, mettre à jour et **réafficher** tous les tableaux.
 - Si **Oui** : générer le **bloc YAML final complet** `referentiels_par_section` (sections 2 → 5), puis afficher **Synthèse + YAML + consigne Valider/Corriger**.
@@ -30,51 +29,52 @@
 # 🧭 A_009 — Référentiels d’auto-évaluation (validation globale)
 
 ## 🎯 Objectif
-Produire des référentiels clairs, séparés par compétence, avec indicateurs qualitatifs liés à la compétence et indicateurs quantitatifs fixes, puis valider l’ensemble en une seule fois.
+Produire des référentiels clairs, séparés par compétence, avec indicateurs qualitatifs liés à la compétence et indicateurs quantitatifs fixes, puis valider l’ensemble en une seule fois.  
+👉 Cohérence avec le **gabarit tableur export (v5)** : 3 onglets (01_Généralités • 02_Référentiels • 03_Macrodesign).
 
 ---
 
-## 📋 Tableaux par compétence
+## 📋 Tableaux par compétence (version blocs)
 
 ### Compétence 1 — [Formulation compétence 1]
-| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
-|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
-| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
-| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
-| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
-| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+| competence_id | competence_formulation | degre | libelle_degre     | indicateur_qualitatif (lié à la compétence) | indicateur_quantitatif |
+|---------------|------------------------|------:|-------------------|---------------------------------------------|------------------------|
+| C1            | [Compétence 1]         | 1     | Je débute         | [à proposer]                                | Au moins **25 %** |
+|               |                        | 2     | Je progresse      | [à proposer]                                | Au moins **50 %** |
+|               |                        | 3     | Je suis autonome  | [à proposer]                                | Au moins **75 %** |
+|               |                        | 4     | Je maîtrise       | [à proposer]                                | **100 %** |
 
 ---
 
 ### Compétence 2 — [Formulation compétence 2]
-| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
-|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
-| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
-| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
-| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
-| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+| competence_id | competence_formulation | degre | libelle_degre     | indicateur_qualitatif (lié à la compétence) | indicateur_quantitatif |
+|---------------|------------------------|------:|-------------------|---------------------------------------------|------------------------|
+| C2            | [Compétence 2]         | 1     | Je débute         | [à proposer]                                | Au moins **25 %** |
+|               |                        | 2     | Je progresse      | [à proposer]                                | Au moins **50 %** |
+|               |                        | 3     | Je suis autonome  | [à proposer]                                | Au moins **75 %** |
+|               |                        | 4     | Je maîtrise       | [à proposer]                                | **100 %** |
 
 ---
 
 ### Compétence 3 — [Formulation compétence 3]
-| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
-|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
-| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
-| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
-| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
-| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+| competence_id | competence_formulation | degre | libelle_degre     | indicateur_qualitatif (lié à la compétence) | indicateur_quantitatif |
+|---------------|------------------------|------:|-------------------|---------------------------------------------|------------------------|
+| C3            | [Compétence 3]         | 1     | Je débute         | [à proposer]                                | Au moins **25 %** |
+|               |                        | 2     | Je progresse      | [à proposer]                                | Au moins **50 %** |
+|               |                        | 3     | Je suis autonome  | [à proposer]                                | Au moins **75 %** |
+|               |                        | 4     | Je maîtrise       | [à proposer]                                | **100 %** |
 
 ---
 
-### Compétence 4 — [Formulation compétence 4]
-| Degré | Libellé                 | Indicateur qualitatif (lié à la compétence) | Indicateur quantitatif                              | Badge |
-|------:|-------------------------|----------------------------------------------|-----------------------------------------------------|:-----:|
-| 1     | Je débute               | [à proposer]                                 | 25 % de réussite dans l’activité proposée           |  non  |
-| 2     | Je progresse            | [à proposer]                                 | 50 % de réussite dans l’activité proposée           |  non  |
-| 3     | Je suis autonome        | [à proposer]                                 | 75 % de réussite dans l’activité proposée           |  oui  |
-| 4     | Je maîtrise avec aisance| [à proposer]                                 | > 75 % de réussite dans l’activité proposée         |  non  |
+### Compétence 4 (optionnelle) — [Formulation compétence 4]
+| competence_id | competence_formulation | degre | libelle_degre     | indicateur_qualitatif (lié à la compétence) | indicateur_quantitatif |
+|---------------|------------------------|------:|-------------------|---------------------------------------------|------------------------|
+| C4            | [Compétence 4]         | 1     | Je débute         | [à proposer]                                | Au moins **25 %** |
+|               |                        | 2     | Je progresse      | [à proposer]                                | Au moins **50 %** |
+|               |                        | 3     | Je suis autonome  | [à proposer]                                | Au moins **75 %** |
+|               |                        | 4     | Je maîtrise       | [à proposer]                                | **100 %** |
 
-*(Si seulement 2 ou 3 compétences : n’afficher que les tableaux correspondants, dans l’ordre de `ordre_competences`.)*
+*(Afficher seulement 2 à 4 compétences selon ce qui a été validé dans A_007 et A_008.)*
 
 ---
 
@@ -90,73 +90,83 @@ Si **Non**, indiquez uniquement les compétences et degrés à modifier.
 
 ---
 
-## 📦 Bloc YAML final (complet — 4 compétences)
-> **Inclure uniquement les compétences réellement présentes (2 à 4).**  
-> **Respecter l’ordre de `ordre_competences` (sections S2 → S5).**
+## 📦 Bloc YAML final (aligné sur export tableur v5)
 
 ```yaml
 referentiels_par_section:
-  - section: 2
-    competence: "[Compétence 1]"
-    badge: "oui (si degré 3 atteint)"
+  - competence_id: C1
+    competence_formulation: "[Compétence 1]"
     niveaux:
       - degre: 1
+        libelle: "Je débute"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 25 %"
       - degre: 2
+        libelle: "Je progresse"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 50 %"
       - degre: 3
+        libelle: "Je suis autonome"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 75 %"
       - degre: 4
+        libelle: "Je maîtrise"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
-  - section: 3
-    competence: "[Compétence 2]"
-    badge: "oui (si degré 3 atteint)"
+        indicateur_quantitatif: "100 %"
+  - competence_id: C2
+    competence_formulation: "[Compétence 2]"
     niveaux:
       - degre: 1
+        libelle: "Je débute"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 25 %"
       - degre: 2
+        libelle: "Je progresse"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 50 %"
       - degre: 3
+        libelle: "Je suis autonome"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 75 %"
       - degre: 4
+        libelle: "Je maîtrise"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
-  - section: 4
-    competence: "[Compétence 3]"
-    badge: "oui (si degré 3 atteint)"
+        indicateur_quantitatif: "100 %"
+  - competence_id: C3
+    competence_formulation: "[Compétence 3]"
     niveaux:
       - degre: 1
+        libelle: "Je débute"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 25 %"
       - degre: 2
+        libelle: "Je progresse"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 50 %"
       - degre: 3
+        libelle: "Je suis autonome"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 75 %"
       - degre: 4
+        libelle: "Je maîtrise"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
-  - section: 5
-    competence: "[Compétence 4]"
-    badge: "oui (si degré 3 atteint)"
+        indicateur_quantitatif: "100 %"
+  - competence_id: C4
+    competence_formulation: "[Compétence 4]"
     niveaux:
       - degre: 1
+        libelle: "Je débute"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "25 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 25 %"
       - degre: 2
+        libelle: "Je progresse"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "50 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 50 %"
       - degre: 3
+        libelle: "Je suis autonome"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "75 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "Au moins 75 %"
       - degre: 4
+        libelle: "Je maîtrise"
         indicateur_qualitatif: "[à valider]"
-        indicateur_quantitatif: "> 75 % de réussite dans l’activité proposée"
+        indicateur_quantitatif: "100 %"
