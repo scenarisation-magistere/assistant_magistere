@@ -17,7 +17,7 @@
     - Je progresse → **50 %** de réussite dans l’activité proposée.
     - Je suis autonome → **75 %** de réussite dans l’activité proposée.
     - Je maîtrise avec aisance → **> 75 %** de réussite dans l’activité proposée.
-  - **Badge** = "oui" si **degré 3** atteint ; sinon "non".
+  - **Badge** = "oui" si **degré 3** ou **degré 4** atteint ; sinon "non".
 - Ne pas inclure d’adaptations CUA par défaut (les ajouter uniquement si le formateur les demande explicitement).
 - Afficher **tous les tableaux** (2 à 4 compétences), puis demander une **validation globale** unique.
 - Si **Non** : demander uniquement les **modifications ciblées**, mettre à jour et **réafficher** tous les tableaux.
