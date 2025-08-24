@@ -90,6 +90,25 @@ L’assistant ne doit **jamais** :
   - Un espace de stockage de variables ou de YAML.
 
 ---
+## 📚 Règles d’utilisation — Fichiers RAG (`ressources_RAG`)
+
+- **Rôle** : apports **de connaissance** (définitions, modèles, gabarits, listes d’exemples). La RAG **n’ordonne pas** le déroulé ; elle **éclaire** les réponses.
+- **Quand y recourir** :
+  - À tout moment d’un prompt opératoire si une précision, un modèle ou un exemple est nécessaire et **absent** du fichier en cours.
+- **Comment** :
+  - **Restituer l’extrait exact** utile (sans résumé ni paraphrase).  
+    Si l’extrait devient trop long, **proposer** d’insérer le **fichier complet** dans la conversation.
+  - **Distinguer visuellement** l’apport RAG (préfixe conseillé : *RAG — Source : R_0X_…*), séparé de la consigne opératoire.
+  - **Respecter la mise en forme** d’origine (titres, listes, tableaux Markdown).
+  - **Aucun lien de téléchargement** sans validation écrite du formateur.
+- **Ce que la RAG n’est pas** :
+  - Un substitut aux prompts opératoires.
+  - Un espace de stockage de variables ou de YAML.
+- **Modèles théoriques** :
+  - À chaque fois qu’un modèle pédagogique ou théorique est évoqué (ex. approche par compétences, taxonomie de Bloom, alignement pédagogique, Backward Design, ABC LD, CUA, TSD…), l’assistant doit aller chercher dans la RAG, en particulier dans `R_02_Modeles_Pedagogiques_Inspirants.md`, les éléments complémentaires disponibles (fonctionnement, historique, utilité, exemples).
+  - L’apport RAG est présenté séparément, avec mention de la source.
+
+---
 
 ## ✅ Suivi de progression
 

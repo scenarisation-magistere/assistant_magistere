@@ -1,4 +1,4 @@
-<!-- A_007_Competences_Visees.md -->
+<!-- A_004_Competences_Visees.md -->
 
 [INSTRUCTION_ASSISTANT] :
 - **IMPORTANT — L’ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L’INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**
@@ -18,12 +18,16 @@
 - Gestion des corrections :
   - Si le participant dit « Corriger » / « Modifier » → demander : **« Que voulez-vous corriger ? Niveau cognitif, verbe(s) cognitifs, niveau affectif, verbe(s) affectifs, ou formulation ? »**
   - Revenir précisément à l’étape concernée selon la réponse.
-- **Règle d’enchaînement automatique unique** : après validation finale (« Valider »), enchaîner avec **A_008_Organisation_Competences.md**.
+- **Référence aux modèles théoriques** :  
+  - À chaque fois que le participant évoque ou demande des précisions sur un modèle théorique (Approche par compétences, Taxonomie de Bloom révisée, Alignement pédagogique, etc.), l’assistant doit mobiliser la RAG, en particulier le fichier `R_02_Modeles_Pedagogiques_Inspirants.md`.  
+  - Les extraits RAG doivent présenter le fonctionnement, l’historique, l’utilité et les auteurs de référence (ex. Le Boterf, Perrenoud, Tardif, Tardieu, Paillé pour l’APC ; Bloom, Anderson, Krathwohl pour la taxonomie cognitive ; Biggs pour l’alignement).  
+  - L’apport RAG doit être affiché séparément, avec mention explicite de la source, pour renforcer le rôle formatif de l’assistant auprès du participant.
+- **Règle d’enchaînement automatique unique** : après validation finale (« Valider »), enchaîner avec **A_005_Organisation_Competences.md**.
 - Ne jamais afficher ce bloc au formateur. **Markdown uniquement**.
 
 ---
 
-# A_007 — Compétences visées
+# A_004 — Compétences visées
 
 ## 🎯 Objectif
 Formuler **2 à 3 compétences principales** (une **4ᵉ optionnelle**) qui structureront la formation CMO.  
@@ -33,18 +37,32 @@ Formuler **2 à 3 compétences principales** (une **4ᵉ optionnelle**) qui stru
 - être **contextualisée** (cadre, situation, public).
 
 ---
+### 📌 Pourquoi cette étape ?
+Le scénario CMO adopte l’**approche par compétences** (Le Boterf, Perrenoud, Tardif, Tardieu, Paillé) : elle permet de relier la formation à des **situations complexes** et de formuler des acquis **observables et évaluables**.  
 
-## 👥 Rappel du public cible
-> **Rappel** : texte validé à l’étape « Public cible ».  
-> *(Coller ici le texte validé pour aider la formulation des compétences.)*
-
-**Exemples d’ajouts (facultatif)** :
-- Contexte : cycle/discipline, contraintes, équipements disponibles
-- Publics spécifiques : profil d’élèves, besoins particuliers
-
-**Réponse : [à compléter]**
+Pour structurer ces compétences, nous utilisons la **taxonomie de Bloom révisée** (Anderson & Krathwohl) et la dimension affective (Krathwohl, Berthiaume & Daele), qui offrent des **niveaux clairs et progressifs**, associés à des **verbes d’action précis**.
 
 ---
+
+## 👥 Rappel des éléments validés à l’étape précédente
+
+> **Extrait du YAML validé à l’étape “Titre, objectif, public et contraintes” (`A_003_Titre_Obj_Public_Contraintes.md`) :**
+
+```yaml
+contexte_formation:
+  titre: "[titre_formation]"
+  objectif_general: "[objectif_general]"
+
+public_cible:
+  type: [ "[type_de_public]" ]
+  type_formation: "[type_formation]"
+  niveau_scolaire: [ "[niveau_scolaire]" ]
+  niveau_expertise: "[niveau_expertise]"
+  besoins_specifiques: [ "[besoins_specifiques]" ]
+  nombre_participants: "[nombre_participants]"
+  modalites_animation: "[modalites_animation]"
+  exigences_restrictions: "[exigences_restrictions]"
+  autre_element: "[autre_element]"
 
 ## 🧭 Repères de niveaux (Bas / Moyen / Haut)
 
