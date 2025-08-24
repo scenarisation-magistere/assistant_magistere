@@ -4,46 +4,48 @@ titre: Modèles pédagogiques inspirants — tableau + mini-fiches enrichies
 type: fiche_comparaison_modeles
 source_titre: Compilation DRANE Occitanie + documents internes + CUA_Synthese_Detaillee + sources complémentaires
 source_editeur: DRANE Occitanie
-source_date: 2025-08-11
+source_date: 2025-08-24
 langue: fr
 mots_cles_normalises:
-  - backward_design
+  - approche_par_competences
   - taxonomie_bloom_krathwohl
   - alignement_pedagogique
-  - conception_universelle_apprentissage
+  - backward_design
   - abc_learning_design
   - addie
   - picrat
-  - icap
+  - conception_universelle_apprentissage
+  - theorie_situations_didactiques
 utilisation_rag: true
-version: 3.0
+version: 4.0
 ---
 
-## [chunk_tableau_modeles] Tableau comparatif des modèles inspirants (ordre validé)
+## [chunk_tableau_modeles] Tableau comparatif des modèles inspirants (ordre aligné avec étapes de l’assistant)
 
-| Ordre | Modèle | Acronyme | Créateur / Origine | Fonctionnement du modèle | Petit historique | Utilité pour l’assistant IA | Étapes de scénarisation concernées | Cible principale |
-| :--: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| 1 | Backward Design (Understanding by Design) | UbD | Grant Wiggins & Jay McTighe (1998) | Conception à rebours : résultats attendus → preuves d’évaluation → activités. | Développé pour placer l’évaluation au cœur de la conception pédagogique. | Planifier les apprentissages en fonction des résultats visés et des preuves à recueillir. | Objectifs/évidences → activités. | **Les deux** |
-| 2 | Taxonomie de Bloom (rév. Anderson & Krathwohl) + volets affectif/psychomoteur | — | Benjamin Bloom (1956) ; Lorin Anderson & David Krathwohl (2001) ; compléments Berthiaume & Daele | Hiérarchie cognitive (Créer→Se rappeler) + verbes d’action ; intégration des dimensions affective et psychomotrice. | Révision majeure en 2001 + enrichissements francophones. | Formuler des objectifs clairs, mesurables et progressifs. | Objectifs → évaluations/activités. | **Apprenant** |
-| 3 | Alignement pédagogique (Biggs) | — | John Biggs (1999) | Cohérence entre objectifs, activités et évaluations. | Concept de Constructive Alignment (1996), popularisé en 1999. | Garantir la cohérence pédagogique de bout en bout. | Vérification macro et micro. | **Les deux** |
-| 4 | Conception Universelle de l’Apprentissage | CUA | David H. Rose & Anne Meyer (CAST, États-Unis, 1990s) ; diffusée en France par INSHEA et réseaux académiques | 3 axes : QUOI (multiples moyens de représentation), COMMENT (multiples moyens d’action et d’expression), POURQUOI (multiples moyens d’engagement). | Origine US (CAST) dans les années 1990, adaptée en France par l’INSHEA, CAPRES, universités, rectorats et réseaux comme l’Enseignement Catholique. | Intégrer l’accessibilité et la différenciation dès la conception. | Conception ressources, modalités, évaluation. | **Les deux** |
-| 5 | ABC Learning Design | ABC LD | Diana Laurillard (UCL), adaptations Natasha Perović & Clive Young | 6 types d’activités : Acquisition, Enquête, Discussion, Collaboration, Pratique, Production. | Créé à l’UCL (2015) pour du co-design rapide, adapté dans plusieurs systèmes éducatifs. | Construire rapidement un scénario équilibré. | Macro et microdesign. | **Les deux** |
-| 6 | ADDIE | ADDIE | Branche militaire US, années 1970 | Analyse – Design – Développement – Implémentation – Évaluation (cycle itératif). | Standard en ingénierie pédagogique depuis les années 1970. | Structurer toutes les étapes d’un projet de formation. | Toutes (macro et micro). | **Enseignant** |
-| 7 | PICRAT | PIC × RAT | Royce Kimmons (2016–2020) | Croise posture apprenant (Passive, Interactive, Creative) et rôle du numérique (Replace, Amplify, Transform). | Conçu pour évaluer l’impact du numérique sur l’apprentissage. | Aider à choisir le bon usage du numérique. | Conception activités numériques. | **Les deux** |
-| 8 | ICAP | ICAP | Michelene T.H. Chi & Ruth Wylie (2014) | Classe les modes d’engagement : Passif → Actif → Constructif → Interactif. | Modèle issu de recherches en sciences cognitives. | Favoriser l’engagement cognitif maximal. | Conception & qualité des activités. | **Apprenant** |
+| Ordre | Modèle | Acronyme | Créateur / Origine | Origine scientifique | Fonctionnement du modèle | Petit historique | Utilité pour l’assistant IA | Étapes de scénarisation concernées | Cible principale |
+| :--: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| 1 | Approche par compétences | APC | Le Boterf (1994), Perrenoud (1997), Tardif (1999), Tardieu (2006, sup.), Paillé (2002, sec.) | Sciences de l’éducation (sociologie, pédagogie curriculaire) | Mobilisation intégrée de ressources (savoirs, savoir-faire, attitudes) pour résoudre des situations complexes. | Alternative aux pédagogies par objectifs (1990–2000). | Socle du scénario CMO : justifie l’écriture en compétences. | Étape A_004 (compétences visées), influence tout le macrodesign. | **Apprenant** |
+| 2 | Taxonomie de Bloom (rév. Anderson & Krathwohl) + volets affectif/psychomoteur | — | Bloom (1956), Anderson & Krathwohl (2001), Berthiaume & Daele | Psychologie cognitive | Hiérarchie cognitive (Créer→Se rappeler) + verbes d’action ; intégration des dimensions affective et psychomotrice. | Révision majeure en 2001 + enrichissements francophones. | Formuler des objectifs clairs, mesurables et progressifs. | Objectifs → évaluations/activités. | **Apprenant** |
+| 3 | Alignement pédagogique (Biggs) | — | John Biggs (1999) | Sciences de l’éducation (constructive alignment) | Cohérence entre objectifs, activités et évaluations. | Concept formalisé 1996, popularisé 1999. | Vérifier la cohérence pédagogique de bout en bout. | Vérification macro et micro. | **Les deux** |
+| 4 | Backward Design (Understanding by Design) | UbD | Wiggins & McTighe (1998) | Curriculum design | Conception à rebours : résultats → preuves → activités. | Années 1990. | Centrer le scénario sur l’évaluation formative. | Référentiels / conception activités. | **Les deux** |
+| 5 | ABC Learning Design | ABC LD | Laurillard, Perović, Young (UCL, 2015) | Sciences de l’éducation (learning design) | 6 types d’activités : Acquisition, Enquête, Discussion, Collaboration, Pratique, Production. | Développé à l’UCL. | Construire rapidement un scénario équilibré. | Macro et microdesign. | **Les deux** |
+| 6 | ADDIE | ADDIE | Branche militaire US, années 1970 | Ingénierie de formation | Analyse – Design – Développement – Implémentation – Évaluation (cycle itératif). | Standard en ingénierie pédagogique depuis les années 1970. | Structurer toutes les étapes d’un projet de formation. | Toutes (macro et micro). | **Enseignant** |
+| 7 | PICRAT | PIC × RAT | Royce Kimmons (2016–2020) | Sciences de l’éducation (numérique éducatif) | Croise posture apprenant (Passive, Interactive, Creative) et rôle du numérique (Replace, Amplify, Transform). | Conçu pour évaluer l’impact du numérique. | Aider à choisir le bon usage du numérique. | Conception activités numériques. | **Les deux** |
+| 8 | Conception Universelle de l’Apprentissage | CUA | Rose & Meyer (1990s, CAST, US) ; diffusée INSHEA | Neurosciences + accessibilité | 3 axes : QUOI, COMMENT, POURQUOI. | Années 1990, adaptée en France par INSHEA, CAPRES, rectorats. | Intégrer l’accessibilité et la différenciation dès la conception. | Ressources, modalités, évaluation. | **Les deux** |
+| 9 | Théorie des situations didactiques | TSD | Brousseau (1980s) | Didactique des mathématiques | L’apprentissage vient de la mise en situation (milieu didactique). Dévolution → autorégulation, autonomie. | Conçue en maths, élargie ensuite. | Concevoir des situations riches, accessibles et autorégulées. Complète la CUA. | Conception des activités. | **Apprenant** |
 
 ---
 
 ## [chunk_mini_fiches_modeles] Mini-fiches enrichies
 
-### Backward Design (UbD)
-**Fonctionnement** : commence par définir les résultats d’apprentissage souhaités, puis les preuves qui démontreront leur atteinte, enfin les activités qui permettront d’y parvenir.  
-**Historique** : conçu par Grant Wiggins & Jay McTighe (1998) pour replacer l’évaluation comme moteur de la conception pédagogique.  
-**Utilité pour l’assistant IA** : aide à formuler un parcours centré sur les résultats attendus, garantissant que chaque activité sert directement les objectifs.  
-**Exemple** : dans un module de langue, commencer par définir les compétences à évaluer (ex. tenir une conversation de 5 minutes) avant de choisir les exercices.  
-**Écueils à éviter** : définir les activités avant les objectifs, ou négliger les critères d’évaluation.  
-**Étapes** : objectifs/évidences → activités.  
-**Cible** : **Les deux**.
+### Approche par compétences (APC)
+**Fonctionnement** : considère la compétence comme la **capacité à mobiliser un ensemble intégré de ressources** (connaissances, savoir-faire, attitudes) pour résoudre des situations complexes. Les compétences sont formulées de manière **contextualisée, observable et évaluable**.  
+**Historique** : introduite en francophonie par **Le Boterf (1994)** (“l’acteur compétent”), diffusée par **Perrenoud (1997)** et **Tardif (1999)**, développée ensuite par **Tardieu (2006, supérieur)** et **Paillé (2002, secondaire/professionnel)**. Référence majeure dans les réformes curriculaires (OCDE, UNESCO).  
+**Utilité pour l’assistant IA** : socle du scénario CMO, explique pourquoi l’on demande d’**écrire en compétences**. Permet de relier objectifs, contenus et évaluations.  
+**Exemple** : “Utiliser les fonctions de calcul et de tri d’Excel pour résoudre un problème de gestion de notes en situation scolaire.”  
+**Écueils à éviter** : réduire la compétence à un savoir isolé ; formuler des compétences trop générales ou non observables ; oublier la contextualisation.  
+**Étapes** : principalement l’étape **A_004 Compétences visées**, mais inspire tout le macrodesign.  
+**Cible** : **Apprenant**.
 
 ---
 
@@ -68,18 +70,27 @@ version: 3.0
 **Cible** : **Les deux**.
 
 ---
+### Backward Design (UbD)
+**Fonctionnement** : part de la fin pour concevoir une formation.  
+1. Définir les **résultats attendus** (objectifs/compétences à atteindre).  
+2. Identifier les **preuves d’évaluation** qui permettront de constater que ces résultats sont atteints.  
+3. Concevoir les **activités d’apprentissage** qui permettront aux apprenants d’atteindre ces résultats.  
 
-### Conception Universelle de l’Apprentissage (CUA)
-**Fonctionnement** : repose sur trois principes —  
-- **QUOI** : diversifier les moyens de représentation (textes, schémas, vidéos, simplification lexicale).  
-- **COMMENT** : varier les moyens d’action et d’expression (production orale, écrite, multimédia, outils d’assistance).  
-- **POURQUOI** : multiplier les leviers d’engagement (choix, authenticité, feedbacks, auto-régulation).  
-**Historique** : créée dans les années 1990 par David H. Rose & Anne Meyer au CAST (États-Unis), inspirée du concept de conception universelle en architecture. En France, diffusée par l’INSHEA, le CAPRES, des universités et rectorats, ainsi que des réseaux comme l’Enseignement Catholique.  
-**Utilité pour l’assistant IA** : intégrer l’accessibilité et l’inclusion dès la conception du scénario, plutôt qu’en adaptation a posteriori.  
-**Exemple** : proposer une synthèse audio et un résumé écrit d’un même contenu pour s’adapter à différents profils.  
-**Écueils à éviter** : ne pas prévoir de supports ou modalités variées dès le départ.  
-**Étapes** : conception ressources, modalités, évaluation.  
-**Cible** : **Les deux**.
+**Historique** : élaboré par **Grant Wiggins et Jay McTighe** dans les années 1990 (ouvrage *Understanding by Design*, 1998). Il inverse le schéma classique de conception pédagogique en plaçant l’évaluation comme moteur de la scénarisation.  
+
+**Utilité pour l’assistant IA** : aide à bâtir des parcours centrés sur les **preuves d’apprentissage**, garantissant que chaque activité a un lien direct avec les résultats visés. Utile dans l’étape de création des **référentiels**.  
+
+**Exemple** : dans un module de langue, commencer par définir :  
+- Résultat attendu → “tenir une conversation de 5 minutes en espagnol”.  
+- Preuve attendue → jeu de rôle enregistré.  
+- Activités → exercices de vocabulaire, mises en situation de dialogue, feedback entre pairs.  
+
+**Écueils à éviter** :  
+- définir les activités avant les objectifs,  
+- négliger les critères d’évaluation ou les formuler de façon trop vague.  
+
+**Étapes** : référentiels / objectifs / évaluations → activités.  
+**Cible** : **Les deux** (enseignant pour concevoir, apprenant pour donner du sens).  
 
 ---
 
@@ -116,13 +127,34 @@ version: 3.0
 
 ---
 
-### ICAP
-**Fonctionnement** : catégorise les comportements d’apprentissage selon l’engagement cognitif : Passif, Actif, Constructif, Interactif.  
-**Historique** : formalisé par Michelene T.H. Chi & Ruth Wylie (2014) sur la base d’études en sciences cognitives.  
-**Utilité pour l’assistant IA** : concevoir des activités qui maximisent l’engagement cognitif et l’interaction significative.  
-**Exemple** : transformer un visionnage passif en activité interactive avec annotation collaborative et débat.  
-**Écueils à éviter** : rester sur des modalités passives qui limitent l’apprentissage en profondeur.  
-**Étapes** : qualité des activités.  
-**Cible** : **Apprenant**.
+### Conception Universelle de l’Apprentissage (CUA)
+**Fonctionnement** : repose sur trois principes —  
+- **QUOI** : diversifier les moyens de représentation (textes, schémas, vidéos, simplification lexicale).  
+- **COMMENT** : varier les moyens d’action et d’expression (production orale, écrite, multimédia, outils d’assistance).  
+- **POURQUOI** : multiplier les leviers d’engagement (choix, authenticité, feedbacks, auto-régulation).  
+**Historique** : créée dans les années 1990 par David H. Rose & Anne Meyer au CAST (États-Unis), inspirée du concept de conception universelle en architecture. En France, diffusée par l’INSHEA, le CAPRES, des universités et rectorats, ainsi que des réseaux comme l’Enseignement Catholique.  
+**Utilité pour l’assistant IA** : intégrer l’accessibilité et l’inclusion dès la conception du scénario, plutôt qu’en adaptation a posteriori.  
+**Exemple** : proposer une synthèse audio et un résumé écrit d’un même contenu pour s’adapter à différents profils.  
+**Écueils à éviter** : ne pas prévoir de supports ou modalités variées dès le départ.  
+**Étapes** : conception ressources, modalités, évaluation.  
+**Cible** : **Les deux**.
 
 ---
+### Théorie des situations didactiques (TSD)
+**Fonctionnement** : l’apprentissage est conçu comme le résultat d’une **situation construite par l’enseignant** (milieu didactique). La **dévolution** transfère la responsabilité du problème à l’élève, ce qui favorise **autonomie et autorégulation**. Trois phases clés :  
+- **Action** (l’élève agit dans la situation),  
+- **Formulation** (il explicite ses démarches et hypothèses),  
+- **Validation** (il confronte ses résultats au problème et aux pairs).  
+
+**Historique** : théorisée par **Guy Brousseau** dans les années 1980 en **didactique des mathématiques**, puis élargie à d’autres disciplines. Elle a profondément influencé la didactique française et internationale.  
+
+**Utilité pour l’assistant IA** :  
+- aide à concevoir des situations stimulantes et accessibles,  
+- complète la **CUA** en anticipant les obstacles et en travaillant l’accessibilité en amont,  
+- cohérente avec l’APC, car les compétences se manifestent dans des situations.  
+
+**Exemple** : plutôt que d’expliquer une règle mathématique, concevoir une situation-problème où l’élève doit trouver la règle pour résoudre un défi.  
+
+**Écueils à éviter** : situation trop guidée (pas de recherche réelle) ou trop complexe (risque de décrochage).  
+**Étapes** : conception des activités.  
+**Cible** : **Apprenant**.
