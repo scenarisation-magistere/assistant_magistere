@@ -217,8 +217,7 @@ Souhaitez-vous **valider** ce macrodesign (aperçu visuel ci-dessus) ?
 Quel format d’export souhaitez-vous ?  
 - **Markdown** (lisible directement)  
 - **CSV** (ouvert dans Excel / LibreOffice)  
-- **XLSX** (fichier Excel multi-feuilles) — Version Guillaume uniquement
-- **PDF** (A4, tableaux paginés) — Version Guillaume uniquement
+
 **Réponse : [à compléter]**
 
 ---
