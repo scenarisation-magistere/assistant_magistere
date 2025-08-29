@@ -1,0 +1,52 @@
+<div class="form-field-section">
+    {% if question.type == 'text' %}
+        <input type="text" 
+               name="{{ question.field_name }}" 
+               id="{{ question.field_name }}"
+               placeholder="{{ question.placeholder or 'Votre réponse...' }}" 
+               required>
+    {% elif question.type == 'textarea' %}
+        <textarea name="{{ question.field_name }}" 
+                  id="{{ question.field_name }}"
+                  placeholder="{{ question.placeholder or "Décrivez l'objectif général de votre formation..." }}" 
+                  required></textarea>
+    {% elif question.type == 'radio' %}
+        <div class="radio-group">
+            {% for option in question.options %}
+            <div class="radio-item">
+                <input type="radio" 
+                       name="{{ question.field_name }}" 
+                       value="{{ option }}" 
+                       id="{{ question.field_name }}_{{ loop.index }}" 
+                       required>
+                <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        {% if question.text_input_options %}
+        <div class="text-input-container" id="text-input-{{ question.field_name }}" style="display: none;">
+            <label id="text-label-{{ question.field_name }}" style="display:block; margin-bottom: 6px; font-weight: 600; color: var(--text-dark);">{{ question.text_placeholder }}</label>
+            <input type="text" name="{{ question.field_name }}_text" placeholder="{{ question.text_placeholder }}">
+        </div>
+        {% endif %}
+    {% elif question.type == 'checkbox' %}
+        <div class="checkbox-group">
+            {% for option in question.options %}
+            <div class="checkbox-item">
+                <input type="checkbox" 
+                       name="{{ question.field_name }}" 
+                       value="{{ option }}" 
+                       id="{{ question.field_name }}_{{ loop.index }}">
+                <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        {% if question.text_input_options %}
+        <div class="text-input-container" id="text-input-{{ question.field_name }}" style="display: none;">
+            <input type="text" name="{{ question.field_name }}_text" placeholder="{{ question.text_placeholder }}">
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+

@@ -101,6 +101,10 @@ def register_main_routes(app):
     def index():
         return render_template('home.html')
 
+    @app.route('/presentation')
+    def presentation():
+        return render_template('presentation.html')
+
     @app.route('/start-journey')
     def start_journey():
         return redirect('/public-cible')
@@ -109,7 +113,17 @@ def register_main_routes(app):
     def public_cible():
         if request.method == 'POST':
             # Handle form submission
-            data = request.form.to_dict()
+            # Collect form data with arrays for checkboxes
+            data = {}
+            for key in request.form.keys():
+                values = request.form.getlist(key)
+                if len(values) > 1:
+                    data[key] = values
+                else:
+                    data[key] = values[0] if values else ''
+            # Attach merged info for type_de_formation for convenience
+            if data.get('type_de_formation_text'):
+                data['type_de_formation_precisions'] = data.get('type_de_formation_text')
             filename = save_yaml_data(data, 'etape_1_public_cible')
             return redirect('/contraintes')
         
@@ -119,34 +133,23 @@ def register_main_routes(app):
                              questions=QUESTIONS_PUBLIC_CIBLE, 
                              nav_info=nav_info,
                              header_gradient=page_config.get('header_gradient', 'var(--gradient-primary)'),
-                             header_title='🧭 Questionnaire Public Cible',
-                             header_description='Déterminez les caractéristiques du public cible de votre formation')
+                             header_title='🧭 Titre, objectif et public cible',
+                             header_description='Déterminez le titre, l’objectif général et les caractéristiques du public cible de votre formation')
 
     @app.route('/load-journey')
     def load_journey():
         return render_template('load_journey.html')
 
-    @app.route('/contraintes', methods=['GET', 'POST'])
-    def contraintes():
-        if request.method == 'POST':
-            # Handle form submission
-            data = request.form.to_dict()
-            filename = save_yaml_data(data, 'etape_2_contraintes')
-            return redirect('/competences')
-        
-        # Check if public_cible step is completed
-        completed, message = check_previous_steps_completed(['etape_1_public_cible'])
-        if not completed:
-            return render_template('error.html', message=f"Veuillez d'abord compléter l'étape Public Cible. {message}")
-        
-        nav_info = get_navigation_info('contraintes')
-        page_config = get_page_config('contraintes')
-        return render_template('contraintes.html', 
-                             questions=QUESTIONS_CONTRAINTES, 
-                             nav_info=nav_info,
-                             header_gradient=page_config.get('header_gradient', 'var(--gradient-danger)'),
-                             header_title='⚙️ Contraintes Formation',
-                             header_description='Précisez les contraintes temporelles, organisationnelles et techniques')
+    @app.route('/app-status')
+    def app_status():
+        """Display app startup timestamp and status"""
+        startup_time = app.config.get('STARTUP_TIMESTAMP', 'Unknown')
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return render_template('app_status.html', 
+                             startup_time=startup_time,
+                             current_time=current_time)
+
+    
 
 
 

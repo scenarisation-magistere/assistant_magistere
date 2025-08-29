@@ -25,12 +25,6 @@ def generate_referentiel_suggestions(section_num, competence, besoins_specifique
     """
     Generate evaluation rubric (referentiel) suggestions using OpenAI GPT
     """
-    # Prepare CUA adaptations based on specific needs
-    adaptations_cua = ""
-    if besoins_specifiques:
-        adaptations_cua = "\n**Adaptations CUA nécessaires :**\n"
-        for besoin in besoins_specifiques:
-            adaptations_cua += f"- {besoin}\n"
     
     # Prompt for GPT
     prompt = f"""En tant qu'expert en pédagogie et en évaluation formative, générez un référentiel d'auto-évaluation pour la section {section_num} basé sur la compétence suivante :
@@ -79,13 +73,7 @@ def generate_referentiel_suggestions(section_num, competence, besoins_specifique
             "libelle": "Je maîtrise avec aisance",
             "observable_qualitatif": "Je suis capable de...",
             "observable_quantitatif": "Score/Fréquence/Action",
-            "badge": "non"
-        }}
-    ],
-    "adaptations_cua": [
-        {{
-            "besoin": "Nom du besoin spécifique",
-            "adaptation": "Description de l'adaptation proposée"
+            "badge": "oui"
         }}
     ]
 }}

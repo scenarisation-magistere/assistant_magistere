@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -39,6 +40,119 @@
         .public-cible-recall .data-item strong {
             color: var(--secondary-orange);
         }
+
+        /* Tag list styling for recap lists */
+        .data-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .data-tags .tag {
+            background: #fff;
+            border: 1px solid var(--secondary-orange);
+            color: var(--secondary-orange);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        /* Layout for context recap (public cible + contraintes) */
+        .context-recall-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-xs);
+            align-items: start;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        @media (max-width: 900px) {
+            .context-recall-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contraintes-recall {
+            background: var(--bg-warning-light);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-small);
+            margin-bottom: var(--spacing-xl);
+            border-left: 4px solid var(--secondary-orange);
+        }
+
+        .contraintes-recall h3 {
+            color: var(--secondary-orange);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contraintes-recall .data-item {
+            margin: var(--spacing-sm) 0;
+            padding: var(--spacing-sm);
+            background: rgba(255,255,255,0.5);
+            border-radius: 5px;
+        }
+
+        .contraintes-recall .data-item strong {
+            color: var(--secondary-orange);
+        }
+
+        /* Two-column fields inside each recap */
+        .recap-fields-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 20px;
+        }
+        @media (max-width: 900px) {
+            .recap-fields-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tight data rows inside recap */
+        .recap-fields-grid .data-item {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+        @media (max-width: 900px) {
+            .recap-fields-grid .data-item {
+                grid-template-columns: 1fr;
+            }
+        }
+        .recap-fields-grid .data-item.wide {
+            grid-column: 1 / -1;
+        }
+
+        /* Two-column blocks for remaining fields */
+        .recap-pairs-grid {
+            column-count: 2;
+            column-gap: 24px;
+            margin-top: 6px;
+        }
+        @media (max-width: 900px) {
+            .recap-pairs-grid { column-count: 1; }
+        }
+        .recap-pairs-grid .data-item {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 8px;
+            margin: 0 0 10px 0;
+            padding: 0;
+            background: transparent;
+            break-inside: avoid;
+            -webkit-column-break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        @media (max-width: 900px) {
+            .recap-pairs-grid .data-item {
+                grid-template-columns: 1fr;
+            }
+        }
+        .recap-pairs-grid .data-item.wide { grid-column: 1 / -1; }
 
         .competence-section {
             margin: var(--spacing-xxl) 0;
@@ -306,6 +420,18 @@
             z-index: 1000;
         }
 
+        /* Confirm modal (reuses .modal-content, .save-btn, .cancel-btn styles) */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
         .modal-content {
             position: absolute;
             top: 50%;
@@ -416,6 +542,17 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 25px 0;
+        }
+
+        /* Force two-column layout specifically inside the suggestions pool */
+        .suggestions-pool-section .suggestions-grid {
+            grid-template-columns: 1fr 1fr;
+            align-items: stretch;
+        }
+        @media (max-width: 900px) {
+            .suggestions-pool-section .suggestions-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .suggestion-card {
@@ -617,8 +754,8 @@
 
         /* Bloom Taxonomy Styles */
         .bloom-verbs-container {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 10px;
+            padding: 10px;
             background: #f8f9fa;
             border-radius: 8px;
             border: 1px solid #e9ecef;
@@ -627,13 +764,13 @@
         .bloom-verbs-title {
             font-weight: 600;
             color: #495057;
-            margin-bottom: 15px;
-            font-size: 0.95em;
+            margin-bottom: 10px;
+            font-size: 0.9em;
         }
 
         .bloom-level {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 12px;
+            padding: 10px;
             background: white;
             border-radius: 8px;
             border-left: 4px solid #20bf6b;
@@ -656,16 +793,16 @@
         .bloom-verbs-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
         .bloom-verb-btn {
             background: #e3f2fd;
             color: #1976d2;
             border: 1px solid #bbdefb;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.8em;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 500;
@@ -682,6 +819,12 @@
             transform: translateY(0);
         }
 
+        .bloom-verb-btn.selected {
+            background: #1976d2;
+            color: #ffffff;
+            border-color: #1976d2;
+        }
+
         .bloom-verb-btn.affective {
             background: #fce4ec;
             color: #c2185b;
@@ -692,6 +835,26 @@
             background: #c2185b;
             color: white;
             box-shadow: 0 2px 8px rgba(194, 24, 91, 0.3);
+        }
+
+        .bloom-verb-btn.affective.selected {
+            background: #c2185b;
+            color: #ffffff;
+            border-color: #c2185b;
+        }
+
+        .bloom-selected-tags {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .bloom-selected-tags .tag {
+            background: #1976d2;
+            color: #fff;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 0.75em;
         }
 
         .modal-actions {
@@ -849,6 +1012,13 @@
             margin-bottom: 20px;
         }
 
+        .selection-counter {
+            text-align: center;
+            margin-top: 6px;
+            color: #666;
+            font-size: 0.95em;
+        }
+
         .selected-actions {
             display: flex;
             justify-content: center;
@@ -951,6 +1121,17 @@
             color: #666;
             margin-bottom: 20px;
         }
+
+        /* Intro explanation in evaluation results */
+        .evaluation-intro {
+            margin: 10px auto 0;
+            text-align: left;
+            max-width: 900px;
+            color: #495057;
+        }
+        .evaluation-intro p { margin-bottom: 8px; }
+        .evaluation-intro ol { padding-left: 18px; margin: 0; }
+        .evaluation-intro li { margin: 6px 0; }
 
         .evaluation-results-content {
             display: flex;
@@ -1065,12 +1246,6 @@
             margin: 8px 0;
             color: #721c24;
         }
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
 
         .avis-global h3 {
             color: #17a2b8;
@@ -1122,6 +1297,52 @@
             color: #666;
             margin-top: 15px;
         }
+
+        /* Nicer explanation above evaluate button */
+        .evaluation-explanation {
+            max-width: 900px;
+            margin: 0 auto 12px auto;
+            width: 100%;
+        }
+        .evaluation-explanation p {
+            text-align: center;
+            margin: 0 0 10px 0;
+            color: #495057;
+            font-weight: 600;
+        }
+        .evaluation-explanation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+        }
+        .evaluation-explanation li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 8px 0;
+            color: #333;
+            line-height: 1.5;
+        }
+        .evaluation-explanation li::before {
+            content: '✔';
+            color: #17a2b8;
+            background: #e8f7fb;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            flex: 0 0 24px;
+        }
+        .evaluation-actions { width: 100%; }
+        .evaluation-actions .evaluate-btn { margin-top: 6px; }
+        .selected-competences-section .evaluation-actions { flex-direction: column; align-items: center; }
+        .evaluation-explanation ul { max-width: 720px; }
+        .evaluation-explanation li { white-space: normal; word-break: normal; overflow-wrap: break-word; }
 
         .competences-manquantes {
             background: white;
@@ -1187,49 +1408,149 @@
         {% include 'includes/header.html' %}
 
         <div class="content-container">
-            <div class="public-cible-recall">
-                <h3>📌 Rappel du public cible</h3>
-                <div class="data-item">
-                    <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.titre_formation if public_cible_data and public_cible_data.titre_formation else 'Non défini' }}</span>
-                </div>
-                <div class="data-item">
-                    <strong>Objectif général :</strong> <span id="objectif-general">{{ public_cible_data.objectif_general if public_cible_data and public_cible_data.objectif_general else 'Non défini' }}</span>
-                </div>
-                <div class="data-item">
-                    <strong>Type de public :</strong> <span id="type-public">
-                        {% if public_cible_data and public_cible_data.type_de_public %}
-                            {% if public_cible_data.type_de_public is string %}
-                                {{ public_cible_data.type_de_public }}
+            <div class="context-recall-grid">
+                <div class="public-cible-recall">
+                    <h3>📌 Titre, objectif et public cible</h3>
+                    <div class="recap-fields-grid">
+                    <div class="data-item wide">
+                        <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.titre_formation if public_cible_data and public_cible_data.titre_formation else 'Non défini' }}</span>
+                    </div>
+                    <div class="data-item wide">
+                        <strong>Objectif général :</strong> <span id="objectif-general">{{ public_cible_data.objectif_general if public_cible_data and public_cible_data.objectif_general else 'Non défini' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Type de public :</strong> <span id="type-public">
+                            {% if public_cible_data and public_cible_data.type_de_public %}
+                                {% if public_cible_data.type_de_public is string %}
+                                    {{ public_cible_data.type_de_public }}
+                                {% else %}
+                                    <span class="data-tags">
+                                        {% for p in public_cible_data.type_de_public %}
+                                            <span class="tag">{{ p }}</span>
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
                             {% else %}
-                                {{ public_cible_data.type_de_public|join(', ') }}
+                                Non défini
                             {% endif %}
-                        {% else %}
-                            Non défini
-                        {% endif %}
-                    </span>
+                        </span>
+                    </div>
+                    </div>
+                    <div class="recap-pairs-grid">
+                        <div class="data-item">
+                        <strong>Type de formation :</strong>
+                        <span>
+                            {% if public_cible_data and public_cible_data.type_de_formation %}
+                                {{ public_cible_data.type_de_formation }}{% if public_cible_data.type_de_formation_precisions %} — {{ public_cible_data.type_de_formation_precisions }}{% endif %}
+                            {% else %}
+                                Non défini
+                            {% endif %}
+                        </span>
+                        </div>
+                        <div class="data-item">
+                        <strong>Niveaux scolaires :</strong>
+                        <span>
+                            {% if public_cible_data and public_cible_data.niveaux_scolaires %}
+                                {% if public_cible_data.niveaux_scolaires is string %}
+                                    {{ public_cible_data.niveaux_scolaires }}
+                                {% else %}
+                                    <span class="data-tags">
+                                        {% for n in public_cible_data.niveaux_scolaires %}
+                                            <span class="tag">{{ n }}</span>
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
+                            {% else %}
+                                Non défini
+                            {% endif %}
+                        </span>
+                        </div>
+                        <div class="data-item">
+                        <strong>Niveau d'expertise :</strong> <span id="niveau-expertise">
+                            {% if public_cible_data and public_cible_data.niveau_expertise %}
+                                {% if public_cible_data.niveau_expertise is string %}
+                                    {{ public_cible_data.niveau_expertise }}
+                                {% else %}
+                                    <span class="data-tags">
+                                        {% for n in public_cible_data.niveau_expertise %}
+                                            <span class="tag">{{ n }}</span>
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
+                            {% else %}
+                                Non défini
+                            {% endif %}
+                        </span>
+                        </div>
+                        <div class="data-item wide">
+                        <strong>Besoins spécifiques :</strong>
+                        <span>
+                            {% if public_cible_data and public_cible_data.besoins_specifiques %}
+                                {% if public_cible_data.besoins_specifiques is string %}
+                                    {{ public_cible_data.besoins_specifiques }}
+                                {% else %}
+                                    <span class="data-tags">
+                                        {% for b in public_cible_data.besoins_specifiques %}
+                                            <span class="tag">{{ b }}</span>
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
+                            {% else %}
+                                Aucun
+                            {% endif %}
+                        </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="data-item">
-                    <strong>Niveau d'expertise :</strong> <span id="niveau-expertise">
-                        {% if public_cible_data and public_cible_data.niveau_expertise %}
-                            {{ public_cible_data.niveau_expertise }}
-                        {% else %}
-                            Non défini
-                        {% endif %}
-                    </span>
+
+                <div class="contraintes-recall">
+                    <h3>📌 Contraintes Formation</h3>
+                    <div class="recap-fields-grid">
+                    <div class="data-item">
+                        <strong>Nombre de participants :</strong>
+                        <span>{{ contraintes_data.nombre_participants if contraintes_data and contraintes_data.nombre_participants else 'Non défini' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Animation :</strong>
+                        <span>{{ contraintes_data.animation if contraintes_data and contraintes_data.animation else 'Non défini' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Exigences institutionnelles :</strong>
+                        <span>{{ contraintes_data.exigences_institutionnelles if contraintes_data and contraintes_data.exigences_institutionnelles else 'Non défini' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Restrictions techniques :</strong>
+                        <span>{{ contraintes_data.restrictions_techniques if contraintes_data and contraintes_data.restrictions_techniques else 'Non défini' }}</span>
+                    </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Instruction panel below recaps (bespoke component) -->
+            {% set instructions_header = 'Objectif' %}
+            {% set instructions_subtitle = "Définissez les compétences clés qui structureront la formation." %}
+            {% set instructions = [
+                "Formuler 2 à 3 compétences principales (une 4e étant optionnelle) selon le scénario CMO.",
+                "Choisir entre deux modes : IA (génère 4 compétences modifiables) ou pas à pas (créer vous-même les compétences).",
+                "Sélectionner les verbes en cliquant sur les tags proposés : ils se colorent lorsqu’ils sont choisis et s’affichent sous forme de pastilles. Cliquez à nouveau pour les retirer.",
+                "Chaque compétence doit inclure au moins un verbe cognitif et un verbe affectif (Bloom révisée).",
+                "Indiquer un niveau de complexité (bas, moyen, haut) pour chaque domaine.",
+                "Contextualiser la compétence (cadre, situation, public)."
+            ] %}
+            {% set instructions_footer = "Astuce : commencez par une formulation simple, puis raffinez avec les niveaux Bloom." %}
+            {% include 'includes/blocks/instructions_competences.html' %}
 
             <!-- Ideas Workshop Section (AI + Manual Drafts) -->
             <div class="suggestions-pool-section">
                 <div class="suggestions-pool-header">
                     <h3>🎨 Atelier d'Idées</h3>
-                    <p>Créez vos brouillons de compétences ou laissez l'IA vous inspirer</p>
+                    <p>Créez des brouillons de compétences avant de les ajouter à votre formation</p>
                     <div class="pool-actions">
                         <button class="ai-generate-btn" onclick="generateAISuggestions()" id="aiGenerateBtn">
-                            ✨ Magie IA
+                            ✨ Génération IA
                         </button>
                         <button class="add-new-competence-btn" onclick="addNewCompetence()">
-                            ✏️ Créer un Brouillon
+                            ✏️ Création pas à pas
                         </button>
                     </div>
                 </div>
@@ -1244,14 +1565,7 @@
                         <!-- AI suggestions and new competences will be inserted here -->
                     </div>
                     
-                    <div class="pool-actions-bottom" id="poolActionsBottom" style="display: none;">
-                        <button class="apply-all-btn" onclick="applyAllSuggestions()">
-                            ➕ Ajouter Tous les Brouillons
-                        </button>
-                        <button class="clear-suggestions-btn" onclick="clearSuggestions()">
-                            🗑️ Tout Supprimer
-                        </button>
-                    </div>
+                    <div class="pool-actions-bottom" id="poolActionsBottom" style="display: none;"></div>
                 </div>
                 
                 <div class="ai-error" id="aiError" style="display: none;">
@@ -1264,6 +1578,7 @@
                 <div class="selected-competences-header">
                     <h3>📋 Compétences Sélectionnées</h3>
                     <p>Compétences choisies pour votre formation</p>
+                    <p class="selection-counter" id="selectionCounter">0/4 compétences sélectionnées — idéal : 3 à 4</p>
                     <div class="selected-actions" id="selectedActions" style="display: none;">
                         <button class="remove-all-btn" onclick="removeAllCompetences()">
                             ➖ Retirer Toutes
@@ -1279,8 +1594,12 @@
                 
                 <!-- Evaluation Button - Only shown when competences are present -->
                 <div class="evaluation-actions" id="evaluationActions" style="display: none;">
+                    <div class="evaluation-explanation">
+                        <p>L’assistant va maintenant ordonner et évaluer vos compétences en fonction de leur niveau de difficulté, selon le principe d’alignement de Biggs.</p>
+
+                    </div>
                     <button type="button" id="evaluateBtn" onclick="evaluateCompetences()" class="evaluate-btn">
-                        🔍 Évaluer et Ordonner
+                        🔍 Ordonner et evaluer
                     </button>
                     <div class="evaluation-loading" id="evaluateLoading" style="display: none;">
                         <div class="loading-spinner"></div>
@@ -1293,7 +1612,14 @@
             <div class="evaluation-results-section" id="evaluationResultsSection" style="display: none;">
                 <div class="evaluation-results-header">
                     <h3>🔍 Résultats de l'Évaluation</h3>
-                    <p>Analyse et ordonnancement des compétences selon les critères pédagogiques</p>
+                    <div class="evaluation-intro">
+                        <p>L’ordonnancement proposé (selon l’alignement pédagogique de Biggs) repose sur trois principes :</p>
+                        <ol>
+                            <li><strong>Progressivité</strong> : commencer par les compétences les plus simples ou fondamentales avant d’aborder les plus complexes.</li>
+                            <li><strong>Cohérence</strong> : veiller à ce que chaque compétence prépare la suivante (enchaînement logique).</li>
+                            <li><strong>Alignement</strong> : faire correspondre objectifs, activités et évaluation pour garantir la pertinence pédagogique.</li>
+                        </ol>
+                    </div>
                 </div>
                 
                 <div class="evaluation-results-content" id="evaluationResultsContent">
@@ -1345,38 +1671,37 @@
     </div>
     </div>
 
-    {% include 'includes/success_modal.html' %}
-
-    <!-- Edit Competence Modal -->
-    <div class="edit-modal" id="editModal">
+    
+    <!-- Confirm Replace Workshop Modal -->
+    <div class="confirm-modal" id="confirmReplaceModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeEditModal()">&times;</span>
-            <h2>✏️ Modifier la Compétence</h2>
-            <div id="editModalContent">
-                <!-- Edit form will be inserted here -->
+            <span class="close-btn" onclick="closeConfirmReplaceModal()">&times;</span>
+            <h2>⚠️ Remplacer l'atelier d'idées</h2>
+            <div>
+                <p>L'atelier d'idées contient déjà des compétences.</p>
+                <p>En poursuivant, elles seront toutes supprimées. Les nouvelles suggestions seront générées en tenant compte des <strong>compétences sélectionnées</strong>.</p>
+                <p>Pour conserver des éléments, ajoutez-les d'abord à <strong>Compétences sélectionnées</strong>.</p>
             </div>
             <div class="modal-actions">
-                <button class="save-btn" onclick="saveCompetenceEdit()">
-                    💾 Sauvegarder
-                </button>
-                <button class="cancel-btn" onclick="closeEditModal()">
-                    ❌ Annuler
-                </button>
+                <button class="cancel-btn" onclick="closeConfirmReplaceModal()">Annuler</button>
+                <button class="save-btn" onclick="confirmReplaceWorkshop()">Continuer</button>
             </div>
         </div>
     </div>
+
+    {% include 'includes/modals/edit_competence_modal.html' %}
 
     <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
         // Load previous data from YAML
         let previousData = {% if public_cible_data %}{{ public_cible_data | tojson | safe }}{% else %}null{% endif %};
-        let aiSuggestions = []; // Store AI suggestions
-        let newCompetences = []; // Store new competences created manually
+        let workshopCompetences = []; // Pool (atelier) – includes IA and manual drafts
         let selectedCompetences = []; // Store selected competences
         let competenceCount = {{ competences | length }};
         let competenceIds = new Set(); // Track existing competence IDs
-        let usedSuggestionIndices = new Set(); // Track which AI suggestions are used
         let evaluationCompleted = false; // Track if evaluation has been completed
+        const MAX_SELECTED_COMPETENCES = 4;
+        const IDEAL_MIN_SELECTED_COMPETENCES = 3;
 
         // Override navigation functions for this template
         function getNextRouteFromNavInfo() {
@@ -1423,23 +1748,52 @@
             const evaluationStatusNotice = document.getElementById('evaluationStatusNotice');
             const evaluationResultsSection = document.getElementById('evaluationResultsSection');
             const hasCompetences = selectedCompetences.length > 0;
+            const tooManyCompetences = selectedCompetences.length > MAX_SELECTED_COMPETENCES;
             
             // Show submit button only if competences are selected AND evaluation is completed
-            if (hasCompetences && evaluationCompleted) {
+            if (hasCompetences && evaluationCompleted && !tooManyCompetences) {
                 submitSection.style.display = 'block';
                 evaluationStatusNotice.style.display = 'none';
                 evaluationResultsSection.style.display = 'block';
+            } else if (tooManyCompetences) {
+                submitSection.style.display = 'none';
+                evaluationStatusNotice.style.display = 'block';
+                evaluationResultsSection.style.display = 'none';
+                const noticeText = evaluationStatusNotice.querySelector('.notice-content p');
+                if (noticeText) {
+                    noticeText.innerHTML = "⚠️ <strong>Limite atteinte :</strong> Sélectionnez au maximum 4 compétences pour continuer.";
+                }
             } else if (hasCompetences && !evaluationCompleted) {
                 // Show evaluation notice when competences are selected but not evaluated
                 submitSection.style.display = 'none';
                 evaluationStatusNotice.style.display = 'block';
                 evaluationResultsSection.style.display = 'none';
+                const noticeText = evaluationStatusNotice.querySelector('.notice-content p');
+                if (noticeText) {
+                    noticeText.innerHTML = "⚠️ <strong>Évaluation requise :</strong> Vous devez évaluer vos compétences avant de pouvoir continuer.";
+                }
             } else {
                 // Hide both when no competences are selected
                 submitSection.style.display = 'none';
                 evaluationStatusNotice.style.display = 'none';
                 evaluationResultsSection.style.display = 'none';
             }
+        }
+
+        function updateSelectionCounter() {
+            const counter = document.getElementById('selectionCounter');
+            if (!counter) return;
+            const count = selectedCompetences.length;
+            const idealHint = count < IDEAL_MIN_SELECTED_COMPETENCES ? ` — ajoutez encore ${IDEAL_MIN_SELECTED_COMPETENCES - count} compétence(s) (idéal : 3 à 4)` : ' — idéal : 3 à 4';
+            counter.textContent = `${count}/${MAX_SELECTED_COMPETENCES} compétences sélectionnées${idealHint}`;
+        }
+
+        function canAddMoreSelected() {
+            if (selectedCompetences.length >= MAX_SELECTED_COMPETENCES) {
+                showSuccessMessage('Limite atteinte : maximum 4 compétences dans la sélection.');
+                return false;
+            }
+            return true;
         }
 
         function createCompetenceHTML(competence, competenceNumber) {
@@ -1579,10 +1933,13 @@
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    document.getElementById('successMessage').textContent = result.message;
-                    document.getElementById('filenameDisplay').textContent = result.filename;
-                    document.getElementById('yamlOutput').textContent = JSON.stringify(result.yaml_data, null, 2);
-                    document.getElementById('successModal').style.display = 'block';
+                    // Redirect directly to next step
+                    const next = getNextRouteFromNavInfo();
+                    if (next) {
+                        window.location.href = next;
+                    } else {
+                        showSuccessMessage('Sauvegarde réussie.');
+                    }
                 } else {
                     alert('Erreur lors de la sauvegarde : ' + result.message);
                 }
@@ -1613,55 +1970,63 @@
             // Open modal directly for creating a new competence
             const editModalContent = document.getElementById('editModalContent');
             editModalContent.innerHTML = `
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Titre de la compétence :</label>
-                    <input type="text" id="editTitle" value="Nouvelle Compétence" class="form-control">
+                    <input type=\"text\" id=\"editTitle\" value=\"Nouvelle Compétence\" class=\"form-control\">
                 </div>
-                <div class="form-group">
-                    <label>Idées clés :</label>
-                    <textarea id="editIdeesCles" class="form-control" placeholder="Entrez les idées clés..."></textarea>
-                </div>
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Niveau :</label>
-                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
-                        <option value="Haut : Créer / Évaluer / Analyser">Haut : Créer / Évaluer / Analyser</option>
-                        <option value="Moyen : Appliquer / Comprendre" selected>Moyen : Appliquer / Comprendre</option>
-                        <option value="Bas : Se rappeler">Bas : Se rappeler</option>
+                    <select id=\"editNiveau\" class=\"form-control\" onchange=\"loadBloomVerbs()\">
+                        <optgroup label=\"Cognitif\">
+                            <option value=\"Haut : Créer / Évaluer / Analyser\">Haut : Créer / Évaluer / Analyser</option>
+                            <option value=\"Moyen : Appliquer / Comprendre\" selected>Moyen : Appliquer / Comprendre</option>
+                            <option value=\"Bas : Se rappeler\">Bas : Se rappeler</option>
+                        </optgroup>
+                        <optgroup label=\"Affectif\">
+                            <option value=\"Affectif : Recevoir\">Affectif : Recevoir</option>
+                            <option value=\"Affectif : Répondre\">Affectif : Répondre</option>
+                            <option value=\"Affectif : Valoriser\">Affectif : Valoriser</option>
+                            <option value=\"Affectif : Organiser\">Affectif : Organiser</option>
+                            <option value=\"Affectif : Caractériser\">Affectif : Caractériser</option>
+                        </optgroup>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Verbes :</label>
-                    <input type="text" id="editVerbes" value="" class="form-control" placeholder="Entrez les verbes...">
-                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
-                        <p class="bloom-verbs-title">💡 Suggestions de verbes selon la taxonomie de Bloom révisée (cognitif + affectif) :</p>
-                        <div id="bloomVerbsList" class="bloom-verbs-list">
+                    <div id=\"bloomVerbsContainer\" class=\"bloom-verbs-container\">
+                        <p class=\"bloom-verbs-title\">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
+                        <div id=\"bloomVerbsList\" class=\"bloom-verbs-list\">
                             <!-- Les verbes seront chargés ici -->
                         </div>
+                        <div id=\"selectedVerbsTags\" class=\"bloom-selected-tags\"></div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Formulation :</label>
-                    <textarea id="editFormulation" class="form-control" placeholder="Entrez la formulation..."></textarea>
+                <div class=\"form-group\">
+                    <label>Idées clés :</label>
+                    <textarea id=\"editIdeesCles\" class=\"form-control\" placeholder=\"Entrez les idées clés...\"></textarea>
                 </div>
-                <input type="hidden" id="editCompetenceId" value="new">
+                <div class=\"form-group\">
+                    <label>Formulation :</label>
+                    <textarea id=\"editFormulation\" class=\"form-control\" placeholder=\"Entrez la formulation...\"></textarea>
+                </div>
+                <input type=\"hidden\" id=\"editCompetenceId\" value=\"new\">
             `;
             
             document.getElementById('editModal').style.display = 'block';
             
-            // Load Bloom verbs for the default niveau
+            // Ensure hidden input exists and is empty, then load verbs
+            const hidden = ensureHiddenVerbsInput();
+            hidden.value = '';
             loadBloomVerbs();
         }
 
         function generateAISuggestions() {
-            // Check if there are available suggestions (not used) or new competences in the workshop
-            const availableSuggestions = aiSuggestions.filter((_, index) => !usedSuggestionIndices.has(index));
-            const hasExistingContent = availableSuggestions.length > 0 || newCompetences.length > 0;
-            
+            // Check if there are competences already in the workshop pool (IA or manual)
+            const hasExistingContent = workshopCompetences.length > 0;
             if (hasExistingContent) {
-                const confirmed = confirm('Il y a déjà des compétences dans l\'atelier d\'idées. Voulez-vous les supprimer et générer de nouvelles suggestions IA ?');
-                if (!confirmed) {
-                    return;
-                }
+                // Open styled confirmation modal
+                openConfirmReplaceModal();
+                return; // Generation continues after user confirms
             }
             
             const generateBtn = document.getElementById('aiGenerateBtn');
@@ -1675,23 +2040,47 @@
             content.style.display = 'none';
             error.style.display = 'none';
             
-            // Clear existing suggestions and new competences
-            aiSuggestions = [];
-            newCompetences = [];
-            usedSuggestionIndices.clear();
+            // Clear entire workshop pool
+            workshopCompetences = [];
             
             // Call the API
+            const payload = {
+                selected_competences: selectedCompetences.map(c => ({
+                    titre: c.titre || '',
+                    idees_cles: c.idees_cles || '',
+                    niveau: c.niveau || '',
+                    verbes: c.verbes || '',
+                    formulation: c.formulation || ''
+                })),
+                workshop_competences: workshopCompetences.map(c => ({
+                    titre: c.titre || '',
+                    idees_cles: c.idees_cles || '',
+                    niveau: c.niveau || '',
+                    verbes: c.verbes || (Array.isArray(c.verbes_suggere) ? c.verbes_suggere.join(', ') : (c.verbes_suggere || '')),
+                    formulation: c.formulation || ''
+                }))
+            };
+
             fetch('/generate_ai_suggestions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify(payload)
             })
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    // Set new suggestions (replace all)
-                    aiSuggestions = result.suggestions;
+                    // Set new suggestions into the unified workshop pool
+                    workshopCompetences = (result.suggestions || []).map((sug, idx) => ({
+                        id: `ws_${Date.now()}_${idx}`,
+                        titre: sug.titre || `Compétence ${idx + 1}`,
+                        idees_cles: sug.idees_cles || '',
+                        niveau: sug.niveau || '',
+                        verbes: Array.isArray(sug.verbes_suggere) ? sug.verbes_suggere.join(', ') : (sug.verbes_suggere || ''),
+                        formulation: sug.formulation || '',
+                        source: 'ai'
+                    }));
                     displaySuggestionsPool();
                     content.style.display = 'block';
                 } else {
@@ -1713,96 +2102,46 @@
             const grid = document.getElementById('suggestionsGrid');
             const actionsBottom = document.getElementById('poolActionsBottom');
             grid.innerHTML = '';
-            
+
             let hasContent = false;
-            
-            // Display AI suggestions
-            if (aiSuggestions.length > 0) {
-                aiSuggestions.forEach((suggestion, index) => {
-                    // Skip if this suggestion is already used
-                    if (usedSuggestionIndices.has(index)) {
-                        return;
-                    }
-                    
+
+            // Display unified workshop competences
+            if (workshopCompetences.length > 0) {
+                workshopCompetences.forEach((item) => {
                     hasContent = true;
                     const card = document.createElement('div');
                     card.className = 'suggestion-card';
-                    
-                    const competenceTitle = suggestion.titre || `Compétence ${index + 1}`;
-                    
+
                     card.innerHTML = `
-                        <h4>${competenceTitle}</h4>
+                        <h4>${item.titre || 'Compétence'}</h4>
                         <div class="suggestion-field">
                             <label>Idées clés :</label>
-                            <div class="field-value">${suggestion.idees_cles || 'Non spécifié'}</div>
+                            <div class="field-value">${item.idees_cles || 'Non spécifié'}</div>
                         </div>
                         <div class="suggestion-field">
                             <label>Niveau :</label>
-                            <div class="field-value">${suggestion.niveau || 'Non spécifié'}</div>
+                            <div class="field-value">${item.niveau || 'Non spécifié'}</div>
                         </div>
                         <div class="suggestion-field">
-                            <label>Verbes suggérés :</label>
-                            <div class="field-value">${Array.isArray(suggestion.verbes_suggere) ? suggestion.verbes_suggere.join(', ') : suggestion.verbes_suggere || 'Non spécifié'}</div>
+                            <label>Verbes :</label>
+                            <div class="field-value">${item.verbes || (Array.isArray(item.verbes_suggere) ? item.verbes_suggere.join(', ') : (item.verbes_suggere || 'Non spécifié'))}</div>
                         </div>
                         <div class="suggestion-field">
                             <label>Formulation :</label>
-                            <div class="field-value">${suggestion.formulation || 'Non spécifié'}</div>
+                            <div class="field-value">${item.formulation || 'Non spécifié'}</div>
                         </div>
-                                            <div class="suggestion-actions">
-                        <button class="apply-suggestion-btn" onclick="applySuggestion(${index})">
-                            ➕ Ajouter
-                        </button>
-                        <button class="delete-suggestion-btn" onclick="deleteSuggestion(${index})" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
-                            🗑️ Supprimer
-                        </button>
-                    </div>
+                        <div class="suggestion-actions">
+                            <button class="apply-suggestion-btn" onclick="addWorkshopItemToSelected('${item.id}')">➕ Ajouter</button>
+                            <button class="apply-suggestion-btn" onclick="editWorkshopItem('${item.id}')" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">✏️ Modifier</button>
+                            <button class="delete-suggestion-btn" onclick="deleteWorkshopItem('${item.id}')" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">🗑️ Supprimer</button>
+                        </div>
                     `;
                     grid.appendChild(card);
                 });
             }
-            
-            // Display new competences
-            newCompetences.forEach((competence, index) => {
-                hasContent = true;
-                const card = document.createElement('div');
-                card.className = 'suggestion-card';
-                
-                card.innerHTML = `
-                    <h4>${competence.titre}</h4>
-                    <div class="suggestion-field">
-                        <label>Idées clés :</label>
-                        <div class="field-value">${competence.idees_cles || 'Non spécifié'}</div>
-                    </div>
-                    <div class="suggestion-field">
-                        <label>Niveau :</label>
-                        <div class="field-value">${competence.niveau || 'Non spécifié'}</div>
-                    </div>
-                    <div class="suggestion-field">
-                        <label>Verbes :</label>
-                        <div class="field-value">${competence.verbes || 'Non spécifié'}</div>
-                    </div>
-                    <div class="suggestion-field">
-                        <label>Formulation :</label>
-                        <div class="field-value">${competence.formulation || 'Non spécifié'}</div>
-                    </div>
-                    <div class="suggestion-actions">
-                        <button class="apply-suggestion-btn" onclick="addNewCompetenceToSelected('${competence.id}')">
-                            ➕ Ajouter
-                        </button>
-                        <button class="delete-suggestion-btn" onclick="deleteNewCompetence('${competence.id}')" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
-                            🗑️ Supprimer
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            
+
             // Show/hide bottom actions
-            if (hasContent) {
-                actionsBottom.style.display = 'flex';
-            } else {
-                actionsBottom.style.display = 'none';
-            }
+            actionsBottom.style.display = hasContent ? 'flex' : 'none';
         }
 
         function updateActiveCompetencesDisplay() {
@@ -1914,16 +2253,17 @@
             
             const competence = selectedCompetences[competenceIndex];
             
-            // Return competence to suggestions pool
-            if (competence.type === 'ai') {
-                // Return AI suggestion to pool
-                usedSuggestionIndices.delete(competence.suggestionIndex);
-                showSuccessMessage('Compétence retirée et retournée à l\'atelier d\'idées !');
-            } else {
-                // Add new competence to suggestions pool
-                newCompetences.push(competence);
-                showSuccessMessage('Compétence retirée et retournée à l\'atelier d\'idées !');
-            }
+            // Return competence to unified workshop pool
+            workshopCompetences.push({
+                id: `ws_${Date.now()}`,
+                titre: competence.titre,
+                idees_cles: competence.idees_cles,
+                niveau: competence.niveau,
+                verbes: competence.verbes,
+                formulation: competence.formulation,
+                source: 'selected'
+            });
+            showSuccessMessage('Compétence retirée et retournée à l\'atelier d\'idées !');
             
             // Remove from selected competences
             selectedCompetences.splice(competenceIndex, 1);
@@ -2000,6 +2340,9 @@
 
         function applySuggestion(index) {
             if (!aiSuggestions[index] || usedSuggestionIndices.has(index)) return;
+            if (!canAddMoreSelected()) {
+                return;
+            }
             
             const suggestion = aiSuggestions[index];
             
@@ -2068,6 +2411,83 @@
             const errorMessage = document.getElementById('aiErrorMessage');
             errorMessage.textContent = message;
             error.style.display = 'block';
+        }
+
+        // Styled confirm modal control
+        function openConfirmReplaceModal() {
+            const modal = document.getElementById('confirmReplaceModal');
+            modal.style.display = 'block';
+        }
+        function closeConfirmReplaceModal() {
+            const modal = document.getElementById('confirmReplaceModal');
+            modal.style.display = 'none';
+        }
+        function confirmReplaceWorkshop() {
+            closeConfirmReplaceModal();
+            // Proceed with generation after clearing workshop
+            const generateBtn = document.getElementById('aiGenerateBtn');
+            const loading = document.getElementById('aiLoading');
+            const content = document.getElementById('suggestionsPoolContent');
+            const error = document.getElementById('aiError');
+
+            generateBtn.disabled = true;
+            loading.style.display = 'block';
+            content.style.display = 'none';
+            error.style.display = 'none';
+
+            // Snapshot current workshop items to inform the backend
+            const workshopSnapshot = workshopCompetences.slice();
+            // Then clear the workshop for fresh generation
+            workshopCompetences = [];
+
+            const payload = {
+                selected_competences: selectedCompetences.map(c => ({
+                    titre: c.titre || '',
+                    idees_cles: c.idees_cles || '',
+                    niveau: c.niveau || '',
+                    verbes: c.verbes || '',
+                    formulation: c.formulation || ''
+                })),
+                workshop_competences: workshopSnapshot.map(c => ({
+                    titre: c.titre || '',
+                    idees_cles: c.idees_cles || '',
+                    niveau: c.niveau || '',
+                    verbes: c.verbes || (Array.isArray(c.verbes_suggere) ? c.verbes_suggere.join(', ') : (c.verbes_suggere || '')),
+                    formulation: c.formulation || ''
+                }))
+            };
+
+            fetch('/generate_ai_suggestions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    workshopCompetences = (result.suggestions || []).map((sug, idx) => ({
+                        id: `ws_${Date.now()}_${idx}`,
+                        titre: sug.titre || `Compétence ${idx + 1}`,
+                        idees_cles: sug.idees_cles || '',
+                        niveau: sug.niveau || '',
+                        verbes: Array.isArray(sug.verbes_suggere) ? sug.verbes_suggere.join(', ') : (sug.verbes_suggere || ''),
+                        formulation: sug.formulation || '',
+                        source: 'ai'
+                    }));
+                    displaySuggestionsPool();
+                    content.style.display = 'block';
+                } else {
+                    showAIError(result.error);
+                }
+            })
+            .catch(e => {
+                console.error('Error:', e);
+                showAIError('Erreur lors de la génération des suggestions');
+            })
+            .finally(() => {
+                generateBtn.disabled = false;
+                loading.style.display = 'none';
+            });
         }
 
         function showSuccessMessage(message) {
@@ -2142,42 +2562,53 @@
             
             const editModalContent = document.getElementById('editModalContent');
             editModalContent.innerHTML = `
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Titre de la compétence :</label>
-                    <input type="text" id="editTitle" value="${competence.titre}" class="form-control">
+                    <input type=\"text\" id=\"editTitle\" value=\"${competence.titre}\" class=\"form-control\">
                 </div>
-                <div class="form-group">
-                    <label>Idées clés :</label>
-                    <textarea id="editIdeesCles" class="form-control">${competence.idees_cles}</textarea>
-                </div>
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Niveau :</label>
-                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
-                        <option value="Haut : Créer / Évaluer / Analyser" ${competence.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
-                        <option value="Moyen : Appliquer / Comprendre" ${competence.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
-                        <option value="Bas : Se rappeler" ${competence.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
+                    <select id=\"editNiveau\" class=\"form-control\" onchange=\"loadBloomVerbs()\">
+                        <optgroup label=\"Cognitif\">
+                            <option value=\"Haut : Créer / Évaluer / Analyser\" ${competence.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
+                            <option value=\"Moyen : Appliquer / Comprendre\" ${competence.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
+                            <option value=\"Bas : Se rappeler\" ${competence.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
+                        </optgroup>
+                        <optgroup label=\"Affectif\">
+                            <option value=\"Affectif : Recevoir\" ${competence.niveau === 'Affectif : Recevoir' ? 'selected' : ''}>Affectif : Recevoir</option>
+                            <option value=\"Affectif : Répondre\" ${competence.niveau === 'Affectif : Répondre' ? 'selected' : ''}>Affectif : Répondre</option>
+                            <option value=\"Affectif : Valoriser\" ${competence.niveau === 'Affectif : Valoriser' ? 'selected' : ''}>Affectif : Valoriser</option>
+                            <option value=\"Affectif : Organiser\" ${competence.niveau === 'Affectif : Organiser' ? 'selected' : ''}>Affectif : Organiser</option>
+                            <option value=\"Affectif : Caractériser\" ${competence.niveau === 'Affectif : Caractériser' ? 'selected' : ''}>Affectif : Caractériser</option>
+                        </optgroup>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class=\"form-group\">
                     <label>Verbes :</label>
-                    <input type="text" id="editVerbes" value="${competence.verbes}" class="form-control">
-                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
-                        <p class="bloom-verbs-title">💡 Suggestions de verbes selon la taxonomie de Bloom révisée (cognitif + affectif) :</p>
-                        <div id="bloomVerbsList" class="bloom-verbs-list">
+                    <div id=\"bloomVerbsContainer\" class=\"bloom-verbs-container\">
+                        <p class=\"bloom-verbs-title\">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
+                        <div id=\"bloomVerbsList\" class=\"bloom-verbs-list\">
                             <!-- Les verbes seront chargés ici -->
                         </div>
+                        <div id=\"selectedVerbsTags\" class=\"bloom-selected-tags\"></div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Formulation :</label>
-                    <textarea id="editFormulation" class="form-control">${competence.formulation}</textarea>
+                <div class=\"form-group\">
+                    <label>Idées clés :</label>
+                    <textarea id=\"editIdeesCles\" class=\"form-control\">${competence.idees_cles}</textarea>
                 </div>
-                <input type="hidden" id="editCompetenceId" value="${competenceId}">
+                <div class=\"form-group\">
+                    <label>Formulation :</label>
+                    <textarea id=\"editFormulation\" class=\"form-control\">${competence.formulation}</textarea>
+                </div>
+                <input type=\"hidden\" id=\"editCompetenceId\" value=\"${competenceId}\">
             `;
             
             document.getElementById('editModal').style.display = 'block';
             
-            // Load Bloom verbs for the current niveau
+            // Prepare hidden input with existing verbs and load verbs
+            const hidden = ensureHiddenVerbsInput();
+            hidden.value = competence.verbes || '';
             loadBloomVerbs();
         }
 
@@ -2232,8 +2663,8 @@
                     type: 'new'
                 };
                 
-                // Add to new competences pool
-                newCompetences.push(newCompetence);
+                // Add to unified workshop pool
+                workshopCompetences.push({ ...newCompetence, id: `ws_${Date.now()}` });
                 competenceCount++;
                 competenceIds.add(newCompetenceId);
                 
@@ -2242,6 +2673,22 @@
                 
                 showSuccessMessage('Brouillon créé dans l\'atelier d\'idées !');
             } else {
+                if (competenceId.startsWith('ws:')) {
+                    // Editing a workshop item
+                    const wsId = competenceId.split(':')[1];
+                    const item = workshopCompetences.find(i => i.id === wsId);
+                    if (item) {
+                        item.titre = document.getElementById('editTitle').value;
+                        item.idees_cles = document.getElementById('editIdeesCles').value;
+                        item.niveau = document.getElementById('editNiveau').value;
+                        item.verbes = document.getElementById('editVerbes').value;
+                        item.formulation = document.getElementById('editFormulation').value;
+                        displaySuggestionsPool();
+                        showSuccessMessage('Brouillon mis à jour !');
+                        closeEditModal();
+                        return;
+                    }
+                }
                 // Editing existing competence
                 const competence = selectedCompetences.find(c => c.id === competenceId);
                 if (!competence) return;
@@ -2296,6 +2743,7 @@
 
         function displayBloomVerbs(bloomVerbs) {
             const bloomVerbsList = document.getElementById('bloomVerbsList');
+            const selectedTags = document.getElementById('selectedVerbsTags');
             
             if (!bloomVerbsList) return;
             
@@ -2331,7 +2779,7 @@
                     
                     levelData.verbs.forEach(verb => {
                         html += `
-                            <button type="button" class="bloom-verb-btn" onclick="addBloomVerb('${verb}')">
+                            <button type="button" class="bloom-verb-btn" data-verb="${verb}" onclick="toggleBloomVerb(this)">
                                 ${verb}
                             </button>
                         `;
@@ -2358,7 +2806,7 @@
                     
                     levelData.verbs.forEach(verb => {
                         html += `
-                            <button type="button" class="bloom-verb-btn affective" onclick="addBloomVerb('${verb}')">
+                            <button type="button" class="bloom-verb-btn affective" data-verb="${verb}" onclick="toggleBloomVerb(this)">
                                 ${verb}
                             </button>
                         `;
@@ -2372,21 +2820,64 @@
             }
             
             bloomVerbsList.innerHTML = html;
+
+            // Rehydrate selected tags if hidden input exists
+            const hidden = document.getElementById('editVerbes');
+            if (hidden && hidden.value) {
+                const selected = hidden.value.split(',').map(v => v.trim()).filter(Boolean);
+                const buttons = bloomVerbsList.querySelectorAll('.bloom-verb-btn');
+                buttons.forEach(btn => {
+                    if (selected.includes(btn.getAttribute('data-verb'))) {
+                        btn.classList.add('selected');
+                    }
+                });
+                renderSelectedTags(selected);
+            } else if (selectedTags) {
+                selectedTags.innerHTML = '';
+            }
         }
 
-        function addBloomVerb(verb) {
-            const verbesInput = document.getElementById('editVerbes');
-            const currentVerbes = verbesInput.value.trim();
-            
-            if (currentVerbes) {
-                // Add comma and space if there are already verbs
-                verbesInput.value = currentVerbes + ', ' + verb;
-            } else {
-                verbesInput.value = verb;
+        // Maintain verbs in a hidden input to keep backend unchanged
+        // Create it on demand in the modal
+        function ensureHiddenVerbsInput() {
+            let hidden = document.getElementById('editVerbes');
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.id = 'editVerbes';
+                hidden.value = '';
+                const container = document.getElementById('bloomVerbsContainer');
+                if (container) container.prepend(hidden);
             }
-            
-            // Focus back to the input
-            verbesInput.focus();
+            return hidden;
+        }
+
+        function renderSelectedTags(list) {
+            const box = document.getElementById('selectedVerbsTags');
+            if (!box) return;
+            box.innerHTML = '';
+            list.forEach(v => {
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.textContent = v;
+                box.appendChild(tag);
+            });
+        }
+
+        function toggleBloomVerb(button) {
+            const verb = button.getAttribute('data-verb');
+            const hidden = ensureHiddenVerbsInput();
+            let list = hidden.value ? hidden.value.split(',').map(v => v.trim()).filter(Boolean) : [];
+            const idx = list.indexOf(verb);
+            if (idx >= 0) {
+                list.splice(idx, 1);
+                button.classList.remove('selected');
+            } else {
+                list.push(verb);
+                button.classList.add('selected');
+            }
+            hidden.value = list.join(', ');
+            renderSelectedTags(list);
         }
 
         // No initialization needed - all competences will have remove buttons
@@ -2396,6 +2887,7 @@
             const selectedGrid = document.getElementById('selectedCompetencesGrid');
             const selectedActions = document.getElementById('selectedActions');
             const evaluationActions = document.getElementById('evaluationActions');
+            const evaluateBtn = document.getElementById('evaluateBtn');
             
             // Always show the section
             selectedSection.style.display = 'block';
@@ -2404,10 +2896,19 @@
             // Show/hide the remove all button and evaluation button based on competences count
             if (selectedCompetences.length > 0) {
                 selectedActions.style.display = 'flex';
-                evaluationActions.style.display = 'block';
+                // Show evaluation block only when 3 to 4 competences are selected
+                if (selectedCompetences.length >= IDEAL_MIN_SELECTED_COMPETENCES && selectedCompetences.length <= MAX_SELECTED_COMPETENCES) {
+                    evaluationActions.style.display = 'block';
+                } else {
+                    evaluationActions.style.display = 'none';
+                }
             } else {
                 selectedActions.style.display = 'none';
                 evaluationActions.style.display = 'none';
+            }
+            // Disable evaluate button if none selected or too many
+            if (evaluateBtn) {
+                evaluateBtn.disabled = (selectedCompetences.length < IDEAL_MIN_SELECTED_COMPETENCES) || (selectedCompetences.length > MAX_SELECTED_COMPETENCES);
             }
             
             if (selectedCompetences.length === 0) {
@@ -2450,9 +2951,6 @@
                         <div class="field-value">${competence.formulation || 'Non spécifié'}</div>
                     </div>
                     <div class="suggestion-actions">
-                        <button class="apply-suggestion-btn" onclick="editCompetence('${competence.id}')" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
-                            ✏️ Modifier
-                        </button>
                         <button class="apply-suggestion-btn" onclick="removeCompetence('${competence.id}')" style="background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);">
                             ➖ Retirer
                         </button>
@@ -2461,7 +2959,8 @@
                 selectedGrid.appendChild(card);
             });
             
-            // Update submit button visibility
+            // Update the selection counter and submit button visibility
+            updateSelectionCounter();
             updateSubmitButtonVisibility();
         }
 
@@ -2523,14 +3022,80 @@
             });
         }
 
-        function deleteSuggestion(index) {
-            // Remove the AI suggestion permanently
-            aiSuggestions.splice(index, 1);
-            
-            // Update displays
+        function deleteSuggestion(index) { /* deprecated by unified pool */ }
+        function deleteNewCompetence(id) { /* deprecated by unified pool */ }
+
+        function deleteWorkshopItem(itemId) {
+            const idx = workshopCompetences.findIndex(i => i.id === itemId);
+            if (idx === -1) return;
+            workshopCompetences.splice(idx, 1);
             displaySuggestionsPool();
-            
-            showSuccessMessage('Suggestion IA supprimée définitivement !');
+            showSuccessMessage('Brouillon supprimé définitivement !');
+        }
+
+        function addWorkshopItemToSelected(itemId) {
+            const idx = workshopCompetences.findIndex(i => i.id === itemId);
+            if (idx === -1) return;
+            if (!canAddMoreSelected()) {
+                return;
+            }
+            const item = workshopCompetences[idx];
+            selectedCompetences.push({ ...item, id: `competence_${selectedCompetences.length + 1}` });
+            // Remove from workshop after adding
+            workshopCompetences.splice(idx, 1);
+            displaySelectedCompetences();
+            displaySuggestionsPool();
+            showSuccessMessage('Compétence ajoutée à votre formation !');
+        }
+
+        function editWorkshopItem(itemId) {
+            const item = workshopCompetences.find(i => i.id === itemId);
+            if (!item) return;
+            const editModalContent = document.getElementById('editModalContent');
+            editModalContent.innerHTML = `
+                <div class="form-group">
+                    <label>Titre de la compétence :</label>
+                    <input type="text" id="editTitle" value="${item.titre || ''}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Idées clés :</label>
+                    <textarea id="editIdeesCles" class="form-control">${item.idees_cles || ''}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Niveau :</label>
+                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
+                        <optgroup label="Cognitif">
+                            <option value="Haut : Créer / Évaluer / Analyser" ${item.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
+                            <option value="Moyen : Appliquer / Comprendre" ${item.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
+                            <option value="Bas : Se rappeler" ${item.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
+                        </optgroup>
+                        <optgroup label="Affectif">
+                            <option value="Affectif : Recevoir" ${item.niveau === 'Affectif : Recevoir' ? 'selected' : ''}>Affectif : Recevoir</option>
+                            <option value="Affectif : Répondre" ${item.niveau === 'Affectif : Répondre' ? 'selected' : ''}>Affectif : Répondre</option>
+                            <option value="Affectif : Valoriser" ${item.niveau === 'Affectif : Valoriser' ? 'selected' : ''}>Affectif : Valoriser</option>
+                            <option value="Affectif : Organiser" ${item.niveau === 'Affectif : Organiser' ? 'selected' : ''}>Affectif : Organiser</option>
+                            <option value="Affectif : Caractériser" ${item.niveau === 'Affectif : Caractériser' ? 'selected' : ''}>Affectif : Caractériser</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Verbes :</label>
+                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
+                        <p class="bloom-verbs-title">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
+                        <div id="bloomVerbsList" class="bloom-verbs-list"></div>
+                        <div id="selectedVerbsTags" class="bloom-selected-tags"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Formulation :</label>
+                    <textarea id="editFormulation" class="form-control">${item.formulation || ''}</textarea>
+                </div>
+                <input type="hidden" id="editCompetenceId" value="ws:${item.id}">
+            `;
+            document.getElementById('editModal').style.display = 'block';
+            const hidden = ensureHiddenVerbsInput();
+            hidden.value = item.verbes || '';
+            loadBloomVerbs();
         }
 
         function deleteNewCompetence(competenceId) {
@@ -2580,6 +3145,9 @@
             // Find the competence in new competences
             const competenceIndex = newCompetences.findIndex(c => c.id === competenceId);
             if (competenceIndex === -1) return;
+            if (!canAddMoreSelected()) {
+                return;
+            }
             
             const competence = newCompetences[competenceIndex];
             

@@ -105,7 +105,8 @@ function showSuccessModal(data) {
         // Update modal content
         const filenameDisplay = document.getElementById('filenameDisplay');
         const resultMessage = document.getElementById('resultMessage');
-        const yamlOutput = document.getElementById('yamlOutput');
+        const recapContainer = document.getElementById('recapContainer');
+        const recapBlock = document.getElementById('recapBlock');
         
         if (filenameDisplay && data.filename) {
             filenameDisplay.textContent = data.filename;
@@ -115,8 +116,13 @@ function showSuccessModal(data) {
             resultMessage.textContent = data.message;
         }
         
-        if (yamlOutput && data.yaml_data) {
-            yamlOutput.textContent = JSON.stringify(data.yaml_data, null, 2);
+        // Build user-friendly recap
+        const recapEnabled = window.RECAP_ENABLED === true;
+        if (recapBlock) {
+            recapBlock.style.display = recapEnabled ? 'block' : 'none';
+        }
+        if (recapEnabled && recapContainer) {
+            recapContainer.innerHTML = buildUserFriendlyRecap(data.yaml_data || {});
         }
         
         modal.style.display = 'block';
@@ -209,4 +215,55 @@ function closeModal() {
     if (modal) {
         modal.style.display = 'none';
     }
+}
+
+// Build a user-friendly recap HTML from step data
+function buildUserFriendlyRecap(stepData) {
+    try {
+        // Detect which step structure is present
+        if (stepData && stepData.public_cible) {
+            const pc = stepData.public_cible;
+            const ctx = stepData.contexte_formation || {};
+            return `
+                <div style="background: var(--light-gray); padding: var(--spacing-md); border-radius: var(--radius-small);">
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🎓 Titre</strong>: ${escapeHtml(ctx.titre || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🎯 Objectif général</strong>: ${escapeHtml(ctx.objectif_general || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>👥 Public visé</strong>: ${(pc.type_de_public || []).map(escapeHtml).join(', ')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>📚 Type de formation</strong>: ${escapeHtml(pc.type_de_formation || '')}${pc.type_de_formation_precisions ? ' — ' + escapeHtml(pc.type_de_formation_precisions) : ''}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🏫 Niveaux scolaires</strong>: ${(pc.niveaux_scolaires || []).map(escapeHtml).join(', ')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>📈 Niveau d’expertise</strong>: ${(pc.niveau_expertise || []).map(escapeHtml).join(', ')}</div>
+                    <div><strong>🧩 Besoins spécifiques</strong>: ${(pc.besoins_specifiques || []).map(escapeHtml).join(', ') || 'Aucun'}</div>
+                </div>
+            `;
+        }
+        if (stepData && stepData.contraintes_formation) {
+            const c = stepData.contraintes_formation;
+            return `
+                <div style="background: var(--light-gray); padding: var(--spacing-md); border-radius: var(--radius-small);">
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🧭 Type de parcours</strong>: ${escapeHtml(c.type_parcours || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>⏱️ Temps total</strong>: ${escapeHtml(c.temps_total || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🧑‍🏫 Animation</strong>: ${escapeHtml(c.animation || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🗓️ Calendrier</strong>: ${escapeHtml(c.calendrier || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🕒 Horaires</strong>: ${escapeHtml(c.horaires || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>👥 Nombre de participants</strong>: ${escapeHtml(c.nombre_participants || '')}</div>
+                    <div style="margin-bottom: var(--spacing-sm);"><strong>🏛️ Exigences institutionnelles</strong>: ${escapeHtml(c.exigences_institutionnelles || '')}</div>
+                    <div><strong>🛠️ Restrictions techniques</strong>: ${escapeHtml(c.restrictions_techniques || '')}</div>
+                </div>
+            `;
+        }
+        // Fallback: show minimal JSON pretty but not as YAML
+        return `<pre style="white-space: pre-wrap;">${escapeHtml(JSON.stringify(stepData, null, 2))}</pre>`;
+    } catch (e) {
+        return '';
+    }
+}
+
+function escapeHtml(unsafe) {
+    if (unsafe === undefined || unsafe === null) return '';
+    return String(unsafe)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }

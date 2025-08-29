@@ -3,28 +3,34 @@
 QUESTIONS_PUBLIC_CIBLE = [
     {
         "id": 1,
-        "type": "text",
-        "question": "Quel est le titre (ou projet de titre) de ta formation ?",
-        "examples": [
-            "Développer les compétences orales en classe hétérogène",
-            "Améliorer la gestion de classe avec les outils numériques",
-            "Développer des compétences orales en classe hétérogène"
+        "type": "group",
+        "question": "Renseignez le titre et l’objectif général de votre formation",
+        "instructions": [
+            "Le titre : court, percutant, facile à lire dans un catalogue.",
+            "L’objectif général : intention globale de la formation, impact attendu sur les participants.",
+            "Les compétences : elles seront travaillées à l’étape suivante (ensemble de savoirs, savoir-faire et savoir-être)."
         ],
-        "field_name": "titre_formation"
+        "examples_block": {
+            "titre": "Intégrer le numérique pour dynamiser sa classe",
+            "objectif_general": "Accompagner les enseignants à utiliser des outils numériques pour enrichir leurs pratiques et favoriser la collaboration entre pairs."
+        },
+        "fields": [
+            {
+                "type": "text",
+                "label": "❓ Quel est le titre envisagé de votre formation ?",
+                "placeholder": "Saisissez un titre court et percutant",
+                "field_name": "titre_formation"
+            },
+            {
+                "type": "textarea",
+                "label": "❓ Quel est l’objectif général envisagé ?",
+                "placeholder": "Décrivez l’intention globale et l’impact attendu sur les participants",
+                "field_name": "objectif_general"
+            }
+        ]
     },
     {
         "id": 2,
-        "type": "textarea",
-        "question": "Quel est l'objectif général de cette formation ?",
-        "examples": [
-            "Accompagner les enseignants à concevoir et animer des activités permettant aux élèves de s'exprimer oralement avec confiance et clarté.",
-            "Accompagner les enseignants dans l'utilisation des outils numériques pour améliorer la gestion de la classe et favoriser l'engagement des élèves.",
-            "Former les enseignants à l'animation de discussions et de débats en classe en utilisant des ressources multimédia adaptées."
-        ],
-        "field_name": "objectif_general"
-    },
-    {
-        "id": 3,
         "type": "checkbox",
         "question": "Quel est le type de public visé ? (plusieurs réponses possibles)",
         "options": [
@@ -34,14 +40,53 @@ QUESTIONS_PUBLIC_CIBLE = [
             "Formateurs INSPE / chercheurs",
             "Inspecteurs",
             "Équipes pluri-catégorielles",
+            "Chefs d’établissement",
+            "Conseillers principaux d’éducation (CPE)",
+            "Assistants d’éducation / AES / AED",
+            "Personnels administratifs et de direction (gestionnaires, secrétaires de circonscription, DDFPT en lycée professionnel)",
+            "Partenaires institutionnels ponctuels (collectivités, associations agréées, intervenants extérieurs)",
             "Autre (à préciser)"
         ],
-        "field_name": "type_de_public"
+        "field_name": "type_de_public",
+        "text_input_options": ["Autre (à préciser)"],
+        "text_placeholder": "Précisez le type de public"
+    },
+    {
+        "id": 3,
+        "type": "radio",
+        "question": "Type de formation",
+        "options": [
+            "Formation disciplinaire",
+            "Formation transdisciplinaire"
+        ],
+        "field_name": "type_de_formation",
+        "text_input_options": [
+            "Formation disciplinaire",
+            "Formation transdisciplinaire"
+        ],
+        "text_placeholder": "Précisez la discipline ou la thématique",
+        "text_placeholder_map": {
+            "Formation disciplinaire": "Discipline",
+            "Formation transdisciplinaire": "Thématique (ex. numérique éducatif, climat scolaire, inclusion, pédagogie différenciée, développement durable, coopération entre pairs, etc.)"
+        }
     },
     {
         "id": 4,
-        "type": "radio",
-        "question": "Quel est le niveau d'expertise global du public visé ?",
+        "type": "checkbox",
+        "question": "Niveau(x) scolaire(s) concerné(s) (plusieurs réponses possibles)",
+        "options": [
+            "Primaire",
+            "Collège",
+            "Lycée général et technologique",
+            "Lycée professionnel",
+            "Enseignement supérieur"
+        ],
+        "field_name": "niveaux_scolaires"
+    },
+    {
+        "id": 5,
+        "type": "checkbox",
+        "question": "Quel est le niveau d’expertise global des participants à la formation ? (plusieurs choix possibles)",
         "options": [
             "Débutant",
             "Intermédiaire",
@@ -52,26 +97,19 @@ QUESTIONS_PUBLIC_CIBLE = [
         "field_name": "niveau_expertise"
     },
     {
-        "id": 5,
-        "type": "radio",
-        "question": "Le groupe est-il homogène ou hétérogène ?",
-        "options": [
-            "Groupe homogène (mêmes profils, mêmes besoins)",
-            "Groupe hétérogène",
-            "Je ne sais pas encore"
-        ],
-        "field_name": "profil_groupe"
-    },
-    {
         "id": 6,
-        "type": "checkbox",
-        "question": "Des besoins spécifiques sont-ils connus pour ce public ?",
+        "type": "radio",
+        "question": "Des besoins spécifiques sont-ils connus pour ce public adulte ? (il s’agit des participants à la formation, et non de leurs élèves)",
         "options": [
             "Aucun besoin identifié",
             "Préférence pour certaines modalités (oral, écrit, visuel…)",
-            "Besoins liés à l'accessibilité (supports adaptés, ajustements pour mieux comprendre et participer)",
-            "Besoins spécifiques d'accompagnement dans certaines compétences ou outils (par exemple, pour renforcer la confiance dans l'utilisation du numérique, etc.)"
+            "Besoin d’accompagnement ou de soutien (prise en main d’outils, renforcement de la confiance, etc.)",
+            "Autre (à préciser)"
         ],
-        "field_name": "besoins_specifiques"
+        "field_name": "besoins_specifiques",
+        "text_input_options": [
+            "Autre (à préciser)"
+        ],
+        "text_placeholder": "Précisez l’autre besoin"
     }
 ] 

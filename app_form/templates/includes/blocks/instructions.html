@@ -1,0 +1,10 @@
+<div class="instructions-section">
+    <div class="instructions-header">{{ instructions_header or '📝 Repère pratique' }}</div>
+    <ul class="instructions-list">
+        {% for line in instructions %}
+        <li class="instructions-item">{{ line }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+

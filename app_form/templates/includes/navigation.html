@@ -10,33 +10,64 @@
     {% endfor %}
 </div>
 
-<!-- Navigation Buttons -->
-<div class="navigation-buttons">
-    {% if not nav_info.is_first %}
-        <button class="btn-prev" onclick="goToPreviousStep()">
-            ← {{ get_page_name_by_step(nav_info.step - 1) }}
-        </button>
-    {% endif %}
-    
-    {% if not nav_info.is_last %}
-        <button class="btn-next" onclick="goToNextStep()">
-            {{ get_page_name_by_step(nav_info.step + 1) }} →
-        </button>
-    {% endif %}
-</div>
+<style>
+/* Compact navigation styles (scoped to this include) */
+.step-indicator {
+    margin: 8px 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.step-indicator .step {
+    font-size: 0.95rem;
+    line-height: 1.25;
+    padding: 6px 12px;
+}
+.navigation-buttons {
+    margin-top: 8px;
+}
+.navigation-buttons .btn-prev,
+.navigation-buttons .btn-next {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+}
+</style>
+
+<!-- Navigation Buttons (shared include) -->
+{% include 'includes/navigation_buttons.html' %}
 
 <script>
 function goToPreviousStep() {
-    {% if nav_info.previous_route %}
-        window.location.href = '{{ nav_info.previous_route }}';
-    {% endif %}
+    try {
+        if (typeof getPreviousRouteFromNavInfo === 'function') {
+            const prev = getPreviousRouteFromNavInfo();
+            if (prev) {
+                window.location.href = prev;
+                return;
+            }
+        }
+    } catch (e) {}
+    const fallbackPrev = '{{ nav_info.previous_route or "" }}';
+    if (fallbackPrev) {
+        window.location.href = fallbackPrev;
+    }
 }
 
 function goToNextStep() {
-    console.log('goToNextStep called, next_route:', '{{ nav_info.next_route if nav_info else "None" }}');
-    {% if nav_info.next_route %}
-        window.location.href = '{{ nav_info.next_route }}';
-    {% endif %}
+    try {
+        if (typeof getNextRouteFromNavInfo === 'function') {
+            const next = getNextRouteFromNavInfo();
+            if (next) {
+                window.location.href = next;
+                return;
+            }
+        }
+    } catch (e) {}
+    const fallbackNext = '{{ nav_info.next_route or "" }}';
+    if (fallbackNext) {
+        window.location.href = fallbackNext;
+    }
 }
 </script>
 {% endif %}

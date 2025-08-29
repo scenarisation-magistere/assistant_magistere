@@ -12,35 +12,38 @@
 
     ## COMPÉTENCES À TRAITER
     - code: C1
-  formulation: À l'issue de la formation, les participants seront capables d'identifier
-    et de nommer les ingrédients nécessaires à la préparation des crêpes et des galettes.
-  idees_cles: ingrédients, crêpes, préparation
-  justification: C1 est la compétence la plus simple, car elle se concentre sur l'identification
-    des ingrédients, ce qui est fondamental avant de passer à des techniques de cuisson.
-  niveau: Bas
-  pertinence: élevée
-  titre: Identifier les ingrédients nécessaires pour faire des crêpes
-  verbes: identifier, nommer, énumérer
-- code: C3
-  formulation: À l'issue de la formation, les participants seront capables d'utiliser
-    les techniques de cuisson adaptées pour réaliser des crêpes et des galettes.
-  idees_cles: techniques, cuisson, crêpes
-  justification: C3 est de niveau moyen et suit logiquement C1, car une fois les ingrédients
-    identifiés, les participants doivent apprendre à les cuisiner.
+  formulation: Concevoir des parcours de formation personnalisés en utilisant les
+    outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants.
+  idees_cles: parcours, personnalisation, apprenants
+  justification: C1 est en première position car il s'agit d'une compétence de niveau
+    moyen qui permet aux formateurs de commencer à appliquer des concepts d'IA dans
+    la conception de formations, ce qui est essentiel pour établir une base.
   niveau: Moyen
   pertinence: élevée
-  titre: Utiliser les techniques de cuisson adaptées pour les crêpes
-  verbes: utiliser, appliquer, manipuler
+  titre: Concevoir des parcours de formation personnalisés
+  verbes: concevoir, élaborer, adapter
 - code: C2
-  formulation: À l'issue de la formation, les participants seront capables de créer
-    des recettes variées de crêpes et de galettes en intégrant différentes garnitures.
-  idees_cles: création, recettes, variété
-  justification: C2 est la compétence la plus complexe, car elle implique la création
-    et l'innovation, nécessitant une maîtrise des compétences précédentes.
+  formulation: Analyser les données d'apprentissage des apprenants générées par les
+    outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
+  idees_cles: données, apprentissage, analyse
+  justification: C2 suit C1 car elle nécessite une compréhension des parcours personnalisés
+    pour pouvoir analyser les données d'apprentissage, ce qui représente une progression
+    logique dans l'application des compétences.
+  niveau: Moyen
+  pertinence: élevée
+  titre: Analyser les données d'apprentissage des apprenants
+  verbes: analyser, interpréter, organiser
+- code: C3
+  formulation: Collaborer avec des experts en intelligence artificielle pour développer
+    et améliorer les formations en intégrant des solutions innovantes et pertinentes.
+  idees_cles: collaboration, experts, amélioration
+  justification: C3 est en dernière position car elle représente un niveau élevé de
+    compétence, nécessitant une expertise préalable dans la conception de parcours
+    et l'analyse des données avant de pouvoir collaborer efficacement avec des experts.
   niveau: Haut
   pertinence: élevée
-  titre: Créer des recettes variées de crêpes et galettes
-  verbes: créer, innover, composer
+  titre: Collaborer avec des experts en IA pour améliorer les formations
+  verbes: collaborer, proposer, développer
 
 
     ## RESSOURCES RAG DISPONIBLES

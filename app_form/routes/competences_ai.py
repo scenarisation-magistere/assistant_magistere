@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import json
 from openai import OpenAI
+from questions.competences import COMPETENCES_QUESTIONS
 import yaml
 from datetime import datetime
 
@@ -38,46 +39,117 @@ def generate_competency_suggestions(formation_data):
     niveau = public_cible_data.get('niveau_expertise', '')
     profil = public_cible_data.get('profil_groupe', '')
     besoins = public_cible_data.get('besoins_specifiques', '')
+    type_formation = public_cible_data.get('type_de_formation', '')
+    type_formation_precisions = public_cible_data.get('type_de_formation_precisions', '')
+    niveaux_scolaires = public_cible_data.get('niveaux_scolaires', '')
+
+    # Extract constraints (step 2)
+    nb_participants = contraintes_data.get('nombre_participants', '')
+    animation = contraintes_data.get('animation', '')
+    exigences_institutionnelles = contraintes_data.get('exigences_institutionnelles', '')
+    restrictions_techniques = contraintes_data.get('restrictions_techniques', '')
+
+    def stringify(value):
+        if isinstance(value, (list, tuple)):
+            return ', '.join([str(v) for v in value if str(v)]) or 'Non spécifié'
+        return str(value) if value not in (None, '') else 'Non spécifié'
+
+    type_public_str = stringify(type_public)
+    niveau_str = stringify(niveau)
+    niveaux_scolaires_str = stringify(niveaux_scolaires)
+    besoins_str = stringify(besoins)
+    nb_participants_str = stringify(nb_participants)
+    animation_str = stringify(animation)
+    exigences_str = stringify(exigences_institutionnelles)
+    restrictions_str = stringify(restrictions_techniques)
+    type_formation_str = stringify(type_formation)
+    type_formation_precisions_str = ''
+    if isinstance(type_formation_precisions, str) and type_formation_precisions.strip():
+        type_formation_precisions_str = f" — {type_formation_precisions.strip()}"
+
+    # Build Bloom taxonomy excerpt from existing dictionary (cognitif + affectif)
+    bloom_taxonomy = COMPETENCES_QUESTIONS.get('bloom_taxonomy', {})
+    taxonomy_lines = []
+    for level_key, level_data in bloom_taxonomy.items():
+        level_name = level_data.get('name', level_key)
+        verbs_sample = ', '.join(level_data.get('verbs', [])[:18])
+        taxonomy_lines.append(f"- {level_name}: {verbs_sample}")
+    taxonomy_text = "\n".join(taxonomy_lines)
+
+    # Include already selected and workshop competences (if passed by client)
+    selected_competences = formation_data.get('selected_competences', []) or []
+    workshop_competences = formation_data.get('workshop_competences', []) or []
+
+    def format_comp_list(lst, title):
+        if not lst:
+            return f"**{title} :**\n- Aucune\n"
+        lines = [f"**{title} :**"]
+        for i, c in enumerate(lst, 1):
+            lines.append(f"- {i}. {c.get('titre','(sans titre)')} — niveau: {c.get('niveau','?')} — verbes: {c.get('verbes','')} — formulation: {c.get('formulation','')}")
+        return "\n".join(lines) + "\n"
+
+    selected_block = format_comp_list(selected_competences, 'Compétences déjà sélectionnées (à NE PAS dupliquer)')
+    workshop_block = format_comp_list(workshop_competences, 'Brouillons présents dans l\'atelier (à éviter de dupliquer)')
 
     # Prompt for GPT
     prompt = f"""
-En tant qu'expert en formation et en pédagogie, générez 6 compétences visées pour une formation Magistère basée sur les informations suivantes :
+        En tant qu'expert en formation et en pédagogie, générez 4 nouvelles compétences visées pour une formation Magistère, à partir des informations ci-dessous. 
+        Le processus est itératif : vous devez tenir compte à la fois des compétences déjà sélectionnées (validées) et des compétences rejetées (à ne pas reproduire). 
+        Les nouvelles compétences doivent être cohérentes avec les compétences sélectionnées, mais différentes : proposez des compétences complémentaires, connexes ou qui enrichissent l’ensemble, sans duplication.
 
-**Contexte de la formation :**
-- Titre : {titre}
-- Objectif général : {objectif}
+        **Contexte de la formation :**
+        - Titre : {titre}
+        - Objectif général : {objectif}
 
-**Public cible :**
-- Type de public : {type_public}
-- Niveau d'expertise : {niveau}
-- Profil du groupe : {profil}
-- Besoins spécifiques : {besoins}
+        **Public cible (étape 1) :**
+        - Type de public : {type_public_str}
+        - Type de formation : {type_formation_str}{type_formation_precisions_str}
+        - Niveaux scolaires : {niveaux_scolaires_str}
+        - Niveau d'expertise : {niveau_str}
+        - Profil du groupe : {stringify(profil)}
+        - Besoins spécifiques : {besoins_str}
 
-**Instructions :**
-1. Générez exactement 6 compétences visées
-2. Chaque compétence doit suivre la taxonomie de Bloom révisée
-3. Utilisez des verbes d'action observables et mesurables
-4. Adaptez le niveau aux caractéristiques du public cible
-5. Assurez-vous que les compétences sont cohérentes avec l'objectif de formation
-6. Les compétences doivent être cohérentes avec le profil du groupe cible
-7. Les competences sont retournées classées par niveau de compétence (de bas à haut)
+        **Contraintes (étape 2) :**
+        - Nombre de participants : {nb_participants_str}
+        - Modalités d'animation : {animation_str}
+        - Exigences institutionnelles : {exigences_str}
+        - Restrictions techniques : {restrictions_str}
 
-**Format de réponse attendu (JSON) :**
-{{
-    "competences": [
+        **Instructions :**
+        1. Générez exactement 4 nouvelles compétences visées.
+        2. Chaque compétence doit suivre la taxonomie de Bloom révisée.
+        3. Utilisez des verbes d'action observables et mesurables.
+        4. Adaptez le niveau aux caractéristiques du public cible.
+        5. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
+        6. Classez les compétences du niveau le plus bas au plus élevé.
+        7. Ne proposez pas de compétences identiques ou quasi-identiques à celles déjà générées.
+        8. Inspirez-vous des compétences sélectionnées pour générer des compétences complémentaires ou connexes (pas de duplication).
+        9. Évitez strictement toute compétence figurant dans la liste des compétences rejetées.
+
+        **Taxonomie de Bloom révisée (extraits issus du référentiel interne) :**
+        {taxonomy_text}
+
+        **Compétences rejetées par l'utilisateur (à ne pas générer) :**
+        {workshop_block}
+
+        **Compétences sélectionnées par l'utilisateur (à compléter par des compétences connexes, sans duplication) :**
+        {selected_block}
+
+        **Format de réponse attendu (JSON valide uniquement, sans texte supplémentaire) :**
         {{
-            "titre": "Titre court et descriptif de la compétence",
-            "idees_cles": "mots-clés et concepts principaux",
-            "niveau": "Haut/Moyen/Bas",
-            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
-            "formulation": "Formulation complète de la compétence"
-        }},
-        ...
-    ]
-}}
+            "competences": [
+                {{
+                    "titre": "Titre court et descriptif de la compétence",
+                    "idees_cles": "mots-clés et concepts principaux",
+                    "niveau": "Haut/Moyen/Bas",
+                    "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+                    "formulation": "Formulation complète de la compétence"
+                }},
+                ...
+            ]
+        }}
+    """
 
-Répondez uniquement en JSON valide, sans texte supplémentaire.
-"""
     
     # Save prompt for debugging
     debug_prefix = "competence_generation"

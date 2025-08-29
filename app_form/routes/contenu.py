@@ -281,38 +281,30 @@ def parse_ai_contenus_response(ai_response):
     Returns the complete table data as expected by the frontend
     """
     try:
-        # Extract YAML part from the response
-        if '```yaml' in ai_response:
-            yaml_start = ai_response.find('```yaml') + 7
-            yaml_end = ai_response.find('```', yaml_start)
-            yaml_content = ai_response[yaml_start:yaml_end].strip()
-            
-            # Parse YAML
-            contenus_data = yaml.safe_load(yaml_content)
-            
-            # Handle both list format (from Gemini) and dict format (from OpenAI)
-            sections = []
-            if isinstance(contenus_data, list):
-                # Direct list of sections (Gemini format)
-                sections = contenus_data
-            elif isinstance(contenus_data, dict) and 'contenus_par_section' in contenus_data:
-                # Nested format (OpenAI format)
-                sections = contenus_data['contenus_par_section']
-            
-            # Convert to the format expected by the frontend
-            # The frontend expects a list of section objects with specific field names
-            formatted_sections = []
-            
-            for section in sections:
-                # Helper function to convert null to empty string
+        def _normalize_value(value):
+            if value is None:
+                return ''
+            try:
+                # Convert lists/dicts to compact strings to avoid [object Object]
+                if isinstance(value, (list, dict)):
+                    return yaml.safe_dump(value, allow_unicode=True, default_flow_style=True).strip()
+                return str(value)
+            except Exception:
+                return ''
+
+        def _to_formatted_sections(raw_sections):
+            formatted_sections_local = []
+
+            for section in raw_sections:
+                section = section or {}
+
                 def safe_get(data, *keys):
                     for key in keys:
                         if key in data:
-                            value = data[key]
-                            return '' if value is None else str(value)
+                            return _normalize_value(data[key])
                     return ''
-                
-                formatted_section = {
+
+                formatted_section_local = {
                     'section': safe_get(section, 'section', 'Section'),
                     'type_de_section': safe_get(section, 'type_de_section', 'Type de section'),
                     'competences_visees': safe_get(section, 'competences_visees', 'Compétences visées'),
@@ -324,10 +316,153 @@ def parse_ai_contenus_response(ai_response):
                     'intention_activite_2': safe_get(section, 'intention_activite_2', 'Intention activité 2'),
                     'justification_activite_s': safe_get(section, 'justification_activite_s', 'justification_activites', 'Justification activité(s)')
                 }
-                formatted_sections.append(formatted_section)
-            
-            return formatted_sections
-            
+
+                # Ensure all keys exist and are strings
+                for k in list(formatted_section_local.keys()):
+                    formatted_section_local[k] = _normalize_value(formatted_section_local.get(k))
+
+                formatted_sections_local.append(formatted_section_local)
+
+            return formatted_sections_local
+
+        # 1) Try YAML fenced blocks first (```yaml or ```yml or last code block looking like YAML)
+        def extract_fenced_blocks(text):
+            blocks = []
+            fence = '```'
+            idx = 0
+            while True:
+                start = text.find(fence, idx)
+                if start == -1:
+                    break
+                lang_start = start + len(fence)
+                newline = text.find('\n', lang_start)
+                if newline == -1:
+                    break
+                lang = text[lang_start:newline].strip()
+                end = text.find(fence, newline + 1)
+                if end == -1:
+                    break
+                content = text[newline + 1:end]
+                blocks.append((lang.lower(), content))
+                idx = end + len(fence)
+            return blocks
+
+        fenced_blocks = extract_fenced_blocks(ai_response)
+
+        # Try explicit YAML blocks first
+        for lang, content in fenced_blocks:
+            if lang in ('yaml', 'yml'):
+                try:
+                    contenus_data = yaml.safe_load(content)
+                    if contenus_data is not None:
+                        if isinstance(contenus_data, list):
+                            return _to_formatted_sections(contenus_data)
+                        if isinstance(contenus_data, dict):
+                            if 'contenus_par_section' in contenus_data and isinstance(contenus_data['contenus_par_section'], list):
+                                return _to_formatted_sections(contenus_data['contenus_par_section'])
+                except Exception:
+                    pass
+
+        # If not found, attempt to parse any fenced block that looks like YAML (starts with '-' or 'section:')
+        for lang, content in reversed(fenced_blocks):
+            if lang in ('', 'markdown', 'md', 'text', 'txt', 'python', 'json', 'yaml', 'yml'):
+                content_stripped = content.strip()
+                if content_stripped.startswith('- ') or content_stripped.startswith('section:') or content_stripped.startswith('[') or content_stripped.startswith('{'):
+                    # Try YAML first
+                    try:
+                        contenus_data = yaml.safe_load(content_stripped)
+                        if contenus_data is not None:
+                            if isinstance(contenus_data, list):
+                                return _to_formatted_sections(contenus_data)
+                            if isinstance(contenus_data, dict):
+                                # Could be JSON/dict style with key
+                                if 'contenus_par_section' in contenus_data and isinstance(contenus_data['contenus_par_section'], list):
+                                    return _to_formatted_sections(contenus_data['contenus_par_section'])
+                    except Exception:
+                        pass
+                    # Try JSON second
+                    try:
+                        import json
+                        contenus_data = json.loads(content_stripped)
+                        if isinstance(contenus_data, list):
+                            return _to_formatted_sections(contenus_data)
+                        if isinstance(contenus_data, dict):
+                            if 'contenus_par_section' in contenus_data and isinstance(contenus_data['contenus_par_section'], list):
+                                return _to_formatted_sections(contenus_data['contenus_par_section'])
+                    except Exception:
+                        pass
+
+        # 2) If still nothing, try to parse Markdown table anywhere in the response
+        def parse_markdown_table(text):
+            lines = [ln.rstrip() for ln in text.splitlines()]
+            # Find header line with pipes and required headers
+            header_idx = -1
+            for i, ln in enumerate(lines):
+                if '|' in ln and 'Section' in ln and 'Type de section' in ln:
+                    header_idx = i
+                    break
+            if header_idx == -1 or header_idx + 2 >= len(lines):
+                return []
+            header_line = lines[header_idx]
+            separator_line = lines[header_idx + 1]
+            if '---' not in separator_line:
+                return []
+            headers = [h.strip() for h in header_line.strip('|').split('|')]
+            rows = []
+            i = header_idx + 2
+            while i < len(lines):
+                ln = lines[i]
+                if not ln.strip().startswith('|'):
+                    i += 1
+                    continue
+                cells = [c.strip() for c in ln.strip().strip('|').split('|')]
+                if len(cells) != len(headers):
+                    i += 1
+                    continue
+                row = dict(zip(headers, cells))
+                rows.append(row)
+                i += 1
+            # Map headers to expected keys
+            mapped = []
+            for row in rows:
+                mapped.append({
+                    'section': _normalize_value(row.get('Section', '')),
+                    'type_de_section': _normalize_value(row.get('Type de section', '')),
+                    'competences_visees': _normalize_value(row.get('Compétences visées', '')),
+                    'ressource': _normalize_value(row.get('Ressource', '')),
+                    'intention_ressource': _normalize_value(row.get('Intention ressource', '')),
+                    'activite_1': _normalize_value(row.get('Activité 1', '')),
+                    'intention_activite_1': _normalize_value(row.get('Intention activité 1', '')),
+                    'activite_2': _normalize_value(row.get('Activité 2', '')),
+                    'intention_activite_2': _normalize_value(row.get('Intention activité 2', '')),
+                    'justification_activite_s': _normalize_value(row.get('Justification activité(s)', '')),
+                })
+            return mapped
+
+        table_sections = parse_markdown_table(ai_response)
+        if table_sections:
+            return _to_formatted_sections(table_sections)
+
+        # 3) As last resort, try to parse the entire response as YAML/JSON
+        try:
+            contenus_data = yaml.safe_load(ai_response)
+            if isinstance(contenus_data, list):
+                return _to_formatted_sections(contenus_data)
+            if isinstance(contenus_data, dict) and 'contenus_par_section' in contenus_data:
+                return _to_formatted_sections(contenus_data['contenus_par_section'])
+        except Exception:
+            pass
+        try:
+            import json
+            contenus_data = json.loads(ai_response)
+            if isinstance(contenus_data, list):
+                return _to_formatted_sections(contenus_data)
+            if isinstance(contenus_data, dict) and 'contenus_par_section' in contenus_data:
+                return _to_formatted_sections(contenus_data['contenus_par_section'])
+        except Exception:
+            pass
+
+        return []
     except Exception as e:
         print(f"Error parsing AI response: {e}")
         return []

@@ -11,6 +11,17 @@ HEADER_COLORS = {
     'info': 'var(--gradient-info)'           # Info gradient
 }
 
+
+# --- Palette Bootstrap classique (contrastes) ---
+HEADER_COLORS = {
+    'primary': 'var(--gradient-primary)',     # Bleu = cadrage
+    'danger': 'var(--gradient-danger)',       # Rouge = contraintes
+    'secondary': 'var(--gradient-secondary)', # Violet = réflexion/structuration
+    'success': 'var(--gradient-success)',     # Vert = validation
+    'info': 'var(--gradient-info)',           # Bleu clair = création
+    'gray': 'var(--gradient-gray)'            # Gris = clôture
+}
+
 # Common configuration
 TOTAL_STEPS = 6
 
@@ -27,7 +38,7 @@ BASE_PAGES_CONFIG = {
         'step': 1,
         'previous': None,
         'next': 'contraintes',
-        'route': '/',
+        'route': '/public-cible',
         'template': 'public_cible.html'
     },
     'contraintes': {
@@ -73,6 +84,15 @@ BASE_PAGES_CONFIG = {
 }
 
 # Apply colors to create final PAGES_CONFIG
+PAGES_CONFIG = {
+    'public_cible': apply_header_color(BASE_PAGES_CONFIG['public_cible'].copy(), 'primary'),
+    'contraintes': apply_header_color(BASE_PAGES_CONFIG['contraintes'].copy(), 'danger'),
+    'competences': apply_header_color(BASE_PAGES_CONFIG['competences'].copy(), 'secondary'),
+    'referentiels': apply_header_color(BASE_PAGES_CONFIG['referentiels'].copy(), 'success'),
+    'contenu': apply_header_color(BASE_PAGES_CONFIG['contenu'].copy(), 'info'),
+    'recap': apply_header_color(BASE_PAGES_CONFIG['recap'].copy(), 'gray')
+}
+
 PAGES_CONFIG = {
     'public_cible': apply_header_color(BASE_PAGES_CONFIG['public_cible'].copy(), 'primary'),
     'contraintes': apply_header_color(BASE_PAGES_CONFIG['contraintes'].copy(), 'danger'),

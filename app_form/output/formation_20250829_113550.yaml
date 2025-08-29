@@ -1,0 +1,204 @@
+etape_1_public_cible:
+  titre_formation: Exploiter l’Intelligence Artificielle pour Concevoir des Formations
+    Innovantes
+  objectif_general: L’objectif de cette formation est d’apprendre à tirer parti de
+    l’Intelligence Artificielle pour imaginer, concevoir et mettre en œuvre des formations
+    innovantes, plus interactives et adaptées aux besoins des apprenants.
+  type_de_public:
+  - Formateurs INSPE / chercheurs
+  - Inspecteurs
+  - les bids
+  type_de_formation: Formation disciplinaire
+  type_de_formation_precisions: EPS
+  niveaux_scolaires:
+  - Collège
+  - Lycée général et technologique
+  niveau_expertise:
+  - Avancé
+  - Expert ou formateur confirmé
+  besoins_specifiques: TEst besoin
+last_updated: '2025-08-29T16:59:23.572381'
+current_step: etape_4_competences
+etape_2_contraintes:
+  nombre_participants: Moins de 10 personnes
+  animation: Un seul formateur
+  exigences_institutionnelles: fdsfsd
+  restrictions_techniques: Aucune restriction identifiée
+etape_4_competences:
+  formulations_competences:
+  - Concevoir des parcours de formation personnalisés en utilisant les outils d'intelligence
+    artificielle pour répondre aux besoins spécifiques des apprenants.
+  - Analyser les données d'apprentissage des apprenants générées par les outils d'intelligence
+    artificielle pour optimiser les stratégies pédagogiques.
+  - Collaborer avec des experts en intelligence artificielle pour développer et améliorer
+    les formations en intégrant des solutions innovantes et pertinentes.
+  competence_1:
+    titre: Concevoir des parcours de formation personnalisés
+    idees_cles: parcours, personnalisation, apprenants
+    niveau: Moyen
+    verbes: concevoir, élaborer, adapter
+    formulation: Concevoir des parcours de formation personnalisés en utilisant les
+      outils d'intelligence artificielle pour répondre aux besoins spécifiques des
+      apprenants.
+  competence_2:
+    titre: Analyser les données d'apprentissage des apprenants
+    idees_cles: données, apprentissage, analyse
+    niveau: Moyen
+    verbes: analyser, interpréter, organiser
+    formulation: Analyser les données d'apprentissage des apprenants générées par
+      les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
+  competence_3:
+    titre: Collaborer avec des experts en IA pour améliorer les formations
+    idees_cles: collaboration, experts, amélioration
+    niveau: Haut
+    verbes: collaborer, proposer, développer
+    formulation: Collaborer avec des experts en intelligence artificielle pour développer
+      et améliorer les formations en intégrant des solutions innovantes et pertinentes.
+  evaluation_competences:
+    ordre_competences:
+    - code: C1
+      formulation: Concevoir des parcours de formation personnalisés en utilisant
+        les outils d'intelligence artificielle pour répondre aux besoins spécifiques
+        des apprenants.
+      justification: C1 est en première position car il s'agit d'une compétence de
+        niveau moyen qui permet aux formateurs de commencer à appliquer des concepts
+        d'IA dans la conception de formations, ce qui est essentiel pour établir une
+        base.
+      pertinence: élevée
+    - code: C2
+      formulation: Analyser les données d'apprentissage des apprenants générées par
+        les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
+      justification: C2 suit C1 car elle nécessite une compréhension des parcours
+        personnalisés pour pouvoir analyser les données d'apprentissage, ce qui représente
+        une progression logique dans l'application des compétences.
+      pertinence: élevée
+    - code: C3
+      formulation: Collaborer avec des experts en intelligence artificielle pour développer
+        et améliorer les formations en intégrant des solutions innovantes et pertinentes.
+      justification: C3 est en dernière position car elle représente un niveau élevé
+        de compétence, nécessitant une expertise préalable dans la conception de parcours
+        et l'analyse des données avant de pouvoir collaborer efficacement avec des
+        experts.
+      pertinence: élevée
+    avis_global: 'L''alignement pédagogique est respecté avec une progression logique
+      des compétences allant de la conception de parcours personnalisés à l''analyse
+      des données, puis à la collaboration avec des experts. Chaque compétence s''appuie
+      sur la précédente, favorisant un apprentissage cohérent et structuré.
+
+      '
+    points_amelioration:
+    - Clarifier les verbes d'action dans chaque compétence pour renforcer la compréhension
+      des attentes.
+    - Ajouter des exemples concrets d'outils d'IA à utiliser dans C1 pour faciliter
+      l'application.
+    - Suggestion d'ajouter une compétence pour combler un gap entre l'analyse des
+      données et la collaboration avec des experts.
+    competence_complementaire:
+      titre: Utiliser des outils d'intelligence artificielle pour l'analyse des données
+        d'apprentissage
+      niveau: Moyen
+      idees_cles: outils, IA, analyse, apprentissage
+      verbes: utiliser, appliquer, interpréter
+      formulation: Utiliser des outils d'intelligence artificielle pour analyser les
+        données d'apprentissage et en tirer des conclusions pertinentes pour l'amélioration
+        des formations.
+      justification: Cette compétence est nécessaire pour fournir une passerelle entre
+        l'analyse des données et la collaboration avec des experts, en s'assurant
+        que les formateurs sont capables d'utiliser des outils spécifiques avant de
+        travailler avec des spécialistes.
+      position_suggeree: entre C1 et C2
+etape_5_referentiels:
+  section_1:
+    competence: Concevoir des parcours de formation personnalisés en utilisant les
+      outils d'intelligence artificielle pour répondre aux besoins spécifiques des
+      apprenants.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de décrire les outils d'intelligence
+        artificielle disponibles pour la formation.
+      observable_quantitatif: Je peux identifier au moins 2 outils d'IA avec une précision
+        de 70%.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de proposer des idées de parcours de
+        formation en utilisant des outils d'IA.
+      observable_quantitatif: Je peux élaborer 2 parcours personnalisés en utilisant
+        des outils d'IA, avec un retour positif de 75% des apprenants.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de concevoir des parcours de formation
+        personnalisés adaptés à différents profils d'apprenants.
+      observable_quantitatif: Je peux créer 5 parcours de formation personnalisés
+        avec un taux de satisfaction d'au moins 80%.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable d'analyser l'efficacité des parcours
+        de formation et d'apporter des ajustements basés sur des données d'apprentissage.
+      observable_quantitatif: Je peux évaluer et ajuster 3 parcours de formation avec
+        une amélioration de 20% des résultats d'apprentissage.
+    section: 1
+  section_2:
+    competence: Analyser les données d'apprentissage des apprenants générées par les
+      outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître des données d'apprentissage
+        basiques.
+      observable_quantitatif: Je peux identifier au moins 2 types de données d'apprentissage.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable d'analyser des tendances simples dans
+        les données.
+      observable_quantitatif: Je réalise au moins 3 analyses de données par mois.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de formuler des recommandations pédagogiques
+        basées sur l'analyse des données.
+      observable_quantitatif: Je propose au moins 2 stratégies pédagogiques par trimestre
+        en fonction des données analysées.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable d'intégrer des outils d'IA pour optimiser
+        continuellement mes stratégies pédagogiques.
+      observable_quantitatif: J'implémente et évalue l'impact de nouvelles stratégies
+        au moins 4 fois par an.
+    section: 2
+  section_3:
+    competence: Collaborer avec des experts en intelligence artificielle pour développer
+      et améliorer les formations en intégrant des solutions innovantes et pertinentes.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de participer à des réunions avec des
+        experts en intelligence artificielle.
+      observable_quantitatif: Je participe à 1 réunion par mois.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de proposer des idées de solutions innovantes
+        en collaboration avec des experts.
+      observable_quantitatif: Je propose 2 idées par trimestre.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de conduire des projets en collaboration
+        avec des experts en intelligence artificielle.
+      observable_quantitatif: Je mène 1 projet par semestre.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de former d'autres personnes sur l'intégration
+        de solutions d'intelligence artificielle dans les formations.
+      observable_quantitatif: Je forme 3 personnes par an.
+    section: 3

@@ -34,29 +34,8 @@ client = OpenAI(api_key=openai_api_key)
 genai.configure(api_key=gemini_api_key)
 
 
-def generate_verb_suggestions_for_level(niveau):
-    """
-    Generate verb suggestions for a specific cognitive level
-    """
-    verb_suggestions = {
-        'Haut': [
-            'créer', 'concevoir', 'structurer', 'synthétiser', 'planifier', 
-            'juger', 'justifier', 'analyser', 'comparer', 'différencier',
-            'évaluer', 'développer', 'organiser', 'construire', 'produire'
-        ],
-        'Moyen': [
-            'appliquer', 'utiliser', 'démontrer', 'résoudre', 'expliquer',
-            'illustrer', 'interpréter', 'reformuler', 'classifier', 'exemplifier',
-            'exécuter', 'implémenter', 'calculer', 'prédire', 'modéliser'
-        ],
-        'Bas': [
-            'définir', 'nommer', 'décrire', 'identifier', 'rappeler',
-            'lister', 'reconnaître', 'énumérer', 'reproduire', 'citer',
-            'mémoriser', 'localiser', 'sélectionner', 'reconnaître', 'reproduire'
-        ]
-    }
-    
-    return verb_suggestions.get(niveau, [])
+# Legacy helper removed: verb suggestions are now provided by Bloom taxonomy via
+# the /get_bloom_verbs route. Keep this file for other helpers.
 
 
 def generate_ai_response(prompt):

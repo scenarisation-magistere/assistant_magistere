@@ -1,5 +1,11 @@
 <!-- Reusable Header Component -->
 <div class="header" {% if header_gradient %}style="background: {{ header_gradient }};"{% endif %}>
+    <div class="brand">
+        <img class="brand-logo" src="{{ url_for('static', filename='image/logo_magistere.png') }}" alt="Logo Magistère">
+        <div class="brand-text">
+            <div class="brand-title">Assistant Scénarisation</div>
+        </div>
+    </div>
     <h1>{{ header_title | default('Titre de la page') }}</h1>
     <p>{{ header_description | default('Description de la page') }}</p>
     {% if nav_info %}
