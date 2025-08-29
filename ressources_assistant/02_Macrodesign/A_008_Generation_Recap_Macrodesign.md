@@ -7,27 +7,62 @@
 > **IMPORTANT — Ces consignes sont destinées uniquement à l’assistant. Elles ne doivent jamais être affichées au participant.**
 
 ### 🎯 But
-Assembler les trois blocs YAML validés (issus de A_003, A_005, A_006, A_007) pour produire un **tableur structuré** en trois onglets :
-1. **Généralités** (titre, objectif, public, contraintes, compétences formulées)  
-2. **Référentiels par section** (bloc de A_006)  
-3. **Contenus par section** (bloc de A_007)  
+Assembler les **trois blocs YAML** validés (A_003, A_005, A_006, A_007) et produire un **APERÇU VISUEL LISIBLE** sous forme de **trois tableaux Markdown** dont les **en-têtes sont exactement** ceux ci-dessous (avec accents/espaces/parenthèses). Les exports **CSV** doivent **reprendre ces mêmes en-têtes lisibles** (séparateur `;`).  
+> **Interdiction** : ne **pas** convertir les en-têtes en `snake_case`. Conserver **à l’identique** la casse, les accents, les espaces et les parenthèses.
 
 ### 📌 Règles générales
-- Le **YAML est la source de vérité**.  
-- Ne rien modifier : seulement assembler et normaliser.  
-- Si un champ est manquant : **laisser `[ ]`**.  
-- Vérifier la concordance **compétences ↔ sections S2–S5**.  
-- Les ressources des sections S2–S5 doivent avoir l’intention **Acquisition**.  
-- Les indicateurs quantitatifs dans les référentiels doivent suivre la norme (25 % / 50 % / 75 % / 100 %).  
-- Les **numéros de téléphone** sont interdits (mails uniquement).  
-- **Nouvelle consigne obligatoire** : toutes les réponses de l’assistant doivent être fournies **intégralement en Markdown brut**, encodées dans **un seul bloc triple backticks**.  
-  Exemple :  
-      ```markdown  
-      # Titre  
-      - Liste  
-      ```  
-  Aucun texte ne doit apparaître en dehors de ce bloc, afin d’éviter tout rendu ou interprétation par l’interface.
+- Le **YAML est la source de vérité** (ne rien modifier).  
+- Si un champ est manquant : **laisser `[ ]`** (ne pas inventer).  
+- Respecter le scénario **CMO** (S1 à S8).  
+- **Vérifications automatiques** (appliquées sur les données, pas sur les en-têtes) :
+  - Concordance **compétences ↔ sections S2–S5** : `C1→S2`, `C2→S3`, `C3→S4`, `C4→S5`.  
+  - S2–S5 : l’**intention ressource** doit être **« Acquisition »**.  
+  - Référentiels : quantitatif ∈ {`25 %`,`50 %`,`75 %`,`100 %`}.  
+- **Sorties supportées** dans ce prompt : **Markdown** (aperçu lisible) et **CSV** (en-têtes lisibles).  
+- **XLSX/PDF** : réservés à la **version Guillaume** (environnement externe).
 
+### 🔁 Flux d’exécution (interne)
+1. Lire les **3 blocs YAML** (ci-dessous).  
+2. Construire les **3 rendus lisibles** :
+   - Feuille 1 : **tableau 2 colonnes** (clé/valeur) **dans cet ordre strict** :
+     1. `titre`  
+     2. `objectif_general`  
+     3. `type_public`  
+     4. `type_formation`  
+     5. `niveau_scolaire`  
+     6. `niveau_expertise`  
+     7. `besoins_specifiques`  
+     8. `nombre_participants`  
+     9. `modalites_animation`  
+     10. `exigences_restrictions`  
+     11. `autre_element`  
+     12. `competences_formulees` (afficher sous forme : `C1; C2; C3; C4`)  
+   - Feuille 2 : **référentiels** avec en-têtes **lisibles** (voir « En-têtes lisibles à produire »).  
+   - Feuille 3 : **macrodesign** avec en-têtes **lisibles** (voir « En-têtes lisibles à produire »).  
+3. Afficher l’**aperçu visuel** (les 3 tableaux Markdown lisibles).  
+4. Demander **validation**.  
+5. Proposer **export** : **Markdown** (rendu tel quel) ou **CSV** (mêmes en-têtes lisibles).  
+6. Produire **uniquement** l’export choisi.
+
+### 🧭 En-têtes lisibles à produire (pour l’aperçu Markdown **et** le CSV)
+- **Feuille 1 — Généralités (clé/valeur)**  
+  `| Champ YAML | Valeur à saisir |`
+- **Feuille 2 — Référentiels par section**  
+  `| competence_id | competence_formulation [illustratif] | degre | libelle_degre | indicateur_qualitatif [illustratif] | indicateur_quantitatif |`
+- **Feuille 3 — Contenus par section**  
+  `| Section | Type de section | Compétence (id) | Compétence (formulation) | Ressource (type) | URL ressource | Intention ressource | Activité 1 (type) | URL activité 1 | Intention activité 1 | Activité 2 (type) | URL activité 2 | Intention activité 2 | Justification pédagogique | Modalité | Durée (min) | Évaluation |`
+
+> **Notes d’assemblage** :  
+> - **Feuille 1** : chaque clé YAML devient une **ligne** dans « Champ YAML », sa valeur normalisée dans « Valeur à saisir ».  
+> - **Feuille 2** :  
+>   - `competence_id`/`competence_formulation` proviennent de `referentiels_par_section`.  
+>   - `degre` = 1..4 ; `libelle_degre` = {Je débute, Je progresse, Je suis autonome, Je maîtrise}.  
+>   - `indicateur_quantitatif` = {25 %, 50 %, 75 %, 100 %}.  
+>   - `indicateur_qualitatif [illustratif]` : reprendre le texte s’il existe, sinon `[ ]`.  
+> - **Feuille 3** :  
+>   - `Section` = S1..S8 ; `Type de section` ∈ {Accueil, Apprentissage, Classe virtuelle, Forum général, Évaluation finale}.  
+>   - Pour S2..S5 : `Compétence (id)` = {C1..C4} mappée à la section, `Intention ressource` = **Acquisition**.  
+>   - `Durée (min)` : S1=5, S2–S5=30, S6=60, S7/S8 = `[ ]` si non précisé. 
 ---
 
 ### 📦 Sources internes (YAML)
