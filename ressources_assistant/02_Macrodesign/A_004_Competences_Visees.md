@@ -30,7 +30,7 @@
 # A_004 — Compétences visées
 
 ## 🎯 Objectif
-Formuler **2 à 3 compétences principales** (une **4ᵉ optionnelle**) qui structureront la formation CMO.  
+Formuler **3 compétences principales** (une **4ᵉ optionnelle**) qui structureront la formation CMO.  
 **Chaque compétence doit obligatoirement :**
 - contenir **au moins 1 verbe d’action cognitif** **ET** **au moins 1 verbe d’action affectif** (verbes observables) ;
 - être **située dans un niveau** pour **le domaine cognitif** *et* **le domaine affectif** (Bas / Moyen / Haut) ;
