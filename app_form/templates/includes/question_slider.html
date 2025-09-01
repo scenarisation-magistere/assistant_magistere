@@ -4,8 +4,7 @@
     <div class="progress-dots">
         {% for question in questions %}
         <div class="progress-dot {% if loop.index == 1 %}active{% endif %}" 
-             data-question="{{ loop.index }}" 
-             onclick="goToQuestion({{ loop.index }})">
+             data-question="{{ loop.index }}">
             <span class="dot-number">{{ loop.index }}</span>
         </div>
         {% endfor %}
@@ -23,85 +22,60 @@
 
             <!-- Question Content -->
             <div class="question-content">
-                {% if question.examples %}
-                <div class="suggestions-section">
-                    <h4>💡 Suggestions de réponses :</h4>
-                    <div class="suggestions-list">
-                        {% for example in question.examples %}
-                        <div class="suggestion-item" onclick="fillSuggestion('{{ question.field_name }}', '{{ example|replace("'", "\\'") }}')">
-                            {{ example }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% if question.type == 'group' %}
+                {% set instructions = question.instructions %}
+                {% set instructions_header = '📝 Repère pratique' %}
+                {% include 'includes/blocks/instructions.html' %}
+
+                {% if question.examples_block %}
+                {% set example_titre = question.examples_block.titre %}
+                {% set example_objectif = question.examples_block.objectif_general %}
+                {% include 'includes/blocks/example.html' %}
                 {% endif %}
 
-                <!-- Form Field -->
+                <div style="margin-top: var(--spacing-lg);"></div>
                 <div class="form-field-section">
-                    {% if question.type == 'text' %}
-                        <input type="text" 
-                               name="{{ question.field_name }}" 
-                               id="{{ question.field_name }}"
-                               placeholder="Votre réponse..." 
-                               required>
-                    
-                    {% elif question.type == 'textarea' %}
-                        <textarea name="{{ question.field_name }}" 
-                                  id="{{ question.field_name }}"
-                                  placeholder="Décrivez l'objectif général de votre formation..." 
-                                  required></textarea>
-                    
-                                         {% elif question.type == 'radio' %}
-                         <div class="radio-group">
-                             {% for option in question.options %}
-                             <div class="radio-item">
-                                 <input type="radio" 
-                                        name="{{ question.field_name }}" 
-                                        value="{{ option }}" 
-                                        id="{{ question.field_name }}_{{ loop.index }}" 
-                                        required>
-                                 <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
-                             </div>
-                             {% endfor %}
-                         </div>
-                         
-                         {% if question.text_input_options %}
-                         <div class="text-input-container" id="text-input-{{ question.field_name }}" style="display: none;">
-                             <input type="text" name="{{ question.field_name }}_text" placeholder="{{ question.text_placeholder }}">
-                         </div>
-                         {% endif %}
-                    
-                    {% elif question.type == 'checkbox' %}
-                        <div class="checkbox-group">
-                            {% for option in question.options %}
-                            <div class="checkbox-item">
-                                <input type="checkbox" 
-                                       name="{{ question.field_name }}" 
-                                       value="{{ option }}" 
-                                       id="{{ question.field_name }}_{{ loop.index }}">
-                                <label for="{{ question.field_name }}_{{ loop.index }}">{{ option }}</label>
+                    {% for field in question.fields %}
+                        {% if field.type == 'text' %}
+                            <div class="form-group" style="margin-bottom: var(--spacing-md);">
+                                <label for="{{ field.field_name }}"><strong>{{ field.label }}</strong></label>
+                                <div style="margin: var(--spacing-xs) 0;">👉 Votre réponse :</div>
+                                <input type="text" name="{{ field.field_name }}" id="{{ field.field_name }}" placeholder="{{ field.placeholder }}" required>
                             </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                        {% elif field.type == 'textarea' %}
+                            <div class="form-group">
+                                <label for="{{ field.field_name }}"><strong>{{ field.label }}</strong></label>
+                                <div style="margin: var(--spacing-xs) 0;">👉 Votre réponse :</div>
+                                <textarea name="{{ field.field_name }}" id="{{ field.field_name }}" rows="4" placeholder="{{ field.placeholder }}" required></textarea>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
+                {% else %}
+                {% set examples = question.examples %}
+                {% set field_name = question.field_name %}
+                {% include 'includes/blocks/suggestions.html' %}
+
+                <!-- Form Field -->
+                {% include 'includes/blocks/question_fields.html' %}
+                {% endif %}
             </div>
 
                          <!-- Navigation Buttons -->
-             <div class="question-navigation" style="justify-content: {% if loop.first %}flex-end{% else %}space-between{% endif %};">
+             <div class="question-navigation{% if loop.first %} first{% endif %}">
                  {% if not loop.first %}
-                 <button type="button" class="btn-prev-question" onclick="previousQuestion()">
+                 <button type="button" class="btn-prev-question">
                      ← Question précédente
                  </button>
                  {% endif %}
                  
                  {% if not loop.last %}
-                 <button type="button" class="btn-next-question" onclick="nextQuestion()">
+                 <button type="button" class="btn-next-question">
                      Question suivante →
                  </button>
                  {% else %}
-                 <button type="button" class="btn-submit-all" onclick="validateAndShowYAML()">
-                     ✅ Valider et Voir le YAML
+                 <button type="button" class="btn-submit-all">
+                     ✅ Valider et Continuer
                  </button>
                  {% endif %}
              </div>
@@ -185,20 +159,26 @@
 
 /* Question Header */
 .question-header {
-    text-align: center;
-    margin-bottom: 30px;
+    text-align: left;
+    display: block;
+    margin-bottom: 16px;
 }
 
 .question-title {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     color: var(--text-dark);
-    margin-bottom: 10px;
-    line-height: 1.4;
+    margin-bottom: 6px;
+    line-height: 1.3;
 }
 
 .question-counter {
     color: var(--text-medium);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    display: block;
+    margin-top: 2px;
+    float: none;
+    clear: both;
+    text-align: left;
 }
 
 /* Question Content */
@@ -246,6 +226,42 @@
     box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
 }
 
+/* Instructions block (reusable) */
+.instructions-section {
+    background: #f8f9fb;
+    border: 1px solid #e7eef6;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset;
+}
+
+.instructions-header {
+    font-weight: 700;
+    color: #243b53;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.instructions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.instructions-item {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #334e68;
+}
+
 /* Form Field Section */
 .form-field-section {
     margin-top: 20px;
@@ -267,6 +283,15 @@
     outline: none;
     border-color: var(--primary-blue);
     box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.example-compact {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
 }
 
 .form-field-section textarea {
@@ -356,6 +381,10 @@
     border-top: 1px solid #e9ecef;
 }
 
+.question-navigation.first {
+    justify-content: flex-end;
+}
+
 .btn-prev-question,
 .btn-next-question,
 .btn-submit-all {
@@ -436,14 +465,41 @@
 }
 </style>
 
+<script type="application/json" id="questionsData">{{ questions|tojson }}</script>
 <script>
 let currentQuestion = 1;
-const totalQuestions = {{ questions|length }};
+const questionsRaw = document.getElementById('questionsData') ? document.getElementById('questionsData').textContent : '[]';
+const questionData = JSON.parse(questionsRaw || '[]');
+const totalQuestions = questionData.length;
 
 // Initialize the slider
 document.addEventListener('DOMContentLoaded', function() {
     updateProgressDots();
     updateQuestionCounter();
+
+    // Attach click handlers for dots and buttons (delegated)
+    document.querySelectorAll('.progress-dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+            const n = Number(this.dataset.question || '0');
+            if (n) goToQuestion(n);
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-prev-question')) {
+            e.preventDefault();
+            previousQuestion();
+        } else if (e.target.closest('.btn-next-question')) {
+            e.preventDefault();
+            nextQuestion();
+        } else if (e.target.closest('.btn-submit-all')) {
+            e.preventDefault();
+            handleSubmitAll();
+        } else if (e.target.closest('.suggestion-item') && e.target.closest('.suggestion-item').dataset.field) {
+            const el = e.target.closest('.suggestion-item');
+            fillSuggestion(el.dataset.field, el.dataset.suggestion || '');
+        }
+    });
 });
 
 // Navigation functions
@@ -451,12 +507,16 @@ function goToQuestion(questionNumber) {
     if (questionNumber < 1 || questionNumber > totalQuestions) return;
     
     // Hide current question
-    document.querySelector('.question-slide.active').classList.remove('active');
-    document.querySelector('.progress-dot.active').classList.remove('active');
+    const activeSlide = document.querySelector('.question-slide.active');
+    if (activeSlide) activeSlide.classList.remove('active');
+    const activeDot = document.querySelector('.progress-dot.active');
+    if (activeDot) activeDot.classList.remove('active');
     
     // Show new question
-    document.getElementById(`question-slide-${questionNumber}`).classList.add('active');
-    document.querySelector(`[data-question="${questionNumber}"]`).classList.add('active');
+    const newSlide = document.getElementById(`question-slide-${questionNumber}`);
+    if (newSlide) newSlide.classList.add('active');
+    const newDot = document.querySelector(`[data-question="${questionNumber}"]`);
+    if (newDot) newDot.classList.add('active');
     
     currentQuestion = questionNumber;
     updateProgressDots();
@@ -479,10 +539,8 @@ function previousQuestion() {
 function updateProgressDots() {
     const dots = document.querySelectorAll('.progress-dot');
     dots.forEach((dot, index) => {
-        const questionNumber = index + 1;
-        const fieldName = getFieldNameForQuestion(questionNumber);
-        
-        if (isQuestionCompleted(fieldName)) {
+        const q = questionData[index];
+        if (isQuestionObjCompleted(q)) {
             dot.classList.add('completed');
         } else {
             dot.classList.remove('completed');
@@ -490,43 +548,72 @@ function updateProgressDots() {
     });
 }
 
- // Check if a question is completed
- function isQuestionCompleted(fieldName) {
-     // Check for radio buttons
-     const radioButtons = document.querySelectorAll(`input[name="${fieldName}"][type="radio"]`);
-     if (radioButtons.length > 0) {
-         const checkedRadio = document.querySelector(`input[name="${fieldName}"][type="radio"]:checked`);
-         if (checkedRadio) {
-             // If there's a text input option and it's selected, check if text is filled
-             const textInputContainer = document.getElementById(`text-input-${fieldName}`);
-             if (textInputContainer && textInputContainer.style.display !== 'none') {
-                 const textInput = textInputContainer.querySelector('input[type="text"]');
-                 return textInput && textInput.value.trim() !== '';
-             }
-             return true;
-         }
-         return false;
-     }
-     
-     // Check for checkbox
-     const checkboxes = document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]`);
-     if (checkboxes.length > 0) {
-         return document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]:checked`).length > 0;
-     }
-     
-     // Check for text/textarea
-     const field = document.getElementById(fieldName);
-     if (field) {
-         return field.value.trim() !== '';
-     }
-     
-     return false;
- }
+// Check if a single field is completed
+function isFieldCompleted(fieldName) {
+    if (!fieldName) return false;
+    // Radio
+    const radioButtons = document.querySelectorAll(`input[name="${fieldName}"][type="radio"]`);
+    if (radioButtons.length > 0) {
+        const checkedRadio = document.querySelector(`input[name="${fieldName}"][type="radio"]:checked`);
+        if (checkedRadio) {
+            const textInputContainer = document.getElementById(`text-input-${fieldName}`);
+            if (textInputContainer && textInputContainer.style.display !== 'none') {
+                const textInput = textInputContainer.querySelector('input[type="text"]');
+                return !!(textInput && textInput.value.trim() !== '');
+            }
+            return true;
+        }
+        return false;
+    }
+    // Checkbox
+    const checkboxes = document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]`);
+    if (checkboxes.length > 0) {
+        const checked = document.querySelectorAll(`input[name="${fieldName}"][type="checkbox"]:checked`);
+        if (checked.length === 0) return false;
+        // If the selection includes an option that requires text input, ensure it's filled
+        const currentQuestion = questionData.find(q => q.field_name === fieldName);
+        const textInputContainer = document.getElementById(`text-input-${fieldName}`);
+        if (currentQuestion && Array.isArray(currentQuestion.text_input_options) && textInputContainer) {
+            const selectedValues = Array.from(checked).map(c => c.value);
+            const needsText = selectedValues.some(v => currentQuestion.text_input_options.includes(v));
+            if (needsText) {
+                const textInput = textInputContainer.querySelector('input[type="text"]');
+                return !!(textInput && textInput.value.trim() !== '');
+            }
+        }
+        return true;
+    }
+    // Text/Textarea
+    const field = document.getElementById(fieldName);
+    if (field) return field.value.trim() !== '';
+    return false;
+}
 
-// Get field name for a question number
+// Backward compatible helper
+function isQuestionCompleted(fieldName) {
+    return isFieldCompleted(fieldName);
+}
+
+// New: check completion for question object (supports 'group')
+function isQuestionObjCompleted(question) {
+    if (!question) return false;
+    if (question.type === 'group' && Array.isArray(question.fields)) {
+        return question.fields.every(f => isFieldCompleted(f.field_name));
+    }
+    if (question.field_name) {
+        return isFieldCompleted(question.field_name);
+    }
+    return false;
+}
+
+// Get field name(s) for a question number
 function getFieldNameForQuestion(questionNumber) {
-    const questionData = {{ questions|tojson }};
-    return questionData[questionNumber - 1].field_name;
+    const q = questionData[questionNumber - 1];
+    if (!q) return '';
+    if (q.type === 'group' && Array.isArray(q.fields)) {
+        return q.fields.map(f => f.field_name).join(',');
+    }
+    return q.field_name || '';
 }
 
 // Update question counter
@@ -541,228 +628,177 @@ function updateQuestionCounter() {
 function fillSuggestion(fieldName, suggestion) {
     const field = document.getElementById(fieldName);
     if (field) {
-        if (field.type === 'textarea') {
-            field.value = suggestion;
-        } else {
-            field.value = suggestion;
-        }
+        field.value = suggestion;
         field.focus();
         updateProgressDots();
     }
 }
 
- // Submit all questions
- function submitAllQuestions() {
-     // Check if all questions are completed
-     const questionData = {{ questions|tojson }};
-     const incompleteQuestions = [];
-     
-     questionData.forEach((question, index) => {
-         if (!isQuestionCompleted(question.field_name)) {
-             incompleteQuestions.push(index + 1);
-         }
-     });
-     
-     if (incompleteQuestions.length > 0) {
-         alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
-         goToQuestion(incompleteQuestions[0]);
-         return;
-     }
-     
-     // Submit the form
-     document.getElementById('questionnaireForm').submit();
- }
+// Submit all questions
+function submitAllQuestions() {
+    const incompleteQuestions = [];
+    questionData.forEach((question, index) => {
+        if (!isQuestionObjCompleted(question)) {
+            incompleteQuestions.push(index + 1);
+        }
+    });
+    if (incompleteQuestions.length > 0) {
+        alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
+        goToQuestion(incompleteQuestions[0]);
+        return;
+    }
+    document.getElementById('questionnaireForm').submit();
+}
 
- // Validate and show YAML
- function validateAndShowYAML() {
-     // Check if all questions are completed
-     const questionData = {{ questions|tojson }};
-     const incompleteQuestions = [];
-     
-     questionData.forEach((question, index) => {
-         if (!isQuestionCompleted(question.field_name)) {
-             incompleteQuestions.push(index + 1);
-         }
-     });
-     
-     if (incompleteQuestions.length > 0) {
-         alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
-         goToQuestion(incompleteQuestions[0]);
-         return;
-     }
-     
-     // Collect form data
-     const form = document.getElementById('questionnaireForm');
-     const formData = new FormData(form);
-     const data = {};
-     
-     for (let [key, value] of formData.entries()) {
-         data[key] = value;
-     }
-     
-     // Show YAML in a modal
-     showYAMLModal(data);
- }
- 
- // Show YAML modal
- function showYAMLModal(data) {
-     // Create modal HTML
-     const modalHTML = `
-         <div id="yamlModal" style="
-             position: fixed;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             background: rgba(0,0,0,0.8);
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             z-index: 1000;
-         ">
-             <div style="
-                 background: white;
-                 padding: 30px;
-                 border-radius: 15px;
-                 max-width: 80%;
-                 max-height: 80%;
-                 overflow-y: auto;
-                 position: relative;
-             ">
-                 <h2 style="margin-bottom: 20px; color: #333;">📄 YAML Généré</h2>
-                 <pre style="
-                     background: #f8f9fa;
-                     padding: 20px;
-                     border-radius: 8px;
-                     font-family: 'Courier New', monospace;
-                     font-size: 14px;
-                     line-height: 1.4;
-                     overflow-x: auto;
-                     white-space: pre-wrap;
-                     border: 1px solid #dee2e6;
-                 ">${JSON.stringify(data, null, 2)}</pre>
-                 <div style="
-                     display: flex;
-                     justify-content: space-between;
-                     margin-top: 20px;
-                     gap: 15px;
-                 ">
-                     <button onclick="closeYAMLModal()" style="
-                         padding: 12px 24px;
-                         background: #6c757d;
-                         color: white;
-                         border: none;
-                         border-radius: 8px;
-                         cursor: pointer;
-                         font-size: 16px;
-                     ">Fermer</button>
-                     <button onclick="submitAndContinue()" style="
-                         padding: 12px 24px;
-                         background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
-                         color: white;
-                         border: none;
-                         border-radius: 8px;
-                         cursor: pointer;
-                         font-size: 16px;
-                         font-weight: bold;
-                     ">Continuer vers la page suivante</button>
-                 </div>
-             </div>
-         </div>
-     `;
-     
-     // Add modal to page
-     document.body.insertAdjacentHTML('beforeend', modalHTML);
- }
- 
- // Close YAML modal
- function closeYAMLModal() {
-     const modal = document.getElementById('yamlModal');
-     if (modal) {
-         modal.remove();
-     }
- }
- 
- // Submit and continue to next page
- function submitAndContinue() {
-     // Close modal first
-     closeYAMLModal();
-     
-     // Submit the form - the server will handle the redirect
-     document.getElementById('questionnaireForm').submit();
- }
+// Validate and show YAML
+function handleSubmitAll() {
+    const incompleteQuestions = [];
+    questionData.forEach((question, index) => {
+        if (!isQuestionObjCompleted(question)) {
+            incompleteQuestions.push(index + 1);
+        }
+    });
+    if (incompleteQuestions.length > 0) {
+        alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
+        goToQuestion(incompleteQuestions[0]);
+        return;
+    }
+    const form = document.getElementById('questionnaireForm');
+    if (!form) return;
+    const endpoint = form.dataset.endpoint || '';
+    const data = processFormData('questionnaireForm');
+    if (endpoint) {
+        fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(res => {
+            if (res && res.success) {
+                showSuccessModal(res);
+            } else {
+                throw new Error(res && res.error ? res.error : 'Erreur lors de la sauvegarde');
+            }
+        })
+        .catch(err => {
+            alert('Erreur: ' + err.message);
+        });
+    } else {
+        form.submit();
+    }
+}
 
-                 // Handle text input visibility for radio buttons
-         function handleRadioChange() {
-             const radioButtons = document.querySelectorAll('input[type="radio"]');
-             
-             radioButtons.forEach(radio => {
-                 radio.addEventListener('change', function() {
-                     const fieldName = this.name;
-                     const textInputContainer = document.getElementById(`text-input-${fieldName}`);
-                     
-                     if (textInputContainer) {
-                         const selectedOption = this.value;
-                         
-                         // Check if the selected option requires text input
-                         const questionData = {{ questions|tojson }};
-                         const currentQuestion = questionData.find(q => q.field_name === fieldName);
-                         
-                         if (currentQuestion && currentQuestion.text_input_options) {
-                             const needsTextInput = currentQuestion.text_input_options.includes(selectedOption);
-                             textInputContainer.style.display = needsTextInput ? 'block' : 'none';
-                             
-                             if (!needsTextInput) {
-                                 const textInput = textInputContainer.querySelector('input');
-                                 if (textInput) textInput.value = '';
-                             }
-                         }
-                     }
-                     
-                     // Update progress immediately when radio button changes
-                     setTimeout(updateProgressDots, 100);
-                 });
-             });
-         }
+// Show YAML modal
+function showYAMLModal(data) {
+    const modalHTML = `
+        <div id="yamlModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 80%; max-height: 80%; overflow-y: auto; position: relative;">
+                <h2 style="margin-bottom: 20px; color: #333;">📄 YAML Généré</h2>
+                <pre style="background: #f8f9fa; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; overflow-x: auto; white-space: pre-wrap; border: 1px solid #dee2e6;">${JSON.stringify(data, null, 2)}</pre>
+                <div style="display: flex; justify-content: space-between; margin-top: 20px; gap: 15px;">
+                    <button onclick="closeYAMLModal()" style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">Fermer</button>
+                    <button onclick="submitAndContinue()" style="padding: 12px 24px; background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Continuer vers la page suivante</button>
+                </div>
+            </div>
+        </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
 
-                 // Add event listeners for real-time progress updates
-         document.addEventListener('input', function(e) {
-             if (e.target.name) {
-                 setTimeout(updateProgressDots, 100);
-             }
-         });
+function closeYAMLModal() {
+    const modal = document.getElementById('yamlModal');
+    if (modal) modal.remove();
+}
 
-         document.addEventListener('change', function(e) {
-             if (e.target.name) {
-                 setTimeout(updateProgressDots, 100);
-             }
-         });
+function submitAndContinue() {
+    closeYAMLModal();
+    document.getElementById('questionnaireForm').submit();
+}
 
-         // Add specific event listeners for radio and checkbox buttons
-         document.addEventListener('click', function(e) {
-             if (e.target.type === 'radio' || e.target.type === 'checkbox') {
-                 setTimeout(updateProgressDots, 100);
-             }
-         });
+// Handle text input visibility for radio buttons
+function handleRadioChange() {
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const fieldName = this.name;
+            const textInputContainer = document.getElementById(`text-input-${fieldName}`);
+            if (textInputContainer) {
+                const selectedOption = this.value;
+                const currentQuestion = questionData.find(q => q.field_name === fieldName);
+                if (currentQuestion && currentQuestion.text_input_options) {
+                    const needsTextInput = currentQuestion.text_input_options.includes(selectedOption);
+                    textInputContainer.style.display = needsTextInput ? 'block' : 'none';
+                    if (needsTextInput) {
+                        const labelEl = document.getElementById(`text-label-${fieldName}`);
+                        const inputEl = textInputContainer.querySelector('input');
+                        if (labelEl && currentQuestion.text_placeholder_map && currentQuestion.text_placeholder_map[selectedOption]) {
+                            labelEl.textContent = currentQuestion.text_placeholder_map[selectedOption] + ' :';
+                        }
+                        if (inputEl && currentQuestion.text_placeholder_map && currentQuestion.text_placeholder_map[selectedOption]) {
+                            inputEl.placeholder = currentQuestion.text_placeholder_map[selectedOption];
+                        }
+                    } else {
+                        const textInput = textInputContainer.querySelector('input');
+                        if (textInput) textInput.value = '';
+                    }
+                }
+            }
+            setTimeout(updateProgressDots, 100);
+        });
+    });
+}
 
-         // Initialize radio change handlers
-         document.addEventListener('DOMContentLoaded', function() {
-             handleRadioChange();
-             
-             // Add event listeners to all radio and checkbox inputs
-             const radioInputs = document.querySelectorAll('input[type="radio"]');
-             const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
-             
-             radioInputs.forEach(input => {
-                 input.addEventListener('change', function() {
-                     setTimeout(updateProgressDots, 100);
-                 });
-             });
-             
-             checkboxInputs.forEach(input => {
-                 input.addEventListener('change', function() {
-                     setTimeout(updateProgressDots, 100);
-                 });
-             });
-         });
+// Handle text input visibility for checkbox groups when specific options are selected
+function handleCheckboxChange() {
+    const checkboxGroupsByName = new Map();
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        const name = cb.name;
+        if (!checkboxGroupsByName.has(name)) checkboxGroupsByName.set(name, []);
+        checkboxGroupsByName.get(name).push(cb);
+    });
+    checkboxGroupsByName.forEach((cbs, name) => {
+        cbs.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const currentQuestion = questionData.find(q => q.field_name === name);
+                const textInputContainer = document.getElementById(`text-input-${name}`);
+                if (!currentQuestion || !Array.isArray(currentQuestion.text_input_options) || !textInputContainer) {
+                    setTimeout(updateProgressDots, 100);
+                    return;
+                }
+                const selectedValues = cbs.filter(x => x.checked).map(x => x.value);
+                const needsText = selectedValues.some(v => currentQuestion.text_input_options.includes(v));
+                textInputContainer.style.display = needsText ? 'block' : 'none';
+                if (!needsText) {
+                    const input = textInputContainer.querySelector('input[type="text"]');
+                    if (input) input.value = '';
+                }
+                setTimeout(updateProgressDots, 100);
+            });
+        });
+    });
+}
+
+// Add event listeners for real-time progress updates
+document.addEventListener('input', function(e) {
+    if (e.target.name) setTimeout(updateProgressDots, 100);
+});
+
+document.addEventListener('change', function(e) {
+    if (e.target.name) setTimeout(updateProgressDots, 100);
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+        setTimeout(updateProgressDots, 100);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    handleRadioChange();
+    handleCheckboxChange();
+    const radioInputs = document.querySelectorAll('input[type="radio"]');
+    const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
+    radioInputs.forEach(input => input.addEventListener('change', () => setTimeout(updateProgressDots, 100)));
+    checkboxInputs.forEach(input => input.addEventListener('change', () => setTimeout(updateProgressDots, 100)));
+});
 </script>

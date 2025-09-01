@@ -1,14 +1,14 @@
-```
+```markdown
 | Section | Type de section | Compétences visées | Ressource | Intention ressource | Activité 1 | Intention activité 1 | Activité 2 | Intention activité 2 | Justification activité(s) |
 |---|---|---|---|---|---|---|---|---|---|
 | S1 | Accueil | "" | "" | "" | "" | "" | "" | "" | "" |
-| S2 | Apprentissage | C1 | Interactive Book | Acquisition | Find the Hotspot | Acquisition/Entraînement | Fill in the Blanks | Acquisition/Entraînement | L'Interactive Book permet une présentation structurée et navigable des ingrédients. Find the Hotspot engage visuellement les apprenants à identifier les éléments clés sur une image, tandis que Fill in the Blanks renforce la mémorisation et l'orthographe des noms d'ingrédients. |
-| S3 | Apprentissage | C3 | Course Presentation | Acquisition/Entraînement | Branching Scenario | Entraînement | Interactive Video | Entraînement | Course Presentation offre une présentation interactive des techniques de cuisson. Branching Scenario met les apprenants en situation pour appliquer leurs connaissances sur les techniques via des choix simulés. Interactive Video permet de tester leur compréhension en contexte visuel, en intégrant des questions directement dans les démonstrations. |
-| S4 | Apprentissage | C2 | Fichier | Acquisition/Production | Devoir | Production | Base de données | Collaboration/Production | Fichier fournit un guide ou des exemples pour la création de recettes. L'activité Devoir est idéale pour la soumission individuelle des recettes créées par les participants. La Base de données encourage la production collaborative et l'inspiration mutuelle en permettant le partage et la consultation des créations de chacun. |
-| S5 | Apprentissage | "" | Fichier | Acquisition | Question Set | Entraînement | "" | "" | Fichier est utilisé pour fournir une synthèse des notions clés abordées. Question Set permet aux participants de s'auto-évaluer sur l'ensemble des compétences et de consolider leur apprentissage de manière interactive. |
-| S6 | Classe virtuelle (BBB) | "" | "" | "" | BigBlueButtonBN | Discussion | "" | "" | Permet d'organiser une session synchrone pour des échanges en direct, des questions-réponses ou des discussions de groupe, favorisant l'interaction et la clarification des notions. |
-| S7 | Forum général | "" | "" | "" | Forum | Discussion/Collaboration | "" | "" | Offre un espace asynchrone pour les questions, les débats thématiques ou le partage d'expériences, encourageant la discussion et la collaboration entre pairs. |
-| S8 | Évaluation | "" | "" | "" | Sondage | Enquête | "" | "" | Permet de recueillir l'avis des participants sur la formation de manière simple et rapide, fournissant des retours essentiels pour l'amélioration continue. |
+| S2 | Apprentissage | Concevoir des parcours de formation personnalisés en utilisant les outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants. | Interactive Book | Acquisition | Essay | Production | Branching Scenario | Enquête/Entraînement | L'Interactive Book fournit un cadre structuré pour acquérir les principes de conception. L'activité Essay permet aux apprenants de mettre en pratique la conception de parcours personnalisés par la rédaction d'un concept détaillé. Le Branching Scenario offre une simulation de prise de décision, essentielle pour l'adaptation des parcours. |
+| S3 | Apprentissage | Analyser les données d'apprentissage des apprenants générées par les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques. | Chart | Acquisition | Base de données | Enquête/Collaboration/Production | Documentation Tool | Entraînement/Production | La ressource Chart aide à visualiser et comprendre les données. La Base de données permet la collecte et l'organisation de données d'apprentissage, cruciales pour l'analyse. Le Documentation Tool guide les apprenants dans la structuration et la production de rapports d'analyse de données. |
+| S4 | Apprentissage | Collaborer avec des experts en intelligence artificielle pour développer et améliorer les formations en intégrant des solutions innovantes et pertinentes. | Fichier | Acquisition | Wiki | Collaboration | Forum | Discussion/Collaboration | Le Fichier fournit des études de cas ou des guides de collaboration. Le Wiki favorise la co-construction de documents et de projets avec des experts. Le Forum permet des échanges asynchrones pour discuter des stratégies et des défis de la collaboration avec des spécialistes de l'IA. |
+| S5 | Apprentissage | "" | Course Presentation | Acquisition | Summary | Acquisition/Entraînement | Documentation Tool | Entraînement/Production | La Course Presentation offre une synthèse visuelle des concepts clés. L'activité Summary encourage la rétention et la synthèse active des informations apprises. Le Documentation Tool permet aux apprenants de produire une réflexion structurée ou un portfolio récapitulatif de leurs acquis. |
+| S6 | Classe virtuelle (BBB) | "" | "" | "" | BigBlueButtonBN | Discussion | "" | "" | "" |
+| S7 | Forum général | "" | "" | "" | Forum | Discussion/Collaboration | "" | "" | "" |
+| S8 | Évaluation | "" | "" | "" | Sondage | Enquête | "" | "" | "" |
 ```
 ```yaml
 - section: S1
@@ -23,44 +23,44 @@
   justification_activite_s: ""
 - section: S2
   type_de_section: Apprentissage
-  competences_visees: C1
+  competences_visees: Concevoir des parcours de formation personnalisés en utilisant les outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants.
   ressource: Interactive Book
   intention_ressource: Acquisition
-  activite_1: Find the Hotspot
-  intention_activite_1: Acquisition/Entraînement
-  activite_2: Fill in the Blanks
-  intention_activite_2: Acquisition/Entraînement
-  justification_activite_s: L'Interactive Book permet une présentation structurée et navigable des ingrédients. Find the Hotspot engage visuellement les apprenants à identifier les éléments clés sur une image, tandis que Fill in the Blanks renforce la mémorisation et l'orthographe des noms d'ingrédients.
+  activite_1: Essay
+  intention_activite_1: Production
+  activite_2: Branching Scenario
+  intention_activite_2: Enquête/Entraînement
+  justification_activite_s: L'Interactive Book fournit un cadre structuré pour acquérir les principes de conception. L'activité Essay permet aux apprenants de mettre en pratique la conception de parcours personnalisés par la rédaction d'un concept détaillé. Le Branching Scenario offre une simulation de prise de décision, essentielle pour l'adaptation des parcours.
 - section: S3
   type_de_section: Apprentissage
-  competences_visees: C3
-  ressource: Course Presentation
-  intention_ressource: Acquisition/Entraînement
-  activite_1: Branching Scenario
-  intention_activite_1: Entraînement
-  activite_2: Interactive Video
-  intention_activite_2: Entraînement
-  justification_activite_s: Course Presentation offre une présentation interactive des techniques de cuisson. Branching Scenario met les apprenants en situation pour appliquer leurs connaissances sur les techniques via des choix simulés. Interactive Video permet de tester leur compréhension en contexte visuel, en intégrant des questions directement dans les démonstrations.
+  competences_visees: Analyser les données d'apprentissage des apprenants générées par les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
+  ressource: Chart
+  intention_ressource: Acquisition
+  activite_1: Base de données
+  intention_activite_1: Enquête/Collaboration/Production
+  activite_2: Documentation Tool
+  intention_activite_2: Entraînement/Production
+  justification_activite_s: La ressource Chart aide à visualiser et comprendre les données. La Base de données permet la collecte et l'organisation de données d'apprentissage, cruciales pour l'analyse. Le Documentation Tool guide les apprenants dans la structuration et la production de rapports d'analyse de données.
 - section: S4
   type_de_section: Apprentissage
-  competences_visees: C2
+  competences_visees: Collaborer avec des experts en intelligence artificielle pour développer et améliorer les formations en intégrant des solutions innovantes et pertinentes.
   ressource: Fichier
-  intention_ressource: Acquisition/Production
-  activite_1: Devoir
-  intention_activite_1: Production
-  activite_2: Base de données
-  intention_activite_2: Collaboration/Production
-  justification_activite_s: Fichier fournit un guide ou des exemples pour la création de recettes. L'activité Devoir est idéale pour la soumission individuelle des recettes créées par les participants. La Base de données encourage la production collaborative et l'inspiration mutuelle en permettant le partage et la consultation des créations de chacun.
+  intention_ressource: Acquisition
+  activite_1: Wiki
+  intention_activite_1: Collaboration
+  activite_2: Forum
+  intention_activite_2: Discussion/Collaboration
+  justification_activite_s: Le Fichier fournit des études de cas ou des guides de collaboration. Le Wiki favorise la co-construction de documents et de projets avec des experts. Le Forum permet des échanges asynchrones pour discuter des stratégies et des défis de la collaboration avec des spécialistes de l'IA.
 - section: S5
   type_de_section: Apprentissage
   competences_visees: ""
-  ressource: Fichier
+  ressource: Course Presentation
   intention_ressource: Acquisition
-  activite_1: Question Set
-  intention_activite_1: Entraînement
-  activite_2: ""
-  intention_activite_2: ""
-  justification_activite_s: Pour consolider l'apprentissage des notions abordées dans les sections précédentes via un document de synthèse et un quiz d'auto-évaluation.
+  activite_1: Summary
+  intention_activite_1: Acquisition/Entraînement
+  activite_2: Documentation Tool
+  intention_activite_2: Entraînement/Production
+  justification_activite_s: La Course Presentation offre une synthèse visuelle des concepts clés. L'activité Summary encourage la rétention et la synthèse active des informations apprises. Le Documentation Tool permet aux apprenants de produire une réflexion structurée ou un portfolio récapitulatif de leurs acquis.
 - section: S6
   type_de_section: Classe virtuelle (BBB)
   competences_visees: ""
@@ -70,7 +70,7 @@
   intention_activite_1: Discussion
   activite_2: ""
   intention_activite_2: ""
-  justification_activite_s: Permet d'organiser une session synchrone pour des échanges en direct, des questions-réponses ou des discussions de groupe, favorisant l'interaction et la clarification des notions.
+  justification_activite_s: ""
 - section: S7
   type_de_section: Forum général
   competences_visees: ""
@@ -80,7 +80,7 @@
   intention_activite_1: Discussion/Collaboration
   activite_2: ""
   intention_activite_2: ""
-  justification_activite_s: Offre un espace asynchrone pour les questions, les débats thématiques ou le partage d'expériences, encourageant la discussion et la collaboration entre pairs.
+  justification_activite_s: ""
 - section: S8
   type_de_section: Évaluation
   competences_visees: ""
@@ -90,5 +90,5 @@
   intention_activite_1: Enquête
   activite_2: ""
   intention_activite_2: ""
-  justification_activite_s: Permet de recueillir l'avis des participants sur la formation de manière simple et rapide, fournissant des retours essentiels pour l'amélioration continue.
+  justification_activite_s: ""
 ```

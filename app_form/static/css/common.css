@@ -80,7 +80,7 @@
 
 body {
     font-family: var(--font-family);
-    background: var(--gradient-secondary);
+    background: radial-gradient(1200px 600px at 50% -200px, #eaf3ff 0%, #f6f9ff 35%, #eef2f7 65%, #e9ecef 100%);
     min-height: 100vh;
     padding: var(--spacing-lg);
     color: var(--text-dark);
@@ -102,19 +102,47 @@ body {
 
 .header {
     color: var(--white);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     text-align: center;
 }
 
 .header h1 {
-    font-size: var(--font-size-title);
-    margin-bottom: var(--spacing-sm);
+    font-size: calc(var(--font-size-title) - 0.3rem);
+    margin-bottom: var(--spacing-xs);
     font-weight: 300;
 }
 
 .header p {
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-normal);
     opacity: 0.9;
+}
+
+/* Brand header layout (logo + text), inspired by Home/Presentation */
+.header .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.header .brand-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+
+.header .brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.header .brand-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
 }
 
 .content-container,
@@ -391,6 +419,83 @@ textarea {
     line-height: 1.6;
 }
 
+/* ========================================
+   COMPETENCES INSTRUCTIONS (bespoke)
+   ======================================== */
+.instructions-competences {
+    background: linear-gradient(180deg, #ffffff 0%, #fafcff 100%);
+    border: 1px solid var(--border-gray);
+    border-left: 5px solid #3f51b5;
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-medium);
+    padding: var(--spacing-xl);
+    margin: 10px 0 25px 0;
+}
+
+.instructions-competences .ic-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.instructions-competences .ic-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3f51b5;
+    color: white;
+    border-radius: var(--radius-circle);
+    box-shadow: 0 6px 16px rgba(63, 81, 181, 0.35);
+    font-size: 18px;
+}
+
+.instructions-competences .ic-title {
+    font-weight: 700;
+    font-size: var(--font-size-xxl);
+    color: #283593;
+}
+
+.instructions-competences .ic-subtitle {
+    color: var(--text-medium);
+    margin-bottom: var(--spacing-md);
+}
+
+.instructions-competences .ic-content {
+    padding-left: 4px;
+}
+
+.instructions-competences .ic-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.instructions-competences .ic-item {
+    position: relative;
+    padding-left: 22px;
+    color: var(--text-dark);
+}
+
+.instructions-competences .ic-item::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #2e7d32;
+}
+
+.instructions-competences .ic-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--border-gray);
+    color: var(--text-medium);
+    font-size: var(--font-size-small);
+}
+
 .section-card {
     background: var(--white);
     border: 2px solid var(--border-gray);
@@ -586,11 +691,11 @@ textarea {
 
 @media (max-width: 480px) {
     .header {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
     }
     
     .header h1 {
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
     
     .question {
@@ -601,3 +706,75 @@ textarea {
         padding: var(--spacing-lg);
     }
 }
+
+/* ========================================
+   FOOTER STYLES (shared across pages)
+   ======================================== */
+
+.footer {
+    margin: var(--spacing-xl) auto 0;
+    max-width: 1200px;
+    background: #ffffff;
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-gray);
+    overflow: hidden;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-xxl);
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.08));
+}
+
+.footer-title {
+    font-weight: 700;
+    color: #1f2d3a;
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.footer-links a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+        padding: var(--spacing-xl);
+    }
+}
+
+/* ========================================
+   AI GENERATION SECTION TWEAKS
+   ======================================== */
+.ai-generate-section { text-align: center; }
+.ai-generate-section ul,
+.ai-generate-section li { list-style: none; margin: 0; padding: 0; }
+.ai-generate-section .ai-guidelines { max-width: 980px; margin: 0 auto 12px; text-align: center; }
+.ai-generate-section .ai-guidelines p { margin: 6px 0; }

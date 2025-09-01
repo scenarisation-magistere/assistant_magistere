@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
     <style>
         /* Page-specific styles for contenu.html */
-        .header {
-            /* Header background will be set via inline style */
-        }
 
         .step-indicator .step.active {
             color: var(--primary-blue);
@@ -639,8 +636,23 @@
 
             <!-- AI Generation Section -->
             <div class="ai-generate-section">
-                <h3>🤖 Génération IA des Contenus</h3>
-                <p>L'IA va analyser vos compétences et générer automatiquement les contenus pédagogiques pour chaque section selon les règles ABC Learning Design.</p>
+                <h3>Génération des contenus pédagogiques</h3>
+                <p>L’IA génère automatiquement les contenus du parcours selon le scénario hybride CMO.</p>
+                <p>Cette génération s’appuie sur :</p>
+                <div class="ai-guidelines">
+                    <p>
+                        Les <strong>intentions pédagogiques du scénario hybride CMO</strong> (méthode ABC Learning Design) :<br>
+                        <strong>Prioritaires</strong> : Acquisition, Collaboration, Discussion, Pratique<br>
+                        <strong>Complémentaires</strong> : Production, Enquête
+                    </p>
+                    <p>
+                        Le <strong>niveau de difficulté</strong> de chaque compétence visée.
+                    </p>
+                    <p>
+                        Une <strong>sélection pré-orientée de ressources et activités Magistère</strong>, validée par la Communauté Magistère Occitanie
+                        (<a href="https://nuage02.apps.education.fr/index.php/s/8TZDK9gYr7nZ4EH?dir=/&openfile=true" target="_blank" rel="noopener">voir le tableur de choix</a>).
+                    </p>
+                </div>
                 
                 <button class="ai-generate-btn" id="generateContenusBtn" onclick="generateContenus()">
                     ✨ Générer les Contenus
@@ -721,12 +733,26 @@
     </div>
 
     {% include 'includes/success_modal.html' %}
+    {% include 'includes/footer.html' %}
 
     <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
         // Global variables
         let competences = [];
         let contenusData = {};
+
+        // Normalize any value to a safe string for rendering
+        function normalizeValue(value) {
+            if (value === null || value === undefined) return '';
+            if (typeof value === 'object') {
+                try {
+                    return JSON.stringify(value);
+                } catch (e) {
+                    return String(value);
+                }
+            }
+            return String(value);
+        }
 
         // Load competences data
         document.addEventListener('DOMContentLoaded', function() {
@@ -882,12 +908,12 @@
             contenusData.forEach(section => {
                 tableHTML += `
                     <tr>
-                        <td class="section-number">${section.section}</td>
-                        <td class="section-type">${section.type_de_section || '-'}</td>
-                        <td class="competence-visee">${section.competences_visees || '-'}</td>
-                        <td class="ressource">${section.ressource || '-'}</td>
-                        <td class="activite">${section.activite_1 || '-'}</td>
-                        <td class="activite">${section.activite_2 || '-'}</td>
+                        <td class="section-number">${normalizeValue(section.section) || '-'}</td>
+                        <td class="section-type">${normalizeValue(section.type_de_section) || '-'}</td>
+                        <td class="competence-visee">${normalizeValue(section.competences_visees) || '-'}</td>
+                        <td class="ressource">${normalizeValue(section.ressource) || '-'}</td>
+                        <td class="activite">${normalizeValue(section.activite_1) || '-'}</td>
+                        <td class="activite">${normalizeValue(section.activite_2) || '-'}</td>
                     </tr>
                 `;
             });
@@ -904,11 +930,10 @@
             const detailedContent = document.getElementById('detailedContent');
             
             // Filter sections to only show those with competences
-            const sectionsWithCompetences = contenusData.filter(section => 
-                section.competences_visees && 
-                section.competences_visees.trim() !== '' && 
-                section.competences_visees !== '-'
-            );
+            const sectionsWithCompetences = contenusData.filter(section => {
+                const cv = normalizeValue(section.competences_visees);
+                return cv && cv.trim() !== '' && cv !== '-';
+            });
             
             // Generate detailed view HTML for filtered sections only
             let detailedHTML = '';
@@ -926,70 +951,70 @@
         }
 
         function generateSectionCard(section, index) {
-            const competenceCode = extractCompetenceCode(section.competences_visees);
+            const competenceCode = extractCompetenceCode(normalizeValue(section.competences_visees));
             const competenceDetails = getCompetenceDetails(competenceCode);
             
             return `
                 <div class="section-card" id="section-${index}" style="display: ${index === 0 ? 'block' : 'none'};">
                     <div class="section-card-header">
-                        <h5>${section.type_de_section || 'Section'}</h5>
-                        <div class="section-number">${section.section}</div>
+                        <h5>${normalizeValue(section.type_de_section) || 'Section'}</h5>
+                        <div class="section-number">${normalizeValue(section.section)}</div>
                     </div>
                     
                     <div class="section-card-content">
                         <div class="section-info-grid">
-                            ${section.competences_visees ? `
+                            ${normalizeValue(section.competences_visees) ? `
                                 <div class="section-info-item">
-                                    <div class="competence-highlight">${competenceCode || 'Compétence'}</div>
+                                    <div class="competence-highlight">${normalizeValue(competenceCode) || 'Compétence'}</div>
                                     <h6>Compétences visées</h6>
-                                    <p>${section.competences_visees}</p>
+                                    <p>${normalizeValue(section.competences_visees)}</p>
                                     ${competenceDetails ? `
                                         <div style="margin-top: 10px; padding: 8px; background: rgba(23, 162, 184, 0.1); border-radius: 5px; font-size: 0.9em;">
-                                            <strong>Niveau :</strong> ${competenceDetails.niveau || 'Non défini'}<br>
-                                            <strong>Idées clés :</strong> ${competenceDetails.idees_cles || 'Non définies'}
+                                            <strong>Niveau :</strong> ${normalizeValue(competenceDetails.niveau) || 'Non défini'}<br>
+                                            <strong>Idées clés :</strong> ${normalizeValue(competenceDetails.idees_cles) || 'Non définies'}
                                         </div>
                                     ` : ''}
                                 </div>
                             ` : ''}
                             
-                            ${section.ressource ? `
+                            ${normalizeValue(section.ressource) ? `
                                 <div class="section-info-item">
                                     <h6>📚 Ressource</h6>
-                                    <p><strong>${section.ressource}</strong></p>
-                                    ${section.intention_ressource ? `<p><em>Intention : ${section.intention_ressource}</em></p>` : ''}
+                                    <p><strong>${normalizeValue(section.ressource)}</strong></p>
+                                    ${normalizeValue(section.intention_ressource) ? `<p><em>Intention : ${normalizeValue(section.intention_ressource)}</em></p>` : ''}
                                 </div>
                             ` : ''}
                         </div>
                         
-                        ${(section.activite_1 || section.activite_2) ? `
+                        ${(normalizeValue(section.activite_1) || normalizeValue(section.activite_2)) ? `
                             <div class="section-actions">
                                 <h6>🎯 Activités pédagogiques</h6>
-                                ${section.activite_1 ? `
+                                ${normalizeValue(section.activite_1) ? `
                                     <div class="action-item">
                                         <div class="action-icon">1</div>
                                         <div class="action-content">
-                                            <div class="action-title">${section.activite_1}</div>
-                                            ${section.intention_activite_1 ? `<div class="action-intention">Intention : ${section.intention_activite_1}</div>` : ''}
+                                            <div class="action-title">${normalizeValue(section.activite_1)}</div>
+                                            ${normalizeValue(section.intention_activite_1) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_1)}</div>` : ''}
                                         </div>
                                     </div>
                                 ` : ''}
                                 
-                                ${section.activite_2 ? `
+                                ${normalizeValue(section.activite_2) ? `
                                     <div class="action-item">
                                         <div class="action-icon">2</div>
                                         <div class="action-content">
-                                            <div class="action-title">${section.activite_2}</div>
-                                            ${section.intention_activite_2 ? `<div class="action-intention">Intention : ${section.intention_activite_2}</div>` : ''}
+                                            <div class="action-title">${normalizeValue(section.activite_2)}</div>
+                                            ${normalizeValue(section.intention_activite_2) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_2)}</div>` : ''}
                                         </div>
                                     </div>
                                 ` : ''}
                             </div>
                         ` : ''}
                         
-                        ${section.justification_activite_s ? `
+                        ${normalizeValue(section.justification_activite_s) ? `
                             <div class="justification-box">
                                 <h6>💡 Justification pédagogique</h6>
-                                <p>${section.justification_activite_s}</p>
+                                <p>${normalizeValue(section.justification_activite_s)}</p>
                             </div>
                         ` : ''}
                     </div>

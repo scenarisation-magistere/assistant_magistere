@@ -1,0 +1,14 @@
+<div class="example-compact" style="margin-top: var(--spacing-sm);">
+    <strong>💡 {{ example_title or 'Exemple' }}</strong>
+    <br>
+    {% if example_titre %}
+    — Titre: « {{ example_titre }} »
+    <br>
+    {% endif %}
+    {% if example_objectif %}
+    — Objectif général: « {{ example_objectif }} »
+    <br>
+    {% endif %}
+</div>
+
+

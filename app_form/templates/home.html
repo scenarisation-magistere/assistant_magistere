@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistant Créa Magistère</title>
+    <title>Assistant Scénarisation Magistère</title>
     <style>
         /* Reset et styles de base */
         * {
@@ -16,56 +16,104 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             color: #333333;
-            padding: 20px;
+            padding: 0;
         }
 
         /* Container principal */
         .main-container {
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-        }
-
-        /* Titre principal */
-        .main-title {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #333333;
-            margin-bottom: 60px;
-            line-height: 1.2;
-            letter-spacing: -1px;
-        }
-
-        /* Section des boutons */
-        .buttons-section {
+            margin: 0 auto;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
+            gap: 28px;
+            padding: 40px 20px;
         }
 
-        /* Style des boutons */
-        .action-button {
-            background: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            padding: 20px 30px;
+        /* Sur-titre */
+        .super-title {
             font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #5c6770;
+            margin-bottom: 18px;
+        }
+
+        /* Titre principal avec logo */
+        .logo-title {
             display: flex;
             align-items: center;
-            gap: 15px;
-            min-width: 280px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 12px;
+        }
+
+        .logo-img {
+            width: 35rem;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.12));
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333333;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+
+        /* Sous-titre descriptif */
+        .subtitle {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            line-height: 1.7;
+            margin-top: 8px;
+            margin-bottom: 56px;
+            max-width: 900px;
+        }
+
+        /* Conteneur CTA en bas de page */
+        .cta-container {
+            margin-top: 24px;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Bloc d'information et contacts */
+        .info-block {
+            margin-top: 16px;
+            max-width: 900px;
+            color: #505a63;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+        .info-block a { color: #0d6efd; text-decoration: none; }
+        .info-block a:hover { text-decoration: underline; }
+        .contact-list { list-style: none; margin-top: 8px; }
+        .contact-list li { margin: 4px 0; }
+
+        /* Style du bouton */
+        .action-button {
+            background: #1f2d3a;
+            color: white;
+            border: none;
+            border-radius: 44px;
+            padding: 18px 26px;
+            font-size: clamp(1.05rem, 1.9vw, 1.6rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            width: clamp(260px, 40vw, 440px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
         }
 
         .action-button:hover {
@@ -78,115 +126,44 @@
             transform: translateY(-1px);
         }
 
-        /* Icônes des boutons */
-        .button-icon {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .button-text {
-            text-align: left;
-            line-height: 1.3;
-        }
-
-        /* Section de l'illustration */
-        .illustration-section {
-            margin-bottom: 60px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* SVG de la chaise d'école */
-        .chair-svg {
-            width: 120px;
-            height: 120px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-        }
-
-        /* Sous-titre de référence */
-        .subtitle {
-            font-size: 1.2rem;
-            color: #666666;
-            font-style: italic;
-            margin-top: 40px;
-        }
-
         /* Responsive design */
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
-                margin-bottom: 40px;
-            }
-
-            .buttons-section {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-                margin-bottom: 40px;
-            }
-
-            .action-button {
-                min-width: 250px;
-                padding: 18px 25px;
-                font-size: 1rem;
-            }
-
-            .chair-svg {
-                width: 100px;
-                height: 100px;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
+            .main-title { font-size: 2.4rem; }
+            .logo-img { width: 160px; height: 160px; }
+            .subtitle { font-size: 1.1rem; margin-bottom: 48px; }
+            .action-button { width: clamp(240px, 50vw, 420px); padding: 18px 24px; }
         }
 
         @media (max-width: 480px) {
-            .main-title {
-                font-size: 2rem;
-            }
-
-            .action-button {
-                min-width: 220px;
-                padding: 15px 20px;
-            }
+            .main-title { font-size: 2rem; }
+            .logo-img { width: 130px; height: 130px; }
+            .subtitle { font-size: 1rem; margin-bottom: 36px; }
+            .action-button { width: 80%; padding: 16px 20px; }
         }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <!-- Titre principal -->
-        <h1 class="main-title">
-            ASSISTANT CRÉA<br>
-            MAGISTÈRE
-        </h1>
+        <!-- Sur-titre -->
+        <div class="super-title">Assistant Scénarisation</div>
 
-        <!-- Section des boutons d'action -->
-        <div class="buttons-section">
-            <button class="action-button" onclick="window.location.href='/start-journey'">
-                <span class="button-icon">+</span>
-                <div class="button-text">
-                    Commencer le<br>
-                    parcours de création
-                </div>
-            </button>
-
-            <button class="action-button" onclick="window.location.href='/load-journey'">
-                <span class="button-icon">↑</span>
-                <div class="button-text">
-                    Charger<br>
-                    un parcours
-                </div>
-            </button>
+        <!-- Titre principal avec logo -->
+        <div class="logo-title">
+            <img class="logo-img" src="{{ url_for('static', filename='image/01-Pap_animé.gif') }}" alt="Logo Magistère">
         </div>
 
-        <!-- Illustration de la chaise d'école -->
-        <div class="illustration-section">
-            <img src="{{ url_for('static', filename='image/chaise.svg') }}" alt="Chaise d'école" class="chair-svg">
+        
+        <!-- Sous-titre descriptif -->
+        <p class="subtitle">Je vous accompagne dans la scénarisation de vos parcours sur Magistère, en suivant le scénario hybride de la Communauté Magistère Occitanie.</p>
+
+        <!-- Bouton d'action principal (en bas de page) -->
+        <div class="cta-container">
+            <button class="action-button" onclick="window.location.href='/presentation'">Commencer</button>
         </div>
 
-        <!-- Sous-titre de référence -->
-        <p class="subtitle">CECI N’EST PAS UNE CHAISE, MAIS UN ASSISTANT BOOSTÉ À L’IA QUI ACCÉLÈRE ET SIMPLIFIE LA CRÉATION DE VOS FORMATIONS MAGISTÈRES.</p>
+        <div class="info-block">
+            <p>👉 S’il s’agit d’une <strong>migration</strong>, veuillez utiliser l’<a href="https://toulouse.magistere.apps.education.fr/course/view.php?id=398" target="_blank" rel="noopener noreferrer">espace dédié</a>.</p>
+        </div>
     </div>
 </body>
 </html>

@@ -1,0 +1,15 @@
+{% if examples %}
+<div class="suggestions-section">
+    <h4>💡 {{ suggestions_title or 'Suggestions de réponses :' }}</h4>
+    <div class="suggestions-list">
+        {% for example in examples %}
+        <div class="suggestion-item" data-field="{{ field_name }}" data-suggestion="{{ example }}">{{ example }}</div>
+        {% endfor %}
+    </div>
+    {% if suggestions_footer %}
+    <div class="suggestions-footer">{{ suggestions_footer }}</div>
+    {% endif %}
+</div>
+{% endif %}
+
+

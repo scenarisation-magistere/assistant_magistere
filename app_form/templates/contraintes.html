@@ -123,14 +123,16 @@
 
         <div class="form-container">
 
-            <form id="questionnaireForm" method="POST">
+            <form id="questionnaireForm" method="POST" data-endpoint="/submit_contraintes">
                 {% include 'includes/question_slider.html' %}
             </form>
         </div>
     </div>
 
     {% include 'includes/success_modal.html' %}
+    {% include 'includes/footer.html' %}
 
+    <script>window.RECAP_ENABLED = false;</script>
     <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
         // Override navigation functions for this template

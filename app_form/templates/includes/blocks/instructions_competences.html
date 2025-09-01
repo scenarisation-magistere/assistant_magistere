@@ -1,0 +1,23 @@
+<div class="instructions-competences">
+    <div class="ic-header">
+        <div class="ic-icon">🌟</div>
+        <div class="ic-title">{{ instructions_header or 'Objectif' }}</div>
+    </div>
+    {% if instructions_subtitle %}
+    <div class="ic-subtitle">{{ instructions_subtitle }}</div>
+    {% endif %}
+
+    <div class="ic-content">
+        <ul class="ic-list">
+            {% for line in instructions %}
+            <li class="ic-item">{{ line }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if instructions_footer %}
+    <div class="ic-footer">{{ instructions_footer }}</div>
+    {% endif %}
+</div>
+
+

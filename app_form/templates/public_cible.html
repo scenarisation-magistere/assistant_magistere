@@ -75,64 +75,26 @@
         {% include 'includes/header.html' %}
 
         <div class="form-container">
-
-            <form id="questionnaireForm" method="POST">
+            <form id="questionnaireForm" method="POST" data-endpoint="/submit_public_cible">
                 {% include 'includes/question_slider.html' %}
             </form>
         </div>
     </div>
 
     {% include 'includes/success_modal.html' %}
+    {% include 'includes/footer.html' %}
 
+    <script>window.RECAP_ENABLED = false;</script>
     <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
-        // Override navigation functions for this template
+        // Override navigation helpers to enable Next/Previous buttons
         function getNextRouteFromNavInfo() {
-            {% if nav_info and nav_info.next_route %}
-                return '{{ nav_info.next_route }}';
-            {% endif %}
-            return null;
+            return '{{ nav_info.next_route if nav_info and nav_info.next_route else "" }}';
         }
 
         function getPreviousRouteFromNavInfo() {
-            {% if nav_info and nav_info.previous_route %}
-                return '{{ nav_info.previous_route }}';
-            {% endif %}
-            return null;
+            return '{{ nav_info.previous_route if nav_info and nav_info.previous_route else "" }}';
         }
-
-        // Override submitAllQuestions function to use harmonized submit
-        const originalSubmitAllQuestions = window.submitAllQuestions;
-        window.submitAllQuestions = function() {
-            // Check if all questions are completed
-            const questionData = {{ questions|tojson }};
-            const incompleteQuestions = [];
-            
-            questionData.forEach((question, index) => {
-                if (!isQuestionCompleted(question.field_name)) {
-                    incompleteQuestions.push(index + 1);
-                }
-            });
-            
-            if (incompleteQuestions.length > 0) {
-                alert(`Veuillez compléter les questions suivantes : ${incompleteQuestions.join(', ')}`);
-                goToQuestion(incompleteQuestions[0]);
-                return;
-            }
-            
-            // Use harmonized submit
-            const submitHandler = createHarmonizedSubmitButton({
-                buttonId: 'submitBtn',
-                buttonText: '✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}',
-                endpoint: '/submit_public_cible',
-                dataProcessor: () => processFormData('questionnaireForm'),
-                loadingText: '⏳ Sauvegarde en cours...'
-            });
-            
-            // Create a temporary form submission event
-            const event = new Event('submit', { bubbles: true, cancelable: true });
-            document.getElementById('questionnaireForm').dispatchEvent(event);
-        };
     </script>
 </body>
 </html> 

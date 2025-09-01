@@ -8,7 +8,6 @@ from questions.competences import (
     reorder_competences, 
     generate_competence_template
 )
-from ai_helpers import generate_verb_suggestions_for_level
 from .competences_ai import (
     generate_competency_suggestions, 
     evaluate_and_order_competences,
@@ -29,6 +28,7 @@ def register_competences_routes(app):
         
         # Load previous data from YAML file
         public_cible_data = None
+        contraintes_data = None
         if 'session_id' in session:
             filename = get_session_filename()
             filepath = os.path.join('output', filename)
@@ -37,6 +37,7 @@ def register_competences_routes(app):
                     with open(filepath, 'r', encoding='utf-8') as f:
                         yaml_data = yaml.safe_load(f) or {}
                         public_cible_data = yaml_data.get('etape_1_public_cible', {})
+                        contraintes_data = yaml_data.get('etape_2_contraintes', {})
                 except:
                     pass
         
@@ -48,8 +49,8 @@ def register_competences_routes(app):
         page_config = get_page_config('competences')
         return render_template('competences.html', 
                              competences=competences,
-                             verb_suggestions=COMPETENCES_QUESTIONS['verb_suggestions'],
                              public_cible_data=public_cible_data,
+                             contraintes_data=contraintes_data,
                              nav_info=nav_info,
                              header_gradient=page_config.get('header_gradient', 'var(--gradient-success)'),
                              header_title='🎯 Compétences Visées',
@@ -133,21 +134,7 @@ def register_competences_routes(app):
                 'error': str(e)
             })
 
-    @app.route('/get_verb_suggestions/<niveau>')
-    def get_verb_suggestions(niveau):
-        """Get verb suggestions for a specific cognitive level"""
-        try:
-            suggestions = generate_verb_suggestions_for_level(niveau)
-            return jsonify({
-                'success': True,
-                'suggestions': suggestions,
-                'niveau': niveau
-            })
-        except Exception as e:
-            return jsonify({
-                'success': False,
-                'error': str(e)
-            })
+    # Legacy endpoint /get_verb_suggestions removed. Use /get_bloom_verbs instead.
 
     @app.route('/get_bloom_verbs/<path:niveau>')
     def get_bloom_verbs(niveau):
@@ -166,6 +153,7 @@ def register_competences_routes(app):
             niveau = decoded_niveau
             # Map niveau to bloom taxonomy keys
             niveau_mapping = {
+                # Sélections combinées (cognitif + quelques affectifs pertinents)
                 'Haut : Créer / Évaluer / Analyser': ['creer', 'evaluer', 'analyser', 'caracteriser', 'organiser'],
                 'Moyen : Appliquer / Comprendre': ['appliquer', 'comprendre', 'valoriser', 'repondre'],
                 'Bas : Se rappeler': ['se_rappeler', 'recevoir']
@@ -199,6 +187,8 @@ def register_competences_routes(app):
     def generate_ai_suggestions():
         """Generate AI suggestions for competencies based on formation data"""
         try:
+            # Read optional context from the request (selected/workshop competences)
+            client_payload = request.get_json(silent=True) or {}
             # Load formation data from YAML file
             if 'session_id' not in session:
                 return jsonify({
@@ -219,7 +209,12 @@ def register_competences_routes(app):
             with open(filepath, 'r', encoding='utf-8') as f:
                 yaml_data = yaml.safe_load(f) or {}
             
-            # Pass the complete YAML data to the AI function
+            # Merge client context into YAML data so the prompt can avoid duplicates
+            if client_payload:
+                yaml_data['selected_competences'] = client_payload.get('selected_competences', [])
+                yaml_data['workshop_competences'] = client_payload.get('workshop_competences', [])
+
+            # Pass the enriched data to the AI function
             result = generate_competency_suggestions(yaml_data)
             
             if result['success']:
