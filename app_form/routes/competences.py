@@ -259,6 +259,34 @@ def register_competences_routes(app):
                 'error': str(e)
             })
 
+    @app.route('/get_verbs_by_domain_level')
+    def get_verbs_by_domain_level():
+        """Return verbs filtered by domain (cognitif/affectif) and level (Bas/Moyen/Haut)"""
+        try:
+            domain = request.args.get('domain', '').strip().lower()
+            level = request.args.get('level', '').strip()
+            if domain not in ('cognitif', 'affectif') or level not in ('Bas', 'Moyen', 'Haut'):
+                return jsonify({
+                    'success': False,
+                    'error': 'Paramètres invalides. domain=cognitif|affectif, level=Bas|Moyen|Haut'
+                })
+            taxonomy = load_verbs_taxonomy()
+            result = {}
+            for key, data in taxonomy.items():
+                if data.get('domain') == domain and data.get('level') == level:
+                    result[key] = data
+            return jsonify({
+                'success': True,
+                'verbs': result,
+                'domain': domain,
+                'level': level
+            })
+        except Exception as e:
+            return jsonify({
+                'success': False,
+                'error': str(e)
+            })
+
     @app.route('/generate_ai_suggestions', methods=['POST'])
     def generate_ai_suggestions():
         """Generate AI suggestions for competencies based on formation data"""
@@ -352,7 +380,11 @@ def register_competences_routes(app):
                 'titre': data.get(f'titre_{i}', ''),
                 'idees_cles': data.get(f'idees_cles_{i}', ''),
                 'niveau': data.get(f'niveau_{i}', ''),
+                'niveau_cognitif': data.get(f'niveau_cognitif_{i}', ''),
+                'niveau_affectif': data.get(f'niveau_affectif_{i}', ''),
                 'verbes': data.get(f'verbes_{i}', ''),
+                'verbes_cognitifs': data.get(f'verbes_cognitifs_{i}', ''),
+                'verbes_affectifs': data.get(f'verbes_affectifs_{i}', ''),
                 'formulation': data.get(f'formulation_{i}', '')
             }
         

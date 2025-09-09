@@ -89,8 +89,8 @@ def generate_competency_suggestions(formation_data):
             warnings.append(f"Verbes en double détectés (cognitif, {lvl}) : {', '.join(cog_dups)}")
         if aff_dups:
             warnings.append(f"Verbes en double détectés (affectif, {lvl}) : {', '.join(aff_dups)}")
-        coherence_lines.append(f"- Cognitif ({lvl}) : {', '.join(cog_list[:24])}")
-        coherence_lines.append(f"- Affectif ({lvl}) : {', '.join(aff_list[:24])}")
+        coherence_lines.append(f"- Cognitif ({lvl}) : {', '.join(cog_list[:30])}")
+        coherence_lines.append(f"- Affectif ({lvl}) : {', '.join(aff_list[:30])}")
     level_verb_coherence_text = "\n".join(coherence_lines)
 
     # Include already selected and workshop competences (if passed by client)
@@ -115,8 +115,10 @@ def generate_competency_suggestions(formation_data):
         {
             "titre": "Titre court et descriptif de la compétence",
             "idees_cles": "mots-clés et concepts principaux",
-            "niveau": "Haut/Moyen/Bas",
-            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+            "niveau_cognitif": "Bas/Moyen/Haut",
+            "niveau_affectif": "Bas/Moyen/Haut",
+            "verbes_cognitifs": ["verbe_cognitif_1", "verbe_cognitif_2"],
+            "verbes_affectifs": ["verbe_affectif_1"],
             "formulation": "Formulation complète de la compétence"
         }
     ]
@@ -156,10 +158,10 @@ def generate_competency_suggestions(formation_data):
 
         1. Générez exactement 4 nouvelles compétences.
         2. Pour chaque compétence :
-            a. Déterminez son niveau (Bas, Moyen, Haut) en fonction du public cible et de l’objectif de formation.
+            a. Déterminez DEUX niveaux : un niveau cognitif et un niveau affectif (Bas/Moyen/Haut) adaptés au public et à l’objectif.
             b. Rédigez le titre et la formulation complète de la compétence.
-            c. Sélectionnez les verbes d’action uniquement parmi la liste autorisée pour le niveau et le domaine appropriés (cognitif ou affectif).
-            d. Variez les verbes entre domaine cognitif et affectif selon la pertinence pour la compétence.
+            c. Sélectionnez AU MOINS un verbe cognitif parmi la liste autorisée du niveau cognitif choisi ET AU MOINS un verbe affectif parmi la liste autorisée du niveau affectif choisi.
+            d. Respectez STRICTEMENT les listes autorisées ci-dessous (orthographe exacte des verbes, accents, traits d’union, underscores).
 
         3. Classez les compétences du niveau le plus bas au plus élevé.
         4. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
@@ -223,11 +225,29 @@ def generate_competency_suggestions(formation_data):
         # Remove JSON code block markers if present
         content = content.replace('```json', '').replace('```', '')
         suggestions = json.loads(content)
+        # Normalize legacy keys if model returned old structure
+        normalized = []
+        for item in suggestions.get('competences', []):
+            ni = {
+                'titre': item.get('titre', ''),
+                'idees_cles': item.get('idees_cles', ''),
+                'niveau_cognitif': item.get('niveau_cognitif') or item.get('niveau') or '',
+                'niveau_affectif': item.get('niveau_affectif') or '',
+                'verbes_cognitifs': item.get('verbes_cognitifs') or item.get('verbes_suggere') or [],
+                'verbes_affectifs': item.get('verbes_affectifs') or [],
+                'formulation': item.get('formulation', '')
+            }
+            # Ensure list types
+            if isinstance(ni['verbes_cognitifs'], str):
+                ni['verbes_cognitifs'] = [v.strip() for v in ni['verbes_cognitifs'].split(',') if v.strip()]
+            if isinstance(ni['verbes_affectifs'], str):
+                ni['verbes_affectifs'] = [v.strip() for v in ni['verbes_affectifs'].split(',') if v.strip()]
+            normalized.append(ni)
         if warnings:
             suggestions['warnings'] = warnings
         return {
             'success': True,
-            'suggestions': suggestions.get('competences', []),
+            'suggestions': normalized,
             'raw_response': content,
             'warnings': warnings
         }
@@ -284,7 +304,11 @@ def evaluate_and_order_competences(yaml_data):
             competences_yaml += f"""  {comp['code']}:
     idees_cles: {comp['idees_cles']}
     niveau: {comp['niveau']}
+    niveau_cognitif: {comp.get('niveau_cognitif','')}
+    niveau_affectif: {comp.get('niveau_affectif','')}
     verbes: {comp['verbes']}
+    verbes_cognitifs: {comp.get('verbes_cognitifs','')}
+    verbes_affectifs: {comp.get('verbes_affectifs','')}
     formulation: {comp['formulation']}
 """
         

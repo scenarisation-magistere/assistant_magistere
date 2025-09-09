@@ -2046,30 +2046,35 @@
                     <input type=\"text\" id=\"editTitle\" value=\"Nouvelle Compétence\" class=\"form-control\">
                 </div>
                 <div class=\"form-group\">
-                    <label>Niveau :</label>
-                    <select id=\"editNiveau\" class=\"form-control\" onchange=\"loadBloomVerbs()\">
-                        <optgroup label=\"Cognitif\">
-                            <option value=\"Haut : Créer / Évaluer\">Haut : Créer / Évaluer</option>
-                            <option value=\"Moyen : Appliquer / Analyser\" selected>Moyen : Appliquer / Analyser</option>
-                            <option value=\"Bas : Comprendre / Connaître\">Bas : Comprendre / Connaître</option>
-                        </optgroup>
-                        <optgroup label=\"Affectif\">
-                            <option value=\"Affectif : Réception\">Affectif : Réception</option>
-                            <option value=\"Affectif : Réponse\">Affectif : Réponse</option>
-                            <option value=\"Affectif : Valorisation\">Affectif : Valorisation</option>
-                            <option value=\"Affectif : Organisation\">Affectif : Organisation</option>
-                            <option value=\"Affectif : Caractérisation\">Affectif : Caractérisation</option>
-                        </optgroup>
+                    <label>Niveau cognitif :</label>
+                    <select id=\"editNiveauCognitif\" class=\"form-control\" onchange=\"loadVerbsForDomain('cognitif')\">
+                        <option value=\"Haut\">Haut</option>
+                        <option value=\"Moyen\" selected>Moyen</option>
+                        <option value=\"Bas\">Bas</option>
                     </select>
                 </div>
                 <div class=\"form-group\">
-                    <label>Verbes :</label>
-                    <div id=\"bloomVerbsContainer\" class=\"bloom-verbs-container\">
-                        <p class=\"bloom-verbs-title\">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
-                        <div id=\"bloomVerbsList\" class=\"bloom-verbs-list\">
-                            <!-- Les verbes seront chargés ici -->
-                        </div>
-                        <div id=\"selectedVerbsTags\" class=\"bloom-selected-tags\"></div>
+                    <label>Verbes cognitifs :</label>
+                    <div id=\"cognitiveVerbsContainer\" class=\"bloom-verbs-container\">
+                        <p class=\"bloom-verbs-title\">💡 Sélectionnez des verbes cognitifs (au moins un).</p>
+                        <div id=\"cognitiveVerbsList\" class=\"bloom-verbs-list\"></div>
+                        <div id=\"selectedCognitiveTags\" class=\"bloom-selected-tags\"></div>
+                    </div>
+                </div>
+                <div class=\"form-group\">
+                    <label>Niveau affectif :</label>
+                    <select id=\"editNiveauAffectif\" class=\"form-control\" onchange=\"loadVerbsForDomain('affectif')\">
+                        <option value=\"Haut\">Haut</option>
+                        <option value=\"Moyen\" selected>Moyen</option>
+                        <option value=\"Bas\">Bas</option>
+                    </select>
+                </div>
+                <div class=\"form-group\">
+                    <label>Verbes affectifs :</label>
+                    <div id=\"affectiveVerbsContainer\" class=\"bloom-verbs-container\">
+                        <p class=\"bloom-verbs-title\">💡 Sélectionnez des verbes affectifs (au moins un).</p>
+                        <div id=\"affectiveVerbsList\" class=\"bloom-verbs-list\"></div>
+                        <div id=\"selectedAffectiveTags\" class=\"bloom-selected-tags\"></div>
                     </div>
                 </div>
                 <div class=\"form-group\">
@@ -2084,18 +2089,11 @@
             `;
             
             document.getElementById('editModal').style.display = 'block';
-            // Replace niveau selector with simple Bas/Moyen/Haut options
-            (function(){
-                const sel = document.getElementById('editNiveau');
-                if (sel) {
-                    sel.innerHTML = '<option value="Haut">Haut</option><option value="Moyen" selected>Moyen</option><option value="Bas">Bas</option>';
-                }
-            })();
-            
-            // Ensure hidden input exists and is empty, then load verbs
-            const hidden = ensureHiddenVerbsInput();
-            hidden.value = '';
-            loadBloomVerbs();
+            // Ensure hidden inputs exist and are empty, then load verbs per domain
+            const hiddenCog = ensureHiddenVerbsInput('cognitif'); hiddenCog.value = '';
+            const hiddenAff = ensureHiddenVerbsInput('affectif'); hiddenAff.value = '';
+            loadVerbsForDomain('cognitif');
+            loadVerbsForDomain('affectif');
         }
 
         function generateAISuggestions() {
@@ -2150,15 +2148,27 @@
             .then(result => {
                 if (result.success) {
                     // Set new suggestions into the unified workshop pool
-                    workshopCompetences = (result.suggestions || []).map((sug, idx) => ({
-                        id: `ws_${Date.now()}_${idx}`,
-                        titre: sug.titre || `Compétence ${idx + 1}`,
-                        idees_cles: sug.idees_cles || '',
-                        niveau: sug.niveau || '',
-                        verbes: Array.isArray(sug.verbes_suggere) ? sug.verbes_suggere.join(', ') : (sug.verbes_suggere || ''),
-                        formulation: sug.formulation || '',
-                        source: 'ai'
-                    }));
+                    workshopCompetences = (result.suggestions || []).map((sug, idx) => {
+                        const vc = Array.isArray(sug.verbes_cognitifs) ? sug.verbes_cognitifs.join(', ') : (sug.verbes_cognitifs || '');
+                        const va = Array.isArray(sug.verbes_affectifs) ? sug.verbes_affectifs.join(', ') : (sug.verbes_affectifs || '');
+                        const combinedVerbs = [vc, va].filter(Boolean).join(', ');
+                        const nc = sug.niveau_cognitif || '';
+                        const na = sug.niveau_affectif || '';
+                        const combinedLevel = (nc || na) ? `Cog: ${nc || '?'} / Aff: ${na || '?'}` : '';
+                        return {
+                            id: `ws_${Date.now()}_${idx}`,
+                            titre: sug.titre || `Compétence ${idx + 1}`,
+                            idees_cles: sug.idees_cles || '',
+                            niveau: combinedLevel,
+                            niveau_cognitif: nc,
+                            niveau_affectif: na,
+                            verbes: combinedVerbs,
+                            verbes_cognitifs: vc,
+                            verbes_affectifs: va,
+                            formulation: sug.formulation || '',
+                            source: 'ai'
+                        };
+                    });
                     displaySuggestionsPool();
                     content.style.display = 'block';
                 } else {
@@ -2543,15 +2553,27 @@
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    workshopCompetences = (result.suggestions || []).map((sug, idx) => ({
-                        id: `ws_${Date.now()}_${idx}`,
-                        titre: sug.titre || `Compétence ${idx + 1}`,
-                        idees_cles: sug.idees_cles || '',
-                        niveau: sug.niveau || '',
-                        verbes: Array.isArray(sug.verbes_suggere) ? sug.verbes_suggere.join(', ') : (sug.verbes_suggere || ''),
-                        formulation: sug.formulation || '',
-                        source: 'ai'
-                    }));
+                    workshopCompetences = (result.suggestions || []).map((sug, idx) => {
+                        const vc = Array.isArray(sug.verbes_cognitifs) ? sug.verbes_cognitifs.join(', ') : (sug.verbes_cognitifs || '');
+                        const va = Array.isArray(sug.verbes_affectifs) ? sug.verbes_affectifs.join(', ') : (sug.verbes_affectifs || '');
+                        const combinedVerbs = [vc, va].filter(Boolean).join(', ');
+                        const nc = sug.niveau_cognitif || '';
+                        const na = sug.niveau_affectif || '';
+                        const combinedLevel = (nc || na) ? `Cog: ${nc || '?'} / Aff: ${na || '?'}` : '';
+                        return {
+                            id: `ws_${Date.now()}_${idx}`,
+                            titre: sug.titre || `Compétence ${idx + 1}`,
+                            idees_cles: sug.idees_cles || '',
+                            niveau: combinedLevel,
+                            niveau_cognitif: nc,
+                            niveau_affectif: na,
+                            verbes: combinedVerbs,
+                            verbes_cognitifs: vc,
+                            verbes_affectifs: va,
+                            formulation: sug.formulation || '',
+                            source: 'ai'
+                        };
+                    });
                     displaySuggestionsPool();
                     content.style.display = 'block';
                 } else {
@@ -2744,8 +2766,12 @@
                     id: newCompetenceId,
                     titre: document.getElementById('editTitle').value,
                     idees_cles: document.getElementById('editIdeesCles').value,
-                    niveau: document.getElementById('editNiveau').value,
-                    verbes: document.getElementById('editVerbes').value,
+                    niveau: `Cog: ${document.getElementById('editNiveauCognitif').value} / Aff: ${document.getElementById('editNiveauAffectif').value}`,
+                    niveau_cognitif: document.getElementById('editNiveauCognitif').value,
+                    niveau_affectif: document.getElementById('editNiveauAffectif').value,
+                    verbes: [ensureHiddenVerbsInput('cognitif').value, ensureHiddenVerbsInput('affectif').value].filter(Boolean).join(', '),
+                    verbes_cognitifs: ensureHiddenVerbsInput('cognitif').value,
+                    verbes_affectifs: ensureHiddenVerbsInput('affectif').value,
                     formulation: document.getElementById('editFormulation').value,
                     type: 'new'
                 };
@@ -2767,8 +2793,12 @@
                     if (item) {
                         item.titre = document.getElementById('editTitle').value;
                         item.idees_cles = document.getElementById('editIdeesCles').value;
-                        item.niveau = document.getElementById('editNiveau').value;
-                        item.verbes = document.getElementById('editVerbes').value;
+                        item.niveau_cognitif = document.getElementById('editNiveauCognitif').value;
+                        item.niveau_affectif = document.getElementById('editNiveauAffectif').value;
+                        item.niveau = `Cog: ${item.niveau_cognitif} / Aff: ${item.niveau_affectif}`;
+                        item.verbes_cognitifs = ensureHiddenVerbsInput('cognitif').value;
+                        item.verbes_affectifs = ensureHiddenVerbsInput('affectif').value;
+                        item.verbes = [item.verbes_cognitifs, item.verbes_affectifs].filter(Boolean).join(', ');
                         item.formulation = document.getElementById('editFormulation').value;
                         displaySuggestionsPool();
                         showSuccessMessage('Brouillon mis à jour !');
@@ -2783,8 +2813,12 @@
                 // Update competence data
                 competence.titre = document.getElementById('editTitle').value;
                 competence.idees_cles = document.getElementById('editIdeesCles').value;
-                competence.niveau = document.getElementById('editNiveau').value;
-                competence.verbes = document.getElementById('editVerbes').value;
+                competence.niveau_cognitif = document.getElementById('editNiveauCognitif').value;
+                competence.niveau_affectif = document.getElementById('editNiveauAffectif').value;
+                competence.niveau = `Cog: ${competence.niveau_cognitif} / Aff: ${competence.niveau_affectif}`;
+                competence.verbes_cognitifs = ensureHiddenVerbsInput('cognitif').value;
+                competence.verbes_affectifs = ensureHiddenVerbsInput('affectif').value;
+                competence.verbes = [competence.verbes_cognitifs, competence.verbes_affectifs].filter(Boolean).join(', ');
                 competence.formulation = document.getElementById('editFormulation').value;
                 
                 // Reset evaluation status since competence was modified
@@ -2803,122 +2837,58 @@
             document.getElementById('editModal').style.display = 'none';
         }
 
-        function loadBloomVerbs() {
-            const niveauSelect = document.getElementById('editNiveau');
-            const bloomVerbsList = document.getElementById('bloomVerbsList');
-            
-            if (!niveauSelect || !bloomVerbsList) return;
-            
-            const selectedNiveau = niveauSelect.value;
-            
-            // Show loading
-            bloomVerbsList.innerHTML = '<p>Chargement des verbes...</p>';
-            
-            fetch(`/get_bloom_verbs/${encodeURIComponent(selectedNiveau)}`)
-                .then(response => response.json())
+        function loadVerbsForDomain(domain) {
+            const levelSelectId = domain === 'cognitif' ? 'editNiveauCognitif' : 'editNiveauAffectif';
+            const listId = domain === 'cognitif' ? 'cognitiveVerbsList' : 'affectiveVerbsList';
+            const levelSelect = document.getElementById(levelSelectId);
+            const verbsList = document.getElementById(listId);
+            if (!levelSelect || !verbsList) return;
+            const selectedLevel = levelSelect.value;
+            verbsList.innerHTML = '<p>Chargement des verbes...</p>';
+            fetch(`/get_verbs_by_domain_level?domain=${encodeURIComponent(domain)}&level=${encodeURIComponent(selectedLevel)}`)
+                .then(r => r.json())
                 .then(data => {
                     if (data.success) {
-                        displayBloomVerbs(data.bloom_verbs);
+                        const flat = [];
+                        Object.values(data.verbs || {}).forEach(v => {
+                            (v.verbs || []).forEach(x => flat.push(x));
+                        });
+                        displayDomainVerbs(domain, flat);
                     } else {
-                        bloomVerbsList.innerHTML = '<p class="error">Erreur lors du chargement des verbes</p>';
+                        verbsList.innerHTML = '<p class="error">Erreur lors du chargement des verbes</p>';
                     }
                 })
-                .catch(error => {
-                    bloomVerbsList.innerHTML = '<p class="error">Erreur de connexion</p>';
+                .catch(() => {
+                    verbsList.innerHTML = '<p class="error">Erreur de connexion</p>';
                 });
         }
 
-        function displayBloomVerbs(bloomVerbs) {
-            const bloomVerbsList = document.getElementById('bloomVerbsList');
-            const selectedTags = document.getElementById('selectedVerbsTags');
-            
-            if (!bloomVerbsList) return;
-            
+        function displayDomainVerbs(domain, verbs) {
+            const listId = domain === 'cognitif' ? 'cognitiveVerbsList' : 'affectiveVerbsList';
+            const tagsId = domain === 'cognitif' ? 'selectedCognitiveTags' : 'selectedAffectiveTags';
+            const listBox = document.getElementById(listId);
+            const selectedTags = document.getElementById(tagsId);
+            if (!listBox) return;
             let html = '';
-            
-            // Séparer les domaines cognitif et affectif
-            const cognitiveLevels = ['creer', 'evaluer', 'analyser', 'appliquer', 'comprendre', 'se_rappeler'];
-            const affectiveLevels = ['caracteriser', 'organiser', 'valoriser', 'repondre', 'recevoir'];
-            
-            // Domaine cognitif
-            const cognitiveVerbs = {};
-            const affectiveVerbs = {};
-            
-            Object.entries(bloomVerbs).forEach(([level, levelData]) => {
-                if (cognitiveLevels.includes(level)) {
-                    cognitiveVerbs[level] = levelData;
-                } else if (affectiveLevels.includes(level)) {
-                    affectiveVerbs[level] = levelData;
-                }
+            html += '<div class="bloom-level">';
+            html += '<div class="bloom-verbs-grid">';
+            verbs.forEach(verb => {
+                const cls = domain === 'affectif' ? 'bloom-verb-btn affective' : 'bloom-verb-btn';
+                html += `<button type="button" class="${cls}" data-verb="${verb}" data-domain="${domain}" onclick="toggleBloomVerb(this)">${verb}</button>`;
             });
-            
-            // Afficher le domaine cognitif
-            if (Object.keys(cognitiveVerbs).length > 0) {
-                html += '<h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.2em;">🧠 Domaine Cognitif</h3>';
-                
-                Object.entries(cognitiveVerbs).forEach(([level, levelData]) => {
-                    html += `
-                        <div class="bloom-level">
-                            <h4 class="bloom-level-title">${levelData.name}</h4>
-                            <p class="bloom-level-description">${levelData.description}</p>
-                            <div class="bloom-verbs-grid">
-                    `;
-                    
-                    levelData.verbs.forEach(verb => {
-                        html += `
-                            <button type="button" class="bloom-verb-btn" data-verb="${verb}" onclick="toggleBloomVerb(this)">
-                                ${verb}
-                            </button>
-                        `;
-                    });
-                    
-                    html += `
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            // Afficher le domaine affectif
-            if (Object.keys(affectiveVerbs).length > 0) {
-                html += '<h3 style="color: #e91e63; margin: 20px 0 15px 0; font-size: 1.2em;">💝 Domaine Affectif</h3>';
-                
-                Object.entries(affectiveVerbs).forEach(([level, levelData]) => {
-                    html += `
-                        <div class="bloom-level">
-                            <h4 class="bloom-level-title" style="color: #e91e63;">${levelData.name}</h4>
-                            <p class="bloom-level-description">${levelData.description}</p>
-                            <div class="bloom-verbs-grid">
-                    `;
-                    
-                    levelData.verbs.forEach(verb => {
-                        html += `
-                            <button type="button" class="bloom-verb-btn affective" data-verb="${verb}" onclick="toggleBloomVerb(this)">
-                                ${verb}
-                            </button>
-                        `;
-                    });
-                    
-                    html += `
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            bloomVerbsList.innerHTML = html;
-
-            // Rehydrate selected tags if hidden input exists
-            const hidden = document.getElementById('editVerbes');
+            html += '</div></div>';
+            listBox.innerHTML = html;
+            // Rehydrate from hidden input
+            const hidden = ensureHiddenVerbsInput(domain);
             if (hidden && hidden.value) {
                 const selected = hidden.value.split(',').map(v => v.trim()).filter(Boolean);
-                const buttons = bloomVerbsList.querySelectorAll('.bloom-verb-btn');
+                const buttons = listBox.querySelectorAll('.bloom-verb-btn');
                 buttons.forEach(btn => {
                     if (selected.includes(btn.getAttribute('data-verb'))) {
                         btn.classList.add('selected');
                     }
                 });
-                renderSelectedTags(selected);
+                renderSelectedTags(selected, domain);
             } else if (selectedTags) {
                 selectedTags.innerHTML = '';
             }
@@ -2926,21 +2896,22 @@
 
         // Maintain verbs in a hidden input to keep backend unchanged
         // Create it on demand in the modal
-        function ensureHiddenVerbsInput() {
-            let hidden = document.getElementById('editVerbes');
+        function ensureHiddenVerbsInput(domain) {
+            const id = domain === 'cognitif' ? 'editVerbesCognitifs' : 'editVerbesAffectifs';
+            let hidden = document.getElementById(id);
             if (!hidden) {
                 hidden = document.createElement('input');
                 hidden.type = 'hidden';
-                hidden.id = 'editVerbes';
+                hidden.id = id;
                 hidden.value = '';
-                const container = document.getElementById('bloomVerbsContainer');
+                const container = domain === 'cognitif' ? document.getElementById('cognitiveVerbsContainer') : document.getElementById('affectiveVerbsContainer');
                 if (container) container.prepend(hidden);
             }
             return hidden;
         }
 
-        function renderSelectedTags(list) {
-            const box = document.getElementById('selectedVerbsTags');
+        function renderSelectedTags(list, domain) {
+            const box = domain === 'cognitif' ? document.getElementById('selectedCognitiveTags') : document.getElementById('selectedAffectiveTags');
             if (!box) return;
             box.innerHTML = '';
             list.forEach(v => {
@@ -2953,7 +2924,8 @@
 
         function toggleBloomVerb(button) {
             const verb = button.getAttribute('data-verb');
-            const hidden = ensureHiddenVerbsInput();
+            const domain = button.getAttribute('data-domain') || (button.classList.contains('affective') ? 'affectif' : 'cognitif');
+            const hidden = ensureHiddenVerbsInput(domain);
             let list = hidden.value ? hidden.value.split(',').map(v => v.trim()).filter(Boolean) : [];
             const idx = list.indexOf(verb);
             if (idx >= 0) {
@@ -2964,7 +2936,7 @@
                 button.classList.add('selected');
             }
             hidden.value = list.join(', ');
-            renderSelectedTags(list);
+            renderSelectedTags(list, domain);
         }
 
         // No initialization needed - all competences will have remove buttons
@@ -3065,7 +3037,11 @@
                         data[`titre_${competenceNumber}`] = competence.titre || `Compétence ${competenceNumber}`;
                         data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
                         data[`niveau_${competenceNumber}`] = competence.niveau;
+                        data[`niveau_cognitif_${competenceNumber}`] = competence.niveau_cognitif || '';
+                        data[`niveau_affectif_${competenceNumber}`] = competence.niveau_affectif || '';
                         data[`verbes_${competenceNumber}`] = competence.verbes;
+                        data[`verbes_cognitifs_${competenceNumber}`] = competence.verbes_cognitifs || '';
+                        data[`verbes_affectifs_${competenceNumber}`] = competence.verbes_affectifs || '';
                         data[`formulation_${competenceNumber}`] = competence.formulation;
                     });
                     return data;
@@ -3084,7 +3060,11 @@
                 data[`titre_${competenceNumber}`] = competence.titre || `Compétence ${competenceNumber}`;
                 data[`idees_cles_${competenceNumber}`] = competence.idees_cles;
                 data[`niveau_${competenceNumber}`] = competence.niveau;
+                data[`niveau_cognitif_${competenceNumber}`] = competence.niveau_cognitif || '';
+                data[`niveau_affectif_${competenceNumber}`] = competence.niveau_affectif || '';
                 data[`verbes_${competenceNumber}`] = competence.verbes;
+                data[`verbes_cognitifs_${competenceNumber}`] = competence.verbes_cognitifs || '';
+                data[`verbes_affectifs_${competenceNumber}`] = competence.verbes_affectifs || '';
                 data[`formulation_${competenceNumber}`] = competence.formulation;
             });
             
@@ -3145,24 +3125,40 @@
                     <input type="text" id="editTitle" value="${item.titre || ''}" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Idées clés :</label>
-                    <textarea id="editIdeesCles" class="form-control">${item.idees_cles || ''}</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Niveau :</label>
-                    <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
+                    <label>Niveau cognitif :</label>
+                    <select id="editNiveauCognitif" class="form-control" onchange="loadVerbsForDomain('cognitif')">
                         <option value="Haut">Haut</option>
                         <option value="Moyen">Moyen</option>
                         <option value="Bas">Bas</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Verbes :</label>
-                    <div id="bloomVerbsContainer" class="bloom-verbs-container">
+                    <label>Verbes cognitifs :</label>
+                    <div id="cognitiveVerbsContainer" class="bloom-verbs-container">
                         <p class="bloom-verbs-title">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
-                        <div id="bloomVerbsList" class="bloom-verbs-list"></div>
-                        <div id="selectedVerbsTags" class="bloom-selected-tags"></div>
+                        <div id="cognitiveVerbsList" class="bloom-verbs-list"></div>
+                        <div id="selectedCognitiveTags" class="bloom-selected-tags"></div>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label>Niveau affectif :</label>
+                    <select id="editNiveauAffectif" class="form-control" onchange="loadVerbsForDomain('affectif')">
+                        <option value="Haut">Haut</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Bas">Bas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Verbes affectifs :</label>
+                    <div id="affectiveVerbsContainer" class="bloom-verbs-container">
+                        <p class="bloom-verbs-title">💡 Sélectionnez des verbes en cliquant sur les tags (cliquer à nouveau pour retirer).</p>
+                        <div id="affectiveVerbsList" class="bloom-verbs-list"></div>
+                        <div id="selectedAffectiveTags" class="bloom-selected-tags"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Idées clés :</label>
+                    <textarea id="editIdeesCles" class="form-control">${item.idees_cles || ''}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Formulation :</label>
@@ -3171,18 +3167,20 @@
                 <input type="hidden" id="editCompetenceId" value="ws:${item.id}">
             `;
             document.getElementById('editModal').style.display = 'block';
-            // Replace niveau selector with simple Bas/Moyen/Haut options
             (function(){
-                const sel = document.getElementById('editNiveau');
-                if (sel) {
-                    const current = item.niveau && ['Bas','Moyen','Haut'].includes(item.niveau) ? item.niveau : null;
-                    sel.innerHTML = '<option value="Haut">Haut</option><option value="Moyen">Moyen</option><option value="Bas">Bas</option>';
-                    if (current) sel.value = current;
-                }
+                const selCog = document.getElementById('editNiveauCognitif');
+                const selAff = document.getElementById('editNiveauAffectif');
+                const currentCog = item.niveau_cognitif && ['Bas','Moyen','Haut'].includes(item.niveau_cognitif) ? item.niveau_cognitif : 'Moyen';
+                const currentAff = item.niveau_affectif && ['Bas','Moyen','Haut'].includes(item.niveau_affectif) ? item.niveau_affectif : 'Moyen';
+                if (selCog) selCog.value = currentCog;
+                if (selAff) selAff.value = currentAff;
             })();
-            const hidden = ensureHiddenVerbsInput();
-            hidden.value = item.verbes || '';
-            loadBloomVerbs();
+            const hiddenCog = ensureHiddenVerbsInput('cognitif');
+            const hiddenAff = ensureHiddenVerbsInput('affectif');
+            hiddenCog.value = item.verbes_cognitifs || '';
+            hiddenAff.value = item.verbes_affectifs || '';
+            loadVerbsForDomain('cognitif');
+            loadVerbsForDomain('affectif');
         }
 
         function deleteNewCompetence(competenceId) {
