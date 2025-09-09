@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Présentation – Assistant Scénarisation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -18,14 +19,15 @@
         }
         .container { max-width: 1100px; width: 100%; }
         .header { text-align: center; margin-bottom: 18px; }
-        .header h1 { font-size: 2.2rem; letter-spacing: 0.02em; }
-        .lead { text-align: center; color: #445; margin-bottom: 28px; font-size: 1.1rem; }
+        .header h1 { font-size: var(--font-size-title); letter-spacing: 0.02em; }
+        .header {color: var(--text-dark);}
+        .lead { text-align: center; color: #445; margin-bottom: 28px; font-size: var(--font-size-large); }
 
         .hero {
             display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 14px;
         }
         .hero img { width: 72px; height: 72px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08)); }
-        .hero .title { font-size: 1.4rem; font-weight: 700; color: #1f2d3a; letter-spacing: 0.01em; }
+        .hero .title { font-size: var(--font-size-xl); font-weight: 700; color: #1f2d3a; letter-spacing: 0.01em; }
 
         .card {
             background: #ffffff;
@@ -36,13 +38,13 @@
 
         .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
         .section { background: #ffffff; border-radius: 12px; padding: 18px; border: 1px solid #eef1f5; }
-        .section h2 { font-size: 1.2rem; margin-bottom: 8px; }
+        .section h2 { font-size: var(--font-size-xl); margin-bottom: 8px; }
         .section p { margin-bottom: 10px; line-height: 1.65; }
         .section ul { padding-left: 20px; line-height: 1.7; }
         .section li { margin-bottom: 6px; }
 
         .contacts { background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%); border: 1px solid #e6eef9; }
-        .contacts h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .contacts h3 { font-size: var(--font-size-large); margin-bottom: 8px; }
         .contacts .contact-intro { margin-bottom: 10px; color: #445; }
         .contacts ul { list-style: none; padding-left: 0; line-height: 1.7; }
         .contacts li { margin-bottom: 6px; }
@@ -55,7 +57,7 @@
         .cta button {
             background: #1f2d3a; color: #fff; border: none; cursor: pointer;
             border-radius: 44px; padding: 14px 24px; font-weight: 700;
-            font-size: 1.05rem; width: 220px; box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            font-size: var(--font-size-large); width: 220px; box-shadow: 0 10px 24px rgba(0,0,0,0.12);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
         .cta button:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,0.16); background: #243648; }

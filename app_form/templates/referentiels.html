@@ -89,13 +89,13 @@
             background: var(--white);
             border-radius: var(--radius-small);
             overflow: hidden;
-            box-shadow: var(--shadow-medium);
+            box-shadow: var(--shadow-light);
         }
 
         .referentiel-table th {
-            background: var(--gradient-gray);
-            color: white;
-            padding: 15px;
+            background: var(--light-gray);
+            color: var(--text-dark);
+            padding: 12px 15px;
             text-align: left;
             font-weight: 600;
         }
@@ -103,6 +103,7 @@
         .referentiel-table td {
             padding: 12px 15px;
             border-bottom: 1px solid #dee2e6;
+            font-size: var(--font-size-small);
         }
 
         .referentiel-table tr:hover {
@@ -112,7 +113,7 @@
         .badge {
             padding: 5px 10px;
             border-radius: 15px;
-            font-size: 0.8em;
+            font-size: var(--font-size-small);
             font-weight: 600;
         }
 
@@ -188,7 +189,7 @@
             padding: 12px;
             border: 2px solid #dee2e6;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             resize: vertical;
             min-height: 80px;
         }
@@ -212,6 +213,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            font-size: var(--font-size-small);
         }
 
         /* Progress Dots */
@@ -243,19 +245,19 @@
         }
 
         .progress-dot.active {
-            background: var(--primary-green);
+            background: var(--bg-success-light);
             border-color: var(--primary-green);
-            color: white;
+            color: var(--primary-green);
         }
 
         .progress-dot.completed {
-            background: var(--primary-green);
+            background: var(--bg-success-light);
             border-color: var(--primary-green);
-            color: white;
+            color: var(--primary-green);
         }
 
         .dot-number {
-            font-size: 14px;
+            font-size: var(--font-size-small);
             font-weight: bold;
         }
 
@@ -313,7 +315,7 @@
         }
 
         .section-title {
-            font-size: 1.5rem;
+            font-size: var(--font-size-xxl);
             color: var(--text-dark);
             margin-bottom: 10px;
             line-height: 1.4;
@@ -321,7 +323,7 @@
 
         .section-counter {
             color: var(--text-medium);
-            font-size: 0.9rem;
+            font-size: var(--font-size-small);
         }
 
         /* Section Navigation */
@@ -340,7 +342,7 @@
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: var(--font-size-large);
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -394,7 +396,7 @@
             }
             
             .section-title {
-                font-size: 1.3rem;
+                font-size: var(--font-size-xl);
             }
             
             .section-navigation {
@@ -418,18 +420,15 @@
         <!-- Content -->
         <div class="content-container">
             <!-- Info Banner -->
-            <div class="info-banner">
-                <h2>📋 Instructions</h2>
-                <p>Dans la logique du Backward Design, une fois les compétences formulées, on construit immédiatement les référentiels d’auto-évaluation qui permettront de vérifier leur atteinte.</p>
-                <p>Pour chaque compétence visée, l’IA génère automatiquement un référentiel d’auto-évaluation. Il s’appuie sur <strong>4 degrés de progression</strong> :</p>
-                <ol style="margin-left: 20px; margin-top: 10px;">
-                    <li>Je débute</li>
-                    <li>Je progresse</li>
-                    <li>Je suis autonome <span style="font-weight: 600;">(compétence considérée comme validée)</span></li>
-                    <li>Je maîtrise</li>
-                </ol>
-                <p>Chaque degré comporte des <strong>indicateurs qualitatifs et quantitatifs</strong>. L’objectif est de permettre aux participants de se situer clairement et de suivre leur progression.</p>
-            </div>
+            {% from 'includes/blocks/components.html' import instructions_panel %}
+            {% set ref_header = 'Instructions' %}
+            {% set ref_sub = "Dans la logique du Backward Design, une fois les compétences formulées, on construit immédiatement les référentiels d’auto-évaluation qui permettront de vérifier leur atteinte." %}
+            {% set ref_items = [
+              "Pour chaque compétence visée, l’IA génère automatiquement un référentiel d’auto-évaluation.",
+              "Le référentiel s’appuie sur 4 degrés de progression : Je débute, Je progresse, Je suis autonome (validée), Je maîtrise.",
+              "Chaque degré comporte des indicateurs qualitatifs et quantitatifs pour situer la progression."
+            ] %}
+            {{ instructions_panel(ref_header, ref_sub, ref_items) }}
 
             <!-- Referentiel Slider -->
             {% if sections %}
@@ -464,10 +463,8 @@
                         <!-- Section Content -->
                         <div class="section-content">
                             <!-- Loading -->
-                            <div class="loading" id="loading-{{ section.numero }}">
-                                <div class="spinner"></div>
-                                <p>Génération du référentiel en cours...</p>
-                            </div>
+                            {% from 'includes/blocks/components.html' import loading %}
+                            {{ loading('loading-' ~ section.numero, 'Génération du référentiel en cours...') }}
 
                             <!-- Generated Referentiel -->
                             <div id="referentiel-{{ section.numero }}" class="hidden">

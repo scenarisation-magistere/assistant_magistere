@@ -1,53 +1,54 @@
 
-    [INSTRUCTION_ASSISTANT] :
-    > **IMPORTANT — L'ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L'INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
-    > **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N'EST AUTORISÉE.**  
-    > **TOUTES LES RÉPONSES DOIVENT ÊTRE FOURNIES INTÉGRALEMENT EN MARKDOWN BRUT, DANS UN SEUL BLOC TRIPLE BACKTICKS, SANS TEXTE EN DEHORS.**
+        [INSTRUCTION_ASSISTANT] :
+        > **IMPORTANT — L'ASSISTANT DOIT FOURNIR UNIQUEMENT DU JSON BRUT DANS UN SEUL BLOC TRIPLE BACKTICKS, SANS TEXTE EN DEHORS.**
 
-    ## BUT TECHNIQUE
-    Générer automatiquement, pour les sections S2 à S5, un tableau complet des contenus pédagogiques à partir :  
-    - du bloc `ordre_competences` validé,  
-    - du fichier Markdown `R_03_Tableau_Activites_Ressources.md` (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),  
-    - des règles ABC Learning Design définies ci-dessous.
+        ## BUT TECHNIQUE
+        Générer automatiquement un objet JSON par compétence à partir :  
+        - des compétences à traiter (avec leur code C1, C2, …),
+        - des activités et ressources disponibles,  
+        - des règles ABC Learning Design ci-dessous.
 
-    ## COMPÉTENCES À TRAITER
-    - code: C1
-  formulation: Concevoir des parcours de formation personnalisés en utilisant les
-    outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants.
-  idees_cles: parcours, personnalisation, apprenants
-  justification: C1 est en première position car il s'agit d'une compétence de niveau
-    moyen qui permet aux formateurs de commencer à appliquer des concepts d'IA dans
-    la conception de formations, ce qui est essentiel pour établir une base.
+        ----------------------------
+
+        ## COMPÉTENCES À TRAITER
+        - code: C1
+  formulation: L'enseignant sera capable d'appliquer des outils numériques pour favoriser
+    l'interaction et la collaboration entre les élèves pendant les cours.
+  idees_cles: outils numériques, interaction, collaboration
+  justification: C1 est au niveau moyen et constitue une première étape essentielle
+    pour les enseignants afin d'utiliser les outils numériques dans un cadre interactif.
   niveau: Moyen
   pertinence: élevée
-  titre: Concevoir des parcours de formation personnalisés
-  verbes: concevoir, élaborer, adapter
+  titre: Utiliser des outils numériques pour favoriser l'interaction en classe
+  verbes: appliquer, participer, cooperer
 - code: C2
-  formulation: Analyser les données d'apprentissage des apprenants générées par les
-    outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
-  idees_cles: données, apprentissage, analyse
-  justification: C2 suit C1 car elle nécessite une compréhension des parcours personnalisés
-    pour pouvoir analyser les données d'apprentissage, ce qui représente une progression
-    logique dans l'application des compétences.
-  niveau: Moyen
-  pertinence: élevée
-  titre: Analyser les données d'apprentissage des apprenants
-  verbes: analyser, interpréter, organiser
-- code: C3
-  formulation: Collaborer avec des experts en intelligence artificielle pour développer
-    et améliorer les formations en intégrant des solutions innovantes et pertinentes.
-  idees_cles: collaboration, experts, amélioration
-  justification: C3 est en dernière position car elle représente un niveau élevé de
-    compétence, nécessitant une expertise préalable dans la conception de parcours
-    et l'analyse des données avant de pouvoir collaborer efficacement avec des experts.
+  formulation: L'enseignant sera capable de concevoir des activités pédagogiques intégrant
+    des outils numériques pour enrichir l'expérience d'apprentissage.
+  idees_cles: activités pédagogiques, conception, intégration numérique
+  justification: C2 est au niveau haut et nécessite d'abord la maîtrise de C1, car
+    concevoir des activités implique une compréhension plus approfondie des outils
+    numériques.
   niveau: Haut
   pertinence: élevée
-  titre: Collaborer avec des experts en IA pour améliorer les formations
-  verbes: collaborer, proposer, développer
+  titre: Concevoir des activités pédagogiques intégrant le numérique
+  verbes: concevoir, combiné, adapter
+- code: C3
+  formulation: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques numériques
+    en classe et de justifier les ajustements nécessaires pour optimiser l'apprentissage.
+  idees_cles: évaluation, pratiques numériques, efficacité
+  justification: C3 est également au niveau haut, mais vient après C2 car évaluer
+    l'efficacité des pratiques nécessite d'abord la capacité à concevoir et à mettre
+    en œuvre ces pratiques.
+  niveau: Haut
+  pertinence: élevée
+  titre: Évaluer l'efficacité des pratiques numériques en classe
+  verbes: évaluer, justifier, contrôler
 
 
-    ## RESSOURCES RAG DISPONIBLES
-    [
+        ----------------------------
+
+        ## LISTES DES ACTIVITÉS ET RESSOURCES DISPONIBLES
+        [
   {
     "Type Ressource\/ Activité":"Ressource H5P",
     "Nom de l'activité ou ressource":"Course Presentation",
@@ -1018,62 +1019,59 @@
   }
 ]
 
-    ## RÈGLES DE FILTRAGE ET DE SÉLECTION PÉDAGOGIQUE
+        ----------------------------
 
-    1. **Priorité pédagogique générale**  
-       - Privilégier : **Acquisition**, **Collaboration**, **Discussion**, **Pratique**.  
-       - **Production** et **Enquête** restent présentes mais de façon secondaire.
+        ## RÈGLES DE SÉLECTION
 
-    2. **Filtrage par recommandation et compétences visées**  
-       - Priorité aux entrées avec `recommandation = 3`.  
-       - Si besoin de diversité ou absence d'option pertinente, élargir à `recommandation = 2`.  
-       - Tenir compte du type de **compétences visées** pour aligner le choix sur le scénario CMO et les intentions ABC Learning Design.  
-       - Déterminer l'intention des ressources et activités à partir de la formulation de la compétence ou des verbes d'action :  
-         - **Acquisition** → mémoriser, identifier, définir, comprendre  
-         - **Entraînement** → appliquer, s'entraîner, mettre en œuvre  
-         - **Production** → réaliser, produire, concevoir  
-         - **Discussion** → discuter, argumenter, échanger, analyser un point de vue  
-         - **Collaboration** → coopérer, co-construire, travailler en groupe  
-         - **Enquête** → explorer, enquêter, rechercher
+        1. **Priorités pédagogiques (CMO hybride — ABC Learning Design)**  
+        Prioriser dans cet ordre : **Acquisition, Collaboration, Discussion, Pratique**.  
+        → **Production** et **Enquête** seulement en complément si nécessaire.
 
-    3. **Filtrage par type de ressource ou activité**  
-       - **Ressource principale** : `Ressource` ou `Ressource H5P` avec intention **Acquisition**.  
-       - **Activité 1** : `Activité` ou `Activité H5P`, intention en cohérence avec la compétence visée.  
-       - **Activité 2** (optionnelle) : uniquement si valeur ajoutée pédagogique et intention complémentaire.  
-       - **Activités externes** autorisées si pertinence claire, avec justification RGPD/hébergement si nécessaire.
+        2. **Filtrage par recommandation (R_03)**  
+        - Sélectionner d’abord les entrées avec `recommandation = 3`.  
+        - Si nécessaire (diversité ou absence d’option pertinente), élargir à `recommandation = 2`.  
+        - Tenir compte du **type** et de l’**intention** indiqués dans R_03.
 
-    4. **Justification obligatoire**  
-       - Expliquer la pertinence pédagogique des activités par rapport à la compétence et au modèle ABC Learning Design.
+        3. **Filtrage par type de ressource / activité (aligné sur R_03)**  
+        - **Ressource principale** : toujours de type `Ressource` ou `Ressource H5P`.  
+            - Intention = **Acquisition systématiquement**.  
+            - Exemples : Page, Fichier, Ressource H5P (Course Presentation, Interactive Book…).  
+        - **Activité 1** : de type `Activité` ou `Activité H5P`.  
+            - Intention en cohérence avec la compétence visée.  
+            - Exemple : si compétence = Collaboration → choisir activité collaborative (Forum, Atelier, Wiki, Padlet/H5P collaboratif…).  
+        - **Activité 2** (optionnelle) : proposer seulement si la compétence est complexe/multifacette et nécessite deux angles pédagogiques.  
+            - Ne pas ajouter si redondant ou sans valeur ajoutée claire.  
+        - **Activités externes** : autorisées uniquement si clairement pertinentes, avec justification RGPD/hébergement explicite.
 
-    ## FORMAT DE SORTIE
+        4. **Justification obligatoire**  
+        - Expliquer en 2–3 phrases max pourquoi :  
+            - la **ressource** (intention Acquisition) est pertinente,  
+            - l’**activité 1** correspond à la compétence,  
+            - et éventuellement l’**activité 2** si présente.  
+        - Justification pédagogique centrée sur l’alignement avec la compétence et les priorités ABC Learning Design.  
+        - Éviter tout discours technique sur l’outil.
 
-    - L'assistant produit **uniquement** un tableau Markdown brut dans un seul bloc triple backticks, puis un bloc YAML reprenant exactement les données du tableau.
-    - Colonnes du tableau (ordre fixe) :  
-      | Section | Type de section | Compétences visées | Ressource | Intention ressource | Activité 1 | Intention activité 1 | Activité 2 | Intention activité 2 | Justification activité(s) |
+        ----------------------------
 
-    **IMPORTANT** : Dans le YAML, utiliser les noms de champs suivants exactement :
-    - `section` (pas "Section")
-    - `type_de_section` (pas "Type de section")
-    - `competences_visees` (pas "Compétences visées")
-    - `ressource` (pas "Ressource")
-    - `intention_ressource` (pas "Intention ressource")
-    - `activite_1` (pas "Activité 1")
-    - `intention_activite_1` (pas "Intention activité 1")
-    - `activite_2` (pas "Activité 2")
-    - `intention_activite_2` (pas "Intention activité 2")
-    - `justification_activite_s` (pas "justification_activites" ou "Justification activité(s)")
-    
-    **IMPORTANT** : Utiliser des chaînes vides `""` au lieu de `null` pour les champs vides.
+        ## FORMAT DE SORTIE
 
-    **Règles de remplissage** :  
-    - **S1 – Accueil** : Type = Accueil, autres colonnes chaînes vides `""`.  
-    - **S2 à S5 – Apprentissage** :  
-      - Compétences visées = depuis `ordre_competences`.  
-      - Ressource, activités et intentions = selon règles ci-dessus.  
-      - Justification = obligatoire pour activités.  
-    - **S6 – Classe virtuelle (BBB)** : Activité 1 = BigBlueButtonBN, Intention = Discussion.  
-    - **S7 – Forum général** : Activité 1 = Forum, Intention = Discussion / Collaboration.  
-    - **S8 – Évaluation** : Activité 1 = Sondage Magistère, Intention = Enquête.
+        - Réponse = JSON brut dans un seul bloc triple backticks.
+        - Chaque compétence devient un objet JSON.
+        - Champs obligatoires :
+        - `code_competence` (ex: "C1")
+        - `titre_competence`
+        - `niveau_competence`
+        - `competences_visees`
+        - `ressource`
+        - `intention_ressource`
+        - `justification_ressource`
+        - `activite_1`
+        - `intention_activite_1`
+        - `justification_activite_1`
+        - `activite_2`
+        - `intention_activite_2`
+        - `justification_activite_2`
+        - Utiliser `""` pour les champs vides.
 
-    Merci de générer le tableau et le YAML selon ces règles.
+        Merci de générer le JSON selon ces règles.
     

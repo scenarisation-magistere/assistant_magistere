@@ -1,0 +1,49 @@
+{% macro loading(id=None, text='Chargement...') -%}
+<div class="loading" {% if id %}id="{{ id }}"{% endif %} style="display: none;">
+    <div class="spinner loading-spinner"></div>
+    <p>{{ text }}</p>
+  </div>
+{%- endmacro %}
+
+{% macro messages(error_id='errorMessage', success_id='successMessage') -%}
+  <div id="{{ error_id }}" class="error-message" style="display: none;"></div>
+  <div id="{{ success_id }}" class="success-message" style="display: none;"></div>
+{%- endmacro %}
+
+{% macro submit_section(button_id, button_text, onclick, loading_id='loading', container_id='submitSection') -%}
+  <div class="submit-section" id="{{ container_id }}" style="display: none;">
+    <div class="submit-actions">
+      <button type="button" class="submit-btn" id="{{ button_id }}" onclick="{{ onclick }}">
+        {{ button_text }}
+      </button>
+    </div>
+    {{ loading(loading_id, '⏳ Sauvegarde en cours...') }}
+  </div>
+{%- endmacro %}
+
+
+{% macro instructions_panel(header, subtitle='', items=[], footer='') -%}
+  <div class="instructions-competences">
+    <div class="ic-header">
+      <div class="ic-icon">🎯</div>
+      <div class="ic-title">{{ header }}</div>
+    </div>
+    {% if subtitle %}
+    <div class="ic-subtitle">{{ subtitle|safe }}</div>
+    {% endif %}
+    <div class="ic-content">
+      {% if items %}
+      <ul class="ic-list">
+        {% for item in items %}
+        <li class="ic-item">{{ item|safe }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if footer %}
+      <div class="ic-footer">{{ footer|safe }}</div>
+      {% endif %}
+    </div>
+  </div>
+{%- endmacro %}
+
+

@@ -60,7 +60,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: var(--font-size-normal);
             margin: 0;
         }
 
@@ -78,10 +78,11 @@
             <form id="questionnaireForm" method="POST" data-endpoint="/submit_public_cible">
                 {% include 'includes/question_slider.html' %}
             </form>
+            {% from 'includes/blocks/components.html' import messages %}
+            {{ messages() }}
         </div>
     </div>
 
-    {% include 'includes/success_modal.html' %}
     {% include 'includes/footer.html' %}
 
     <script>window.RECAP_ENABLED = false;</script>

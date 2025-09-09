@@ -34,7 +34,7 @@ def apply_header_color(page_config, color_key):
 # Base page configurations
 BASE_PAGES_CONFIG = {
     'public_cible': {
-        'name': 'Public Cible',
+        'name': 'Infos clés',
         'step': 1,
         'previous': None,
         'next': 'contraintes',

@@ -1,0 +1,270 @@
+etape_1_public_cible:
+  titre_formation: Intégrer le numérique pour dynamiser sa classe
+  objectif_general: Accompagner les enseignants à utiliser des outils numériques pour
+    enrichir leurs pratiques et favoriser la collaboration entre pairs.
+  type_de_public:
+  - Enseignants 1er degré
+  - Enseignants 2d degré
+  type_de_formation: Formation transdisciplinaire
+  type_de_formation_precisions: numérique educatif
+  niveaux_scolaires: Lycée général et technologique
+  niveau_expertise:
+  - Débutant
+  - Intermédiaire
+  besoins_specifiques: Aucun besoin identifié
+last_updated: '2025-09-09T11:39:40.085154'
+current_step: etape_5_contenu
+etape_2_contraintes:
+  nombre_participants: Entre 10 et 20 personnes (format idéal CMO)
+  animation: Un seul formateur
+  exigences_institutionnelles: Aucune exigence identifiée
+  restrictions_techniques: Aucune restriction identifiée
+etape_4_competences:
+  formulations_competences:
+  - L'enseignant sera capable d'appliquer des outils numériques pour favoriser l'interaction
+    et la collaboration entre les élèves pendant les cours.
+  - L'enseignant sera capable de concevoir des activités pédagogiques intégrant des
+    outils numériques pour enrichir l'expérience d'apprentissage.
+  - L'enseignant sera capable d'évaluer l'efficacité de ses pratiques numériques en
+    classe et de justifier les ajustements nécessaires pour optimiser l'apprentissage.
+  competence_1:
+    titre: Utiliser des outils numériques pour favoriser l'interaction en classe
+    idees_cles: outils numériques, interaction, collaboration
+    niveau: Moyen
+    verbes: appliquer, participer, cooperer
+    formulation: L'enseignant sera capable d'appliquer des outils numériques pour
+      favoriser l'interaction et la collaboration entre les élèves pendant les cours.
+  competence_2:
+    titre: Concevoir des activités pédagogiques intégrant le numérique
+    idees_cles: activités pédagogiques, conception, intégration numérique
+    niveau: Haut
+    verbes: concevoir, combiné, adapter
+    formulation: L'enseignant sera capable de concevoir des activités pédagogiques
+      intégrant des outils numériques pour enrichir l'expérience d'apprentissage.
+  competence_3:
+    titre: Évaluer l'efficacité des pratiques numériques en classe
+    idees_cles: évaluation, pratiques numériques, efficacité
+    niveau: Haut
+    verbes: évaluer, justifier, contrôler
+    formulation: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques
+      numériques en classe et de justifier les ajustements nécessaires pour optimiser
+      l'apprentissage.
+  evaluation_competences:
+    ordre_competences:
+    - code: C1
+      formulation: L'enseignant sera capable d'appliquer des outils numériques pour
+        favoriser l'interaction et la collaboration entre les élèves pendant les cours.
+      justification: C1 est au niveau moyen et constitue une première étape essentielle
+        pour les enseignants afin d'utiliser les outils numériques dans un cadre interactif.
+      pertinence: élevée
+    - code: C2
+      formulation: L'enseignant sera capable de concevoir des activités pédagogiques
+        intégrant des outils numériques pour enrichir l'expérience d'apprentissage.
+      justification: C2 est au niveau haut et nécessite d'abord la maîtrise de C1,
+        car concevoir des activités implique une compréhension plus approfondie des
+        outils numériques.
+      pertinence: élevée
+    - code: C3
+      formulation: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques
+        numériques en classe et de justifier les ajustements nécessaires pour optimiser
+        l'apprentissage.
+      justification: C3 est également au niveau haut, mais vient après C2 car évaluer
+        l'efficacité des pratiques nécessite d'abord la capacité à concevoir et à
+        mettre en œuvre ces pratiques.
+      pertinence: élevée
+    avis_global: 'L''alignement pédagogique est respecté avec une progression logique
+      des compétences, allant de l''application des outils numériques à leur évaluation.
+      Chaque compétence s''appuie sur la précédente, garantissant une montée en complexité
+      cohérente.
+
+      '
+    points_amelioration:
+    - Clarifier les formulations pour éviter toute ambiguïté, notamment pour C2 et
+      C3.
+    - Ajouter une compétence de niveau bas pour introduire les outils numériques avant
+      d'aborder leur application.
+    competence_complementaire:
+      titre: Identifier et décrire les outils numériques adaptés à l'enseignement
+      niveau: Bas
+      idees_cles: outils numériques, identification, description
+      verbes: identifier, décrire
+      formulation: L'enseignant sera capable d'identifier et de décrire les outils
+        numériques adaptés à son enseignement.
+      justification: Cette compétence est nécessaire comme point d'entrée pour les
+        enseignants débutants afin de comprendre les outils avant de les appliquer.
+      position_suggeree: début
+etape_5_referentiels:
+  section_1:
+    competence: L'enseignant sera capable d'appliquer des outils numériques pour favoriser
+      l'interaction et la collaboration entre les élèves pendant les cours.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître quelques outils numériques.
+      observable_quantitatif: Je peux identifier 1 à 2 outils numériques.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable d'utiliser un outil numérique pour engager
+        les élèves.
+      observable_quantitatif: J'utilise un outil lors de 1 à 2 cours par semaine.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable d'intégrer plusieurs outils numériques
+        pour favoriser l'interaction.
+      observable_quantitatif: J'utilise au moins 3 outils différents dans 3 cours
+        par semaine.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de concevoir des activités collaboratives
+        en ligne et d'évaluer leur impact.
+      observable_quantitatif: Je mets en place des projets collaboratifs avec des
+        outils numériques dans 4 cours par semaine et j'évalue les résultats.
+    section: 1
+  section_2:
+    competence: L'enseignant sera capable de concevoir des activités pédagogiques
+      intégrant des outils numériques pour enrichir l'expérience d'apprentissage.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de décrire des outils numériques utilisés
+        en éducation.
+      observable_quantitatif: Je peux citer 1 à 2 outils numériques.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable de proposer des activités pédagogiques
+        simples intégrant des outils numériques.
+      observable_quantitatif: Je conçois 1 à 2 activités intégrant des outils numériques
+        par mois.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable de concevoir des activités pédagogiques
+        variées et adaptées intégrant des outils numériques.
+      observable_quantitatif: Je conçois 3 à 5 activités par mois, intégrant différents
+        outils numériques.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable d'évaluer l'impact des outils numériques
+        sur l'apprentissage et d'ajuster mes activités en conséquence.
+      observable_quantitatif: Je conçois et évalue 5 ou plus d'activités par mois,
+        avec des ajustements basés sur les retours des apprenants.
+    section: 2
+  section_3:
+    competence: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques
+      numériques en classe et de justifier les ajustements nécessaires pour optimiser
+      l'apprentissage.
+    niveaux:
+    - badge: non
+      degre: 1
+      libelle: Je débute
+      observable_qualitatif: Je suis capable de reconnaître quelques outils numériques
+        utilisés en classe.
+      observable_quantitatif: Je peux identifier 1 à 2 outils numériques par mois.
+    - badge: non
+      degre: 2
+      libelle: Je progresse
+      observable_qualitatif: Je suis capable d'évaluer sommairement l'impact de certains
+        outils numériques sur l'apprentissage.
+      observable_quantitatif: J'évalue au moins 2 outils numériques par trimestre
+        et je note mes observations.
+    - badge: oui
+      degre: 3
+      libelle: Je suis autonome
+      observable_qualitatif: Je suis capable d'analyser et de justifier les ajustements
+        nécessaires de mes pratiques numériques.
+      observable_quantitatif: J'effectue une évaluation complète de l'efficacité de
+        mes outils numériques à chaque fin de période (trimestre), et je propose des
+        ajustements.
+    - badge: oui
+      degre: 4
+      libelle: Je maîtrise avec aisance
+      observable_qualitatif: Je suis capable de former mes collègues sur l'évaluation
+        et l'optimisation des pratiques numériques.
+      observable_quantitatif: Je réalise au moins 2 sessions de formation par an et
+        j'évalue l'impact de mes recommandations sur les pratiques des autres.
+    section: 3
+etape_5_contenu:
+  contenus_par_section:
+  - activite_1: Information Wall
+    activite_2: BigBlueButtonBN
+    code_competence: C1
+    competences_visees: appliquer, participer, cooperer
+    intention_activite_1: Collaboration
+    intention_activite_2: Discussion
+    intention_ressource: Acquisition
+    justification_activite_1: Le mur d'information collaboratif favorisera l'application
+      des outils numériques pour l'interaction et la collaboration entre pairs. Les
+      enseignants pourront y partager et organiser leurs idées sur l'utilisation des
+      outils en classe, répondant ainsi à l'aspect 'collaborer' de la compétence.
+    justification_activite_2: L'activité BigBlueButtonBN permettra aux enseignants
+      de pratiquer l'animation de séances interactives en direct. Ils pourront expérimenter
+      l'utilisation d'outils numériques pour faciliter la discussion et la participation
+      des élèves, consolidant leur capacité à 'appliquer' ces outils en contexte réel.
+    justification_activite_s: ''
+    justification_ressource: Ce livre interactif permettra aux enseignants d'acquérir
+      les bases et les principes d'utilisation des outils numériques pour l'interaction.
+      Il offre un format structuré idéal pour la présentation de concepts et d'exemples
+      concrets, favorisant une acquisition progressive des connaissances.
+    niveau_competence: Moyen
+    ressource: Interactive Book
+    section: ''
+    titre_competence: Utiliser des outils numériques pour favoriser l'interaction
+      en classe
+    type_de_section: ''
+  - activite_1: Devoir
+    activite_2: Atelier
+    code_competence: C2
+    competences_visees: concevoir, combiné, adapter
+    intention_activite_1: Production
+    intention_activite_2: Enquête/Collaboration
+    intention_ressource: Acquisition
+    justification_activite_1: L'activité 'Devoir' permettra aux enseignants de soumettre
+      une proposition d'activité pédagogique numérique qu'ils auront conçue. Cela
+      leur offrira l'opportunité d'appliquer concrètement les principes de design
+      étudiés et de recevoir un feedback structuré sur leur 'production'.
+    justification_activite_2: L'atelier de révision par les pairs permettra aux enseignants
+      d'évaluer les conceptions d'activités de leurs collègues et de recevoir des
+      retours constructifs sur les leurs. Cette 'collaboration' et 'enquête' sur les
+      pratiques enrichira leur capacité à concevoir des activités efficaces et adaptées.
+    justification_activite_s: ''
+    justification_ressource: Ce livre interactif sera une ressource complète pour
+      comprendre les principes de conception d'activités pédagogiques intégrant le
+      numérique. Il guidera les enseignants à travers les étapes clés de l'intégration
+      technologique, fournissant les bases nécessaires pour 'concevoir' efficacement.
+    niveau_competence: Haut
+    ressource: Interactive Book
+    section: ''
+    titre_competence: Concevoir des activités pédagogiques intégrant le numérique
+    type_de_section: ''
+  - activite_1: Questionnaire
+    activite_2: Devoir
+    code_competence: C3
+    competences_visees: évaluer, justifier, contrôler
+    intention_activite_1: Enquête
+    intention_activite_2: Collaboration/Production
+    intention_ressource: Acquisition/Entraînement
+    justification_activite_1: Le questionnaire H5P permettra aux enseignants de collecter
+      des données et des avis auprès de leurs élèves sur l'efficacité de leurs pratiques
+      numériques. C'est une méthode directe pour initier une démarche d''enquête'
+      sur l'impact de leurs interventions et 'évaluer' les résultats.
+    justification_activite_2: L'activité 'Devoir' sera utilisée pour la soumission
+      d'un rapport d'évaluation complet. Les enseignants devront y 'justifier' leurs
+      conclusions et proposer des ajustements argumentés pour optimiser leurs pratiques
+      numériques en classe, démontrant leur capacité à 'contrôler' et améliorer.
+    justification_activite_s: ''
+    justification_ressource: Cette présentation interactive offrira aux enseignants
+      une vue d'ensemble des méthodes et critères d'évaluation des pratiques numériques.
+      Elle fournira les connaissances nécessaires pour analyser l'efficacité des outils
+      en classe, préparant à l'étape d''évaluation'.
+    niveau_competence: Haut
+    ressource: Course Presentation
+    section: ''
+    titre_competence: Évaluer l'efficacité des pratiques numériques en classe
+    type_de_section: ''

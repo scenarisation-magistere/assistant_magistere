@@ -107,7 +107,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: var(--font-size-normal);
             margin: 0;
         }
 
@@ -126,10 +126,11 @@
             <form id="questionnaireForm" method="POST" data-endpoint="/submit_contraintes">
                 {% include 'includes/question_slider.html' %}
             </form>
+            {% from 'includes/blocks/components.html' import messages %}
+            {{ messages() }}
         </div>
     </div>
 
-    {% include 'includes/success_modal.html' %}
     {% include 'includes/footer.html' %}
 
     <script>window.RECAP_ENABLED = false;</script>
@@ -137,17 +138,11 @@
     <script>
         // Override navigation functions for this template
         function getNextRouteFromNavInfo() {
-            {% if nav_info and nav_info.next_route %}
-                return '{{ nav_info.next_route }}';
-            {% endif %}
-            return null;
+            return '{{ nav_info.next_route if nav_info and nav_info.next_route else "" }}' || null;
         }
 
         function getPreviousRouteFromNavInfo() {
-            {% if nav_info and nav_info.previous_route %}
-                return '{{ nav_info.previous_route }}';
-            {% endif %}
-            return null;
+            return '{{ nav_info.previous_route if nav_info and nav_info.previous_route else "" }}' || null;
         }
 
         // Override submitAllQuestions function to use harmonized submit for contraintes

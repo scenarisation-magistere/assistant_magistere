@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistant Scénarisation Magistère</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
     <style>
         /* Reset et styles de base */
         * {
@@ -37,7 +38,7 @@
 
         /* Sur-titre */
         .super-title {
-            font-size: 1.1rem;
+            font-size: var(--font-size-large);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: #5c6770;
@@ -60,7 +61,7 @@
         }
 
         .main-title {
-            font-size: 3rem;
+            font-size: var(--font-size-title);
             font-weight: 800;
             color: #333333;
             line-height: 1.1;
@@ -69,7 +70,7 @@
 
         /* Sous-titre descriptif */
         .subtitle {
-            font-size: 1.1rem;
+            font-size: var(--font-size-large);
             color: #4a4a4a;
             line-height: 1.7;
             margin-top: 8px;
@@ -107,7 +108,7 @@
             border: none;
             border-radius: 44px;
             padding: 18px 26px;
-            font-size: clamp(1.05rem, 1.9vw, 1.6rem);
+            font-size: var(--font-size-xl);
             font-weight: 700;
             letter-spacing: 0.02em;
             cursor: pointer;

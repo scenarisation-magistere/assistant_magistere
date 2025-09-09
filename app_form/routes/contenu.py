@@ -3,83 +3,15 @@ import yaml
 import os
 from datetime import datetime
 from config.pages_config import get_navigation_info, get_page_config
-from ai_helpers import generate_ai_response, generate_gemini_response
-
-# Create output directory if it doesn't exist
-OUTPUT_DIR = 'output'
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
-
-def get_session_filename():
-    """Generate a unique filename for this session"""
-    if 'session_id' not in session:
-        session['session_id'] = datetime.now().strftime("%Y%m%d_%H%M%S")
-    return f"formation_{session['session_id']}.yaml"
-
-def save_yaml_data(data, step_name):
-    """Save data to YAML file, updating existing file if it exists"""
-    filename = get_session_filename()
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    
-    # Load existing data if file exists
-    existing_data = {}
-    if os.path.exists(filepath):
-        try:
-            with open(filepath, 'r', encoding='utf-8') as f:
-                existing_data = yaml.safe_load(f) or {}
-        except:
-            existing_data = {}
-    
-    # Update with new data
-    existing_data[step_name] = data
-    existing_data['last_updated'] = datetime.now().isoformat()
-    existing_data['current_step'] = step_name
-    
-    # Save updated data
-    with open(filepath, 'w', encoding='utf-8') as f:
-        yaml.dump(existing_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
-    
-    return filename
-
-def load_yaml_data():
-    """Load data from YAML file"""
-    if 'session_id' not in session:
-        return None
-    
-    filename = get_session_filename()
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    
-    if not os.path.exists(filepath):
-        return None
-    
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f) or {}
-    except:
-        return None
-
-def check_previous_steps_completed(required_steps):
-    """Check if all required previous steps are completed"""
-    if 'session_id' not in session:
-        return False, "Aucune session active"
-    
-    filename = get_session_filename()
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    
-    if not os.path.exists(filepath):
-        return False, "Aucun fichier de données trouvé"
-    
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            yaml_data = yaml.safe_load(f) or {}
-    except:
-        return False, "Erreur lors du chargement des données"
-    
-    for step in required_steps:
-        if step not in yaml_data:
-            return False, f"Étape {step} non complétée"
-    
-    return True, "OK"
+from helpers.ai_helpers import generate_gemini_response
+import json
+from helpers.session_yaml import (
+    get_session_filename,
+    save_yaml_data,
+    load_yaml_data,
+    check_previous_steps_completed,
+)
+from helpers.resource_loader import load_rag_resources
 
 def generate_contenus_with_ai(competences_data):
     """
@@ -128,24 +60,7 @@ def generate_contenus_with_ai(competences_data):
         # Fallback to mock data
         return generate_mock_contenus(competences_data)
 
-def load_rag_resources():
-    """
-    Load RAG resources for contenus generation
-    """
-    try:
-        # Load the R_03_Tableau_Activites_Ressources.md file
-        rag_file_path = os.path.join('ressources', 'Tableau_Activites_Ressources.json')
-        
-        if os.path.exists(rag_file_path):
-            with open(rag_file_path, 'r', encoding='utf-8') as f:
-                return f.read()
-        else:
-            print(f"RAG file not found: {rag_file_path}")
-            return ""
-            
-    except Exception as e:
-        print(f"Error loading RAG resources: {e}")
-        return ""
+ 
 
 def extract_competences_from_etape4(competences_data):
     """
@@ -196,81 +111,80 @@ def prepare_contenus_prompt(competences, rag_resources):
     """
     
     prompt = f"""
-    [INSTRUCTION_ASSISTANT] :
-    > **IMPORTANT — L'ASSISTANT DOIT STRICTEMENT UTILISER LE TEXTE CI-DESSOUS POUR L'INTERACTION AVEC LE PARTICIPANT, MOT POUR MOT, SANS MODIFICATION OU OMISSION.**  
-    > **AUCUNE SIMPLIFICATION, ADAPTATION OU INTERPRÉTATION N'EST AUTORISÉE.**  
-    > **TOUTES LES RÉPONSES DOIVENT ÊTRE FOURNIES INTÉGRALEMENT EN MARKDOWN BRUT, DANS UN SEUL BLOC TRIPLE BACKTICKS, SANS TEXTE EN DEHORS.**
+        [INSTRUCTION_ASSISTANT] :
+        > **IMPORTANT — L'ASSISTANT DOIT FOURNIR UNIQUEMENT DU JSON BRUT DANS UN SEUL BLOC TRIPLE BACKTICKS, SANS TEXTE EN DEHORS.**
 
-    ## BUT TECHNIQUE
-    Générer automatiquement, pour les sections S2 à S5, un tableau complet des contenus pédagogiques à partir :  
-    - du bloc `ordre_competences` validé,  
-    - du fichier Markdown `R_03_Tableau_Activites_Ressources.md` (col.1 = id, col.2 = type, col.3 = nom, col.4 = recommandation),  
-    - des règles ABC Learning Design définies ci-dessous.
+        ## BUT TECHNIQUE
+        Générer automatiquement un objet JSON par compétence à partir :  
+        - des compétences à traiter (avec leur code C1, C2, …),
+        - des activités et ressources disponibles,  
+        - des règles ABC Learning Design ci-dessous.
 
-    ## COMPÉTENCES À TRAITER
-    {yaml.dump(competences, default_flow_style=False, allow_unicode=True)}
+        ----------------------------
 
-    ## RESSOURCES RAG DISPONIBLES
-    {rag_resources}
+        ## COMPÉTENCES À TRAITER
+        {yaml.dump(competences, default_flow_style=False, allow_unicode=True)}
 
-    ## RÈGLES DE FILTRAGE ET DE SÉLECTION PÉDAGOGIQUE
+        ----------------------------
 
-    1. **Priorité pédagogique générale**  
-       - Privilégier : **Acquisition**, **Collaboration**, **Discussion**, **Pratique**.  
-       - **Production** et **Enquête** restent présentes mais de façon secondaire.
+        ## LISTES DES ACTIVITÉS ET RESSOURCES DISPONIBLES
+        {rag_resources}
 
-    2. **Filtrage par recommandation et compétences visées**  
-       - Priorité aux entrées avec `recommandation = 3`.  
-       - Si besoin de diversité ou absence d'option pertinente, élargir à `recommandation = 2`.  
-       - Tenir compte du type de **compétences visées** pour aligner le choix sur le scénario CMO et les intentions ABC Learning Design.  
-       - Déterminer l'intention des ressources et activités à partir de la formulation de la compétence ou des verbes d'action :  
-         - **Acquisition** → mémoriser, identifier, définir, comprendre  
-         - **Entraînement** → appliquer, s'entraîner, mettre en œuvre  
-         - **Production** → réaliser, produire, concevoir  
-         - **Discussion** → discuter, argumenter, échanger, analyser un point de vue  
-         - **Collaboration** → coopérer, co-construire, travailler en groupe  
-         - **Enquête** → explorer, enquêter, rechercher
+        ----------------------------
 
-    3. **Filtrage par type de ressource ou activité**  
-       - **Ressource principale** : `Ressource` ou `Ressource H5P` avec intention **Acquisition**.  
-       - **Activité 1** : `Activité` ou `Activité H5P`, intention en cohérence avec la compétence visée.  
-       - **Activité 2** (optionnelle) : uniquement si valeur ajoutée pédagogique et intention complémentaire.  
-       - **Activités externes** autorisées si pertinence claire, avec justification RGPD/hébergement si nécessaire.
+        ## RÈGLES DE SÉLECTION
 
-    4. **Justification obligatoire**  
-       - Expliquer la pertinence pédagogique des activités par rapport à la compétence et au modèle ABC Learning Design.
+        1. **Priorités pédagogiques (CMO hybride — ABC Learning Design)**  
+        Prioriser dans cet ordre : **Acquisition, Collaboration, Discussion, Pratique**.  
+        → **Production** et **Enquête** seulement en complément si nécessaire.
 
-    ## FORMAT DE SORTIE
+        2. **Filtrage par recommandation (R_03)**  
+        - Sélectionner d’abord les entrées avec `recommandation = 3`.  
+        - Si nécessaire (diversité ou absence d’option pertinente), élargir à `recommandation = 2`.  
+        - Tenir compte du **type** et de l’**intention** indiqués dans R_03.
 
-    - L'assistant produit **uniquement** un tableau Markdown brut dans un seul bloc triple backticks, puis un bloc YAML reprenant exactement les données du tableau.
-    - Colonnes du tableau (ordre fixe) :  
-      | Section | Type de section | Compétences visées | Ressource | Intention ressource | Activité 1 | Intention activité 1 | Activité 2 | Intention activité 2 | Justification activité(s) |
+        3. **Filtrage par type de ressource / activité (aligné sur R_03)**  
+        - **Ressource principale** : toujours de type `Ressource` ou `Ressource H5P`.  
+            - Intention = **Acquisition systématiquement**.  
+            - Exemples : Page, Fichier, Ressource H5P (Course Presentation, Interactive Book…).  
+        - **Activité 1** : de type `Activité` ou `Activité H5P`.  
+            - Intention en cohérence avec la compétence visée.  
+            - Exemple : si compétence = Collaboration → choisir activité collaborative (Forum, Atelier, Wiki, Padlet/H5P collaboratif…).  
+        - **Activité 2** (optionnelle) : proposer seulement si la compétence est complexe/multifacette et nécessite deux angles pédagogiques.  
+            - Ne pas ajouter si redondant ou sans valeur ajoutée claire.  
+        - **Activités externes** : autorisées uniquement si clairement pertinentes, avec justification RGPD/hébergement explicite.
 
-    **IMPORTANT** : Dans le YAML, utiliser les noms de champs suivants exactement :
-    - `section` (pas "Section")
-    - `type_de_section` (pas "Type de section")
-    - `competences_visees` (pas "Compétences visées")
-    - `ressource` (pas "Ressource")
-    - `intention_ressource` (pas "Intention ressource")
-    - `activite_1` (pas "Activité 1")
-    - `intention_activite_1` (pas "Intention activité 1")
-    - `activite_2` (pas "Activité 2")
-    - `intention_activite_2` (pas "Intention activité 2")
-    - `justification_activite_s` (pas "justification_activites" ou "Justification activité(s)")
-    
-    **IMPORTANT** : Utiliser des chaînes vides `""` au lieu de `null` pour les champs vides.
+        4. **Justification obligatoire**  
+        - Expliquer en 2–3 phrases max pourquoi :  
+            - la **ressource** (intention Acquisition) est pertinente,  
+            - l’**activité 1** correspond à la compétence,  
+            - et éventuellement l’**activité 2** si présente.  
+        - Justification pédagogique centrée sur l’alignement avec la compétence et les priorités ABC Learning Design.  
+        - Éviter tout discours technique sur l’outil.
 
-    **Règles de remplissage** :  
-    - **S1 – Accueil** : Type = Accueil, autres colonnes chaînes vides `""`.  
-    - **S2 à S5 – Apprentissage** :  
-      - Compétences visées = depuis `ordre_competences`.  
-      - Ressource, activités et intentions = selon règles ci-dessus.  
-      - Justification = obligatoire pour activités.  
-    - **S6 – Classe virtuelle (BBB)** : Activité 1 = BigBlueButtonBN, Intention = Discussion.  
-    - **S7 – Forum général** : Activité 1 = Forum, Intention = Discussion / Collaboration.  
-    - **S8 – Évaluation** : Activité 1 = Sondage Magistère, Intention = Enquête.
+        ----------------------------
 
-    Merci de générer le tableau et le YAML selon ces règles.
+        ## FORMAT DE SORTIE
+
+        - Réponse = JSON brut dans un seul bloc triple backticks.
+        - Chaque compétence devient un objet JSON.
+        - Champs obligatoires :
+        - `code_competence` (ex: "C1")
+        - `titre_competence`
+        - `niveau_competence`
+        - `competences_visees`
+        - `ressource`
+        - `intention_ressource`
+        - `justification_ressource`
+        - `activite_1`
+        - `intention_activite_1`
+        - `justification_activite_1`
+        - `activite_2`
+        - `intention_activite_2`
+        - `justification_activite_2`
+        - Utiliser `""` pour les champs vides.
+
+        Merci de générer le JSON selon ces règles.
     """
     
     return prompt
@@ -305,15 +219,21 @@ def parse_ai_contenus_response(ai_response):
                     return ''
 
                 formatted_section_local = {
+                    'code_competence': safe_get(section, 'code_competence', 'code', 'Code', 'competence_code'),
+                    'titre_competence': safe_get(section, 'titre_competence', 'titre', 'title', 'Titre'),
+                    'niveau_competence': safe_get(section, 'niveau_competence', 'niveau', 'level', 'Niveau'),
                     'section': safe_get(section, 'section', 'Section'),
                     'type_de_section': safe_get(section, 'type_de_section', 'Type de section'),
-                    'competences_visees': safe_get(section, 'competences_visees', 'Compétences visées'),
+                    'competences_visees': safe_get(section, 'competences_visees', 'competence_visee', 'Compétences visées', 'Compétence visée'),
                     'ressource': safe_get(section, 'ressource', 'Ressource'),
                     'intention_ressource': safe_get(section, 'intention_ressource', 'Intention ressource'),
+                    'justification_ressource': safe_get(section, 'justification_ressource', 'Justification ressource'),
                     'activite_1': safe_get(section, 'activite_1', 'Activité 1'),
                     'intention_activite_1': safe_get(section, 'intention_activite_1', 'Intention activité 1'),
+                    'justification_activite_1': safe_get(section, 'justification_activite_1', 'Justification activité 1'),
                     'activite_2': safe_get(section, 'activite_2', 'Activité 2'),
                     'intention_activite_2': safe_get(section, 'intention_activite_2', 'Intention activité 2'),
+                    'justification_activite_2': safe_get(section, 'justification_activite_2', 'Justification activité 2'),
                     'justification_activite_s': safe_get(section, 'justification_activite_s', 'justification_activites', 'Justification activité(s)')
                 }
 
@@ -660,3 +580,18 @@ def register_contenu_routes(app):
                 'success': False,
                 'error': str(e)
             })
+
+    @app.route('/get_resources_catalog', methods=['GET'])
+    def get_resources_catalog():
+        try:
+            rag_file_path = os.path.join('ressources', 'Tableau_Activites_Ressources.json')
+            if not os.path.exists(rag_file_path):
+                return jsonify({'success': False, 'error': 'Catalogue non trouvé'})
+            with open(rag_file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            # Ensure it's a list of dicts
+            if not isinstance(data, list):
+                return jsonify({'success': False, 'error': 'Format de catalogue invalide'})
+            return jsonify({'success': True, 'items': data})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})

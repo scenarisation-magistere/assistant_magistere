@@ -1,9 +1,38 @@
-from flask import request, jsonify, session
-from .main import save_yaml_data
+from flask import request, jsonify, session, render_template, redirect
+from helpers.session_yaml import save_yaml_data
+from config.pages_config import get_navigation_info, get_page_config
+from helpers.resource_loader import load_questions_from_json
 
 def register_public_cible_routes(app):
     """Register public cible routes with the Flask app"""
     
+    @app.route('/public-cible', methods=['GET', 'POST'])
+    def public_cible():
+        if request.method == 'POST':
+            # Handle form submission
+            data = {}
+            for key in request.form.keys():
+                values = request.form.getlist(key)
+                if len(values) > 1:
+                    data[key] = values
+                else:
+                    data[key] = values[0] if values else ''
+            # Attach merged info for type_de_formation for convenience
+            if data.get('type_de_formation_text'):
+                data['type_de_formation_precisions'] = data.get('type_de_formation_text')
+            save_yaml_data(data, 'etape_1_public_cible')
+            return redirect('/contraintes')
+        
+        nav_info = get_navigation_info('public_cible')
+        page_config = get_page_config('public_cible')
+        questions_public_cible = load_questions_from_json('public_cible.json')
+        return render_template('public_cible.html', 
+                             questions=questions_public_cible, 
+                             nav_info=nav_info,
+                             header_gradient=page_config.get('header_gradient', 'var(--gradient-primary)'),
+                             header_title='🧭 Titre, objectif et public cible',
+                             header_description='Déterminez le titre, l’objectif général et les caractéristiques du public cible de votre formation')
+
     @app.route('/submit_public_cible', methods=['POST'])
     def submit_public_cible():
         data = request.get_json()

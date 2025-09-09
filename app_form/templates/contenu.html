@@ -24,6 +24,7 @@
         .competences-recall h3 {
             color: var(--primary-blue);
             margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-xl);
         }
 
         .competences-recall .data-item {
@@ -47,6 +48,30 @@
             line-height: 1.4;
         }
 
+        /* New: richer competence display */
+        .competences-recall .competence-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .competences-recall .competence-code {
+            background: var(--primary-blue);
+            color: #fff;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+        .competences-recall .competence-title {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: var(--font-size-large);
+        }
+        .competences-recall .competence-desc {
+            color: var(--text-medium);
+        }
+
         .competences-recall .competence-item strong {
             color: var(--primary-blue);
             font-weight: 600;
@@ -65,8 +90,8 @@
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
+            padding: 12px 26px;
+            font-size: var(--font-size-large);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -201,11 +226,12 @@
             background: var(--light-gray);
             border: 2px solid var(--border-gray);
             color: var(--text-medium);
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: var(--radius-small);
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            font-size: var(--font-size-normal);
         }
 
         .view-option-btn.active {
@@ -421,14 +447,25 @@
         }
 
         /* Navigation between detailed views */
+        /* Topbar for detailed view */
+        .detailed-topbar {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+            backdrop-filter: saturate(1.1) blur(2px);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-small);
+            padding: var(--spacing-sm) var(--spacing-md);
+            margin: var(--spacing-md) 0 var(--spacing-lg) 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+
         .detailed-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: var(--spacing-lg) 0;
-            padding: var(--spacing-md);
-            background: var(--light-gray);
-            border-radius: var(--radius-small);
+            gap: var(--spacing-md);
         }
 
         .nav-detail-btn {
@@ -454,6 +491,13 @@
         .section-counter {
             font-weight: 600;
             color: var(--text-dark);
+        }
+
+        .navigation-tips {
+            text-align: center;
+            margin-top: var(--spacing-sm);
+            font-size: 0.9em;
+            color: var(--text-medium);
         }
 
         /* Responsive design for new components */
@@ -600,28 +644,33 @@
         {% include 'includes/header.html' %}   
         <div class="content-container">
             
+            {% set instructions_header = 'Génération des contenus pédagogiques' %}
+            {% set instructions_subtitle = "L’IA génère automatiquement les contenus du parcours selon le scénario hybride CMO." %}
+            {% set instructions = [
+                'Intentions pédagogiques ABC — Prioritaires : Acquisition, Collaboration, Discussion, Pratique ; Complémentaires : Production, Enquête.',
+                'Niveau de difficulté de chaque compétence visée.',
+                'Sélection pré‑orientée de ressources et activités Magistère (validée par la Communauté Magistère Occitanie). Voir le <a href="https://nuage02.apps.education.fr/index.php/s/8TZDK9gYr7nZ4EH?dir=/&openfile=true">tableur</a>'
+            ] %}
+            {% from 'includes/blocks/components.html' import instructions_panel %}
+            {{ instructions_panel(instructions_header, instructions_subtitle, instructions, '') }}
+
 
             <!-- Compétences Recall Section -->
             <div class="competences-recall">
                 <h3>📋 Compétences Sélectionnées</h3>
-                <div class="data-item">
-                    <strong>Nombre de compétences :</strong> 
-                    <span id="competences-count">
-                        {% if competences_for_display %}
-                            {{ competences_for_display | length }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    </span>
-                </div>
-
-                <div class="data-item">
-                    <strong>Compétences :</strong>
-                    <div id="competences-list">
+                <div id="competences-list">
                         {% if competences_for_display %}
                             {% for comp in competences_for_display %}
                                 <div class="competence-item">
-                                    <strong>{{ comp.code }}</strong> - {{ comp.formulation }}
+                                    <div class="competence-header">
+                                        <span class="competence-code">{{ comp.code }}</span>
+                                        <span class="competence-title">{{ comp.titre if comp.titre else comp.formulation }}</span>
+                                    </div>
+                                    {% if comp.titre and comp.formulation %}
+                                        <div class="competence-desc">{{ comp.formulation }}</div>
+                                    {% elif comp.idees_cles %}
+                                        <div class="competence-desc">{{ comp.idees_cles }}</div>
+                                    {% endif %}
                                 </div>
                             {% endfor %}
                         {% else %}
@@ -630,43 +679,23 @@
                             </div>
 
                         {% endif %}
-                    </div>
                 </div>
             </div>
 
             <!-- AI Generation Section -->
             <div class="ai-generate-section">
                 <h3>Génération des contenus pédagogiques</h3>
-                <p>L’IA génère automatiquement les contenus du parcours selon le scénario hybride CMO.</p>
-                <p>Cette génération s’appuie sur :</p>
-                <div class="ai-guidelines">
-                    <p>
-                        Les <strong>intentions pédagogiques du scénario hybride CMO</strong> (méthode ABC Learning Design) :<br>
-                        <strong>Prioritaires</strong> : Acquisition, Collaboration, Discussion, Pratique<br>
-                        <strong>Complémentaires</strong> : Production, Enquête
-                    </p>
-                    <p>
-                        Le <strong>niveau de difficulté</strong> de chaque compétence visée.
-                    </p>
-                    <p>
-                        Une <strong>sélection pré-orientée de ressources et activités Magistère</strong>, validée par la Communauté Magistère Occitanie
-                        (<a href="https://nuage02.apps.education.fr/index.php/s/8TZDK9gYr7nZ4EH?dir=/&openfile=true" target="_blank" rel="noopener">voir le tableur de choix</a>).
-                    </p>
-                </div>
-                
                 <button class="ai-generate-btn" id="generateContenusBtn" onclick="generateContenus()">
                     ✨ Générer les Contenus
                 </button>
                 
-                <div class="ai-loading" id="aiLoading" style="display: none;">
-                    <div class="loading-spinner"></div>
-                    <p>Génération des contenus en cours...</p>
-                </div>
+                {% from 'includes/blocks/components.html' import loading %}
+                {{ loading('aiLoading', 'Génération des contenus en cours...') }}
             </div>
 
             <!-- Error/Success Messages -->
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
-            <div id="successMessage" class="success-message" style="display: none;"></div>
+            {% from 'includes/blocks/components.html' import messages %}
+            {{ messages() }}
 
             <!-- AI Generated Results Section -->
             <div id="aiResultsSection" style="display: none;">
@@ -693,22 +722,16 @@
                     
                     <!-- Detailed View -->
                     <div id="detailedView" class="detailed-view">
-                        <!-- Navigation between sections -->
-                        <div class="detailed-navigation">
-                            <button class="nav-detail-btn" id="prevSectionBtn" onclick="showPreviousSection()">
-                                ← Précédent
-                            </button>
-                            <div class="section-counter">
-                                Section <span id="currentSectionNumber">1</span> sur <span id="totalSections">0</span>
+                        <!-- Topbar: navigation + tips -->
+                        <div class="detailed-topbar">
+                            <div class="detailed-navigation">
+                                <button class="nav-detail-btn" id="prevSectionBtn" onclick="showPreviousSection()">← Précédent</button>
+                                <div class="section-counter">Section <span id="currentSectionNumber">1</span> sur <span id="totalSections">0</span></div>
+                                <button class="nav-detail-btn" id="nextSectionBtn" onclick="showNextSection()">Suivant →</button>
                             </div>
-                            <button class="nav-detail-btn" id="nextSectionBtn" onclick="showNextSection()">
-                                Suivant →
-                            </button>
-                        </div>
-                        
-                        <div style="text-align: center; margin: 10px 0; font-size: 0.9em; color: var(--text-medium);">
-                            💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer<br>
-                            📋 Vue détaillée : Seules les sections avec des compétences sont affichées
+                            <div class="navigation-tips">
+                                💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer — seules les sections avec des compétences sont affichées
+                            </div>
                         </div>
                         
                         <div id="detailedContent">
@@ -719,16 +742,9 @@
             </div>
 
             <!-- Submit Section -->
-            <div class="submit-section" id="submitSection" style="display: none;">
-                <button class="submit-btn" id="submitBtn" onclick="saveContenus()">
-                    ✅ Valider et Continuer vers {{ get_page_name_by_step(nav_info.step + 1) }}
-                </button>
-                
-                <div class="loading" id="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Sauvegarde en cours...</p>
-                </div>
-            </div>
+            {% from 'includes/blocks/components.html' import submit_section %}
+            {% set next_label = '✅ Valider et Continuer vers ' ~ (get_page_name_by_step(nav_info.step + 1)) %}
+            {{ submit_section('submitBtn', next_label, 'saveContenus()') }}
         </div>
     </div>
 
@@ -740,6 +756,7 @@
         // Global variables
         let competences = [];
         let contenusData = {};
+        let resourcesCatalog = [];
 
         // Normalize any value to a safe string for rendering
         function normalizeValue(value) {
@@ -754,10 +771,125 @@
             return String(value);
         }
 
+        // New: Known labels and preferred order for dynamic columns
+        const FIELD_LABELS = {
+            section: 'Section',
+            type_de_section: 'Type',
+            type: 'Type',
+            code_competence: 'Code compétence',
+            competences_visees: 'Compétences visées',
+            competence_visee: 'Compétence visée',
+            ressource: 'Ressource',
+            intention_ressource: 'Intention ressource',
+            justification_ressource: 'Justification ressource',
+            activite_1: 'Activité 1',
+            intention_activite_1: 'Intention activité 1',
+            justification_activite_1: 'Justification activité 1',
+            activite_2: 'Activité 2',
+            intention_activite_2: 'Intention activité 2',
+            justification_activite_2: 'Justification activité 2',
+            justification_activite_s: 'Justification activité(s)'
+        };
+
+        const PREFERRED_ORDER = [
+            'section',
+            'type_de_section',
+            'type',
+            'code_competence',
+            'competences_visees',
+            'competence_visee',
+            'ressource',
+            'intention_ressource',
+            'justification_ressource',
+            'activite_1',
+            'intention_activite_1',
+            'justification_activite_1',
+            'activite_2',
+            'intention_activite_2',
+            'justification_activite_2',
+            'justification_activite_s'
+        ];
+
+        // Exclusions for simplified table view (avoid overly verbose columns)
+        const EXCLUDE_IN_SIMPLIFIED_PREFIXES = ['justification_'];
+
+        function collectDynamicColumns(data) {
+            const allKeys = new Set();
+            (data || []).forEach(item => {
+                if (item && typeof item === 'object') {
+                    Object.keys(item).forEach(k => allKeys.add(k));
+                }
+            });
+            // Remove keys that are always empty across rows
+            const keys = Array.from(allKeys);
+            const nonEmptyKeys = keys.filter(key => {
+                return (data || []).some(item => {
+                    const v = item ? item[key] : undefined;
+                    const s = normalizeValue(v);
+                    return s && s.trim() !== '' && s !== '-';
+                });
+            });
+            // Exclude noisy fields from simplified table
+            const filteredKeys = nonEmptyKeys.filter(key => !EXCLUDE_IN_SIMPLIFIED_PREFIXES.some(p => key.startsWith(p)));
+            // Order: preferred first (as present), then rest alphabetically
+            const preferred = PREFERRED_ORDER.filter(k => filteredKeys.includes(k));
+            const rest = filteredKeys.filter(k => !preferred.includes(k)).sort();
+            return [...preferred, ...rest];
+        }
+
+        function labelForKey(key) {
+            return FIELD_LABELS[key] || key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        // Extract a human-friendly title from a value that may be an object or an inline map string
+        function displayTitle(value) {
+            if (value === null || value === undefined) return '';
+            if (typeof value === 'object') {
+                try {
+                    const keys = Object.keys(value);
+                    const nameKey = keys.find(k => /^(nom|name|titre|label|intitule|intitulé|Nom de l'activité ou ressource)$/i.test(k));
+                    if (nameKey) return normalizeValue(value[nameKey]);
+                } catch (_) {}
+                return normalizeValue(value);
+            }
+            const s = String(value);
+            // Try to extract from inline map-like strings
+            let m = s.match(/Nom de l['’]activité ou ressource\s*:\s*([^,}\n]+)/i);
+            if (m) return m[1].trim();
+            m = s.match(/Nom\s*:\s*([^,}\n]+)/i);
+            if (m) return m[1].trim();
+            m = s.match(/Titre\s*:\s*([^,}\n]+)/i);
+            if (m) return m[1].trim();
+            return s;
+        }
+
+        // Helpers for competence title/formulation extraction
+        function stripLeadingCode(text) {
+            if (!text) return '';
+            const s = String(text);
+            const m = s.match(/^([A-Z]\d+)\s*[-–:]?\s*(.*)$/);
+            return m ? m[2] : s;
+        }
+
+        function getCompetenceTitleAndFormulation(competenceText, competenceDetails) {
+            const titleFromDetails = competenceDetails && competenceDetails.titre ? String(competenceDetails.titre) : '';
+            const formulationFromDetails = competenceDetails && competenceDetails.formulation ? String(competenceDetails.formulation) : '';
+            if (titleFromDetails || formulationFromDetails) {
+                return {
+                    title: titleFromDetails || stripLeadingCode(competenceText || ''),
+                    formulation: formulationFromDetails || stripLeadingCode(competenceText || '')
+                };
+            }
+            const stripped = stripLeadingCode(competenceText || '');
+            return { title: stripped, formulation: stripped };
+        }
+
         // Load competences data
         document.addEventListener('DOMContentLoaded', function() {
             // Load competences from the backend
             loadCompetencesData();
+            // Load resources catalog for enrichment
+            loadResourcesCatalog();
             
             // Add keyboard shortcuts for detailed view navigation
             document.addEventListener('keydown', function(e) {
@@ -804,20 +936,64 @@
         }
 
         function updateCompetencesDisplay() {
-            const countElement = document.getElementById('competences-count');
             const listElement = document.getElementById('competences-list');
             
             // Only update if we have competences data
             if (competences && competences.length > 0) {
-                countElement.textContent = competences.length;
-                
                 let listHTML = '';
                 competences.forEach(comp => {
-                    listHTML += `<div class="competence-item"><strong>${comp.code}</strong> - ${comp.formulation}</div>`;
+                    const title = comp.titre && String(comp.titre).trim() !== '' ? comp.titre : comp.formulation;
+                    const desc = comp.titre && comp.formulation ? comp.formulation : (comp.idees_cles || '');
+                    listHTML += `
+                        <div class="competence-item">
+                            <div class="competence-header">
+                                <span class="competence-code">${comp.code}</span>
+                                <span class="competence-title">${title || ''}</span>
+                            </div>
+                            ${desc ? `<div class="competence-desc">${desc}</div>` : ''}
+                        </div>
+                    `;
                 });
                 
                 listElement.innerHTML = listHTML;
             }
+        }
+
+        function loadResourcesCatalog() {
+            fetch('/get_resources_catalog')
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success && Array.isArray(res.items)) {
+                        resourcesCatalog = res.items;
+                    }
+                })
+                .catch(() => { /* silent */ });
+        }
+
+        function normalizeCatalogName(name) {
+            if (!name) return '';
+            return String(name).trim().toLowerCase();
+        }
+
+        function findCatalogEntryByName(name) {
+            const target = normalizeCatalogName(displayTitle(name));
+            if (!target) return null;
+            // direct match on "Nom de l'activité ou ressource"
+            const exact = resourcesCatalog.find(item => normalizeCatalogName(item['Nom de l\'activité ou ressource']) === target);
+            if (exact) return exact;
+            // fallback: contains
+            return resourcesCatalog.find(item => normalizeCatalogName(item['Nom de l\'activité ou ressource']).includes(target)) || null;
+        }
+
+        function formatCatalogLink(link) {
+            if (!link) return '';
+            const s = String(link).trim();
+            const isUrl = /^https?:\/\//i.test(s);
+            if (isUrl) {
+                const safe = s.replace(/"/g, '&quot;');
+                return `<a href="${safe}" target="_blank" rel="noopener">Voir la documentation</a>`;
+            }
+            return normalizeValue(s);
         }
 
         function generateContenus() {
@@ -888,17 +1064,17 @@
         function generateSimplifiedTable(contenusData) {
             const simplifiedTableContent = document.getElementById('simplifiedTableContent');
             
+            // Determine dynamic columns from data
+            let columns = collectDynamicColumns(contenusData);
+            // Hide standalone code/titre/niveau fields in simplified table; use only inside competence cell
+            columns = columns.filter(c => !['code_competence','titre_competence','niveau_competence'].includes(c));
+            
             // Generate simplified table HTML - show ALL sections
             let tableHTML = `
                 <table class="simplified-table">
                     <thead>
                         <tr>
-                            <th>Section</th>
-                            <th>Type</th>
-                            <th>Compétences visées</th>
-                            <th>Ressource</th>
-                            <th>Activité 1</th>
-                            <th>Activité 2</th>
+                            ${columns.map(col => `<th>${labelForKey(col)}</th>`).join('')}
                         </tr>
                     </thead>
                     <tbody>
@@ -908,12 +1084,28 @@
             contenusData.forEach(section => {
                 tableHTML += `
                     <tr>
-                        <td class="section-number">${normalizeValue(section.section) || '-'}</td>
-                        <td class="section-type">${normalizeValue(section.type_de_section) || '-'}</td>
-                        <td class="competence-visee">${normalizeValue(section.competences_visees) || '-'}</td>
-                        <td class="ressource">${normalizeValue(section.ressource) || '-'}</td>
-                        <td class="activite">${normalizeValue(section.activite_1) || '-'}</td>
-                        <td class="activite">${normalizeValue(section.activite_2) || '-'}</td>
+                        ${columns.map(col => {
+                            let val;
+                            if (col === 'ressource' || col === 'activite_1' || col === 'activite_2') {
+                                val = displayTitle(section[col]);
+                            } else if (col === 'competences_visees' || col === 'competence_visee') {
+                                const compText = normalizeValue(section[col]);
+                                const explicitCode = normalizeValue(section.code_competence);
+                                const explicitTitle = normalizeValue(section.titre_competence);
+                                const explicitLevel = normalizeValue(section.niveau_competence);
+                                const code = explicitCode || extractCompetenceCode(compText);
+                                const details = getCompetenceDetails(code);
+                                const cf = explicitTitle ? { title: explicitTitle, formulation: compText } : getCompetenceTitleAndFormulation(compText, details);
+                                val = `<div><strong>${code ? `${code} — ` : ''}${cf.title || ''}</strong>${cf.formulation ? `<div>${cf.formulation}</div>` : ''}${explicitLevel ? `<div style=\"font-size:0.85em;color:var(--text-medium);\">Niveau : ${explicitLevel}</div>` : ''}</div>`;
+                            } else {
+                                val = normalizeValue(section[col]);
+                            }
+                            const className = (col === 'section') ? 'section-number' :
+                                              (col === 'type_de_section' || col === 'type') ? 'section-type' :
+                                              (col === 'competences_visees' || col === 'competence_visee') ? 'competence-visee' :
+                                              (col.startsWith('activite') ? 'activite' : (col.startsWith('intention') ? 'intention' : (col === 'ressource' ? 'ressource' : '')));
+                            return `<td class="${className}">${val || '-'}</td>`;
+                        }).join('')}
                     </tr>
                 `;
             });
@@ -929,9 +1121,9 @@
         function generateDetailedView(contenusData) {
             const detailedContent = document.getElementById('detailedContent');
             
-            // Filter sections to only show those with competences
+            // Filter sections to only show those with competences (if present)
             const sectionsWithCompetences = contenusData.filter(section => {
-                const cv = normalizeValue(section.competences_visees);
+                const cv = normalizeValue(section.competences_visees || section.competence_visee);
                 return cv && cv.trim() !== '' && cv !== '-';
             });
             
@@ -951,23 +1143,46 @@
         }
 
         function generateSectionCard(section, index) {
-            const competenceCode = extractCompetenceCode(normalizeValue(section.competences_visees));
+            const competenceText = normalizeValue(section.competences_visees || section.competence_visee);
+            const competenceCode = normalizeValue(section.code_competence) || extractCompetenceCode(competenceText);
             const competenceDetails = getCompetenceDetails(competenceCode);
+            
+            // Known fields handled explicitly; extra fields are ignored per request
+
+            // New: collect top justifications to show at the top of the card
+            const topJustifications = [];
+            const jr = normalizeValue(section.justification_ressource);
+            const ja1 = normalizeValue(section.justification_activite_1);
+            const ja2 = normalizeValue(section.justification_activite_2);
+            const jas = normalizeValue(section.justification_activite_s);
+            if (jr) topJustifications.push({ label: 'Justification ressource', value: jr });
+            if (ja1) topJustifications.push({ label: 'Justification activité 1', value: ja1 });
+            if (ja2) topJustifications.push({ label: 'Justification activité 2', value: ja2 });
+            if (jas) topJustifications.push({ label: 'Justification activité(s)', value: jas });
             
             return `
                 <div class="section-card" id="section-${index}" style="display: ${index === 0 ? 'block' : 'none'};">
                     <div class="section-card-header">
-                        <h5>${normalizeValue(section.type_de_section) || 'Section'}</h5>
+                        <h5>${normalizeValue(section.type_de_section || section.type) || 'Section'}</h5>
                         <div class="section-number">${normalizeValue(section.section)}</div>
                     </div>
                     
                     <div class="section-card-content">
+                        ${topJustifications.length ? `
+                            <div class="justification-box" style="margin-bottom: 16px;">
+                                <h6>💡 Justifications</h6>
+                                <ul style="margin: 0; padding-left: 18px;">
+                                    ${topJustifications.map(j => `<li><strong>${j.label}:</strong> ${j.value}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+
                         <div class="section-info-grid">
-                            ${normalizeValue(section.competences_visees) ? `
+                            ${competenceText ? `
                                 <div class="section-info-item">
                                     <div class="competence-highlight">${normalizeValue(competenceCode) || 'Compétence'}</div>
-                                    <h6>Compétences visées</h6>
-                                    <p>${normalizeValue(section.competences_visees)}</p>
+
+                                    ${(() => { const cf = getCompetenceTitleAndFormulation(competenceText, competenceDetails); return `<p><strong>${normalizeValue(competenceCode)} — ${normalizeValue(cf.title)}</strong></p>${cf.formulation ? `<p>${normalizeValue(cf.formulation)}</p>` : ''}`; })()}
                                     ${competenceDetails ? `
                                         <div style="margin-top: 10px; padding: 8px; background: rgba(23, 162, 184, 0.1); border-radius: 5px; font-size: 0.9em;">
                                             <strong>Niveau :</strong> ${normalizeValue(competenceDetails.niveau) || 'Non défini'}<br>
@@ -980,8 +1195,11 @@
                             ${normalizeValue(section.ressource) ? `
                                 <div class="section-info-item">
                                     <h6>📚 Ressource</h6>
-                                    <p><strong>${normalizeValue(section.ressource)}</strong></p>
+                                    <p><strong>${displayTitle(section.ressource)}</strong></p>
                                     ${normalizeValue(section.intention_ressource) ? `<p><em>Intention : ${normalizeValue(section.intention_ressource)}</em></p>` : ''}
+                                    ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e.Description ? `<p style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</p>` : '' })()}
+                                    ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e['Type Ressource/ Activité'] ? `<p style="margin-top:6px; font-size: 0.9em;">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</p>` : '' })()}
+                                    ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e['Liens'] ? `<p style=\"margin-top:6px;\">${formatCatalogLink(e['Liens'])}</p>` : '' })()}
                                 </div>
                             ` : ''}
                         </div>
@@ -993,8 +1211,11 @@
                                     <div class="action-item">
                                         <div class="action-icon">1</div>
                                         <div class="action-content">
-                                            <div class="action-title">${normalizeValue(section.activite_1)}</div>
+                                            <div class="action-title">${displayTitle(section.activite_1)}</div>
                                             ${normalizeValue(section.intention_activite_1) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_1)}</div>` : ''}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e.Description ? `<div style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: 0.85em; color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e['Liens'] ? `<div style=\"margin-top:4px;\">${formatCatalogLink(e['Liens'])}</div>` : '' })()}
                                         </div>
                                     </div>
                                 ` : ''}
@@ -1003,18 +1224,14 @@
                                     <div class="action-item">
                                         <div class="action-icon">2</div>
                                         <div class="action-content">
-                                            <div class="action-title">${normalizeValue(section.activite_2)}</div>
+                                            <div class="action-title">${displayTitle(section.activite_2)}</div>
                                             ${normalizeValue(section.intention_activite_2) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_2)}</div>` : ''}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e.Description ? `<div style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: 0.85em; color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e['Liens'] ? `<div style=\"margin-top:4px;\">${formatCatalogLink(e['Liens'])}</div>` : '' })()}
                                         </div>
                                     </div>
                                 ` : ''}
-                            </div>
-                        ` : ''}
-                        
-                        ${normalizeValue(section.justification_activite_s) ? `
-                            <div class="justification-box">
-                                <h6>💡 Justification pédagogique</h6>
-                                <p>${normalizeValue(section.justification_activite_s)}</p>
                             </div>
                         ` : ''}
                     </div>
@@ -1084,8 +1301,6 @@
             prevBtn.disabled = currentSectionIndex === 0;
             nextBtn.disabled = currentSectionIndex === totalSections - 1;
         }
-
-
 
         function saveContenus() {
             const submitBtn = document.getElementById('submitBtn');
@@ -1172,3 +1387,5 @@
     </script>
 </body>
 </html>
+
+

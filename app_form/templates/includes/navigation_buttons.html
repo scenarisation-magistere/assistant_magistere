@@ -10,12 +10,12 @@
 {% set justify_class = 'justify-between' if has_prev and has_next else ('justify-start' if has_prev else ('justify-end' if has_next else 'justify-center')) %}
 <div class="navigation-buttons {{ justify_class }}" style="margin-top: 8px; display: flex; align-items: center; gap: 8px; width: 100%;">
     {% if nav_info and not nav_info.is_first %}
-        <button type="button" class="btn-prev" onclick="goToPreviousStep()" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">
+        <button type="button" class="btn-prev" onclick="goToPreviousStep()" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: var(--font-size-small);">
             ← {{ get_page_name_by_step(nav_info.step - 1) }}
         </button>
     {% endif %}
     {% if nav_info and not nav_info.is_last %}
-        <button type="button" class="btn-next" onclick="goToNextStep()" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%); color: white; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">
+        <button type="button" class="btn-next" onclick="goToNextStep()" style="background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%); color: white; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: var(--font-size-small);">
             {{ get_page_name_by_step(nav_info.step + 1) }} →
         </button>
     {% endif %}

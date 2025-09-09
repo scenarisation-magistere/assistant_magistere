@@ -1,0 +1,232 @@
+
+                Tu es un expert en ingénierie pédagogique et en communication.
+                Je vais te fournir un fichier YAML décrivant une formation.
+
+                Ta mission est de générer un résumé clair, chaleureux et engageant en HTML, directement intégrable dans une page existante (⚠️ pas de <html>, <head> ni <body>).
+
+                Style et ton :
+
+                Rédige dans un style clair, accessible et convivial.
+
+                Ajoute un paragraphe d’introduction générale décrivant l’esprit et l’objectif de la formation.
+
+                Avant chaque section, ajoute une phrase courte et amicale qui introduit la section.
+
+                Utilise des émoticônes pour rendre le rendu vivant et chaleureux (🎯, 👩‍🏫, 📘, 🛠️, ✅…).
+
+                Le HTML doit rester propre, sémantique et facile à styliser avec du CSS.
+
+                Contenu et structure :
+
+                <h1> Titre de la formation + paragraphe d’introduction 🌟
+
+                <h2> Public cible 👥
+
+                Phrase introductive : « Qui est concerné par cette formation ? »
+
+                Présente les informations dans un tableau.
+
+                <h2> Contraintes de formation 📋
+
+                Phrase introductive : « Voici les aspects pratiques à connaître : »
+
+                Utilise un tableau.
+
+                <h2> Scénario hybride 🧩
+
+                Phrase introductive : « Comment la formation sera structurée : »
+
+                Affiche sous forme de liste ou tableau.
+
+                <h2> Compétences visées 🎯
+
+                Phrase introductive : « À l’issue de la formation, vous serez capable de… »
+
+                Liste <ul> avec identifiants en gras.               
+
+                Sortie attendue :
+
+                Génère directement le bloc HTML complet à partir du YAML, prêt à copier-coller dans une page web existante. 
+
+            YAML :
+            macrodesign_generalites:
+  titre_formation: Intégrer le numérique pour dynamiser sa classe
+  public_cible:
+    type: Enseignants 1er degré, Enseignants 2d degré
+    profil: Formation transdisciplinaire — numérique educatif
+    niveau_expertise: Débutant, Intermédiaire
+    niveaux_scolaires: Lycée général et technologique
+    besoins_specifiques: Aucun besoin identifié
+  contraintes_formation:
+    animation: Un seul formateur
+    nombre_participants: Entre 10 et 20 personnes (format idéal CMO)
+    exigences_institutionnelles: Aucune exigence identifiée
+    restrictions_techniques: Aucune restriction identifiée
+  scenario_hybride:
+    reference: CMO
+    structure:
+    - Accueil
+    - Apprentissage 1
+    - Apprentissage 2
+    - Apprentissage 3
+    - Apprentissage 4
+    - Classe virtuelle
+    - Forum général
+    - Évaluation finale
+  competences_visees:
+  - id: C1
+    formulation: L'enseignant sera capable d'appliquer des outils numériques pour
+      favoriser l'interaction et la collaboration entre les élèves pendant les cours.
+  - id: C2
+    formulation: L'enseignant sera capable de concevoir des activités pédagogiques
+      intégrant des outils numériques pour enrichir l'expérience d'apprentissage.
+  - id: C3
+    formulation: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques
+      numériques en classe et de justifier les ajustements nécessaires pour optimiser
+      l'apprentissage.
+  referentiels_autoevaluation_complet:
+  - section: 1
+    competence_id: C1
+    competence: L'enseignant sera capable d'appliquer des outils numériques pour favoriser
+      l'interaction et la collaboration entre les élèves pendant les cours.
+    niveaux:
+    - niveau: 1
+      label: Je débute
+      indicateurs:
+      - Je suis capable de reconnaître quelques outils numériques.
+      - Je peux identifier 1 à 2 outils numériques.
+      badge: non
+    - niveau: 2
+      label: Je progresse
+      indicateurs:
+      - Je suis capable d'utiliser un outil numérique pour engager les élèves.
+      - J'utilise un outil lors de 1 à 2 cours par semaine.
+      badge: non
+    - niveau: 3
+      label: Je suis autonome
+      indicateurs:
+      - Je suis capable d'intégrer plusieurs outils numériques pour favoriser l'interaction.
+      - J'utilise au moins 3 outils différents dans 3 cours par semaine.
+      badge: oui
+    - niveau: 4
+      label: Je maîtrise avec aisance
+      indicateurs:
+      - Je suis capable de concevoir des activités collaboratives en ligne et d'évaluer
+        leur impact.
+      - Je mets en place des projets collaboratifs avec des outils numériques dans
+        4 cours par semaine et j'évalue les résultats.
+      badge: oui
+    badge_criteres: ''
+    modalites_preuve: ''
+  - section: 2
+    competence_id: C2
+    competence: L'enseignant sera capable de concevoir des activités pédagogiques
+      intégrant des outils numériques pour enrichir l'expérience d'apprentissage.
+    niveaux:
+    - niveau: 1
+      label: Je débute
+      indicateurs:
+      - Je suis capable de décrire des outils numériques utilisés en éducation.
+      - Je peux citer 1 à 2 outils numériques.
+      badge: non
+    - niveau: 2
+      label: Je progresse
+      indicateurs:
+      - Je suis capable de proposer des activités pédagogiques simples intégrant des
+        outils numériques.
+      - Je conçois 1 à 2 activités intégrant des outils numériques par mois.
+      badge: non
+    - niveau: 3
+      label: Je suis autonome
+      indicateurs:
+      - Je suis capable de concevoir des activités pédagogiques variées et adaptées
+        intégrant des outils numériques.
+      - Je conçois 3 à 5 activités par mois, intégrant différents outils numériques.
+      badge: oui
+    - niveau: 4
+      label: Je maîtrise avec aisance
+      indicateurs:
+      - Je suis capable d'évaluer l'impact des outils numériques sur l'apprentissage
+        et d'ajuster mes activités en conséquence.
+      - Je conçois et évalue 5 ou plus d'activités par mois, avec des ajustements
+        basés sur les retours des apprenants.
+      badge: oui
+    badge_criteres: ''
+    modalites_preuve: ''
+  - section: 3
+    competence_id: C3
+    competence: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques
+      numériques en classe et de justifier les ajustements nécessaires pour optimiser
+      l'apprentissage.
+    niveaux:
+    - niveau: 1
+      label: Je débute
+      indicateurs:
+      - Je suis capable de reconnaître quelques outils numériques utilisés en classe.
+      - Je peux identifier 1 à 2 outils numériques par mois.
+      badge: non
+    - niveau: 2
+      label: Je progresse
+      indicateurs:
+      - Je suis capable d'évaluer sommairement l'impact de certains outils numériques
+        sur l'apprentissage.
+      - J'évalue au moins 2 outils numériques par trimestre et je note mes observations.
+      badge: non
+    - niveau: 3
+      label: Je suis autonome
+      indicateurs:
+      - Je suis capable d'analyser et de justifier les ajustements nécessaires de
+        mes pratiques numériques.
+      - J'effectue une évaluation complète de l'efficacité de mes outils numériques
+        à chaque fin de période (trimestre), et je propose des ajustements.
+      badge: oui
+    - niveau: 4
+      label: Je maîtrise avec aisance
+      indicateurs:
+      - Je suis capable de former mes collègues sur l'évaluation et l'optimisation
+        des pratiques numériques.
+      - Je réalise au moins 2 sessions de formation par an et j'évalue l'impact de
+        mes recommandations sur les pratiques des autres.
+      badge: oui
+    badge_criteres: ''
+    modalites_preuve: ''
+contenus_par_section:
+- section: ''
+  type_section: ''
+  competence_visee: appliquer, participer, cooperer
+  ressource: Interactive Book
+  intention_ressource: Acquisition
+  activite_1: Information Wall
+  intention_activite_1: Collaboration
+  activite_2: BigBlueButtonBN
+  intention_activite_2: Discussion
+  justification: Ce livre interactif permettra aux enseignants d'acquérir les bases
+    et les principes d'utilisation des outils numériques pour l'interaction. Il offre
+    un format structuré idéal pour la présentation de concepts et d'exemples concrets,
+    favorisant une acquisition progressive des connaissances.
+- section: ''
+  type_section: ''
+  competence_visee: concevoir, combiné, adapter
+  ressource: Interactive Book
+  intention_ressource: Acquisition
+  activite_1: Devoir
+  intention_activite_1: Production
+  activite_2: Atelier
+  intention_activite_2: Enquête/Collaboration
+  justification: Ce livre interactif sera une ressource complète pour comprendre les
+    principes de conception d'activités pédagogiques intégrant le numérique. Il guidera
+    les enseignants à travers les étapes clés de l'intégration technologique, fournissant
+    les bases nécessaires pour 'concevoir' efficacement.
+- section: ''
+  type_section: ''
+  competence_visee: évaluer, justifier, contrôler
+  ressource: Course Presentation
+  intention_ressource: Acquisition/Entraînement
+  activite_1: Questionnaire
+  intention_activite_1: Enquête
+  activite_2: Devoir
+  intention_activite_2: Collaboration/Production
+  justification: Cette présentation interactive offrira aux enseignants une vue d'ensemble
+    des méthodes et critères d'évaluation des pratiques numériques. Elle fournira
+    les connaissances nécessaires pour analyser l'efficacité des outils en classe,
+    préparant à l'étape d''évaluation'.

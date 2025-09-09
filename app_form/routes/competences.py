@@ -1,20 +1,109 @@
 from flask import render_template, request, jsonify, session
 import yaml
 import os
-from questions.competences import (
-    COMPETENCES_QUESTIONS, 
-    get_competences_with_count, 
-    get_next_competence_number, 
-    reorder_competences, 
-    generate_competence_template
-)
 from .competences_ai import (
     generate_competency_suggestions, 
     evaluate_and_order_competences,
     add_suggested_competence
 )
-from .main import check_previous_steps_completed, save_yaml_data, get_session_filename
+from helpers.session_yaml import check_previous_steps_completed, save_yaml_data, get_session_filename
 from config.pages_config import get_navigation_info, get_page_config
+from helpers.resource_loader import load_verbs_taxonomy
+
+
+def generate_competence_template(competence_number):
+    """Generate a competence template for a given number"""
+    return {
+        "id": f"competence_{competence_number}",
+        "title": f"Compétence {competence_number}",
+        "competence_number": competence_number,  # Add explicit number tracking
+        "steps": [
+            {
+                "step": 1,
+                "title": "Vos idées clés",
+                "description": "Indiquez ici les éléments ou mots-clés importants pour cette compétence (contenu, contexte, résultat attendu)",
+                "field_name": f"idees_cles_{competence_number}",
+                "type": "textarea",
+                "placeholder": "Ex: inclusion scolaire, outils numériques, collaboration..."
+            },
+            {
+                "step": 2,
+                "title": "Niveau visé",
+                "description": "Choisir le niveau visé dans le domaine cognitif",
+                "field_name": f"niveau_{competence_number}",
+                "type": "radio",
+                "options": [
+                    "Haut : Créer / Évaluer / Analyser",
+                    "Moyen : Appliquer / Comprendre",
+                    "Bas : Se rappeler"
+                ]
+            },
+            {
+                "step": 3,
+                "title": "Verbes d'action",
+                "description": "Verbe(s) d'action cognitifs",
+                "field_name": f"verbes_{competence_number}",
+                "type": "text",
+                "placeholder": "Ex: créer, analyser, appliquer..."
+            },
+            {
+                "step": 4,
+                "title": "Formulation finale",
+                "description": "Proposition générée automatiquement. Modifiez-la directement si nécessaire.",
+                "field_name": f"formulation_{competence_number}",
+                "type": "textarea",
+                "placeholder": "Formulation de la compétence..."
+            }
+        ]
+    }
+
+def get_competences_with_count(count):
+    """Get competences list with specified count"""
+    competences = []
+    for i in range(1, count + 1):
+        competences.append(generate_competence_template(i))
+    return competences
+
+def get_next_competence_number(existing_competences):
+    """Get the next available competence number based on existing competences"""
+    if not existing_competences:
+        return 1
+    
+    # Find the highest competence number
+    max_number = 0
+    for competence in existing_competences:
+        if 'competence_number' in competence:
+            max_number = max(max_number, competence['competence_number'])
+        else:
+            # Fallback: extract number from ID
+            try:
+                number = int(competence['id'].split('_')[1])
+                max_number = max(max_number, number)
+            except (IndexError, ValueError):
+                continue
+    
+    return max_number + 1
+
+def reorder_competences(competences):
+    """Reorder competences to have sequential numbering"""
+    reordered = []
+    for i, competence in enumerate(competences, 1):
+        new_competence = competence.copy()
+        new_competence['id'] = f"competence_{i}"
+        new_competence['title'] = f"Compétence {i}"
+        new_competence['competence_number'] = i
+        
+        # Update field names in steps
+        for step in new_competence.get('steps', []):
+            if 'field_name' in step:
+                step['field_name'] = step['field_name'].replace(
+                    f"_{competence.get('competence_number', i)}", f"_{i}"
+                )
+        
+        reordered.append(new_competence)
+    
+    return reordered
+
 
 def register_competences_routes(app):
     """Register competences routes with the Flask app"""
@@ -149,28 +238,15 @@ def register_competences_routes(app):
             decoded_niveau = unquote(niveau)
             print(f"DEBUG: Decoded niveau: '{decoded_niveau}'")
             
-            # Use the decoded niveau
+            # Use the decoded niveau (expected: 'Bas', 'Moyen', 'Haut')
             niveau = decoded_niveau
-            # Map niveau to bloom taxonomy keys
-            niveau_mapping = {
-                # Sélections combinées (cognitif + quelques affectifs pertinents)
-                'Haut : Créer / Évaluer / Analyser': ['creer', 'evaluer', 'analyser', 'caracteriser', 'organiser'],
-                'Moyen : Appliquer / Comprendre': ['appliquer', 'comprendre', 'valoriser', 'repondre'],
-                'Bas : Se rappeler': ['se_rappeler', 'recevoir']
-            }
-            
-            print(f"DEBUG: Available niveaux: {list(niveau_mapping.keys())}")
-            print(f"DEBUG: Looking for niveau: '{niveau}'")
-            
-            bloom_taxonomy = COMPETENCES_QUESTIONS.get('bloom_taxonomy', {})
-            selected_levels = niveau_mapping.get(niveau, [])
-            
-            print(f"DEBUG: Selected levels: {selected_levels}")
-            
+            taxonomy = load_verbs_taxonomy()
+
+            # Filter all categories by requested level across both domains
             result = {}
-            for level in selected_levels:
-                if level in bloom_taxonomy:
-                    result[level] = bloom_taxonomy[level]
+            for key, data in taxonomy.items():
+                if data.get('level') == niveau:
+                    result[key] = data
             
             return jsonify({
                 'success': True,
@@ -221,7 +297,8 @@ def register_competences_routes(app):
                 return jsonify({
                     'success': True,
                     'suggestions': result['suggestions'],
-                    'message': 'Suggestions générées avec succès !'
+                    'message': 'Suggestions générées avec succès !',
+                    'warnings': result.get('warnings', [])
                 })
             else:
                 return jsonify({

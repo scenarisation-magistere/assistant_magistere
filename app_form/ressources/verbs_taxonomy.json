@@ -1,0 +1,82 @@
+{
+    "verbs_taxonomy": { 
+        "cognitif_bas": {
+            "name": "Se rappeler / Comprendre",
+            "domain": "cognitif",
+            "level": "Bas",
+            "description": "Capacité à mémoriser et restituer des informations, à identifier et comprendre des concepts de base. Objectif : assurer l’acquisition et la reconnaissance des connaissances fondamentales.",
+            "verbs": [
+                "associer", "citer", "décrire", "définir", "énumérer", "étiqueter", "identifier", "indiquer", 
+                "lister", "localiser", "nommer", "ordonner", "rappeler", "réciter", "reconnaître", "répéter", 
+                "reproduire", "sélectionner", "classer", "comparer", "convertir", "démontrer", "différencier", 
+                "dire dans ses mots", "illustrer (par des exemples)", "inférer", "expliquer", "exprimer", 
+                "faire une analogie", "généraliser", "interpréter", "paraphraser", "prédire", "reformuler", 
+                "représenter", "résumer"
+            ]
+        },
+        "cognitif_moyen": {
+            "name": "Appliquer / Analyser",
+            "domain": "cognitif",
+            "level": "Moyen",
+            "description": "Capacité à mettre en pratique des connaissances, à les utiliser dans des contextes variés et à analyser des situations complexes. Objectif : appliquer, manipuler et examiner les savoirs pour les relier à de nouveaux problèmes.",
+            "verbs": [
+                "administrer", "appliquer", "assembler", "calculer", "construire", "découvrir", "démontrer", 
+                "dessiner", "déterminer", "employer", "établir", "exécuter", "formuler", "fournir", "implanter", 
+                "manipuler", "mesurer", "mettre en pratique", "modifier", "montrer", "opérer", "participer", 
+                "préparer", "résoudre", "traiter", "trouver", "utiliser", "analyser", "attribuer", "catégoriser", 
+                "cibler", "comparer (critères)", "contraster", "critiquer", "découper", "déduire", "délimiter", 
+                "différencier", "discriminer", "disséquer", "distinguer", "examiner", "faire corréler", 
+                "faire ressortir", "inférer", "limiter", "mettre en priorité", "mettre en relation", "morceler", 
+                "organiser", "opposer", "questionner", "séparer", "subdiviser"
+            ]
+        },
+        "cognitif_haut": {
+            "name": "Évaluer / Créer",
+            "domain": "cognitif",
+            "level": "Haut",
+            "description": "Capacité à juger de la valeur d’une information, à élaborer de nouvelles idées et à créer des solutions originales. Objectif : développer l’esprit critique, la créativité et l’innovation.",
+            "verbs": [
+                "apprécier", "argumenter", "attaquer", "choisir", "conclure", "contrôler", "critiquer", "défendre", 
+                "déterminer", "estimer", "évaluer", "juger", "justifier", "soutenir", "vérifier", "adapter", 
+                "agencer", "anticiper", "arranger", "assembler", "combiner", "commenter", "composer", "concevoir", 
+                "construire", "créer", "développer", "écrire", "exposer", "générer", "incorporer", "intégrer", 
+                "mettre en place", "organiser", "planifier", "préparer", "produire", "proposer", "rédiger", 
+                "structurer", "synthétiser"
+            ]
+        },
+        "affectif_bas": {
+            "name": "Réception",
+            "domain": "affectif",
+            "level": "Bas",
+            "description": "Capacité à être attentif et réceptif aux stimuli, à reconnaître et identifier des valeurs ou attitudes. Objectif : sensibiliser et éveiller l’intérêt.",
+            "verbs": [
+                "accepter", "écouter", "observer", "reconnaître", "identifier", "différencier (valeurs)", "analyser", 
+                "associer", "attribuer", "définir", "interroger", "poser des questions", "spécifier", "noter", 
+                "manifester de l’intérêt"
+            ]
+        },
+        "affectif_moyen": {
+            "name": "Valorisation / Réponse",
+            "domain": "affectif",
+            "level": "Moyen",
+            "description": "Capacité à s’impliquer activement, à défendre des idées et à participer à des activités. Objectif : développer l’adhésion et la valorisation des valeurs.",
+            "verbs": [
+                "acclamer", "approuver", "argumenter", "choisir (et défendre)", "conscientiser", "contester", 
+                "débattre", "démontrer", "encourager", "fournir des exemples", "influencer", "promouvoir", 
+                "protester", "valoriser", "participer", "contribuer", "s’impliquer", "coopérer", "partager"
+            ]
+        },
+        "affectif_haut": {
+            "name": "Adoption (internalisation)",
+            "domain": "affectif",
+            "level": "Haut",
+            "description": "Capacité à intégrer des valeurs de façon durable, à transformer ses pratiques et à incarner ces valeurs dans ses comportements. Objectif : consolidation des attitudes et engagement personnel.",
+            "verbs": [
+                "adhérer", "adopter", "agir", "aider", "assister", "changer", "diriger", "éviter", "modifier", 
+                "offrir", "pratiquer", "prévenir", "réclamer", "réviser", "résister", "résoudre", "s’associer", 
+                "se conformer", "suivre", "incarner", "modéliser", "défendre", "assumer", "diffuser", 
+                "transformer ses pratiques", "s’engager", "persévérer"
+            ]
+        }
+    }
+}

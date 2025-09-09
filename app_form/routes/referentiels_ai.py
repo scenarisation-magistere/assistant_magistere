@@ -3,22 +3,12 @@ from dotenv import load_dotenv
 import json
 from openai import OpenAI
 import yaml
+from helpers.ai_helpers import OPENAI_MODEL, OPENAI_MAX_TOKENS, OPENAI_TEMPERATURE, client
 
 # Load environment variables
 load_dotenv()
 
-# Required OpenAI config
-OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
-OPENAI_MAX_TOKENS = int(os.getenv('OPENAI_MAX_TOKENS', '1000'))
-OPENAI_TEMPERATURE = float(os.getenv('OPENAI_TEMPERATURE', '0.7'))
-
-# Check API key
-api_key = os.getenv('OPENAI_API_KEY')
-if not api_key:
-    raise EnvironmentError("❌ OPENAI_API_KEY is missing from environment variables")
-
-# Create OpenAI client
-client = OpenAI(api_key=api_key)
+## OpenAI configuration and client are provided by helpers.ai_helpers
 
 
 def generate_referentiel_suggestions(section_num, competence, besoins_specifiques):

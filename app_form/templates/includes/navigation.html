@@ -10,29 +10,7 @@
     {% endfor %}
 </div>
 
-<style>
-/* Compact navigation styles (scoped to this include) */
-.step-indicator {
-    margin: 8px 0 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-.step-indicator .step {
-    font-size: 0.95rem;
-    line-height: 1.25;
-    padding: 6px 12px;
-}
-.navigation-buttons {
-    margin-top: 8px;
-}
-.navigation-buttons .btn-prev,
-.navigation-buttons .btn-next {
-    padding: 8px 14px;
-    font-size: 0.95rem;
-}
-</style>
+<!-- Styles moved to app_form/static/css/navigation.css -->
 
 <!-- Navigation Buttons (shared include) -->
 {% include 'includes/navigation_buttons.html' %}

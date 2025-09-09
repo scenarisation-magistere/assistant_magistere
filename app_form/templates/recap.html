@@ -190,6 +190,42 @@
                 padding: var(--spacing-md);
             }
         }
+
+        /* HTML Recap styles */
+        .html-recap {
+            background: #fff;
+            border: 2px solid var(--border-gray);
+            border-radius: var(--radius-medium);
+            padding: var(--spacing-lg);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .html-recap h1, .html-recap h2, .html-recap h3 {
+            margin: 0.6em 0 0.4em;
+            color: var(--primary-blue);
+        }
+        .html-recap h1 { font-size: var(--font-size-title); }
+        .html-recap h2 { font-size: var(--font-size-xxl); }
+        .html-recap h3 { font-size: var(--font-size-xl); }
+        .html-recap table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8em 0;
+            font-size: var(--font-size-normal);
+        }
+        .html-recap th, .html-recap td {
+            border: 1px solid var(--border-gray);
+            padding: 8px 10px;
+            vertical-align: top;
+            background: #fff;
+        }
+        .html-recap thead th {
+            background: var(--light-gray);
+            color: var(--text-dark);
+        }
+        .html-recap ul { padding-left: 1.2em; }
+        .html-recap strong { color: var(--text-dark); }
     </style>
 </head>
 <body>
@@ -197,137 +233,42 @@
         {% include 'includes/header.html' %}   
         <div class="content-container">
             
-            <!-- Recap Overview -->
-            <div class="recap-overview">
-                <h3>🎯 Aperçu de votre Macrodesign</h3>
-                <div class="overview-item">
-                    <strong>Formation :</strong> 
-                    <span id="formation-title">
-                        {% if recap_data and recap_data.macrodesign_generalites %}
-                            {{ recap_data.macrodesign_generalites.titre_formation }}
-                        {% else %}
-                            [Titre à définir]
-                        {% endif %}
-                    </span>
-                </div>
-                <div class="overview-item">
-                    <strong>Compétences visées :</strong> 
-                    <span id="competences-count">
-                        {% if recap_data and recap_data.macrodesign_generalites %}
-                            {{ recap_data.macrodesign_generalites.competences_visees | length }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    </span> compétences
-                </div>
-            </div>
-
-            <!-- Debug Information -->
-            <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 12px;">
-                <strong>Debug Info:</strong><br>
-                Recap data available: {{ 'Yes' if recap_data else 'No' }}<br>
-                {% if recap_data %}
-                    Generalites available: {{ 'Yes' if recap_data.macrodesign_generalites else 'No' }}<br>
-                    Contenus available: {{ 'Yes' if recap_data.contenus_par_section else 'No' }}<br>
-                    Competences count: {{ recap_data.macrodesign_generalites.competences_visees | length if recap_data.macrodesign_generalites else 0 }}<br>
-                {% endif %}
-            </div>
-
             <!-- Error/Success Messages -->
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
-            <div id="successMessage" class="success-message" style="display: none;"></div>
-
-            <!-- YAML Sections -->
-            {% if recap_data %}
-                <!-- Macrodesign Generalites -->
-                <div class="yaml-section">
-                    <div class="yaml-section-header">
-                        <h4>📦 Bloc 1 — Généralités (référentiel complet inclus)</h4>
-                    </div>
-                    <div class="yaml-content" id="yamlGeneralites">macrodesign_generalites:
-  titre_formation: "{{ recap_data.macrodesign_generalites.titre_formation }}"
-  public_cible:
-    type: "{{ recap_data.macrodesign_generalites.public_cible.type }}"
-    profil: "{{ recap_data.macrodesign_generalites.public_cible.profil }}"
-    niveau_expertise: "{{ recap_data.macrodesign_generalites.public_cible.niveau_expertise }}"
-    besoins_specifiques:
-      - "{{ recap_data.macrodesign_generalites.public_cible.besoins_specifiques[0] }}"
-      - "{{ recap_data.macrodesign_generalites.public_cible.besoins_specifiques[1] }}"
-  contraintes_formation:
-    type_parcours: "{{ recap_data.macrodesign_generalites.contraintes_formation.type_parcours }}"
-    hybridation: "{{ recap_data.macrodesign_generalites.contraintes_formation.hybridation }}"
-    temps_total: "{{ recap_data.macrodesign_generalites.contraintes_formation.temps_total }}"
-    autonomie: "{{ recap_data.macrodesign_generalites.contraintes_formation.autonomie }}"
-    animation: "{{ recap_data.macrodesign_generalites.contraintes_formation.animation }}"
-    calendrier: "{{ recap_data.macrodesign_generalites.contraintes_formation.calendrier }}"
-    horaires: "{{ recap_data.macrodesign_generalites.contraintes_formation.horaires }}"
-    nombre_participants: "{{ recap_data.macrodesign_generalites.contraintes_formation.nombre_participants }}"
-  competences_visees:
-{% for competence in recap_data.macrodesign_generalites.competences_visees %}
-    - id: "{{ competence.id }}"
-      formulation: "{{ competence.formulation }}"
-{% endfor %}</div>
-                    </div>
-                </div>
-
-                <!-- Contenus par Section -->
-                <div class="yaml-section">
-                    <div class="yaml-section-header">
-                        <h4>📦 Bloc 2 — Contenus par section</h4>
-                    </div>
-                    <div class="yaml-content" id="yamlContenus">contenus_par_section:
-{% for section in recap_data.contenus_par_section %}
-  - section: {{ section.section }}
-    type_section: "{{ section.type_section }}"
-    competence_visee: "{{ section.competence_visee }}"
-    ressource: "{{ section.ressource }}"
-    intention_ressource: "{{ section.intention_ressource }}"
-    activite_1: "{{ section.activite_1 }}"
-    intention_activite_1: "{{ section.intention_activite_1 }}"
-    activite_2: "{{ section.activite_2 }}"
-    intention_activite_2: "{{ section.intention_activite_2 }}"
-    justification: "{{ section.justification }}"
-{% endfor %}</div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="error-message">
-                    ❌ Aucune donnée de récapitulatif disponible.
-                </div>
-            {% endif %}
+            {% from 'includes/blocks/components.html' import messages, loading %}
+            {{ messages() }}
 
             <!-- Export Section -->
             <div class="export-section">
-                <h3>📤 Export et Partage</h3>
-                <p>Choisissez le format d'export qui vous convient le mieux :</p>
+                <h3>📤 Export Macrodesign</h3>
+                <p>Exportez les données brutes et les tableaux CSV prêts pour vos outils.</p>
                 
                 <div class="export-options">
                     <button class="export-btn" onclick="downloadYAML()">
-                        📄 Télécharger YAML
+                        📄 Données brutes (YAML)
                     </button>
-                    <button class="export-btn" onclick="generateExport('markdown')">
-                        📝 Export Markdown
+                    <button class="export-btn" onclick="downloadReferentielsZip()">
+                        🧭 Référentiels (CSV)
                     </button>
-                    <button class="export-btn" onclick="generateExport('csv')">
-                        📊 Export CSV
+                    <button class="export-btn" onclick="downloadCSV('csv_activites_complet', 'activites_complet.csv')">
+                        📚 Contenus (CSV)
                     </button>
                 </div>
                 
-                <div class="loading" id="exportLoading" style="display: none;">
-                    <div class="loading-spinner"></div>
-                    <p>Génération de l'export en cours...</p>
-                </div>
+                {{ loading('exportLoading', "Génération de l'export en cours...") }}
             </div>
 
-            <!-- Export Results -->
-            <div class="export-results" id="exportResults">
-                <div class="export-results-header">
-                    <h4 id="exportTitle">Export</h4>
-                    <button class="copy-btn" onclick="copyToClipboard()">
-                        📋 Copier
-                    </button>
+            <!-- Markdown Recap Section -->
+            <div class="yaml-section">
+                <div class="yaml-section-header">
+                    <h4>📝 Récapitulatif (HTML)</h4>
                 </div>
-                <div class="export-results-content" id="exportContent">
+                <div style="padding: var(--spacing-lg);">
+                    <div id="recapActions" class="export-options" style="display: none;">
+                        <button id="downloadHtmlBtn" class="export-btn" onclick="downloadHTML()" disabled>⬇️ Télécharger en .html</button>
+                        <button id="downloadPdfBtn" class="export-btn" onclick="downloadPDF()" disabled>🖨️ Exporter en PDF</button>
+                    </div>
+                    {{ loading('recapLoading', 'Génération du récapitulatif en cours...') }}
+                    <div id="mdRecapHtml" class="html-recap" style="display: none;"></div>
                 </div>
             </div>
 
@@ -339,9 +280,6 @@
     {% include 'includes/footer.html' %}
 
     <script>
-        let currentExportContent = '';
-        let currentExportFormat = '';
-
         function downloadYAML() {
             const loading = document.getElementById('exportLoading');
             loading.style.display = 'block';
@@ -350,7 +288,7 @@
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
-                        const blob = new Blob([result.yaml_content], { type: 'text/yaml' });
+                        const blob = new Blob(["\ufeff" + result.yaml_content], { type: 'text/yaml;charset=utf-8' });
                         const url = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
@@ -372,14 +310,9 @@
                 });
         }
 
-        function generateExport(format) {
+        function downloadCSV(format, filename) {
             const loading = document.getElementById('exportLoading');
-            const exportResults = document.getElementById('exportResults');
-            const exportTitle = document.getElementById('exportTitle');
-            const exportContent = document.getElementById('exportContent');
-            
             loading.style.display = 'block';
-            exportResults.style.display = 'none';
             
             fetch('/generate_export', {
                 method: 'POST',
@@ -389,19 +322,39 @@
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    currentExportContent = result.export_content;
-                    currentExportFormat = result.format;
-                    
-                    exportTitle.textContent = `Export ${format.toUpperCase()}`;
-                    exportContent.textContent = result.export_content;
-                    exportResults.style.display = 'block';
-                    
-                    showSuccess(`Export ${format.toUpperCase()} généré !`);
+                    if (format === 'csv_referentiels_zip') {
+                        // base64 -> Blob(zip)
+                        const b64 = result.export_content || '';
+                        const byteChars = atob(b64);
+                        const byteNumbers = new Array(byteChars.length);
+                        for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+                        const byteArray = new Uint8Array(byteNumbers);
+                        const blob = new Blob([byteArray], { type: 'application/zip' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = filename.endsWith('.zip') ? filename : 'referentiels.zip';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    } else {
+                        const blob = new Blob(["\ufeff" + result.export_content], { type: 'text/csv;charset=utf-8' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    }
+                    showSuccess('Fichier téléchargé avec succès !');
                 } else {
                     showError('Erreur : ' + result.error);
                 }
             })
-            .catch(error => {
+            .catch(() => {
                 showError('Erreur lors de la génération.');
             })
             .finally(() => {
@@ -409,15 +362,164 @@
             });
         }
 
-        function copyToClipboard() {
-            if (currentExportContent) {
-                navigator.clipboard.writeText(currentExportContent).then(() => {
-                    showSuccess('Contenu copié !');
-                }).catch(err => {
-                    showError('Erreur lors de la copie.');
-                });
+        function downloadReferentielsZip() {
+            const loading = document.getElementById('exportLoading');
+            loading.style.display = 'block';
+            fetch('/generate_export', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format: 'csv_referentiels_zip' })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    const b64 = result.export_content || '';
+                    const byteChars = atob(b64);
+                    const byteNumbers = new Array(byteChars.length);
+                    for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], { type: 'application/zip' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'referentiels.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    showSuccess('ZIP téléchargé');
+                } else {
+                    showError('Erreur : ' + result.error);
+                }
+            })
+            .catch(() => showError('Erreur lors de la génération.'))
+            .finally(() => { loading.style.display = 'none'; });
+        }
+
+        let currentHtmlRecap = '';
+        function generateMarkdownRecap() {
+            const exportLoading = document.getElementById('exportLoading');
+            const recapLoading = document.getElementById('recapLoading');
+            const recapActions = document.getElementById('recapActions');
+            const dlHtmlBtn = document.getElementById('downloadHtmlBtn');
+            const dlPdfBtn = document.getElementById('downloadPdfBtn');
+            const recapContainer = document.getElementById('mdRecapHtml');
+            if (recapLoading) recapLoading.style.display = 'block';
+            if (exportLoading) exportLoading.style.display = 'none';
+            if (recapActions) recapActions.style.display = 'none';
+            if (recapContainer) recapContainer.style.display = 'none';
+            if (dlHtmlBtn) dlHtmlBtn.disabled = true;
+            if (dlPdfBtn) dlPdfBtn.disabled = true;
+            fetch('/generate_export', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format: 'markdown_recap' })
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) {
+                    currentHtmlRecap = result.export_content;
+                    const mdHtmlEl = document.getElementById('mdRecapHtml');
+                    try {
+                        const clean = window.DOMPurify ? window.DOMPurify.sanitize(result.export_content || '') : (result.export_content || '');
+                        mdHtmlEl.innerHTML = clean;
+                    } catch (e) {
+                        mdHtmlEl.textContent = result.export_content || '';
+                    }
+                    if (recapActions) recapActions.style.display = '';
+                    if (recapContainer) recapContainer.style.display = '';
+                    if (dlHtmlBtn) dlHtmlBtn.disabled = false;
+                    if (dlPdfBtn) dlPdfBtn.disabled = false;
+                    showSuccess('Résumé HTML généré');
+                } else {
+                    showError('Erreur : ' + result.error);
+                }
+            })
+            .catch(() => showError('Erreur lors de la génération.'))
+            .finally(() => { if (recapLoading) recapLoading.style.display = 'none'; });
+        }
+
+        function downloadHTML() {
+            if (!currentHtmlRecap) return;
+            const blob = new Blob(["\ufeff" + currentHtmlRecap], { type: 'text/html;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'recap.html';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function downloadPDF() {
+            if (!currentHtmlRecap) return;
+            const source = document.getElementById('mdRecapHtml');
+            if (!source) return showError('Aucune source à exporter.');
+            // Ensure we have rendered HTML
+            if (!source.innerHTML) {
+                try {
+                    source.innerHTML = window.DOMPurify ? window.DOMPurify.sanitize(currentHtmlRecap || '') : (currentHtmlRecap || '');
+                } catch(e) {}
+            }
+            const html = source.innerHTML || '';
+            try {
+                if (window.htmlToPdfmake && window.pdfMake) {
+                    const docContent = window.htmlToPdfmake(html, { window: window });
+                    const docDefinition = {
+                        content: docContent,
+                        pageSize: 'A4',
+                        pageMargins: [20, 20, 20, 20],
+                        defaultStyle: { fontSize: 10 },
+                        styles: {
+                            h1: { fontSize: 20, bold: true, margin: [0, 10, 0, 6] },
+                            h2: { fontSize: 16, bold: true, margin: [0, 10, 0, 6] },
+                            h3: { fontSize: 14, bold: true, margin: [0, 8, 0, 4] },
+                            tableHeader: { bold: true }
+                        }
+                    };
+                    return window.pdfMake.createPdf(docDefinition).download('recap.pdf');
+                }
+            } catch (err) {
+                console.warn('pdfmake export failed, falling back to html2pdf', err);
+            }
+            if (window.html2pdf) {
+                const opt = {
+                    margin:       10,
+                    filename:     'recap.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                window.html2pdf().set(opt).from(source).save();
+            } else {
+                showError('Librairies PDF non chargées.');
             }
         }
+
+        // Load client-side libraries for MD rendering and PDF export
+        ;(function injectLibs(){
+            const head = document.getElementsByTagName('head')[0];
+            const scripts = [
+                'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+                'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js',
+                'https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js',
+                'https://cdn.jsdelivr.net/npm/pdfmake@0.2.7/build/pdfmake.min.js',
+                'https://cdn.jsdelivr.net/npm/pdfmake@0.2.7/build/vfs_fonts.js',
+                'https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js'
+            ];
+            scripts.forEach(src => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.defer = true;
+                head.appendChild(s);
+            });
+        })();
+
+        // Auto-generate recap on page load
+        document.addEventListener('DOMContentLoaded', function(){
+            generateMarkdownRecap();
+        });
 
         function showError(message) {
             const errorElement = document.getElementById('errorMessage');
@@ -427,10 +529,10 @@
         }
 
         function showSuccess(message) {
-            const successElement = document.getElementById('successMessage');
-            successElement.textContent = message;
-            successElement.style.display = 'block';
-            setTimeout(() => successElement.style.display = 'none', 3000);
+            // const successElement = document.getElementById('successMessage');
+            // successElement.textContent = message;
+            // successElement.style.display = 'block';
+            // setTimeout(() => successElement.style.display = 'none', 3000);
         }
     </script>
 </body>

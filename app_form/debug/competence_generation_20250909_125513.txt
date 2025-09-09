@@ -1,0 +1,82 @@
+
+        En tant qu'expert en formation et en pédagogie, générez exactement 4 nouvelles compétences visées pour une formation Magistère, en respectant les informations ci-dessous.
+        Le processus est itératif : vous devez tenir compte à la fois des compétences déjà sélectionnées (validées) et des compétences rejetées (à ne pas reproduire).
+        Les nouvelles compétences doivent être complémentaires et cohérentes avec les compétences sélectionnées, mais différentes, enrichissant l’ensemble sans duplication.
+
+        ----------------------------
+        ** Informations de contexte **
+
+        Contexte de la formation :
+        Titre : Intégrer le numérique pour dynamiser sa classe
+        Objectif général : Accompagner les enseignants à utiliser des outils numériques pour enrichir leurs pratiques et favoriser la collaboration entre pairs.
+
+        Public cible (étape 1) :
+        Type de public : Enseignants 1er degré, Enseignants 2d degré
+        Type de formation : Formation transdisciplinaire — numérique educatif
+        Niveaux scolaires : Lycée général et technologique
+        Niveau d'expertise : Débutant, Intermédiaire
+        Profil du groupe : Non spécifié
+        Besoins spécifiques : Aucun besoin identifié
+
+        Contraintes (étape 2) :
+        Nombre de participants : Entre 10 et 20 personnes (format idéal CMO)
+        Modalités d'animation : Un seul formateur
+        Exigences institutionnelles : Aucune exigence identifiée
+        Restrictions techniques : Aucune restriction identifiée
+
+        ----------------------------
+        ** Instructions détaillées **
+
+        1. Générez exactement 4 nouvelles compétences.
+        2. Pour chaque compétence :
+            a. Déterminez son niveau (Bas, Moyen, Haut) en fonction du public cible et de l’objectif de formation.
+            b. Rédigez le titre et la formulation complète de la compétence.
+            c. Sélectionnez les verbes d’action uniquement parmi la liste autorisée pour le niveau et le domaine appropriés (cognitif ou affectif).
+            d. Variez les verbes entre domaine cognitif et affectif selon la pertinence pour la compétence.
+
+        3. Classez les compétences du niveau le plus bas au plus élevé.
+        4. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
+        5. Ne dupliquez pas les compétences déjà générées ou figurant dans la liste des compétences rejetées.
+        6. Inspirez-vous des compétences sélectionnées pour générer des compétences complémentaires ou connexes, sans duplication.
+        7. Respectez strictement l’orthographe exacte des verbes fournis (accents, traits d’union, underscores).
+        8. N’utilisez aucun verbe en dehors des listes autorisées.
+        9. Verifiez que les compétences sont cohérentes avec l'objectif de formation et le profil du groupe.
+        ----------------------------
+
+        ** Listes de verbes d’action AUTORISÉES par niveau (bas, moyen, haut) et domaine (cognitif, affectif) **
+
+        - Cognitif (Bas) : associer, citer, décrire, définir, énumérer, étiqueter, identifier, indiquer, lister, localiser, nommer, ordonner, rappeler, réciter, reconnaître, répéter, reproduire, sélectionner, classer, comparer, convertir, démontrer, différencier, dire dans ses mots
+- Affectif (Bas) : accepter, écouter, observer, reconnaître, identifier, différencier (valeurs), analyser, associer, attribuer, définir, interroger, poser des questions, spécifier, noter, manifester de l’intérêt
+- Cognitif (Moyen) : administrer, appliquer, assembler, calculer, construire, découvrir, démontrer, dessiner, déterminer, employer, établir, exécuter, formuler, fournir, implanter, manipuler, mesurer, mettre en pratique, modifier, montrer, opérer, participer, préparer, résoudre
+- Affectif (Moyen) : acclamer, approuver, argumenter, choisir (et défendre), conscientiser, contester, débattre, démontrer, encourager, fournir des exemples, influencer, promouvoir, protester, valoriser, participer, contribuer, s’impliquer, coopérer, partager
+- Cognitif (Haut) : apprécier, argumenter, attaquer, choisir, conclure, contrôler, critiquer, défendre, déterminer, estimer, évaluer, juger, justifier, soutenir, vérifier, adapter, agencer, anticiper, arranger, assembler, combiner, commenter, composer, concevoir
+- Affectif (Haut) : adhérer, adopter, agir, aider, assister, changer, diriger, éviter, modifier, offrir, pratiquer, prévenir, réclamer, réviser, résister, résoudre, s’associer, se conformer, suivre, incarner, modéliser, défendre, assumer, diffuser
+
+        ----------------------------
+
+        Compétences rejetées par l'utilisateur (à ne pas générer) :
+        **Brouillons présents dans l'atelier (à éviter de dupliquer) :**
+- Aucune
+
+
+        Compétences sélectionnées par l'utilisateur (à compléter par des compétences connexes, sans duplication) :
+        **Compétences déjà sélectionnées (à NE PAS dupliquer) :**
+- Aucune
+
+
+        ----------------------------
+
+        Format de réponse attendu (JSON valide uniquement, sans texte supplémentaire) :
+
+        {{
+    "competences": [
+        {{
+            "titre": "Titre court et descriptif de la compétence",
+            "idees_cles": "mots-clés et concepts principaux",
+            "niveau": "Haut/Moyen/Bas",
+            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+            "formulation": "Formulation complète de la compétence"
+        }}
+    ]
+}}
+    

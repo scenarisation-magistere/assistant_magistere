@@ -1,94 +1,52 @@
-```markdown
-| Section | Type de section | Compétences visées | Ressource | Intention ressource | Activité 1 | Intention activité 1 | Activité 2 | Intention activité 2 | Justification activité(s) |
-|---|---|---|---|---|---|---|---|---|---|
-| S1 | Accueil | "" | "" | "" | "" | "" | "" | "" | "" |
-| S2 | Apprentissage | Concevoir des parcours de formation personnalisés en utilisant les outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants. | Interactive Book | Acquisition | Essay | Production | Branching Scenario | Enquête/Entraînement | L'Interactive Book fournit un cadre structuré pour acquérir les principes de conception. L'activité Essay permet aux apprenants de mettre en pratique la conception de parcours personnalisés par la rédaction d'un concept détaillé. Le Branching Scenario offre une simulation de prise de décision, essentielle pour l'adaptation des parcours. |
-| S3 | Apprentissage | Analyser les données d'apprentissage des apprenants générées par les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques. | Chart | Acquisition | Base de données | Enquête/Collaboration/Production | Documentation Tool | Entraînement/Production | La ressource Chart aide à visualiser et comprendre les données. La Base de données permet la collecte et l'organisation de données d'apprentissage, cruciales pour l'analyse. Le Documentation Tool guide les apprenants dans la structuration et la production de rapports d'analyse de données. |
-| S4 | Apprentissage | Collaborer avec des experts en intelligence artificielle pour développer et améliorer les formations en intégrant des solutions innovantes et pertinentes. | Fichier | Acquisition | Wiki | Collaboration | Forum | Discussion/Collaboration | Le Fichier fournit des études de cas ou des guides de collaboration. Le Wiki favorise la co-construction de documents et de projets avec des experts. Le Forum permet des échanges asynchrones pour discuter des stratégies et des défis de la collaboration avec des spécialistes de l'IA. |
-| S5 | Apprentissage | "" | Course Presentation | Acquisition | Summary | Acquisition/Entraînement | Documentation Tool | Entraînement/Production | La Course Presentation offre une synthèse visuelle des concepts clés. L'activité Summary encourage la rétention et la synthèse active des informations apprises. Le Documentation Tool permet aux apprenants de produire une réflexion structurée ou un portfolio récapitulatif de leurs acquis. |
-| S6 | Classe virtuelle (BBB) | "" | "" | "" | BigBlueButtonBN | Discussion | "" | "" | "" |
-| S7 | Forum général | "" | "" | "" | Forum | Discussion/Collaboration | "" | "" | "" |
-| S8 | Évaluation | "" | "" | "" | Sondage | Enquête | "" | "" | "" |
-```
-```yaml
-- section: S1
-  type_de_section: Accueil
-  competences_visees: ""
-  ressource: ""
-  intention_ressource: ""
-  activite_1: ""
-  intention_activite_1: ""
-  activite_2: ""
-  intention_activite_2: ""
-  justification_activite_s: ""
-- section: S2
-  type_de_section: Apprentissage
-  competences_visees: Concevoir des parcours de formation personnalisés en utilisant les outils d'intelligence artificielle pour répondre aux besoins spécifiques des apprenants.
-  ressource: Interactive Book
-  intention_ressource: Acquisition
-  activite_1: Essay
-  intention_activite_1: Production
-  activite_2: Branching Scenario
-  intention_activite_2: Enquête/Entraînement
-  justification_activite_s: L'Interactive Book fournit un cadre structuré pour acquérir les principes de conception. L'activité Essay permet aux apprenants de mettre en pratique la conception de parcours personnalisés par la rédaction d'un concept détaillé. Le Branching Scenario offre une simulation de prise de décision, essentielle pour l'adaptation des parcours.
-- section: S3
-  type_de_section: Apprentissage
-  competences_visees: Analyser les données d'apprentissage des apprenants générées par les outils d'intelligence artificielle pour optimiser les stratégies pédagogiques.
-  ressource: Chart
-  intention_ressource: Acquisition
-  activite_1: Base de données
-  intention_activite_1: Enquête/Collaboration/Production
-  activite_2: Documentation Tool
-  intention_activite_2: Entraînement/Production
-  justification_activite_s: La ressource Chart aide à visualiser et comprendre les données. La Base de données permet la collecte et l'organisation de données d'apprentissage, cruciales pour l'analyse. Le Documentation Tool guide les apprenants dans la structuration et la production de rapports d'analyse de données.
-- section: S4
-  type_de_section: Apprentissage
-  competences_visees: Collaborer avec des experts en intelligence artificielle pour développer et améliorer les formations en intégrant des solutions innovantes et pertinentes.
-  ressource: Fichier
-  intention_ressource: Acquisition
-  activite_1: Wiki
-  intention_activite_1: Collaboration
-  activite_2: Forum
-  intention_activite_2: Discussion/Collaboration
-  justification_activite_s: Le Fichier fournit des études de cas ou des guides de collaboration. Le Wiki favorise la co-construction de documents et de projets avec des experts. Le Forum permet des échanges asynchrones pour discuter des stratégies et des défis de la collaboration avec des spécialistes de l'IA.
-- section: S5
-  type_de_section: Apprentissage
-  competences_visees: ""
-  ressource: Course Presentation
-  intention_ressource: Acquisition
-  activite_1: Summary
-  intention_activite_1: Acquisition/Entraînement
-  activite_2: Documentation Tool
-  intention_activite_2: Entraînement/Production
-  justification_activite_s: La Course Presentation offre une synthèse visuelle des concepts clés. L'activité Summary encourage la rétention et la synthèse active des informations apprises. Le Documentation Tool permet aux apprenants de produire une réflexion structurée ou un portfolio récapitulatif de leurs acquis.
-- section: S6
-  type_de_section: Classe virtuelle (BBB)
-  competences_visees: ""
-  ressource: ""
-  intention_ressource: ""
-  activite_1: BigBlueButtonBN
-  intention_activite_1: Discussion
-  activite_2: ""
-  intention_activite_2: ""
-  justification_activite_s: ""
-- section: S7
-  type_de_section: Forum général
-  competences_visees: ""
-  ressource: ""
-  intention_ressource: ""
-  activite_1: Forum
-  intention_activite_1: Discussion/Collaboration
-  activite_2: ""
-  intention_activite_2: ""
-  justification_activite_s: ""
-- section: S8
-  type_de_section: Évaluation
-  competences_visees: ""
-  ressource: ""
-  intention_ressource: ""
-  activite_1: Sondage
-  intention_activite_1: Enquête
-  activite_2: ""
-  intention_activite_2: ""
-  justification_activite_s: ""
+```json
+[
+  {
+    "code_competence": "C1",
+    "titre_competence": "Utiliser des outils numériques pour favoriser l'interaction en classe",
+    "niveau_competence": "Moyen",
+    "competences_visees": "L'enseignant sera capable d'appliquer des outils numériques pour favoriser l'interaction et la collaboration entre les élèves pendant les cours.",
+    "ressource": "Interactive Book",
+    "intention_ressource": "Acquisition/Entraînement",
+    "justification_ressource": "Cette ressource H5P permet d'acquérir une compréhension structurée des différents outils numériques et de leurs fonctionnalités pour l'interaction et la collaboration. Elle offre un parcours d'apprentissage clair et navigable pour les enseignants.",
+    "activite_1": "Forum",
+    "intention_activite_1": "Discussion/Collaboration",
+    "justification_activite_1": "Le Forum est idéal pour que les enseignants partagent leurs expériences et bonnes pratiques dans l'application des outils numériques. Il favorise la discussion asynchrone et la co-construction de savoirs sur les stratégies d'interaction en classe.",
+    "activite_2": "Sticky Notes",
+    "intention_activite_2": "Collaboration/Discussion",
+    "justification_activite_2": "Cette activité permet aux enseignants de collaborer visuellement en partageant des idées et des retours sur l'utilisation d'outils numériques interactifs. Elle encourage le brainstorming collectif et l'organisation des concepts liés à l'application pratique.",
+    "justification_activite_2": "Cette activité permet aux enseignants de collaborer visuellement en partageant des idées et des retours sur l'utilisation d'outils numériques interactifs. Elle encourage le brainstorming collectif et l'organisation des concepts liés à l'application pratique."
+  },
+  {
+    "code_competence": "C2",
+    "titre_competence": "Concevoir des activités pédagogiques intégrant le numérique",
+    "niveau_competence": "Haut",
+    "competences_visees": "L'enseignant sera capable de concevoir des activités pédagogiques intégrant des outils numériques pour enrichir l'expérience d'apprentissage.",
+    "ressource": "Course Presentation",
+    "intention_ressource": "Acquisition/Entraînement",
+    "justification_ressource": "La Course Presentation H5P est pertinente pour présenter les principes de conception d'activités pédagogiques numériques de manière interactive. Elle permet d'illustrer des exemples concrets et des méthodologies pour enrichir l'expérience d'apprentissage.",
+    "activite_1": "Documentation Tool",
+    "intention_activite_1": "Entraînement/Production",
+    "justification_activite_1": "Cet outil H5P guide les enseignants dans la production d'un plan d'activité pédagogique intégrant le numérique. Il structure la démarche de conception et permet de formaliser un projet d'activité.",
+    "activite_2": "Atelier",
+    "intention_activite_2": "Enquête/Collaboration",
+    "justification_activite_2": "L'Atelier facilite l'évaluation par les pairs des activités numériques conçues par les enseignants. Cette collaboration et l'enquête critique sur les productions renforcent la capacité à adapter et améliorer leurs conceptions pédagogiques.",
+    "justification_activite_2": "L'Atelier facilite l'évaluation par les pairs des activités numériques conçues par les enseignants. Cette collaboration et l'enquête critique sur les productions renforcent la capacité à adapter et améliorer leurs conceptions pédagogiques."
+  },
+  {
+    "code_competence": "C3",
+    "titre_competence": "Évaluer l'efficacité des pratiques numériques en classe",
+    "niveau_competence": "Haut",
+    "competences_visees": "L'enseignant sera capable d'évaluer l'efficacité de ses pratiques numériques en classe et de justifier les ajustements nécessaires pour optimiser l'apprentissage.",
+    "ressource": "Interactive Book",
+    "intention_ressource": "Acquisition/Entraînement",
+    "justification_ressource": "L'Interactive Book H5P offre un support complet pour l'acquisition des méthodes et critères d'évaluation des pratiques numériques. Il permet aux enseignants de se former aux techniques d'analyse de l'efficacité pédagogique.",
+    "activite_1": "Questionnaire",
+    "intention_activite_1": "Enquête",
+    "justification_activite_1": "Le Questionnaire H5P est un excellent outil pour mener une enquête auprès des élèves et recueillir leurs avis sur l'efficacité des pratiques numériques mises en œuvre. Il fournit des données précieuses pour l'évaluation initiale des pratiques.",
+    "activite_2": "Devoir",
+    "intention_activite_2": "Collaboration/Production",
+    "justification_activite_2": "L'activité Devoir permet aux enseignants de produire un rapport d'évaluation détaillé de leurs pratiques numériques. Ils peuvent y justifier les ajustements proposés pour optimiser l'apprentissage, démontrant ainsi leur capacité à la réflexion critique.",
+    "justification_activite_2": "L'activité Devoir permet aux enseignants de produire un rapport d'évaluation détaillé de leurs pratiques numériques. Ils peuvent y justifier les ajustements proposés pour optimiser l'apprentissage, démontrant ainsi leur capacité à la réflexion critique."
+  }
+]
 ```

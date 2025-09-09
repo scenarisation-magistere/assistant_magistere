@@ -18,16 +18,24 @@
         }
 
         .public-cible-recall {
-            background: var(--bg-warning-light);
+            background: var(--bg-info-light);
             padding: var(--spacing-lg);
             border-radius: var(--radius-small);
             margin-bottom: var(--spacing-xl);
-            border-left: 4px solid var(--secondary-orange);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Ensure dynamic recap text inherits a variable-based size */
+        .public-cible-recall,
+        .public-cible-recall .data-item,
+        .public-cible-recall .data-item span {
+            font-size: var(--font-size-normal);
         }
 
         .public-cible-recall h3 {
-            color: var(--secondary-orange);
+            color: var(--primary-blue);
             margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-xl);
         }
 
         .public-cible-recall .data-item {
@@ -38,7 +46,7 @@
         }
 
         .public-cible-recall .data-item strong {
-            color: var(--secondary-orange);
+            color: var(--primary-blue);
         }
 
         /* Tag list styling for recap lists */
@@ -50,11 +58,11 @@
 
         .data-tags .tag {
             background: #fff;
-            border: 1px solid var(--secondary-orange);
-            color: var(--secondary-orange);
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
             padding: 2px 10px;
             border-radius: 12px;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             line-height: 1.8;
         }
 
@@ -73,17 +81,51 @@
             }
         }
 
+        /* Accordion styles for recap context */
+        .accordion-card {
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-small);
+            background: var(--white);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-light);
+        }
+        .accordion-header {
+            width: 100%;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            color: var(--text-dark);
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: var(--font-size-large);
+        }
+        .accordion-title { display: inline-flex; align-items: center; gap: 8px; }
+        .accordion-chevron { transition: transform 0.2s ease; }
+        .accordion-header[aria-expanded="false"] .accordion-chevron { transform: rotate(-90deg); }
+        .accordion-panel { padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg); }
+
         .contraintes-recall {
-            background: var(--bg-warning-light);
+            background: var(--bg-info-light);
             padding: var(--spacing-lg);
             border-radius: var(--radius-small);
             margin-bottom: var(--spacing-xl);
-            border-left: 4px solid var(--secondary-orange);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Ensure dynamic contraintes recap text uses variables too */
+        .contraintes-recall,
+        .contraintes-recall .data-item,
+        .contraintes-recall .data-item span {
+            font-size: var(--font-size-normal);
         }
 
         .contraintes-recall h3 {
-            color: var(--secondary-orange);
+            color: var(--primary-blue);
             margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-xl);
         }
 
         .contraintes-recall .data-item {
@@ -94,7 +136,7 @@
         }
 
         .contraintes-recall .data-item strong {
-            color: var(--secondary-orange);
+            color: var(--primary-blue);
         }
 
         /* Two-column fields inside each recap */
@@ -117,6 +159,7 @@
             margin: 0;
             padding: 0;
             background: transparent;
+            font-size: var(--font-size-normal);
         }
         @media (max-width: 900px) {
             .recap-fields-grid .data-item {
@@ -146,6 +189,7 @@
             break-inside: avoid;
             -webkit-column-break-inside: avoid;
             page-break-inside: avoid;
+            font-size: var(--font-size-normal);
         }
         @media (max-width: 900px) {
             .recap-pairs-grid .data-item {
@@ -184,7 +228,7 @@
             padding: 8px 12px;
             border-radius: var(--radius-circle);
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: var(--font-size-large);
             width: 35px;
             height: 35px;
             display: flex;
@@ -231,6 +275,7 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--text-dark);
+            font-size: var(--font-size-normal);
         }
 
         .form-group input[type="text"],
@@ -299,7 +344,7 @@
             color: white;
             border: none;
             padding: 15px 30px;
-            font-size: 1.1em;
+            font-size: var(--font-size-xl);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -316,7 +361,7 @@
             color: white;
             border: none;
             padding: 8px 16px;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             border-radius: 20px;
             cursor: pointer;
             margin-left: 10px;
@@ -346,12 +391,12 @@
             background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
+            padding: 12px 25px;
+            font-size: var(--font-size-normal);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+            box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
         }
 
         .evaluate-btn:hover {
@@ -370,7 +415,7 @@
             color: white;
             border: none;
             padding: 15px 40px;
-            font-size: 1.1em;
+            font-size: var(--font-size-xl);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -461,7 +506,7 @@
             border-radius: 8px;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             white-space: pre-wrap;
             max-height: 300px;
             overflow-y: auto;
@@ -508,7 +553,7 @@
             color: white;
             border: none;
             padding: 15px 30px;
-            font-size: 1.1em;
+            font-size: var(--font-size-normal);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -583,7 +628,7 @@
             color: #333;
             display: block;
             margin-bottom: 5px;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
         }
 
         .suggestion-field .field-value {
@@ -591,7 +636,7 @@
             padding: 8px 12px;
             border-radius: 6px;
             border-left: 3px solid #6f42c1;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             color: #555;
         }
 
@@ -606,7 +651,7 @@
             color: white;
             border: none;
             padding: 8px 16px;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -630,7 +675,7 @@
             color: white;
             border: none;
             padding: 12px 25px;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -646,7 +691,7 @@
             color: white;
             border: none;
             padding: 12px 25px;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -927,7 +972,7 @@
         .suggestions-pool-header h3 {
             color: #6f42c1;
             margin-bottom: 10px;
-            font-size: 1.4em;
+            font-size: var(--font-size-xl);
         }
 
         .suggestions-pool-header p {
@@ -947,7 +992,7 @@
             color: white;
             border: none;
             padding: 12px 25px;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -964,7 +1009,7 @@
             color: white;
             border: none;
             padding: 8px 15px;
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1004,7 +1049,7 @@
         .selected-competences-header h3 {
             color: #20bf6b;
             margin-bottom: 10px;
-            font-size: 1.4em;
+            font-size: var(--font-size-xl);
         }
 
         .selected-competences-header p {
@@ -1016,7 +1061,7 @@
             text-align: center;
             margin-top: 6px;
             color: #666;
-            font-size: 0.95em;
+            font-size: var(--font-size-normal);
         }
 
         .selected-actions {
@@ -1038,7 +1083,7 @@
             color: white;
             border: none;
             padding: 12px 25px;
-            font-size: 1em;
+            font-size: var(--font-size-normal);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1114,7 +1159,7 @@
         .evaluation-results-header h3 {
             color: #17a2b8;
             margin-bottom: 10px;
-            font-size: 1.4em;
+            font-size: var(--font-size-xl);
         }
 
         .evaluation-results-header p {
@@ -1155,7 +1200,7 @@
         .competence-evaluation h4 {
             color: #17a2b8;
             margin-bottom: 15px;
-            font-size: 1.1em;
+            font-size: var(--font-size-large);
         }
 
         .competence-formulation {
@@ -1166,14 +1211,14 @@
             margin: 10px 0 15px 0;
             font-style: italic;
             color: #555;
-            font-size: 0.95em;
+            font-size: var(--font-size-normal);
             line-height: 1.4;
         }
 
         .competence-evaluation p {
             color: #666;
             margin: 8px 0;
-            font-size: 0.95em;
+            font-size: var(--font-size-normal);
         }
 
         .competence-evaluation strong {
@@ -1408,9 +1453,31 @@
         {% include 'includes/header.html' %}
 
         <div class="content-container">
-            <div class="context-recall-grid">
+            <!-- Instruction panel moved above recap -->
+            {% set instructions_header = 'Objectif de cette étape' %}
+            {% set instructions_subtitle = "Définissez les compétences clés qui structureront la formation." %}
+            {% set instructions = [
+                "Formuler 3 compétences principales (une 4e étant optionnelle) selon le scénario CMO.",
+                "Choisir entre deux modes : IA (génère 4 compétences modifiables) ou pas à pas (créer vous-même les compétences).",
+                "Sélectionner les verbes en cliquant sur les tags proposés : ils se colorent lorsqu’ils sont choisis et s’affichent sous forme de pastilles. Cliquez à nouveau pour les retirer.",
+                "Chaque compétence doit inclure au moins un verbe cognitif et un verbe affectif (Bloom révisée).",
+                "Indiquer un niveau de complexité (bas, moyen, haut) pour chaque domaine.",
+                "Contextualiser la compétence (cadre, situation, public)."
+            ] %}
+            {% set instructions_footer = "Astuce : commencez par une formulation simple, puis raffinez avec les niveaux Bloom." %}
+            {% from 'includes/blocks/components.html' import instructions_panel %}
+            {{ instructions_panel(instructions_header, instructions_subtitle, instructions, instructions_footer) }}
+
+            <!-- Recap accordion -->
+            <div class="accordion-card">
+                <button type="button" class="accordion-header" id="recapToggleBtn" aria-expanded="false" aria-controls="recapSection">
+                    <span class="accordion-title">📌 Contexte (Public cible & Contraintes)</span>
+                    <span class="accordion-chevron">▾</span>
+                </button>
+                <div id="recapSection" class="accordion-panel" style="display: none;">
+                <div class="context-recall-grid">
                 <div class="public-cible-recall">
-                    <h3>📌 Titre, objectif et public cible</h3>
+                    <h3> Titre, objectif et public cible</h3>
                     <div class="recap-fields-grid">
                     <div class="data-item wide">
                         <strong>Titre de formation :</strong> <span id="titre-formation">{{ public_cible_data.titre_formation if public_cible_data and public_cible_data.titre_formation else 'Non défini' }}</span>
@@ -1504,7 +1571,7 @@
                 </div>
 
                 <div class="contraintes-recall">
-                    <h3>📌 Contraintes Formation</h3>
+                    <h3> Contraintes Formation</h3>
                     <div class="recap-fields-grid">
                     <div class="data-item">
                         <strong>Nombre de participants :</strong>
@@ -1524,21 +1591,11 @@
                     </div>
                     </div>
                 </div>
+                </div>
+            </div>
             </div>
 
-            <!-- Instruction panel below recaps (bespoke component) -->
-            {% set instructions_header = 'Objectif' %}
-            {% set instructions_subtitle = "Définissez les compétences clés qui structureront la formation." %}
-            {% set instructions = [
-                "Formuler 2 à 3 compétences principales (une 4e étant optionnelle) selon le scénario CMO.",
-                "Choisir entre deux modes : IA (génère 4 compétences modifiables) ou pas à pas (créer vous-même les compétences).",
-                "Sélectionner les verbes en cliquant sur les tags proposés : ils se colorent lorsqu’ils sont choisis et s’affichent sous forme de pastilles. Cliquez à nouveau pour les retirer.",
-                "Chaque compétence doit inclure au moins un verbe cognitif et un verbe affectif (Bloom révisée).",
-                "Indiquer un niveau de complexité (bas, moyen, haut) pour chaque domaine.",
-                "Contextualiser la compétence (cadre, situation, public)."
-            ] %}
-            {% set instructions_footer = "Astuce : commencez par une formulation simple, puis raffinez avec les niveaux Bloom." %}
-            {% include 'includes/blocks/instructions_competences.html' %}
+            
 
             <!-- Ideas Workshop Section (AI + Manual Drafts) -->
             <div class="suggestions-pool-section">
@@ -1578,7 +1635,7 @@
                 <div class="selected-competences-header">
                     <h3>📋 Compétences Sélectionnées</h3>
                     <p>Compétences choisies pour votre formation</p>
-                    <p class="selection-counter" id="selectionCounter">0/4 compétences sélectionnées — idéal : 3 à 4</p>
+                    <p class="selection-counter" id="selectionCounter">0/4 compétences sélectionnées —  nécessaire : 3</p>
                     <div class="selected-actions" id="selectedActions" style="display: none;">
                         <button class="remove-all-btn" onclick="removeAllCompetences()">
                             ➖ Retirer Toutes
@@ -1693,6 +1750,20 @@
 
     <script src="{{ url_for('static', filename='js/common_validation.js') }}"></script>
     <script>
+        // Accordion behavior for recap
+        (function initRecapAccordion(){
+            document.addEventListener('DOMContentLoaded', function(){
+                const header = document.getElementById('recapToggleBtn');
+                const panel = document.getElementById('recapSection');
+                if (!header || !panel) return;
+                header.addEventListener('click', function(){
+                    const expanded = header.getAttribute('aria-expanded') === 'true';
+                    header.setAttribute('aria-expanded', (!expanded).toString());
+                    panel.style.display = expanded ? 'none' : 'block';
+                });
+            });
+        })();
+
         // Load previous data from YAML
         let previousData = {% if public_cible_data %}{{ public_cible_data | tojson | safe }}{% else %}null{% endif %};
         let workshopCompetences = []; // Pool (atelier) – includes IA and manual drafts
@@ -1870,9 +1941,9 @@
             
             // Simple formulation generation
             const niveauMap = {
-                'Haut : Créer / Évaluer / Analyser': 'créer',
-                'Moyen : Appliquer / Comprendre': 'appliquer',
-                'Bas : Se rappeler': 'identifier'
+                'Haut': 'créer',
+                'Moyen': 'appliquer',
+                'Bas': 'identifier'
             };
             
             const actionVerb = niveauMap[niveau] || verbes.split(',')[0].trim();
@@ -1978,16 +2049,16 @@
                     <label>Niveau :</label>
                     <select id=\"editNiveau\" class=\"form-control\" onchange=\"loadBloomVerbs()\">
                         <optgroup label=\"Cognitif\">
-                            <option value=\"Haut : Créer / Évaluer / Analyser\">Haut : Créer / Évaluer / Analyser</option>
-                            <option value=\"Moyen : Appliquer / Comprendre\" selected>Moyen : Appliquer / Comprendre</option>
-                            <option value=\"Bas : Se rappeler\">Bas : Se rappeler</option>
+                            <option value=\"Haut : Créer / Évaluer\">Haut : Créer / Évaluer</option>
+                            <option value=\"Moyen : Appliquer / Analyser\" selected>Moyen : Appliquer / Analyser</option>
+                            <option value=\"Bas : Comprendre / Connaître\">Bas : Comprendre / Connaître</option>
                         </optgroup>
                         <optgroup label=\"Affectif\">
-                            <option value=\"Affectif : Recevoir\">Affectif : Recevoir</option>
-                            <option value=\"Affectif : Répondre\">Affectif : Répondre</option>
-                            <option value=\"Affectif : Valoriser\">Affectif : Valoriser</option>
-                            <option value=\"Affectif : Organiser\">Affectif : Organiser</option>
-                            <option value=\"Affectif : Caractériser\">Affectif : Caractériser</option>
+                            <option value=\"Affectif : Réception\">Affectif : Réception</option>
+                            <option value=\"Affectif : Réponse\">Affectif : Réponse</option>
+                            <option value=\"Affectif : Valorisation\">Affectif : Valorisation</option>
+                            <option value=\"Affectif : Organisation\">Affectif : Organisation</option>
+                            <option value=\"Affectif : Caractérisation\">Affectif : Caractérisation</option>
                         </optgroup>
                     </select>
                 </div>
@@ -2013,6 +2084,13 @@
             `;
             
             document.getElementById('editModal').style.display = 'block';
+            // Replace niveau selector with simple Bas/Moyen/Haut options
+            (function(){
+                const sel = document.getElementById('editNiveau');
+                if (sel) {
+                    sel.innerHTML = '<option value="Haut">Haut</option><option value="Moyen" selected>Moyen</option><option value="Bas">Bas</option>';
+                }
+            })();
             
             // Ensure hidden input exists and is empty, then load verbs
             const hidden = ensureHiddenVerbsInput();
@@ -2570,16 +2648,16 @@
                     <label>Niveau :</label>
                     <select id=\"editNiveau\" class=\"form-control\" onchange=\"loadBloomVerbs()\">
                         <optgroup label=\"Cognitif\">
-                            <option value=\"Haut : Créer / Évaluer / Analyser\" ${competence.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
-                            <option value=\"Moyen : Appliquer / Comprendre\" ${competence.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
-                            <option value=\"Bas : Se rappeler\" ${competence.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
+                            <option value=\"Haut : Créer / Évaluer\" ${competence.niveau === 'Haut : Créer / Évaluer' ? 'selected' : ''}>Haut : Créer / Évaluer</option>
+                            <option value=\"Moyen : Appliquer / Analyser\" ${competence.niveau === 'Moyen : Appliquer / Analyser' ? 'selected' : ''}>Moyen : Appliquer / Analyser</option>
+                            <option value=\"Bas : Comprendre / Connaître\" ${competence.niveau === 'Bas : Comprendre / Connaître' ? 'selected' : ''}>Bas : Comprendre / Connaître</option>
                         </optgroup>
                         <optgroup label=\"Affectif\">
-                            <option value=\"Affectif : Recevoir\" ${competence.niveau === 'Affectif : Recevoir' ? 'selected' : ''}>Affectif : Recevoir</option>
-                            <option value=\"Affectif : Répondre\" ${competence.niveau === 'Affectif : Répondre' ? 'selected' : ''}>Affectif : Répondre</option>
-                            <option value=\"Affectif : Valoriser\" ${competence.niveau === 'Affectif : Valoriser' ? 'selected' : ''}>Affectif : Valoriser</option>
-                            <option value=\"Affectif : Organiser\" ${competence.niveau === 'Affectif : Organiser' ? 'selected' : ''}>Affectif : Organiser</option>
-                            <option value=\"Affectif : Caractériser\" ${competence.niveau === 'Affectif : Caractériser' ? 'selected' : ''}>Affectif : Caractériser</option>
+                            <option value=\"Affectif : Réception\" ${competence.niveau === 'Affectif : Réception' ? 'selected' : ''}>Affectif : Réception</option>
+                            <option value=\"Affectif : Réponse\" ${competence.niveau === 'Affectif : Réponse' ? 'selected' : ''}>Affectif : Réponse</option>
+                            <option value=\"Affectif : Valorisation\" ${competence.niveau === 'Affectif : Valorisation' ? 'selected' : ''}>Affectif : Valorisation</option>
+                            <option value=\"Affectif : Organisation\" ${competence.niveau === 'Affectif : Organisation' ? 'selected' : ''}>Affectif : Organisation</option>
+                            <option value=\"Affectif : Caractérisation\" ${competence.niveau === 'Affectif : Caractérisation' ? 'selected' : ''}>Affectif : Caractérisation</option>
                         </optgroup>
                     </select>
                 </div>
@@ -2605,6 +2683,15 @@
             `;
             
             document.getElementById('editModal').style.display = 'block';
+            // Replace niveau selector with simple Bas/Moyen/Haut options
+            (function(){
+                const sel = document.getElementById('editNiveau');
+                if (sel) {
+                    const current = competence.niveau && ['Bas','Moyen','Haut'].includes(competence.niveau) ? competence.niveau : null;
+                    sel.innerHTML = '<option value="Haut">Haut</option><option value="Moyen">Moyen</option><option value="Bas">Bas</option>';
+                    if (current) sel.value = current;
+                }
+            })();
             
             // Prepare hidden input with existing verbs and load verbs
             const hidden = ensureHiddenVerbsInput();
@@ -3064,18 +3151,9 @@
                 <div class="form-group">
                     <label>Niveau :</label>
                     <select id="editNiveau" class="form-control" onchange="loadBloomVerbs()">
-                        <optgroup label="Cognitif">
-                            <option value="Haut : Créer / Évaluer / Analyser" ${item.niveau === 'Haut : Créer / Évaluer / Analyser' ? 'selected' : ''}>Haut : Créer / Évaluer / Analyser</option>
-                            <option value="Moyen : Appliquer / Comprendre" ${item.niveau === 'Moyen : Appliquer / Comprendre' ? 'selected' : ''}>Moyen : Appliquer / Comprendre</option>
-                            <option value="Bas : Se rappeler" ${item.niveau === 'Bas : Se rappeler' ? 'selected' : ''}>Bas : Se rappeler</option>
-                        </optgroup>
-                        <optgroup label="Affectif">
-                            <option value="Affectif : Recevoir" ${item.niveau === 'Affectif : Recevoir' ? 'selected' : ''}>Affectif : Recevoir</option>
-                            <option value="Affectif : Répondre" ${item.niveau === 'Affectif : Répondre' ? 'selected' : ''}>Affectif : Répondre</option>
-                            <option value="Affectif : Valoriser" ${item.niveau === 'Affectif : Valoriser' ? 'selected' : ''}>Affectif : Valoriser</option>
-                            <option value="Affectif : Organiser" ${item.niveau === 'Affectif : Organiser' ? 'selected' : ''}>Affectif : Organiser</option>
-                            <option value="Affectif : Caractériser" ${item.niveau === 'Affectif : Caractériser' ? 'selected' : ''}>Affectif : Caractériser</option>
-                        </optgroup>
+                        <option value="Haut">Haut</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Bas">Bas</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -3093,6 +3171,15 @@
                 <input type="hidden" id="editCompetenceId" value="ws:${item.id}">
             `;
             document.getElementById('editModal').style.display = 'block';
+            // Replace niveau selector with simple Bas/Moyen/Haut options
+            (function(){
+                const sel = document.getElementById('editNiveau');
+                if (sel) {
+                    const current = item.niveau && ['Bas','Moyen','Haut'].includes(item.niveau) ? item.niveau : null;
+                    sel.innerHTML = '<option value="Haut">Haut</option><option value="Moyen">Moyen</option><option value="Bas">Bas</option>';
+                    if (current) sel.value = current;
+                }
+            })();
             const hidden = ensureHiddenVerbsInput();
             hidden.value = item.verbes || '';
             loadBloomVerbs();

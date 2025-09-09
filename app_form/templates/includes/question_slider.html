@@ -39,13 +39,11 @@
                         {% if field.type == 'text' %}
                             <div class="form-group" style="margin-bottom: var(--spacing-md);">
                                 <label for="{{ field.field_name }}"><strong>{{ field.label }}</strong></label>
-                                <div style="margin: var(--spacing-xs) 0;">👉 Votre réponse :</div>
                                 <input type="text" name="{{ field.field_name }}" id="{{ field.field_name }}" placeholder="{{ field.placeholder }}" required>
                             </div>
                         {% elif field.type == 'textarea' %}
                             <div class="form-group">
                                 <label for="{{ field.field_name }}"><strong>{{ field.label }}</strong></label>
-                                <div style="margin: var(--spacing-xs) 0;">👉 Votre réponse :</div>
                                 <textarea name="{{ field.field_name }}" id="{{ field.field_name }}" rows="4" placeholder="{{ field.placeholder }}" required></textarea>
                             </div>
                         {% endif %}
@@ -133,7 +131,7 @@
 }
 
 .dot-number {
-    font-size: 14px;
+    font-size: var(--font-size-small);
     font-weight: bold;
 }
 
@@ -165,7 +163,7 @@
 }
 
 .question-title {
-    font-size: 1.35rem;
+    font-size: var(--font-size-xxl);
     color: var(--text-dark);
     margin-bottom: 6px;
     line-height: 1.3;
@@ -173,7 +171,7 @@
 
 .question-counter {
     color: var(--text-medium);
-    font-size: 0.85rem;
+    font-size: var(--font-size-small);
     display: block;
     margin-top: 2px;
     float: none;
@@ -198,7 +196,7 @@
 .suggestions-section h4 {
     color: var(--text-dark);
     margin-bottom: 15px;
-    font-size: 1.1rem;
+    font-size: var(--font-size-large);
 }
 
 .suggestions-list {
@@ -214,7 +212,7 @@
     border: 1px solid #e9ecef;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
+    font-size: var(--font-size-normal);
     line-height: 1.4;
 }
 
@@ -273,7 +271,7 @@
     padding: 15px;
     border: 2px solid #e9ecef;
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: var(--font-size-normal);
     transition: all 0.3s ease;
     background: white;
 }
@@ -291,7 +289,7 @@
     border-radius: 8px;
     padding: 12px 14px;
     font-family: 'Courier New', monospace;
-    font-size: 0.95rem;
+    font-size: var(--font-size-normal);
 }
 
 .form-field-section textarea {
@@ -337,7 +335,7 @@
  .checkbox-item label {
      flex: 1;
      cursor: pointer;
-     font-size: 1rem;
+     font-size: var(--font-size-normal);
      line-height: 1.4;
  }
 
@@ -361,7 +359,7 @@
      padding: 12px;
      border: 2px solid #e9ecef;
      border-radius: 8px;
-     font-size: 1rem;
+     font-size: var(--font-size-normal);
      transition: all 0.3s ease;
  }
 

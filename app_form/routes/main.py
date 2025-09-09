@@ -3,12 +3,11 @@ import yaml
 import os
 from datetime import datetime
 
-# Import questions from separate files
-from questions.public_cible import QUESTIONS_PUBLIC_CIBLE
-from questions.contraintes import QUESTIONS_CONTRAINTES
+ 
 
 # Import navigation config
 from config.pages_config import get_navigation_info, get_page_by_step, PAGES_CONFIG, get_page_config
+from helpers.session_yaml import get_session_filename, save_yaml_data, check_previous_steps_completed
 
 # Create output directory if it doesn't exist
 OUTPUT_DIR = 'output'
@@ -109,32 +108,7 @@ def register_main_routes(app):
     def start_journey():
         return redirect('/public-cible')
 
-    @app.route('/public-cible', methods=['GET', 'POST'])
-    def public_cible():
-        if request.method == 'POST':
-            # Handle form submission
-            # Collect form data with arrays for checkboxes
-            data = {}
-            for key in request.form.keys():
-                values = request.form.getlist(key)
-                if len(values) > 1:
-                    data[key] = values
-                else:
-                    data[key] = values[0] if values else ''
-            # Attach merged info for type_de_formation for convenience
-            if data.get('type_de_formation_text'):
-                data['type_de_formation_precisions'] = data.get('type_de_formation_text')
-            filename = save_yaml_data(data, 'etape_1_public_cible')
-            return redirect('/contraintes')
-        
-        nav_info = get_navigation_info('public_cible')
-        page_config = get_page_config('public_cible')
-        return render_template('public_cible.html', 
-                             questions=QUESTIONS_PUBLIC_CIBLE, 
-                             nav_info=nav_info,
-                             header_gradient=page_config.get('header_gradient', 'var(--gradient-primary)'),
-                             header_title='🧭 Titre, objectif et public cible',
-                             header_description='Déterminez le titre, l’objectif général et les caractéristiques du public cible de votre formation')
+    
 
     @app.route('/load-journey')
     def load_journey():

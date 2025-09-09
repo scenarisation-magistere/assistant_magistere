@@ -1,7 +1,8 @@
 from flask import request, jsonify, session, render_template, redirect
-from .main import save_yaml_data, check_migration_warning
-from questions.contraintes import QUESTIONS_CONTRAINTES
+from helpers.session_yaml import save_yaml_data, check_previous_steps_completed
+from helpers.utils import check_migration_warning
 from config.pages_config import get_navigation_info, get_page_config
+from helpers.resource_loader import load_questions_from_json
 
 def register_contraintes_routes(app):
     """Register contraintes routes with the Flask app"""
@@ -40,8 +41,10 @@ def register_contraintes_routes(app):
         
         nav_info = get_navigation_info('contraintes')
         page_config = get_page_config('contraintes')
+        # Load questions from JSON file
+        questions_contraintes = load_questions_from_json('contraintes.json')
         return render_template('contraintes.html', 
-                             questions=QUESTIONS_CONTRAINTES, 
+                             questions=questions_contraintes, 
                              nav_info=nav_info,
                              header_gradient=page_config.get('header_gradient', 'var(--gradient-danger)'),
                              header_title='⚙️ Contraintes Formation',

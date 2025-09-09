@@ -2,25 +2,15 @@ import os
 from dotenv import load_dotenv
 import json
 from openai import OpenAI
-from questions.competences import COMPETENCES_QUESTIONS
 import yaml
 from datetime import datetime
+from helpers.resource_loader import load_verbs_taxonomy
+from helpers.ai_helpers import OPENAI_MODEL, OPENAI_MAX_TOKENS, OPENAI_TEMPERATURE, client
 
 # Load environment variables
 load_dotenv()
 
-# Required OpenAI config
-OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
-OPENAI_MAX_TOKENS = int(os.getenv('OPENAI_MAX_TOKENS', '1000'))
-OPENAI_TEMPERATURE = float(os.getenv('OPENAI_TEMPERATURE', '0.7'))
-
-# Check API key
-api_key = os.getenv('OPENAI_API_KEY')
-if not api_key:
-    raise EnvironmentError("❌ OPENAI_API_KEY is missing from environment variables")
-
-# Create OpenAI client
-client = OpenAI(api_key=api_key)
+## OpenAI configuration and client are provided by helpers.ai_helpers
 
 
 def generate_competency_suggestions(formation_data):
@@ -67,14 +57,41 @@ def generate_competency_suggestions(formation_data):
     if isinstance(type_formation_precisions, str) and type_formation_precisions.strip():
         type_formation_precisions_str = f" — {type_formation_precisions.strip()}"
 
-    # Build Bloom taxonomy excerpt from existing dictionary (cognitif + affectif)
-    bloom_taxonomy = COMPETENCES_QUESTIONS.get('bloom_taxonomy', {})
-    taxonomy_lines = []
-    for level_key, level_data in bloom_taxonomy.items():
-        level_name = level_data.get('name', level_key)
-        verbs_sample = ', '.join(level_data.get('verbs', [])[:18])
-        taxonomy_lines.append(f"- {level_name}: {verbs_sample}")
-    taxonomy_text = "\n".join(taxonomy_lines)
+    # Build verb lists per domain & level in a simple pass
+    bloom_taxonomy = load_verbs_taxonomy()
+
+    def collect_verbs(domain: str, level: str) -> list:
+        verbs = []
+        for _, data in bloom_taxonomy.items():
+            if data.get('domain') == domain and data.get('level') == level:
+                verbs.extend(data.get('verbs', []))
+        return verbs
+
+    def find_duplicates_in_order(items):
+        seen = set()
+        dups = []
+        for x in items:
+            if x in seen and x not in dups:
+                dups.append(x)
+            else:
+                seen.add(x)
+        return dups
+
+    warnings = []
+    coherence_lines = []
+    for lvl in ['Bas', 'Moyen', 'Haut']:
+        cog_list = collect_verbs('cognitif', lvl)
+        aff_list = collect_verbs('affectif', lvl)
+        # Warn on duplicates, but do not deduplicate
+        cog_dups = find_duplicates_in_order(cog_list)
+        aff_dups = find_duplicates_in_order(aff_list)
+        if cog_dups:
+            warnings.append(f"Verbes en double détectés (cognitif, {lvl}) : {', '.join(cog_dups)}")
+        if aff_dups:
+            warnings.append(f"Verbes en double détectés (affectif, {lvl}) : {', '.join(aff_dups)}")
+        coherence_lines.append(f"- Cognitif ({lvl}) : {', '.join(cog_list[:24])}")
+        coherence_lines.append(f"- Affectif ({lvl}) : {', '.join(aff_list[:24])}")
+    level_verb_coherence_text = "\n".join(coherence_lines)
 
     # Include already selected and workshop competences (if passed by client)
     selected_competences = formation_data.get('selected_competences', []) or []
@@ -91,63 +108,85 @@ def generate_competency_suggestions(formation_data):
     selected_block = format_comp_list(selected_competences, 'Compétences déjà sélectionnées (à NE PAS dupliquer)')
     workshop_block = format_comp_list(workshop_competences, 'Brouillons présents dans l\'atelier (à éviter de dupliquer)')
 
+    # Build escaped JSON example to avoid f-string brace interpretation
+    expected_json_format = """
+{
+    "competences": [
+        {
+            "titre": "Titre court et descriptif de la compétence",
+            "idees_cles": "mots-clés et concepts principaux",
+            "niveau": "Haut/Moyen/Bas",
+            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+            "formulation": "Formulation complète de la compétence"
+        }
+    ]
+}
+""".strip()
+    expected_json_format_escaped = expected_json_format.replace("{", "{{").replace("}", "}}")
+
     # Prompt for GPT
     prompt = f"""
-        En tant qu'expert en formation et en pédagogie, générez 4 nouvelles compétences visées pour une formation Magistère, à partir des informations ci-dessous. 
-        Le processus est itératif : vous devez tenir compte à la fois des compétences déjà sélectionnées (validées) et des compétences rejetées (à ne pas reproduire). 
-        Les nouvelles compétences doivent être cohérentes avec les compétences sélectionnées, mais différentes : proposez des compétences complémentaires, connexes ou qui enrichissent l’ensemble, sans duplication.
+        En tant qu'expert en formation et en pédagogie, générez exactement 4 nouvelles compétences visées pour une formation Magistère, en respectant les informations ci-dessous.
+        Le processus est itératif : vous devez tenir compte à la fois des compétences déjà sélectionnées (validées) et des compétences rejetées (à ne pas reproduire).
+        Les nouvelles compétences doivent être complémentaires et cohérentes avec les compétences sélectionnées, mais différentes, enrichissant l’ensemble sans duplication.
 
-        **Contexte de la formation :**
-        - Titre : {titre}
-        - Objectif général : {objectif}
+        ----------------------------
+        ** Informations de contexte **
 
-        **Public cible (étape 1) :**
-        - Type de public : {type_public_str}
-        - Type de formation : {type_formation_str}{type_formation_precisions_str}
-        - Niveaux scolaires : {niveaux_scolaires_str}
-        - Niveau d'expertise : {niveau_str}
-        - Profil du groupe : {stringify(profil)}
-        - Besoins spécifiques : {besoins_str}
+        Contexte de la formation :
+        Titre : {titre}
+        Objectif général : {objectif}
 
-        **Contraintes (étape 2) :**
-        - Nombre de participants : {nb_participants_str}
-        - Modalités d'animation : {animation_str}
-        - Exigences institutionnelles : {exigences_str}
-        - Restrictions techniques : {restrictions_str}
+        Public cible (étape 1) :
+        Type de public : {type_public_str}
+        Type de formation : {type_formation_str}{type_formation_precisions_str}
+        Niveaux scolaires : {niveaux_scolaires_str}
+        Niveau d'expertise : {niveau_str}
+        Profil du groupe : {stringify(profil)}
+        Besoins spécifiques : {besoins_str}
 
-        **Instructions :**
-        1. Générez exactement 4 nouvelles compétences visées.
-        2. Chaque compétence doit suivre la taxonomie de Bloom révisée.
-        3. Utilisez des verbes d'action observables et mesurables.
-        4. Adaptez le niveau aux caractéristiques du public cible.
-        5. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
-        6. Classez les compétences du niveau le plus bas au plus élevé.
-        7. Ne proposez pas de compétences identiques ou quasi-identiques à celles déjà générées.
-        8. Inspirez-vous des compétences sélectionnées pour générer des compétences complémentaires ou connexes (pas de duplication).
-        9. Évitez strictement toute compétence figurant dans la liste des compétences rejetées.
+        Contraintes (étape 2) :
+        Nombre de participants : {nb_participants_str}
+        Modalités d'animation : {animation_str}
+        Exigences institutionnelles : {exigences_str}
+        Restrictions techniques : {restrictions_str}
 
-        **Taxonomie de Bloom révisée (extraits issus du référentiel interne) :**
-        {taxonomy_text}
+        ----------------------------
+        ** Instructions détaillées **
 
-        **Compétences rejetées par l'utilisateur (à ne pas générer) :**
+        1. Générez exactement 4 nouvelles compétences.
+        2. Pour chaque compétence :
+            a. Déterminez son niveau (Bas, Moyen, Haut) en fonction du public cible et de l’objectif de formation.
+            b. Rédigez le titre et la formulation complète de la compétence.
+            c. Sélectionnez les verbes d’action uniquement parmi la liste autorisée pour le niveau et le domaine appropriés (cognitif ou affectif).
+            d. Variez les verbes entre domaine cognitif et affectif selon la pertinence pour la compétence.
+
+        3. Classez les compétences du niveau le plus bas au plus élevé.
+        4. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
+        5. Ne dupliquez pas les compétences déjà générées ou figurant dans la liste des compétences rejetées.
+        6. Inspirez-vous des compétences sélectionnées pour générer des compétences complémentaires ou connexes, sans duplication.
+        7. Respectez strictement l’orthographe exacte des verbes fournis (accents, traits d’union, underscores).
+        8. N’utilisez aucun verbe en dehors des listes autorisées.
+        9. Verifiez que les compétences sont cohérentes avec l'objectif de formation et le profil du groupe.
+        ----------------------------
+
+        ** Listes de verbes d’action AUTORISÉES par niveau (bas, moyen, haut) et domaine (cognitif, affectif) **
+
+        {level_verb_coherence_text}
+
+        ----------------------------
+
+        Compétences rejetées par l'utilisateur (à ne pas générer) :
         {workshop_block}
 
-        **Compétences sélectionnées par l'utilisateur (à compléter par des compétences connexes, sans duplication) :**
+        Compétences sélectionnées par l'utilisateur (à compléter par des compétences connexes, sans duplication) :
         {selected_block}
 
-        **Format de réponse attendu (JSON valide uniquement, sans texte supplémentaire) :**
-        {{
-            "competences": [
-                {{
-                    "titre": "Titre court et descriptif de la compétence",
-                    "idees_cles": "mots-clés et concepts principaux",
-                    "niveau": "Haut/Moyen/Bas",
-                    "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
-                    "formulation": "Formulation complète de la compétence"
-                }},
-                ...
-            ]
-        }}
+        ----------------------------
+
+        Format de réponse attendu (JSON valide uniquement, sans texte supplémentaire) :
+
+        {expected_json_format_escaped}
     """
 
     
@@ -158,6 +197,8 @@ def generate_competency_suggestions(formation_data):
     
     with open(debug_filepath, 'w', encoding='utf-8') as f:
         f.write(prompt)
+        if warnings:
+            f.write("\n\n[WARNINGS]\n" + "\n".join(warnings))
 
     # Call OpenAI API
     response = client.chat.completions.create(
@@ -182,16 +223,20 @@ def generate_competency_suggestions(formation_data):
         # Remove JSON code block markers if present
         content = content.replace('```json', '').replace('```', '')
         suggestions = json.loads(content)
+        if warnings:
+            suggestions['warnings'] = warnings
         return {
             'success': True,
             'suggestions': suggestions.get('competences', []),
-            'raw_response': content
+            'raw_response': content,
+            'warnings': warnings
         }
     except json.JSONDecodeError:
         return {
             'success': False,
             'error': 'Impossible de parser la réponse JSON',
-            'raw_response': content
+            'raw_response': content,
+            'warnings': warnings
         }
 
 

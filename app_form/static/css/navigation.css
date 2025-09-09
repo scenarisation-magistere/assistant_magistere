@@ -12,6 +12,12 @@
     margin-top: var(--spacing-lg);
     border-radius: var(--radius-small);
     text-align: center;
+    /* compact from include */
+    margin: 8px 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
 }
 
 .step-indicator .step {
@@ -22,6 +28,9 @@
     font-weight: bold;
     font-size: var(--font-size-small);
     transition: all 0.3s ease;
+    /* compact */
+    line-height: 1.25;
+    padding: 6px 12px;
 }
 
 .step-indicator .step.active {
@@ -70,6 +79,9 @@
     text-decoration: none;
     display: inline-block;
     min-width: 120px;
+    /* compact */
+    padding: 8px 14px;
+    font-size: var(--font-size-small);
 }
 
 .navigation-buttons .btn-next {
@@ -216,7 +228,7 @@
     .step-indicator .step {
         padding: 6px 12px;
         margin: 0 3px;
-        font-size: 0.8em;
+        font-size: var(--font-size-small);
     }
     
     .navigation-buttons {
@@ -260,6 +272,6 @@
     
     .step-indicator .step {
         padding: 4px 8px;
-        font-size: 0.75em;
+        font-size: var(--font-size-xs);
     }
 }
