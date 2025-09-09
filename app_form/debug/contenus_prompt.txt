@@ -12,37 +12,39 @@
 
         ## COMPÉTENCES À TRAITER
         - code: C1
-  formulation: L'enseignant sera capable d'appliquer des outils numériques pour favoriser
-    l'interaction et la collaboration entre les élèves pendant les cours.
-  idees_cles: outils numériques, interaction, collaboration
-  justification: C1 est au niveau moyen et constitue une première étape essentielle
-    pour les enseignants afin d'utiliser les outils numériques dans un cadre interactif.
-  niveau: Moyen
+  formulation: L'apprenant sera capable d'utiliser des outils numériques pour favoriser
+    la collaboration entre les élèves et les enseignants, en s'impliquant activement
+    dans des projets collectifs.
+  idees_cles: outils numériques, collaboration, travail en groupe
+  justification: C1 est une compétence de niveau moyen qui introduit l'utilisation
+    des outils numériques dans un contexte collaboratif, ce qui est fondamental pour
+    les enseignants.
+  niveau: 'Cog: Moyen / Aff: Moyen'
   pertinence: élevée
-  titre: Utiliser des outils numériques pour favoriser l'interaction en classe
-  verbes: appliquer, participer, cooperer
+  titre: Utiliser des outils numériques pour la collaboration
+  verbes: utiliser, appliquer, coopérer, s'impliquer
 - code: C2
-  formulation: L'enseignant sera capable de concevoir des activités pédagogiques intégrant
-    des outils numériques pour enrichir l'expérience d'apprentissage.
-  idees_cles: activités pédagogiques, conception, intégration numérique
-  justification: C2 est au niveau haut et nécessite d'abord la maîtrise de C1, car
-    concevoir des activités implique une compréhension plus approfondie des outils
-    numériques.
-  niveau: Haut
+  formulation: L'apprenant sera capable de créer des ressources numériques pédagogiques
+    adaptées aux besoins de ses élèves et d'encourager leur utilisation en classe.
+  idees_cles: ressources numériques, pédagogie, création
+  justification: C2 est également de niveau moyen, mais elle nécessite une compréhension
+    plus approfondie des besoins pédagogiques, ce qui en fait une progression logique
+    après C1.
+  niveau: 'Cog: Haut / Aff: Moyen'
   pertinence: élevée
-  titre: Concevoir des activités pédagogiques intégrant le numérique
-  verbes: concevoir, combiné, adapter
+  titre: Créer des ressources numériques pédagogiques
+  verbes: créer, développer, participer, encourager
 - code: C3
-  formulation: L'enseignant sera capable d'évaluer l'efficacité de ses pratiques numériques
-    en classe et de justifier les ajustements nécessaires pour optimiser l'apprentissage.
-  idees_cles: évaluation, pratiques numériques, efficacité
-  justification: C3 est également au niveau haut, mais vient après C2 car évaluer
-    l'efficacité des pratiques nécessite d'abord la capacité à concevoir et à mettre
-    en œuvre ces pratiques.
-  niveau: Haut
+  formulation: L'apprenant sera capable d'évaluer l'efficacité de ses pratiques numériques
+    en classe et de justifier les ajustements nécessaires pour améliorer l'apprentissage.
+  idees_cles: évaluation, ajustement, pratiques numériques
+  justification: C3 est une compétence de niveau haut qui repose sur l'application
+    des compétences précédentes, permettant une réflexion critique sur les pratiques
+    numériques.
+  niveau: 'Cog: Haut / Aff: Haut'
   pertinence: élevée
-  titre: Évaluer l'efficacité des pratiques numériques en classe
-  verbes: évaluer, justifier, contrôler
+  titre: Évaluer et ajuster les pratiques numériques en classe
+  verbes: évaluer, justifier, transformer ses pratiques, s'engager
 
 
         ----------------------------

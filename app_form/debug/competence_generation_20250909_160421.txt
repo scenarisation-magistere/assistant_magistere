@@ -11,10 +11,10 @@
         Objectif général : Accompagner les enseignants à utiliser des outils numériques pour enrichir leurs pratiques et favoriser la collaboration entre pairs.
 
         Public cible (étape 1) :
-        Type de public : Enseignants 2d degré, Formateurs académiques
+        Type de public : Enseignants 1er degré, Enseignants 2d degré
         Type de formation : Formation transdisciplinaire — numérique educatif
-        Niveaux scolaires : Primaire, Collège
-        Niveau d'expertise : Avancé, Expert ou formateur confirmé
+        Niveaux scolaires : Lycée général et technologique, Lycée professionnel
+        Niveau d'expertise : Intermédiaire, Avancé
         Profil du groupe : Non spécifié
         Besoins spécifiques : Aucun besoin identifié
 
@@ -29,10 +29,10 @@
 
         1. Générez exactement 4 nouvelles compétences.
         2. Pour chaque compétence :
-            a. Déterminez son niveau (Bas, Moyen, Haut) en fonction du public cible et de l’objectif de formation.
+            a. Déterminez DEUX niveaux : un niveau cognitif et un niveau affectif (Bas/Moyen/Haut) adaptés au public et à l’objectif.
             b. Rédigez le titre et la formulation complète de la compétence.
-            c. Sélectionnez les verbes d’action uniquement parmi la liste autorisée pour le niveau et le domaine appropriés (cognitif ou affectif).
-            d. Variez les verbes entre domaine cognitif et affectif selon la pertinence pour la compétence.
+            c. Sélectionnez AU MOINS un verbe cognitif parmi la liste autorisée du niveau cognitif choisi ET AU MOINS un verbe affectif parmi la liste autorisée du niveau affectif choisi.
+            d. Respectez STRICTEMENT les listes autorisées ci-dessous (orthographe exacte des verbes, accents, traits d’union, underscores).
 
         3. Classez les compétences du niveau le plus bas au plus élevé.
         4. Assurez la cohérence avec l’objectif de formation et le profil du groupe.
@@ -45,12 +45,12 @@
 
         ** Listes de verbes d’action AUTORISÉES par niveau (bas, moyen, haut) et domaine (cognitif, affectif) **
 
-        - Cognitif (Bas) : classer, comparer, convertir, démontrer, différencier, dire dans ses mots, illustrer (à l’aide d’exemples), inférer, expliquer, exprimer, faire une analogie, généraliser, interpréter, paraphraser, prédire, reformuler, représenter, résumer, associer, citer, décrire, définir, énumérer, étiqueter
-- Affectif (Bas) : accepter, analyser, associer, attribuer, définir, différencier, écouter, identifier, interroger, poser des questions, reconnaître, spécifier
-- Cognitif (Moyen) : analyser, attribuer, catégoriser, cibler, comparer, contraster, critiquer, découper, déduire, délimiter, différencier, discriminer, disséquer, distinguer, examiner, faire corréler, faire ressortir, inférer, limiter, mettre en priorité, mettre en relation, morceler, organiser, opposer
-- Affectif (Moyen) : acclamer, approuver, argumenter, choisir, conscientiser, contester, débattre, démontrer, encourager, fournir des exemples, influencer, nier, promouvoir, protester
-- Cognitif (Haut) : adapter, agencer, anticiper, arranger, assembler, combiner, commenter, composer, concevoir, construire, créer, développer, écrire, exposer, générer, incorporer, intégrer, mettre en place, organiser, planifier, préparer, produire, proposer, rédiger
-- Affectif (Haut) : adhérer, adopter, agir, aider, assister, changer, diriger, éviter, modifier, offrir, pratiquer, prévenir, réclamer, réviser, résister, résoudre, s’associer, se conformer, suivre
+        - Cognitif (Bas) : associer, citer, décrire, définir, énumérer, étiqueter, identifier, indiquer, lister, localiser, nommer, ordonner, rappeler, réciter, reconnaître, répéter, reproduire, sélectionner, classer, comparer, convertir, démontrer, différencier, dire dans ses mots, illustrer (par des exemples), inférer, expliquer, exprimer, faire une analogie, généraliser
+- Affectif (Bas) : accepter, écouter, observer, reconnaître, identifier, différencier (valeurs), analyser, associer, attribuer, définir, interroger, poser des questions, spécifier, noter, manifester de l’intérêt
+- Cognitif (Moyen) : administrer, appliquer, assembler, calculer, construire, découvrir, démontrer, dessiner, déterminer, employer, établir, exécuter, formuler, fournir, implanter, manipuler, mesurer, mettre en pratique, modifier, montrer, opérer, participer, préparer, résoudre, traiter, trouver, utiliser, analyser, attribuer, catégoriser
+- Affectif (Moyen) : acclamer, approuver, argumenter, choisir (et défendre), conscientiser, contester, débattre, démontrer, encourager, fournir des exemples, influencer, promouvoir, protester, valoriser, participer, contribuer, s’impliquer, coopérer, partager
+- Cognitif (Haut) : apprécier, argumenter, attaquer, choisir, conclure, contrôler, critiquer, défendre, déterminer, estimer, évaluer, juger, justifier, soutenir, vérifier, adapter, agencer, anticiper, arranger, assembler, combiner, commenter, composer, concevoir, construire, créer, développer, écrire, exposer, générer
+- Affectif (Haut) : adhérer, adopter, agir, aider, assister, changer, diriger, éviter, modifier, offrir, pratiquer, prévenir, réclamer, réviser, résister, résoudre, s’associer, se conformer, suivre, incarner, modéliser, défendre, assumer, diffuser, transformer ses pratiques, s’engager, persévérer
 
         ----------------------------
 
@@ -73,8 +73,10 @@
         {{
             "titre": "Titre court et descriptif de la compétence",
             "idees_cles": "mots-clés et concepts principaux",
-            "niveau": "Haut/Moyen/Bas",
-            "verbes_suggere": ["verbe1", "verbe2", "verbe3"],
+            "niveau_cognitif": "Bas/Moyen/Haut",
+            "niveau_affectif": "Bas/Moyen/Haut",
+            "verbes_cognitifs": ["verbe_cognitif_1", "verbe_cognitif_2"],
+            "verbes_affectifs": ["verbe_affectif_1"],
             "formulation": "Formulation complète de la compétence"
         }}
     ]

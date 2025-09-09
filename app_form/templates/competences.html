@@ -1454,7 +1454,7 @@
 
         <div class="content-container">
             <!-- Instruction panel moved above recap -->
-            {% set instructions_header = 'Objectif de cette étape' %}
+            {% set instructions_header = 'Création des compétences' %}
             {% set instructions_subtitle = "Définissez les compétences clés qui structureront la formation." %}
             {% set instructions = [
                 "Formuler 3 compétences principales (une 4e étant optionnelle) selon le scénario CMO.",
@@ -2795,7 +2795,7 @@
                         item.idees_cles = document.getElementById('editIdeesCles').value;
                         item.niveau_cognitif = document.getElementById('editNiveauCognitif').value;
                         item.niveau_affectif = document.getElementById('editNiveauAffectif').value;
-                        item.niveau = `Cog: ${item.niveau_cognitif} / Aff: ${item.niveau_affectif}`;
+                        item.niveau = `Cognitif: ${item.niveau_cognitif} / Affectif: ${item.niveau_affectif}`;
                         item.verbes_cognitifs = ensureHiddenVerbsInput('cognitif').value;
                         item.verbes_affectifs = ensureHiddenVerbsInput('affectif').value;
                         item.verbes = [item.verbes_cognitifs, item.verbes_affectifs].filter(Boolean).join(', ');
@@ -3394,5 +3394,7 @@
             {% endif %}
         }
     </script>
+    {% include 'includes/footer.html' %}
 </body>
+</html>
 </html> 

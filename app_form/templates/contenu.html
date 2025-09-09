@@ -251,6 +251,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: var(--spacing-md) 0;
+            font-size: var(--font-size-small);
         }
 
         .simplified-table th,
@@ -264,11 +265,13 @@
             background: var(--light-gray);
             font-weight: 600;
             color: var(--text-dark);
+            font-size: var(--font-size-normal);
         }
 
         .simplified-table td {
             background: white;
             color: var(--text-medium);
+            font-size: var(--font-size-small);
         }
 
         .simplified-table .section-number {
@@ -304,6 +307,7 @@
         /* Detailed view styles */
         .detailed-view {
             display: none;
+            font-size: var(--font-size-small);
         }
 
         .section-card {
@@ -326,7 +330,7 @@
 
         .section-card-header h5 {
             margin: 0;
-            font-size: var(--font-size-lg);
+            font-size: var(--font-size-md);
         }
 
         .section-card-header .section-number {
@@ -357,7 +361,7 @@
         .section-info-item h6 {
             color: var(--primary-blue);
             margin: 0 0 var(--spacing-sm) 0;
-            font-size: var(--font-size-md);
+            font-size: var(--font-size-normal);
         }
 
         .section-info-item p {
@@ -419,6 +423,7 @@
             font-weight: 600;
             color: var(--text-dark);
             margin-bottom: 2px;
+            font-size: var(--font-size-normal);
         }
 
         .action-item .action-intention {
@@ -496,7 +501,7 @@
         .navigation-tips {
             text-align: center;
             margin-top: var(--spacing-sm);
-            font-size: 0.9em;
+            font-size: var(--font-size-small);
             color: var(--text-medium);
         }
 
@@ -558,7 +563,7 @@
             color: white;
             border: none;
             padding: 15px 40px;
-            font-size: 1.1em;
+            font-size: var(--font-size-md);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -628,7 +633,7 @@
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: var(--font-size-xxl, var(--font-size-xl));
             }
 
             .contenus-grid {
@@ -684,62 +689,60 @@
 
             <!-- AI Generation Section -->
             <div class="ai-generate-section">
-                <h3>Génération des contenus pédagogiques</h3>
-                <button class="ai-generate-btn" id="generateContenusBtn" onclick="generateContenus()">
-                    ✨ Générer les Contenus
-                </button>
+                <h3>Contenus pédagogiques</h3>
                 
                 {% from 'includes/blocks/components.html' import loading %}
                 {{ loading('aiLoading', 'Génération des contenus en cours...') }}
+
+                <!-- AI Generated Results Section (moved inside the generation container) -->
+                <div id="aiResultsSection" style="display: none;">
+                    <div class="section-results">
+                        <p>Voici les contenus générés automatiquement par l'IA. Choisissez votre mode d'affichage :</p>
+                        
+                        <!-- View Options -->
+                        <div class="view-options">
+                            <button class="view-option-btn active" onclick="switchView('simplified')">
+                                📊 Tableau Simplifié
+                            </button>
+                            <button class="view-option-btn" onclick="switchView('detailed')">
+                                🔍 Vue Détaillée
+                            </button>
+                        </div>
+                        
+                        <!-- Simplified Table View -->
+                        <div id="simplifiedView" class="simplified-view">
+                            <div id="simplifiedTableContent">
+                                <!-- Simplified table will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Detailed View -->
+                        <div id="detailedView" class="detailed-view">
+                            <!-- Topbar: navigation + tips -->
+                            <div class="detailed-topbar">
+                                <div class="detailed-navigation">
+                                    <button class="nav-detail-btn" id="prevSectionBtn" onclick="showPreviousSection()">← Précédent</button>
+                                    <div class="section-counter">Section <span id="currentSectionNumber">1</span> sur <span id="totalSections">0</span></div>
+                                    <button class="nav-detail-btn" id="nextSectionBtn" onclick="showNextSection()">Suivant →</button>
+                                </div>
+                                <div class="navigation-tips">
+                                    💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer — seules les sections avec des compétences sont affichées
+                                </div>
+                            </div>
+                            
+                            <div id="detailedContent">
+                                <!-- Detailed section cards will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Error/Success Messages -->
             {% from 'includes/blocks/components.html' import messages %}
             {{ messages() }}
 
-            <!-- AI Generated Results Section -->
-            <div id="aiResultsSection" style="display: none;">
-                <div class="section-results">
-                    <h4>📋 Contenus Générés par l'IA</h4>
-                    <p>Voici les contenus générés automatiquement par l'IA. Choisissez votre mode d'affichage :</p>
-                    
-                    <!-- View Options -->
-                    <div class="view-options">
-                        <button class="view-option-btn active" onclick="switchView('simplified')">
-                            📊 Tableau Simplifié
-                        </button>
-                        <button class="view-option-btn" onclick="switchView('detailed')">
-                            🔍 Vue Détaillée
-                        </button>
-                    </div>
-                    
-                    <!-- Simplified Table View -->
-                    <div id="simplifiedView" class="simplified-view">
-                        <div id="simplifiedTableContent">
-                            <!-- Simplified table will be inserted here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Detailed View -->
-                    <div id="detailedView" class="detailed-view">
-                        <!-- Topbar: navigation + tips -->
-                        <div class="detailed-topbar">
-                            <div class="detailed-navigation">
-                                <button class="nav-detail-btn" id="prevSectionBtn" onclick="showPreviousSection()">← Précédent</button>
-                                <div class="section-counter">Section <span id="currentSectionNumber">1</span> sur <span id="totalSections">0</span></div>
-                                <button class="nav-detail-btn" id="nextSectionBtn" onclick="showNextSection()">Suivant →</button>
-                            </div>
-                            <div class="navigation-tips">
-                                💡 Utilisez les flèches ← → ou la barre d'espace pour naviguer — seules les sections avec des compétences sont affichées
-                            </div>
-                        </div>
-                        
-                        <div id="detailedContent">
-                            <!-- Detailed section cards will be inserted here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Submit Section -->
             {% from 'includes/blocks/components.html' import submit_section %}
@@ -890,6 +893,8 @@
             loadCompetencesData();
             // Load resources catalog for enrichment
             loadResourcesCatalog();
+            // Auto-run AI content generation on page load
+            generateContenus();
             
             // Add keyboard shortcuts for detailed view navigation
             document.addEventListener('keydown', function(e) {
@@ -997,12 +1002,9 @@
         }
 
         function generateContenus() {
-            const generateBtn = document.getElementById('generateContenusBtn');
             const aiLoading = document.getElementById('aiLoading');
-            
             // Show loading state
-            generateBtn.disabled = true;
-            aiLoading.style.display = 'block';
+            if (aiLoading) aiLoading.style.display = 'block';
             hideMessages();
             
             // Call the AI generation endpoint
@@ -1027,9 +1029,7 @@
                 showError('Erreur lors de la génération des contenus.');
             })
             .finally(() => {
-                // Reset button state
-                generateBtn.disabled = false;
-                aiLoading.style.display = 'none';
+                if (aiLoading) aiLoading.style.display = 'none';
             });
         }
 
@@ -1039,9 +1039,6 @@
 
         function showAIResults(contenusData) {
             const aiResultsSection = document.getElementById('aiResultsSection');
-            
-            // Hide the AI generation section
-            document.querySelector('.ai-generate-section').style.display = 'none';
             
             // Show the results section
             aiResultsSection.style.display = 'block';
@@ -1096,7 +1093,7 @@
                                 const code = explicitCode || extractCompetenceCode(compText);
                                 const details = getCompetenceDetails(code);
                                 const cf = explicitTitle ? { title: explicitTitle, formulation: compText } : getCompetenceTitleAndFormulation(compText, details);
-                                val = `<div><strong>${code ? `${code} — ` : ''}${cf.title || ''}</strong>${cf.formulation ? `<div>${cf.formulation}</div>` : ''}${explicitLevel ? `<div style=\"font-size:0.85em;color:var(--text-medium);\">Niveau : ${explicitLevel}</div>` : ''}</div>`;
+                                val = `<div><strong>${code ? `${code} — ` : ''}${cf.title || ''}</strong>${cf.formulation ? `<div>${cf.formulation}</div>` : ''}${explicitLevel ? `<div style=\"font-size: var(--font-size-small); color: var(--text-medium);\">Niveau : ${explicitLevel}</div>` : ''}</div>`;
                             } else {
                                 val = normalizeValue(section[col]);
                             }
@@ -1184,7 +1181,7 @@
 
                                     ${(() => { const cf = getCompetenceTitleAndFormulation(competenceText, competenceDetails); return `<p><strong>${normalizeValue(competenceCode)} — ${normalizeValue(cf.title)}</strong></p>${cf.formulation ? `<p>${normalizeValue(cf.formulation)}</p>` : ''}`; })()}
                                     ${competenceDetails ? `
-                                        <div style="margin-top: 10px; padding: 8px; background: rgba(23, 162, 184, 0.1); border-radius: 5px; font-size: 0.9em;">
+                                        <div style="margin-top: 10px; padding: 8px; background: rgba(23, 162, 184, 0.1); border-radius: 5px; font-size: var(--font-size-small);">
                                             <strong>Niveau :</strong> ${normalizeValue(competenceDetails.niveau) || 'Non défini'}<br>
                                             <strong>Idées clés :</strong> ${normalizeValue(competenceDetails.idees_cles) || 'Non définies'}
                                         </div>
@@ -1198,7 +1195,7 @@
                                     <p><strong>${displayTitle(section.ressource)}</strong></p>
                                     ${normalizeValue(section.intention_ressource) ? `<p><em>Intention : ${normalizeValue(section.intention_ressource)}</em></p>` : ''}
                                     ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e.Description ? `<p style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</p>` : '' })()}
-                                    ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e['Type Ressource/ Activité'] ? `<p style="margin-top:6px; font-size: 0.9em;">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</p>` : '' })()}
+                                    ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e['Type Ressource/ Activité'] ? `<p style=\"margin-top:6px; font-size: var(--font-size-small);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</p>` : '' })()}
                                     ${(() => { const e = findCatalogEntryByName(section.ressource); return e && e['Liens'] ? `<p style=\"margin-top:6px;\">${formatCatalogLink(e['Liens'])}</p>` : '' })()}
                                 </div>
                             ` : ''}
@@ -1214,7 +1211,7 @@
                                             <div class="action-title">${displayTitle(section.activite_1)}</div>
                                             ${normalizeValue(section.intention_activite_1) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_1)}</div>` : ''}
                                             ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e.Description ? `<div style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</div>` : '' })()}
-                                            ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: 0.85em; color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: var(--font-size-small); color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
                                             ${(() => { const e = findCatalogEntryByName(section.activite_1); return e && e['Liens'] ? `<div style=\"margin-top:4px;\">${formatCatalogLink(e['Liens'])}</div>` : '' })()}
                                         </div>
                                     </div>
@@ -1227,7 +1224,7 @@
                                             <div class="action-title">${displayTitle(section.activite_2)}</div>
                                             ${normalizeValue(section.intention_activite_2) ? `<div class="action-intention">Intention : ${normalizeValue(section.intention_activite_2)}</div>` : ''}
                                             ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e.Description ? `<div style="margin-top:6px; color: var(--text-medium);">${normalizeValue(e.Description)}</div>` : '' })()}
-                                            ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: 0.85em; color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
+                                            ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e['Type Ressource/ Activité'] ? `<div style=\"margin-top:4px; font-size: var(--font-size-small); color: var(--text-dark);\">Type : ${normalizeValue(e['Type Ressource/ Activité'])}</div>` : '' })()}
                                             ${(() => { const e = findCatalogEntryByName(section.activite_2); return e && e['Liens'] ? `<div style=\"margin-top:4px;\">${formatCatalogLink(e['Liens'])}</div>` : '' })()}
                                         </div>
                                     </div>
